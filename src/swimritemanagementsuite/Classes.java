@@ -16,38 +16,38 @@ public class Classes {
     /**
      * Primary Key: Auto generated Class ID number.
      */
-    @DatabaseField(columnName = "Class Id", generatedId = true)
+    @DatabaseField(columnName = "classId", generatedId = true)
     private int classId;
     
     /**
      * The type of swimming class (field cannot be null).
      */
-    @DatabaseField (columnName = "Class Type", canBeNull = false)
+    @DatabaseField (columnName = "classType", canBeNull = false)
     private String classType;
     
     
     /**
      * Foreign Key: The timeslot (day/time) of the class.
      */
-    @DatabaseField(columnName = "Timeslot Id", canBeNull = false, foreign = true)
+    @DatabaseField(columnName = "timeslotId", canBeNull = false, foreign = true)
     private int timeslotId;
     
     /**
      * Foreign Key: The teacher of the class.
      */
-    @DatabaseField(columnName = "Teacher Id", canBeNull = false, foreign = true)
+    @DatabaseField(columnName = "teacherId", canBeNull = false, foreign = true)
     private int teacherId;
     
     /**
      * The maximum capacity of swimming class (field cannot be null).
      */
-    @DatabaseField (columnName = "Maximum Capacity", canBeNull = false)
+    @DatabaseField (columnName = "maxCapacity", canBeNull = false)
     private int maxCapacity;
     
     /**
      * The current capacity of swimming class (field cannot be null).
      */
-    @DatabaseField (columnName = "Current Capacity", canBeNull = false)
+    @DatabaseField (columnName = "currentCapacity", canBeNull = false)
     private int currentCapacity;
 
     /**
@@ -58,7 +58,7 @@ public class Classes {
     }
 
     /**
-     * Parameterized constructor to create a new Class in the Classes database.
+     * Parameterized constructor to create a new Class in the Classes database table.
      * @param classType The type of swimming class.
      * @param timeslotId The timeslot (day/time) of the class each week.
      * @param teacherId The teacher of the class.

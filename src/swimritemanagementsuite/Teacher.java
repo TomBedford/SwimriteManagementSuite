@@ -16,13 +16,13 @@ public class Teacher {
     /**
      * Primary Key: Auto generated Teacher ID number.
      */
-    @DatabaseField(columnName = "Teacher Id", generatedId = true)
+    @DatabaseField(columnName = "teacherId", generatedId = true)
     private int teacherId;
     
     /**
      * The name of the Teacher (field cannot be null and must be unique).
      */
-    @DatabaseField (columnName = "Teacher Name", canBeNull = false, unique = true)
+    @DatabaseField (columnName = "teacherName", canBeNull = false, unique = true)
     private String teacherName;
 
     /**
@@ -33,7 +33,7 @@ public class Teacher {
     }
 
     /**
-     * Parameterized constructor to create a new Teacher in the Teacher database.
+     * Parameterized constructor to create a new Teacher in the Teacher database table.
      * @param teacherName The individual Teachers name.
      */
     public Teacher(String teacherName) {
