@@ -29,13 +29,13 @@ public class Classes {
     /**
      * Foreign Key: The timeslot (day/time) of the class.
      */
-    @DatabaseField(columnName = "Timeslot Id", foreign = true)
+    @DatabaseField(columnName = "Timeslot Id", canBeNull = false, foreign = true)
     private int timeslotId;
     
     /**
      * Foreign Key: The teacher of the class.
      */
-    @DatabaseField(columnName = "Teacher Id", foreign = true)
+    @DatabaseField(columnName = "Teacher Id", canBeNull = false, foreign = true)
     private int teacherId;
     
     /**
