@@ -64,13 +64,13 @@ public class StudentRecord {
     private String abilityLevel;
     
     /**
-     * The class that the student is currently in.
+     * Foreign Key: The class that the student is currently in.
      */
     @DatabaseField(columnName = "classId", foreign = true)
     private int classId;
     
     /**
-     * The attendance record of the student (field cannot be null).
+     * Foreign Key: The attendance record of the student (field cannot be null).
      */
     @DatabaseField(columnName = "attendanceId", foreign = true)
     private int attendanceId;
