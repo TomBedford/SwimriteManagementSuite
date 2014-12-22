@@ -41,7 +41,7 @@ public class Teacher {
     }
 
     /**
-     * Accessor to retrieve the teachers auto generated Id.
+     * Accessor to retrieve the auto generated teacher Id.
      * @return teacherId The auto generated teachers Id.
      */
     public int getTeacherId() {

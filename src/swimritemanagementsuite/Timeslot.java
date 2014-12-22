@@ -49,7 +49,7 @@ public class Timeslot {
     }
 
     /**
-     * Accessor to retrieve the timeslot auto generated Id.
+     * Accessor to retrieve the auto generated timeslot Id.
      * @return timeslotId The auto generated timeslot Id.
      */
     public int getTimeslotId() {
