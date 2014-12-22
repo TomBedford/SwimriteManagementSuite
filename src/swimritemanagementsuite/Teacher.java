@@ -3,9 +3,10 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 /**
- * This class represents the Teacher database table, declaring its fields and 
- * specific attributes of the fields. Accessor and mutator methods are also 
- * available for each of the fields (except a mutator for the auto generated ID).
+ * This class represents the Teacher database table showing teachers working at 
+ * Swimrite Leisure, declaring database fields and specific attributes of the fields. 
+ * Accessor and mutator methods are also available for each of the fields 
+ * (except a mutator for the auto generated ID).
  * 
  * @author Thomas Bedford (m2081433)
  */
