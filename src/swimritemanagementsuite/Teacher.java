@@ -15,7 +15,7 @@ public class Teacher {
     /**
      * Primary Key: Auto generated Teacher ID number.
      */
-    @DatabaseField(generatedId = true)
+    @DatabaseField(columnName = "Teacher Id", generatedId = true)
     private int teacherId;
     
     /**
