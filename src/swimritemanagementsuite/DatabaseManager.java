@@ -218,18 +218,22 @@ public class DatabaseManager {
     
     
     
-    // CREATE, UPDATE AND DELETE FOR CLASSES.
+    // CREATE, UPDATE AND DELETE FOR SWIMMING CLASSES.
     
     /**
-     * Creates an Attendance Record and persists it to the database.
+     * Creates a Swimming Class and persists it to the database.
+     * @param classType The type of Swimming class it is.
+     * @param timeslot The timeslot of the class (day/time)
+     * @param teacher The teacher of the class.
+     * @param maxCapacity The maximum student capacity of the class.
      * @throws Exception SQL Exception.
      */
-    public void createSwimmingClass() throws Exception {
-        // Create an instance of an Attendance Record
-        attendanceRecord = new AttendanceRecord();
+    public void createSwimmingClass(String classType, Timeslot timeslot, Teacher teacher, int maxCapacity) throws Exception {
+        // Create an instance of a Swimming Class
+        swimmingClass = new SwimmingClasses(classType, timeslot, teacher, maxCapacity);
         
-        // Persist the Attendance Record object to the database.
-        attendanceRecordDao.create(attendanceRecord);
+        // Persist the Swimming Class object to the database.
+        swimmingClassDao.create(swimmingClass);
     }
     
     

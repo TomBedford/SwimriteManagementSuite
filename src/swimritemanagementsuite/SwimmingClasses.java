@@ -65,12 +65,12 @@ public class SwimmingClasses {
      * @param maxCapacity The maxmimum capacity of the swimming class.
      * @param currentCapacity The current capacity of the swimming class.
      */
-    public SwimmingClasses(String classType, Timeslot timeslot, Teacher teacher, int maxCapacity, int currentCapacity) {
+    public SwimmingClasses(String classType, Timeslot timeslot, Teacher teacher, int maxCapacity) {
         this.classType = classType;
         this.timeslot = timeslot;
         this.teacher = teacher;
         this.maxCapacity = maxCapacity;
-        this.currentCapacity = currentCapacity;
+        this.currentCapacity = 0;
     }
 
     /**
