@@ -29,14 +29,14 @@ public class Classes {
     /**
      * Foreign Key: The timeslot (day/time) of the class.
      */
-    @DatabaseField(columnName = "timeslotId", canBeNull = false, foreign = true)
-    private int timeslotId;
+    @DatabaseField(columnName = "timeslot", canBeNull = false, foreign = true)
+    private Timeslot timeslot;
     
     /**
      * Foreign Key: The teacher of the class.
      */
-    @DatabaseField(columnName = "teacherId", canBeNull = false, foreign = true)
-    private int teacherId;
+    @DatabaseField(columnName = "teacher", canBeNull = false, foreign = true)
+    private Teacher teacher;
     
     /**
      * The maximum capacity of swimming class (field cannot be null).
@@ -60,15 +60,15 @@ public class Classes {
     /**
      * Parameterized constructor to create a new Class in the Classes database table.
      * @param classType The type of swimming class.
-     * @param timeslotId The timeslot (day/time) of the class each week.
-     * @param teacherId The teacher of the class.
+     * @param timeslot The timeslot (day/time) of the class each week.
+     * @param teacher The teacher of the class.
      * @param maxCapacity The maxmimum capacity of the swimming class.
      * @param currentCapacity The current capacity of the swimming class.
      */
-    public Classes(String classType, int timeslotId, int teacherId, int maxCapacity, int currentCapacity) {
+    public Classes(String classType, Timeslot timeslot, Teacher teacher, int maxCapacity, int currentCapacity) {
         this.classType = classType;
-        this.timeslotId = timeslotId;
-        this.teacherId = teacherId;
+        this.timeslot = timeslot;
+        this.teacher = teacher;
         this.maxCapacity = maxCapacity;
         this.currentCapacity = currentCapacity;
     }
@@ -99,34 +99,34 @@ public class Classes {
 
     /**
      * Accessor to retrieve the current timeslot of the class.
-     * @return timeslotId The timeslot of the class.
+     * @return timeslot The timeslot of the class.
      */
-    public int getTimeslotId() {
-        return timeslotId;
+    public Timeslot getTimeslot() {
+        return timeslot;
     }
 
     /**
      * Mutator to set the new timeslot of the class.
-     * @param timeslotId The updated timeslot of the class.
+     * @param timeslot The updated timeslot of the class.
      */
-    public void setTimeslotId(int timeslotId) {
-        this.timeslotId = timeslotId;
+    public void setTimeslot(Timeslot timeslot) {
+        this.timeslot = timeslot;
     }
 
     /**
-     * Accessor to retrieve the current teacher Id of the class.
-     * @return teacherId The teacher of the class.
+     * Accessor to retrieve the current teacher of the class.
+     * @return teacher The teacher of the class.
      */
-    public int getTeacherId() {
-        return teacherId;
+    public Teacher getTeacher() {
+        return teacher;
     }
 
     /**
-     * Mutator to set the new Teacher Id of the class.
-     * @param teacherId The updated teacherId of the class.
+     * Mutator to set the new Teacher of the class.
+     * @param teacher The updated teacher of the class.
      */
-    public void setTeacherId(int teacherId) {
-        this.teacherId = teacherId;
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 
     /**

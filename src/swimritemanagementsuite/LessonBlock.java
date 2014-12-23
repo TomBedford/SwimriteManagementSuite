@@ -22,10 +22,10 @@ public class LessonBlock {
     private int blockId;
     
     /**
-     * Foreign Key: The payment id of the lesson block.
+     * Foreign Key: The payment info of the lesson block.
      */
-    @DatabaseField (columnName = "paymentId", foreign = true)
-    private int paymentId;
+    @DatabaseField (columnName = "lessonPayment", foreign = true)
+    private LessonPayment lessonPayment;
     
     /**
      * The date of the first lesson of the lesson block (field cannot be null).
@@ -157,7 +157,7 @@ public class LessonBlock {
 
     /**
      * Parameterized constructor to create a new block of lessons in the Lesson Block database table.
-     * @param paymentId The corresponding payment Id of the lesson blocks
+     * @param lessonPayment The corresponding payment Id of the lesson blocks
      * @param lesson1Date The date of the first lesson of the lesson block.
      * @param lesson2Date The date of the second lesson of the lesson block.
      * @param lesson3Date The date of the third lesson of the lesson block.
@@ -169,10 +169,10 @@ public class LessonBlock {
      * @param lesson9Date The date of the ninth lesson of the lesson block.
      * @param lesson10Date The date of the tenth lesson of the lesson block.
      */
-    public LessonBlock(int paymentId, Date lesson1Date, Date lesson2Date, Date lesson3Date, Date lesson4Date,
+    public LessonBlock(LessonPayment lessonPayment, Date lesson1Date, Date lesson2Date, Date lesson3Date, Date lesson4Date,
                         Date lesson5Date, Date lesson6Date, Date lesson7Date, Date lesson8Date, 
                             Date lesson9Date, Date lesson10Date) {
-        this.paymentId = paymentId;
+        this.lessonPayment = lessonPayment;
         this.lesson1Date = lesson1Date;
         this.lesson2Date = lesson1Date;
         this.lesson3Date = lesson1Date;
@@ -195,19 +195,19 @@ public class LessonBlock {
     }
 
     /**
-     * Accessor to retrieve the payment Id of the lesson block.
-     * @return paymentId The payment Id of the lesson block.
+     * Accessor to retrieve the payment info of the lesson block.
+     * @return lessonPayment The payment info of the lesson block.
      */
-    public int getPaymentId() {
-        return paymentId;
+    public LessonPayment getLessonPayment() {
+        return lessonPayment;
     }
 
     /**
-     * Mutator to set the new payment Id of the lesson block.
-     * @param paymentId The updated payment Id of the lesson block.
+     * Mutator to set the new payment info of the lesson block.
+     * @param lessonPayment The updated payment info of the lesson block.
      */
-    public void setPaymentId(int paymentId) {
-        this.paymentId = paymentId;
+    public void setLessonPayment(LessonPayment lessonPayment) {
+        this.lessonPayment = lessonPayment;
     }
 
     /**

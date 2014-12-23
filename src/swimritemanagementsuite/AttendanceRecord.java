@@ -20,10 +20,10 @@ public class AttendanceRecord {
     private int attendanceId;
     
     /**
-     * Foreign Key: The lesson block id of the attendance record.
+     * Foreign Key: The lesson block of the attendance record.
      */
-    @DatabaseField (columnName = "blockId", foreign = true)
-    private int blockId;
+    @DatabaseField (columnName = "lessonBlock", foreign = true)
+    private LessonBlock lessonBlock;
 
     /**
      * Default constructor of the Attendance Record class.
@@ -34,10 +34,10 @@ public class AttendanceRecord {
 
     /**
      * Parameterized constructor to create a new attendance record in the attendance record database table.
-     * @param blockId The lesson block Id.
+     * @param lessonBlock The lesson block.
      */
-    public AttendanceRecord(int blockId) {
-        this.blockId = blockId;
+    public AttendanceRecord(LessonBlock lessonBlock) {
+        this.lessonBlock = lessonBlock;
     }
 
     /**
@@ -49,19 +49,19 @@ public class AttendanceRecord {
     }
 
     /**
-     * Accessor to retrieve the lesson block Id.
-     * @return blockId The lesson block Id.
+     * Accessor to retrieve the lesson block.
+     * @return lessonBlock The lesson block.
      */
-    public int getBlockId() {
-        return blockId;
+    public LessonBlock getLessonBlock() {
+        return lessonBlock;
     }
 
     /**
-     * Mutator to set the new lesson block Id.
-     * @param blockId The updated lesson block Id.
+     * Mutator to set the new lesson block.
+     * @param lessonBlock The updated lesson block.
      */
-    public void setBlockId(int blockId) {
-        this.blockId = blockId;
+    public void setLessonBlock(LessonBlock lessonBlock) {
+        this.lessonBlock = lessonBlock;
     }
 
 }

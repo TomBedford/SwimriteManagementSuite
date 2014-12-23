@@ -64,16 +64,16 @@ public class StudentRecord {
     private String abilityLevel;
     
     /**
-     * Foreign Key: The class that the student is currently in.
+     * Foreign Key: The swimming class that the student is currently in.
      */
-    @DatabaseField(columnName = "classId", foreign = true)
-    private int classId;
+    @DatabaseField(columnName = "swimmingClass", foreign = true)
+    private Classes swimmingClass;
     
     /**
      * Foreign Key: The attendance record of the student (field cannot be null).
      */
-    @DatabaseField(columnName = "attendanceId", foreign = true)
-    private int attendanceId;
+    @DatabaseField(columnName = "attendance", foreign = true)
+    private AttendanceRecord attendance;
 
     /**
      * Default constructor of the Student Record class.
@@ -91,11 +91,11 @@ public class StudentRecord {
      * @param hasIllness Information as to whether the student has any illnesses/disabilities
      * @param parentName The students parents name.
      * @param abilityLevel The ability level of the student.
-     * @param classId The class the student is in.
-     * @param attendanceId The attendance ID of the student.
+     * @param swimmingClass The class the student is in.
+     * @param attendance The attendance record of the student.
      */
     public StudentRecord(String studentName, Date studentDOB, int telephoneNo, String studentAddress, 
-                            String hasIllness, String parentName, String abilityLevel, int classId, int attendanceId) {
+                            String hasIllness, String parentName, String abilityLevel, Classes swimmingClass, AttendanceRecord attendance) {
         this.studentName = studentName;
         this.studentDOB = studentDOB;
         this.telephoneNo = telephoneNo;
@@ -103,8 +103,8 @@ public class StudentRecord {
         this.hasIllness = hasIllness;
         this.parentName = parentName;
         this.abilityLevel = abilityLevel;
-        this.classId = classId;
-        this.attendanceId = attendanceId;
+        this.swimmingClass = swimmingClass;
+        this.attendance = attendance;
     }
 
     /**
@@ -228,35 +228,35 @@ public class StudentRecord {
     }
 
     /**
-     * Accessor to retrieve the class Id of the student. 
-     * @return classId The class the student is in.
+     * Accessor to retrieve the class of the student. 
+     * @return swimmingClass The swimming class the student is in.
      */
-    public int getClassId() {
-        return classId;
+    public Classes getSwimmingClass() {
+        return swimmingClass;
     }
 
     /**
-     * Mutator to set the new class Id of the student.
-     * @param classId The updated class Id of the student.
+     * Mutator to set the new class of the student.
+     * @param swimmingClass The updated class of the student.
      */
-    public void setClassId(int classId) {
-        this.classId = classId;
+    public void setSwimmingClass(Classes swimmingClass) {
+        this.swimmingClass = swimmingClass;
     }
 
     /**
-     * Accessor to retrieve the students attendance Id.
-     * @return attendanceID The link to the attendance record of the student.
+     * Accessor to retrieve the students attendance record.
+     * @return attendance The link to the attendance record of the student.
      */
-    public int getAttendanceId() {
-        return attendanceId;
+    public AttendanceRecord getAttendance() {
+        return attendance;
     }
 
     /**
-     * Mutator to set the new attendance Id of the student.
-     * @param attendanceId The updated attendance Id of the student.
+     * Mutator to set the new attendance record of the student.
+     * @param attendance The updated attendance record of the student.
      */
-    public void setAttendanceId(int attendanceId) {
-        this.attendanceId = attendanceId;
+    public void setAttendance(AttendanceRecord attendance) {
+        this.attendance = attendance;
     }
 
 }
