@@ -3,15 +3,15 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 /**
- * This class represents the Classes database table showing all classes running at 
- * Swimrite Leisure, declaring database fields and specific attributes of the fields. 
+ * This class represents the Swimming Classes database table showing all classes running at 
+ Swimrite Leisure, declaring database fields and specific attributes of the fields. 
  * Accessor and mutator methods are also available for each of the fields 
  * (except a mutator for the auto generated ID).
  * 
  * @author Thomas Bedford (m2081433)
  */
-@DatabaseTable(tableName = "Classes")
-public class Classes {
+@DatabaseTable(tableName = "SwimmingClasses")
+public class SwimmingClasses {
     
     /**
      * Primary Key: Auto generated Class ID number.
@@ -53,7 +53,7 @@ public class Classes {
     /**
      * Default constructor of the Classes class.
      */
-    public Classes() {
+    public SwimmingClasses() {
         // ORMLite needs a no-arg constructor
     }
 
@@ -65,7 +65,7 @@ public class Classes {
      * @param maxCapacity The maxmimum capacity of the swimming class.
      * @param currentCapacity The current capacity of the swimming class.
      */
-    public Classes(String classType, Timeslot timeslot, Teacher teacher, int maxCapacity, int currentCapacity) {
+    public SwimmingClasses(String classType, Timeslot timeslot, Teacher teacher, int maxCapacity, int currentCapacity) {
         this.classType = classType;
         this.timeslot = timeslot;
         this.teacher = teacher;

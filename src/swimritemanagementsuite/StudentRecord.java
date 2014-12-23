@@ -67,12 +67,12 @@ public class StudentRecord {
      * Foreign Key: The swimming class that the student is currently in.
      */
     @DatabaseField(columnName = "swimmingClass", foreign = true)
-    private Classes swimmingClass;
+    private SwimmingClasses swimmingClass;
     
     /**
      * Foreign Key: The attendance record of the student (field cannot be null).
      */
-    @DatabaseField(columnName = "attendance", foreign = true)
+    @DatabaseField(columnName = "attendance", canBeNull = false, foreign = true)
     private AttendanceRecord attendance;
 
     /**
@@ -95,7 +95,7 @@ public class StudentRecord {
      * @param attendance The attendance record of the student.
      */
     public StudentRecord(String studentName, Date studentDOB, int telephoneNo, String studentAddress, 
-                            String hasIllness, String parentName, String abilityLevel, Classes swimmingClass, AttendanceRecord attendance) {
+                            String hasIllness, String parentName, String abilityLevel, SwimmingClasses swimmingClass, AttendanceRecord attendance) {
         this.studentName = studentName;
         this.studentDOB = studentDOB;
         this.telephoneNo = telephoneNo;
@@ -231,7 +231,7 @@ public class StudentRecord {
      * Accessor to retrieve the class of the student. 
      * @return swimmingClass The swimming class the student is in.
      */
-    public Classes getSwimmingClass() {
+    public SwimmingClasses getSwimmingClass() {
         return swimmingClass;
     }
 
@@ -239,7 +239,7 @@ public class StudentRecord {
      * Mutator to set the new class of the student.
      * @param swimmingClass The updated class of the student.
      */
-    public void setSwimmingClass(Classes swimmingClass) {
+    public void setSwimmingClass(SwimmingClasses swimmingClass) {
         this.swimmingClass = swimmingClass;
     }
 
