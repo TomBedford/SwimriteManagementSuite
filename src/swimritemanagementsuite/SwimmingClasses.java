@@ -62,8 +62,7 @@ public class SwimmingClasses {
      * @param classType The type of swimming class.
      * @param timeslot The timeslot (day/time) of the class each week.
      * @param teacher The teacher of the class.
-     * @param maxCapacity The maxmimum capacity of the swimming class.
-     * @param currentCapacity The current capacity of the swimming class.
+     * @param maxCapacity The maximum capacity of the swimming class.
      */
     public SwimmingClasses(String classType, Timeslot timeslot, Teacher teacher, int maxCapacity) {
         this.classType = classType;

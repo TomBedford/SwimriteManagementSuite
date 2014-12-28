@@ -21,7 +21,7 @@ public class LessonPayment {
     private int paymentId;
     
     /**
-     * The type of payment being made (visa, cheque or cash) (field cannot be null).
+     * The type of payment being made (debit, cheque or cash) (field cannot be null).
      */
     @DatabaseField (columnName = "paymentType", canBeNull = false)
     private String paymentType;

@@ -87,7 +87,7 @@ public class StudentRecord {
      * @param studentName The name of the student.
      * @param studentDOB The date of birth of the student.
      * @param telephoneNo The telephone number of the student.
-     * @param studentAddress The address of the student.
+     * @param studentAddress The home address of the student.
      * @param hasIllness Information as to whether the student has any illnesses/disabilities
      * @param parentName The students parents name.
      * @param abilityLevel The ability level of the student.
