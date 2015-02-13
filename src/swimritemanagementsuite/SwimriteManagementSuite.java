@@ -27,12 +27,21 @@ public class SwimriteManagementSuite {
      */
     public static void main(String[] args) {
         
-        // Commented out dtabase initialization code while under development.
+        // Creates the Swimrite Management System Database Manager inorder to start interactios with the db.
+        smsDatabaseManager = new DatabaseManager();
         
-//        smsDatabaseManager = new DatabaseManager();
-//        smsConnectionSource = smsDatabaseManager.createDatabaseConnection();
-//        smsDatabaseManager.setupDatabase(smsConnectionSource);
-//        smsDatabaseManager.initializeDaos(smsConnectionSource);
+        // Gets the JDBC Connection Source 
+        smsConnectionSource = smsDatabaseManager.createDatabaseConnection();
+        
+        /**
+         * DO SOMETHING IF THE DB CONNECTION IS NULL!!!!!
+         */
+        
+        // Sets up/creates the database tables if they do not already exist.
+        smsDatabaseManager.setupDatabase(smsConnectionSource);
+        
+        // Initialises the database access object for each table inorder to add, edit and delete records.
+        smsDatabaseManager.initializeDaos(smsConnectionSource);
         
     }
     

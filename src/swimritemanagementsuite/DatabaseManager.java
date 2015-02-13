@@ -20,7 +20,17 @@ public class DatabaseManager {
     /**
      * The URL that links to the Online MySQL Swimrite Management Suite database.
      */
-    private final static String DATABASE_URL = "jdbc:mysql://my-database-host/my-database-name";
+    private final static String DATABASE_URL = "jdbc:mysql://localhost:8888/SwimriteManagementSuite";
+    
+    /**
+     * This is the username for the MySql database.
+     */
+    private final String dbUsername = "root";
+    
+    /** 
+     * This is the password for the MySql database.
+     */
+    private final String dbPassword = "root";
     
     /**
      * The data access object used to access the Attendance Record table in the mySQL database.
@@ -112,16 +122,18 @@ public class DatabaseManager {
      */
     public JdbcConnectionSource createDatabaseConnection() {
         JdbcConnectionSource connectionSource = null;
-            try {
-                // create our data source
-                connectionSource = new JdbcConnectionSource(DATABASE_URL);
-            } catch (SQLException e) {
-                // print stack trace to help diagnose error + appropriate message to console.
-                e.printStackTrace();
-                System.out.println("createDatabaseConnection: Error establishing connection source");
-            }
-            
-            return connectionSource;
+        
+        try {
+            // create our data source.
+            connectionSource = new JdbcConnectionSource(DATABASE_URL, dbUsername, dbPassword);
+            System.out.println("Connection Source set up correctly");
+        } catch (SQLException e) {
+            // print stack trace to help diagnose error + appropriate message to console.
+            e.printStackTrace();
+            System.out.println("createDatabaseConnection: Error establishing connection source");
+        }
+        
+        return connectionSource;
     }
     
     /**
@@ -141,7 +153,7 @@ public class DatabaseManager {
             TableUtils.createTableIfNotExists(connectionSource, Timeslot.class);
         } catch (SQLException e) {
             // print stack trace to help diagnose error + appropriate message to console.
-            e.printStackTrace();
+            //e.printStackTrace();
             System.out.println("setupDatabase: Error creating database tables");
         }
         
