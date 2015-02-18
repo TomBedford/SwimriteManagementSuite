@@ -1,6 +1,9 @@
 package swimritemanagementsuite;
 
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
 
 /**
  * This is the main class of the Swimrite Management Suite where the database and its tables 
@@ -27,22 +30,48 @@ public class SwimriteManagementSuite {
      */
     public static void main(String[] args) {
         
-        // Creates the Swimrite Management System Database Manager inorder to start interactios with the db.
+        // Calls method to initialise the Swimrite Management Suite database connection references.
+        createDbReferences();
+        
+        // Calls method to create the swimrite management frame and panels.
+        createSMSWindow();
+        
+    }
+    
+    public static void createSMSWindow(){
+        // creates the frame to hold the home controller panel
+        JFrame smsFrame = new JFrame("Swimrite Management Suite");
+        
+        // creates the main panel to hold the tool bar and the interchangeable panels.
+        smsMainPanel smsMainPanel = new smsMainPanel();
+        
+        // Adds the main panel to the frame.
+        smsFrame.add(smsMainPanel);
+        
+        // settings for the frame
+        smsFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        smsFrame.setSize(1400,800);
+        smsFrame.setVisible(true);
+        smsFrame.setResizable(false);
+        
+    }
+    
+    public static void createDbReferences(){
+        // Creates the Swimrite Management Suites Database Manager inorder to start interactions with the db.
         smsDatabaseManager = new DatabaseManager();
         
-        // Gets the JDBC Connection Source 
+        // Gets the JDBC Connection Source to the SMS database.
         smsConnectionSource = smsDatabaseManager.createDatabaseConnection();
         
         /**
          * DO SOMETHING IF THE DB CONNECTION IS NULL!!!!!
          */
         
-        // Sets up/creates the database tables if they do not already exist.
+        // Creates the database tables if they do not already exist.
         smsDatabaseManager.setupDatabase(smsConnectionSource);
         
         // Initialises the database access object for each table inorder to add, edit and delete records.
         smsDatabaseManager.initializeDaos(smsConnectionSource);
-        
     }
     
 }
