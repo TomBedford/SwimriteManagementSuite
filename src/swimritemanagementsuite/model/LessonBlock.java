@@ -1,4 +1,4 @@
-package swimritemanagementsuite;
+package swimritemanagementsuite.model;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import java.util.Date;
@@ -34,10 +34,10 @@ public class LessonBlock {
     private Date lesson1Date;
     
     /**
-     * A boolean that informs whether the student attended the first lesson of the block.
+     * An Enum that holds the attendance type of the students attendance for the first lesson of the block.
      */
     @DatabaseField (columnName = "lesson1Attendance")
-    private boolean lesson1Attendance;
+    private AttendanceType lesson1Attendance;
     
     /**
      * The date of the second lesson of the lesson block (field cannot be null).
@@ -46,10 +46,10 @@ public class LessonBlock {
     private Date lesson2Date;
     
     /**
-     * A boolean that informs whether the student attended the second lesson of the block.
+     * An Enum that holds the attendance type of the students attendance for the second lesson of the block.
      */
     @DatabaseField (columnName = "lesson2Attendance")
-    private boolean lesson2Attendance;
+    private AttendanceType lesson2Attendance;
     
     /**
      * The date of the third lesson of the lesson block (field cannot be null).
@@ -58,10 +58,10 @@ public class LessonBlock {
     private Date lesson3Date;
     
     /**
-     * A boolean that informs whether the student attended the third lesson of the block.
+     * An Enum that holds the attendance type of the students attendance for the third lesson of the block.
      */
     @DatabaseField (columnName = "lesson3Attendance")
-    private boolean lesson3Attendance;
+    private AttendanceType lesson3Attendance;
     
     /**
      * The date of the fourth lesson of the lesson block (field cannot be null).
@@ -70,10 +70,10 @@ public class LessonBlock {
     private Date lesson4Date;
     
     /**
-     * A boolean that informs whether the student attended the fourth lesson of the block.
+     * An Enum that holds the attendance type of the students attendance for the fourth lesson of the block.
      */
     @DatabaseField (columnName = "lesson4Attendance")
-    private boolean lesson4Attendance;
+    private AttendanceType lesson4Attendance;
     
     /**
      * The date of the fifth lesson of the lesson block (field cannot be null).
@@ -82,10 +82,10 @@ public class LessonBlock {
     private Date lesson5Date;
     
     /**
-     * A boolean that informs whether the student attended the fifth lesson of the block.
+     * An Enum that holds the attendance type of the students attendance for the fifth lesson of the block.
      */
     @DatabaseField (columnName = "lesson5Attendance")
-    private boolean lesson5Attendance;
+    private AttendanceType lesson5Attendance;
     
     /**
      * The date of the sixth lesson of the lesson block (field cannot be null).
@@ -94,10 +94,10 @@ public class LessonBlock {
     private Date lesson6Date;
     
     /**
-     * A boolean that informs whether the student attended the sixth lesson of the block.
+     * An Enum that holds the attendance type of the students attendance for the sixth lesson of the block.
      */
     @DatabaseField (columnName = "lesson6Attendance")
-    private boolean lesson6Attendance;
+    private AttendanceType lesson6Attendance;
     
     /**
      * The date of the seventh lesson of the lesson block (field cannot be null).
@@ -106,10 +106,10 @@ public class LessonBlock {
     private Date lesson7Date;
     
     /**
-     * A boolean that informs whether the student attended the seventh lesson of the block.
+     * An Enum that holds the attendance type of the students attendance for the seventh lesson of the block.
      */
     @DatabaseField (columnName = "lesson7Attendance")
-    private boolean lesson7Attendance;
+    private AttendanceType lesson7Attendance;
     
     /**
      * The date of the eighth lesson of the lesson block (field cannot be null).
@@ -118,10 +118,10 @@ public class LessonBlock {
     private Date lesson8Date;
     
     /**
-     * A boolean that informs whether the student attended the eighth lesson of the block.
+     * An Enum that holds the attendance type of the students attendance for the eighth lesson of the block.
      */
     @DatabaseField (columnName = "lesson8Attendance")
-    private boolean lesson8Attendance;
+    private AttendanceType lesson8Attendance;
     
     /**
      * The date of the ninth lesson of the lesson block (field cannot be null).
@@ -130,10 +130,10 @@ public class LessonBlock {
     private Date lesson9Date;
     
     /**
-     * A boolean that informs whether the student attended the ninth lesson of the block.
+     * An Enum that holds the attendance type of the students attendance for the ninth lesson of the block.
      */
     @DatabaseField (columnName = "lesson9Attendance")
-    private boolean lesson9Attendance;
+    private AttendanceType lesson9Attendance;
     
     /**
      * The date of the tenth lesson of the lesson block (field cannot be null).
@@ -142,10 +142,10 @@ public class LessonBlock {
     private Date lesson10Date;
     
     /**
-     * A boolean that informs whether the student attended the tenth lesson of the block.
+     * An Enum that holds the attendance type of the students attendance for the tenth lesson of the block.
      */
     @DatabaseField (columnName = "lesson10Attendance")
-    private boolean lesson10Attendance;
+    private AttendanceType lesson10Attendance;
     
 
     /**
@@ -228,9 +228,9 @@ public class LessonBlock {
 
     /**
      * Accessor to retrieve whether the student attended lesson 1.
-     * @return lesson1Attendance Boolean as to whether they attended lesson 1.
+     * @return lesson1Attendance Enum as to their attendance type for lesson 1.
      */
-    public boolean isLesson1Attendance() {
+    public AttendanceType isLesson1Attendance() {
         return lesson1Attendance;
     }
 
@@ -238,7 +238,7 @@ public class LessonBlock {
      * Mutator to set the new attendance record of lesson 1.
      * @param lesson1Attendance The updated attendance record for lesson 1.
      */
-    public void setLesson1Attendance(boolean lesson1Attendance) {
+    public void setLesson1Attendance(AttendanceType lesson1Attendance) {
         this.lesson1Attendance = lesson1Attendance;
     }
 
@@ -260,9 +260,9 @@ public class LessonBlock {
 
     /**
      * Accessor to retrieve whether the student attended lesson 2.
-     * @return lesson2Attendance Boolean as to whether they attended lesson 2.
+     * @return lesson2Attendance Enum as to their attendance type for lesson 2.
      */
-    public boolean isLesson2Attendance() {
+    public AttendanceType isLesson2Attendance() {
         return lesson2Attendance;
     }
 
@@ -270,7 +270,7 @@ public class LessonBlock {
      * Mutator to set the new attendance record of lesson 2.
      * @param lesson2Attendance The updated attendance record for lesson 2.
      */
-    public void setLesson2Attendance(boolean lesson2Attendance) {
+    public void setLesson2Attendance(AttendanceType lesson2Attendance) {
         this.lesson2Attendance = lesson2Attendance;
     }
 
@@ -292,9 +292,9 @@ public class LessonBlock {
 
     /**
      * Accessor to retrieve whether the student attended lesson 3.
-     * @return lesson3Attendance Boolean as to whether they attended lesson 3.
+     * @return lesson3Attendance Enum as to their attendance type for lesson 3.
      */
-    public boolean isLesson3Attendance() {
+    public AttendanceType isLesson3Attendance() {
         return lesson3Attendance;
     }
 
@@ -302,7 +302,7 @@ public class LessonBlock {
      * Mutator to set the new attendance record of lesson 3.
      * @param lesson3Attendance The updated attendance record for lesson 3.
      */
-    public void setLesson3Attendance(boolean lesson3Attendance) {
+    public void setLesson3Attendance(AttendanceType lesson3Attendance) {
         this.lesson3Attendance = lesson3Attendance;
     }
 
@@ -324,9 +324,9 @@ public class LessonBlock {
 
     /**
      * Accessor to retrieve whether the student attended lesson 4.
-     * @return lesson4Attendance Boolean as to whether they attended lesson 4.
+     * @return lesson4Attendance Enum as to their attendance type for lesson 4.
      */
-    public boolean isLesson4Attendance() {
+    public AttendanceType isLesson4Attendance() {
         return lesson4Attendance;
     }
 
@@ -334,7 +334,7 @@ public class LessonBlock {
      * Mutator to set the new attendance record of lesson 4.
      * @param lesson4Attendance The updated attendance record for lesson 4.
      */
-    public void setLesson4Attendance(boolean lesson4Attendance) {
+    public void setLesson4Attendance(AttendanceType lesson4Attendance) {
         this.lesson4Attendance = lesson4Attendance;
     }
 
@@ -356,9 +356,9 @@ public class LessonBlock {
 
     /**
      * Accessor to retrieve whether the student attended lesson 5.
-     * @return lesson5Attendance Boolean as to whether they attended lesson 5.
+     * @return lesson5Attendance Enum as to their attendance type for lesson 5.
      */
-    public boolean isLesson5Attendance() {
+    public AttendanceType isLesson5Attendance() {
         return lesson5Attendance;
     }
 
@@ -366,7 +366,7 @@ public class LessonBlock {
      * Mutator to set the new attendance record of lesson 5.
      * @param lesson5Attendance The updated attendance record for lesson 5.
      */
-    public void setLesson5Attendance(boolean lesson5Attendance) {
+    public void setLesson5Attendance(AttendanceType lesson5Attendance) {
         this.lesson5Attendance = lesson5Attendance;
     }
 
@@ -388,9 +388,9 @@ public class LessonBlock {
 
     /**
      * Accessor to retrieve whether the student attended lesson 6.
-     * @return lesson6Attendance Boolean as to whether they attended lesson 6.
+     * @return lesson6Attendance Enum as to their attendance type for lesson 6.
      */
-    public boolean isLesson6Attendance() {
+    public AttendanceType isLesson6Attendance() {
         return lesson6Attendance;
     }
 
@@ -398,7 +398,7 @@ public class LessonBlock {
      * Mutator to set the new attendance record of lesson 6.
      * @param lesson6Attendance The updated attendance record for lesson 6.
      */
-    public void setLesson6Attendance(boolean lesson6Attendance) {
+    public void setLesson6Attendance(AttendanceType lesson6Attendance) {
         this.lesson6Attendance = lesson6Attendance;
     }
 
@@ -420,9 +420,9 @@ public class LessonBlock {
 
     /**
      * Accessor to retrieve whether the student attended lesson 7.
-     * @return lesson7Attendance Boolean as to whether they attended lesson 7.
+     * @return lesson7Attendance Enum as to their attendance type for lesson 7.
      */
-    public boolean isLesson7Attendance() {
+    public AttendanceType isLesson7Attendance() {
         return lesson7Attendance;
     }
 
@@ -430,7 +430,7 @@ public class LessonBlock {
      * Mutator to set the new attendance record of lesson 7.
      * @param lesson7Attendance The updated attendance record for lesson 7.
      */
-    public void setLesson7Attendance(boolean lesson7Attendance) {
+    public void setLesson7Attendance(AttendanceType lesson7Attendance) {
         this.lesson7Attendance = lesson7Attendance;
     }
 
@@ -452,9 +452,9 @@ public class LessonBlock {
 
     /**
      * Accessor to retrieve whether the student attended lesson 8.
-     * @return lesson8Attendance Boolean as to whether they attended lesson 8.
+     * @return lesson8Attendance Enum as to their attendance type for lesson 8.
      */
-    public boolean isLesson8Attendance() {
+    public AttendanceType isLesson8Attendance() {
         return lesson8Attendance;
     }
 
@@ -462,7 +462,7 @@ public class LessonBlock {
      * Mutator to set the new attendance record of lesson 8.
      * @param lesson8Attendance The updated attendance record for lesson 8.
      */
-    public void setLesson8Attendance(boolean lesson8Attendance) {
+    public void setLesson8Attendance(AttendanceType lesson8Attendance) {
         this.lesson8Attendance = lesson8Attendance;
     }
 
@@ -484,9 +484,9 @@ public class LessonBlock {
 
     /**
      * Accessor to retrieve whether the student attended lesson 9.
-     * @return lesson9Attendance Boolean as to whether they attended lesson 9.
+     * @return lesson9Attendance Enum as to their attendance type for lesson 9.
      */
-    public boolean isLesson9Attendance() {
+    public AttendanceType isLesson9Attendance() {
         return lesson9Attendance;
     }
 
@@ -494,7 +494,7 @@ public class LessonBlock {
      * Mutator to set the new attendance record of lesson 9.
      * @param lesson9Attendance The updated attendance record for lesson 9.
      */
-    public void setLesson9Attendance(boolean lesson9Attendance) {
+    public void setLesson9Attendance(AttendanceType lesson9Attendance) {
         this.lesson9Attendance = lesson9Attendance;
     }
 
@@ -516,9 +516,9 @@ public class LessonBlock {
 
     /**
      * Accessor to retrieve whether the student attended lesson 10.
-     * @return lesson10Attendance Boolean as to whether they attended lesson 10.
+     * @return lesson10Attendance Enum as to their attendance type for lesson 10.
      */
-    public boolean isLesson10Attendance() {
+    public  AttendanceType isLesson10Attendance() {
         return lesson10Attendance;
     }
 
@@ -526,7 +526,7 @@ public class LessonBlock {
      * Mutator to set the new attendance record of lesson 10.
      * @param lesson10Attendance The updated attendance record for lesson 10.
      */
-    public void setLesson10Attendance(boolean lesson10Attendance) {
+    public void setLesson10Attendance(AttendanceType lesson10Attendance) {
         this.lesson10Attendance = lesson10Attendance;
     }
     

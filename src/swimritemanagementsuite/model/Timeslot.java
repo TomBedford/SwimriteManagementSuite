@@ -1,4 +1,4 @@
-package swimritemanagementsuite;
+package swimritemanagementsuite.model;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -23,7 +23,7 @@ public class Timeslot {
      * The day of the timeslot (field cannot be null).
      */
     @DatabaseField (columnName = "day", canBeNull = false)
-    private String day;
+    private Day day;
     
     /**
      * The time of the timeslot (field cannot be null).
@@ -43,7 +43,7 @@ public class Timeslot {
      * @param day The day of the timeslot.
      * @param time The time of the timeslot.
      */
-    public Timeslot(String day, int time) {
+    public Timeslot(Day day, int time) {
         this.day = day;
         this.time = time;
     }
@@ -60,7 +60,7 @@ public class Timeslot {
      * Accessor to retrieve the day of the timeslot.
      * @return day The day the timeslot is on.
      */
-    public String getDay() {
+    public Day getDay() {
         return day;
     }
 
@@ -68,7 +68,7 @@ public class Timeslot {
      * Mutator to set the new day of the timeslot.
      * @param day The updated day of the timeslot.
      */
-    public void setDay(String day) {
+    public void setDay(Day day) {
         this.day = day;
     }
 

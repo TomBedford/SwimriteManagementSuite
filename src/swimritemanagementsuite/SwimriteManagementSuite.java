@@ -1,5 +1,6 @@
 package swimritemanagementsuite;
 
+import swimritemanagementsuite.view.smsMainPanel;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import java.awt.*;
 import javax.swing.*;
@@ -36,6 +37,9 @@ public class SwimriteManagementSuite {
         // Calls method to create the swimrite management frame and panels.
         createSMSWindow();
         
+        // TESTING INPUT OF DATA INTO DB
+        readAndWriteDB();
+        
     }
     
     public static void createSMSWindow(){
@@ -53,7 +57,6 @@ public class SwimriteManagementSuite {
         smsFrame.setSize(1400,800);
         smsFrame.setVisible(true);
         smsFrame.setResizable(false);
-        
     }
     
     public static void createDbReferences(){
@@ -74,4 +77,7 @@ public class SwimriteManagementSuite {
         smsDatabaseManager.initializeDaos(smsConnectionSource);
     }
     
+    public static void readAndWriteDB() {
+        
+    }
 }

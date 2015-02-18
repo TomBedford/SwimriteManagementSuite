@@ -1,4 +1,4 @@
-package swimritemanagementsuite;
+package swimritemanagementsuite.model;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import java.util.Date;
@@ -21,10 +21,10 @@ public class LessonPayment {
     private int paymentId;
     
     /**
-     * The type of payment being made (debit, cheque or cash) (field cannot be null).
+     * The type of payment being made (card, cheque or cash) (field cannot be null).
      */
     @DatabaseField (columnName = "paymentType", canBeNull = false)
-    private String paymentType;
+    private PaymentType paymentType;
     
     /**
      * The date the payment was made on (field cannot be null).
@@ -58,7 +58,7 @@ public class LessonPayment {
      * @param paymentAmount The payment amount.
      * @param paymentTaker The taker of the payment.
      */
-    public LessonPayment(String paymentType, Date paymentDate, double paymentAmount, String paymentTaker) {
+    public LessonPayment(PaymentType paymentType, Date paymentDate, double paymentAmount, String paymentTaker) {
         this.paymentType = paymentType;
         this.paymentDate = paymentDate;
         this.paymentAmount = paymentAmount;
@@ -77,7 +77,7 @@ public class LessonPayment {
      * Accessor to retrieve the type of the payment.
      * @return paymentType The type of payment made.
      */
-    public String getPaymentType() {
+    public PaymentType getPaymentType() {
         return paymentType;
     }
 
@@ -85,7 +85,7 @@ public class LessonPayment {
      * Mutator to set the new type of payment.
      * @param paymentType The updated type of payment made.
      */
-    public void setPaymentType(String paymentType) {
+    public void setPaymentType(PaymentType paymentType) {
         this.paymentType = paymentType;
     }
 

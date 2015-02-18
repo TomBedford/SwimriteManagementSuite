@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package swimritemanagementsuite;
+package swimritemanagementsuite.view;
 
 import javax.swing.JPanel;
 

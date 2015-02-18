@@ -1,4 +1,4 @@
-package swimritemanagementsuite;
+package swimritemanagementsuite.model;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import java.util.Date;
@@ -61,7 +61,7 @@ public class StudentRecord {
      * The ability level of the student.
      */
     @DatabaseField (columnName = "abilityLevel")
-    private String abilityLevel;
+    private SwimmingLevel abilityLevel;
     
     /**
      * Foreign Key: The swimming class that the student is currently in.
@@ -95,7 +95,7 @@ public class StudentRecord {
      * @param attendance The attendance record of the student.
      */
     public StudentRecord(String studentName, Date studentDOB, int telephoneNo, String studentAddress, 
-                            String hasIllness, String parentName, String abilityLevel, SwimmingClasses swimmingClass, AttendanceRecord attendance) {
+                            String hasIllness, String parentName, SwimmingLevel abilityLevel, SwimmingClasses swimmingClass, AttendanceRecord attendance) {
         this.studentName = studentName;
         this.studentDOB = studentDOB;
         this.telephoneNo = telephoneNo;
@@ -215,7 +215,7 @@ public class StudentRecord {
      * Accessor to retrieve the ability level of the student.
      * @return abilityLevel The students ability level.
      */
-    public String getAbilityLevel() {
+    public SwimmingLevel getAbilityLevel() {
         return abilityLevel;
     }
 
@@ -223,7 +223,7 @@ public class StudentRecord {
      * Mutator to set the new ability level of the student.
      * @param abilityLevel The updated ability level of the student.
      */
-    public void setAbilityLevel(String abilityLevel) {
+    public void setAbilityLevel(SwimmingLevel abilityLevel) {
         this.abilityLevel = abilityLevel;
     }
 

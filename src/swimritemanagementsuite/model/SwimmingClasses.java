@@ -1,4 +1,4 @@
-package swimritemanagementsuite;
+package swimritemanagementsuite.model;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -23,7 +23,7 @@ public class SwimmingClasses {
      * The type of swimming class (field cannot be null).
      */
     @DatabaseField (columnName = "classType", canBeNull = false)
-    private String classType;
+    private SwimmingLevel classType;
     
     
     /**
@@ -64,7 +64,7 @@ public class SwimmingClasses {
      * @param teacher The teacher of the class.
      * @param maxCapacity The maximum capacity of the swimming class.
      */
-    public SwimmingClasses(String classType, Timeslot timeslot, Teacher teacher, int maxCapacity) {
+    public SwimmingClasses(SwimmingLevel classType, Timeslot timeslot, Teacher teacher, int maxCapacity) {
         this.classType = classType;
         this.timeslot = timeslot;
         this.teacher = teacher;
@@ -84,7 +84,7 @@ public class SwimmingClasses {
      * Accessor to retrieve the current type of swimming class.
      * @return classType The type of class.
      */
-    public String getClassType() {
+    public SwimmingLevel getClassType() {
         return classType;
     }
 
@@ -92,7 +92,7 @@ public class SwimmingClasses {
      * Mutator to set the new swimming class type.
      * @param classType The updated type of the swimming class.
      */
-    public void setClassType(String classType) {
+    public void setClassType(SwimmingLevel classType) {
         this.classType = classType;
     }
 
