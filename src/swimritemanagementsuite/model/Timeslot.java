@@ -30,6 +30,8 @@ public class Timeslot {
      */
     @DatabaseField (columnName = "time", canBeNull = false)
     private int time;
+    
+    public static final String DAY_FIELD_NAME = "day"; 
 
     /**
      * Default constructor of the timeslot class.

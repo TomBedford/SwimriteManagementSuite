@@ -1,5 +1,7 @@
-package swimritemanagementsuite;
+package swimritemanagementsuite.controller;
 
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.DaoManager;
 import swimritemanagementsuite.model.*;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.table.TableUtils;
@@ -28,44 +30,47 @@ public class DatabaseManager {
      */
     private final String dbPassword = "root";
     
-    AddressDAC addressDAC;
     
     /**
-     * This is the Data Access Class used to Add, Update and Delete records from the Attendance Record table.
+     * The Data Access Object used to access the Teacher table in the mySQL database.
      */
-    AttendanceRecordDAC attendanceRecordDAC;
+    public static Dao<StudentAddress, Integer> studentAddressDAO;
     
     /**
-     * This is the Data Access Class used to Add, Update and Delete records from the Lesson Block table.
+     * The data access object used to access the Attendance Record table in the mySQL database.
      */
-    LessonBlockDAC lessonBlockDAC;
+    public static Dao<AttendanceRecord, Integer> attendanceRecordDAO;
     
     /**
-     * This is the Data Access Class used to Add, Update and Delete records from the Lesson Payment table.
+     * The Data Access Object used to access the Lesson Block table in the mySQL database.
      */
-    LessonPaymentDAC lessonPaymentDAC;
+    public static Dao<LessonBlock, Integer> lessonBlockDAO;
     
     /**
-     * This is the Data Access Class used to Add, Update and Delete records from the Student Record table.
+     * The Data Access Object used to access the Lesson Payment table in the mySQL database.
      */
-    StudentRecordDAC studentRecordDAC;
+    public static Dao<LessonPayment, Integer> lessonPaymentDAO;
     
     /**
-     * This is the Data Access Class used to Add, Update and Delete records from the Swimming Classes table.
+     * The Data Access Object used to access the Student Record table in the mySQL database.
      */
-    SwimmingClassesDAC swimmingClassesDAC;
-    
-    /**
-     * This is the Data Access Class used to Add, Update and Delete records from the Teacher table.
-     */
-    TeacherDAC TeacherDAC;
-    
-    /**
-     * This is the Data Access Class used to Add, Update and Delete records from the Timeslot table.
-     */
-    TimeslotDAC TimeslotDAC;
-    
+    public static Dao<StudentRecord, Integer> studentRecordDAO;
 
+    /**
+     * The Data Access Object used to access the Swimming Classes table in the mySQL database.
+     */
+    public static Dao<SwimmingClasses, Integer> swimmingClassesDAO;
+    
+    /**
+     * The Data Access Object used to access the Teacher table in the mySQL database.
+     */
+    public static Dao<Teacher, Integer> teacherDAO;
+    
+    /**
+     * The Data Access Object used to access the Timeslot table in the mySQL database.
+     */
+    public static Dao<Timeslot, Integer> timeslotDAO;
+    
     /**
      * Default constructor of the database manager class.
      */
@@ -104,7 +109,7 @@ public class DatabaseManager {
 
         try {
             //Creates all tables within the database if they do not already exist.
-            TableUtils.createTableIfNotExists(connectionSource, Address.class);
+            TableUtils.createTableIfNotExists(connectionSource, StudentAddress.class);
             TableUtils.createTableIfNotExists(connectionSource, AttendanceRecord.class);
             TableUtils.createTableIfNotExists(connectionSource, SwimmingClasses.class);
             TableUtils.createTableIfNotExists(connectionSource, LessonBlock.class);
@@ -124,16 +129,21 @@ public class DatabaseManager {
      *
      * @param connectionSource The JBDC connection source to the Swimrite Management Suite MySQL database.
      */
-    public void initializeDaos(JdbcConnectionSource connectionSource) {
+    public void initializeDaos(JdbcConnectionSource connectionSource) throws Exception {
         
-        addressDAC = new AddressDAC(connectionSource);
-        attendanceRecordDAC = new AttendanceRecordDAC(connectionSource);
-        lessonBlockDAC = new LessonBlockDAC(connectionSource);
-        lessonPaymentDAC = new LessonPaymentDAC(connectionSource);
-        studentRecordDAC = new StudentRecordDAC(connectionSource);
-        swimmingClassesDAC = new SwimmingClassesDAC(connectionSource);
-        TeacherDAC = new TeacherDAC(connectionSource);
-        TimeslotDAC = new TimeslotDAC(connectionSource);
-        
+        try {
+            studentAddressDAO = DaoManager.createDao(connectionSource, StudentAddress.class);
+            attendanceRecordDAO = DaoManager.createDao(connectionSource, AttendanceRecord.class);
+            lessonBlockDAO = DaoManager.createDao(connectionSource, LessonBlock.class);
+            lessonPaymentDAO = DaoManager.createDao(connectionSource, LessonPayment.class);
+            studentRecordDAO = DaoManager.createDao(connectionSource, StudentRecord.class);
+            swimmingClassesDAO = DaoManager.createDao(connectionSource, SwimmingClasses.class);
+            teacherDAO = DaoManager.createDao(connectionSource, Teacher.class);
+            timeslotDAO = DaoManager.createDao(connectionSource, Timeslot.class);
+        } catch (SQLException e) {
+            // print stack trace to help diagnose error + appropriate message to console.
+            e.printStackTrace();
+            System.out.println("initializeDaos: Error initializing the Address database access objects");
+        }
     }
 }

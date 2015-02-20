@@ -10,8 +10,8 @@ import com.j256.ormlite.table.DatabaseTable;
  * 
  * @author Thomas Bedford (m2081433)
  */
-@DatabaseTable(tableName = "Address")
-public class Address {
+@DatabaseTable(tableName = "StudentAddress")
+public class StudentAddress {
     
     /**
      * Primary Key: Auto generated Address ID number.
@@ -34,16 +34,24 @@ public class Address {
     @DatabaseField (columnName = "postcode", canBeNull = false)
     private String postcode;
     
-    public Address() {
+    public StudentAddress() {
         
     }
     
-    public Address(String addressLine1, String addressLine2, String city, String county, String postcode) {
+    public StudentAddress(String addressLine1, String addressLine2, String city, String county, String postcode) {
         this.addressLine1 = addressLine1;
         this.addressLine2 = addressLine2;
         this.city = city;
         this.county = county;
         this.postcode = postcode;
+    }
+    
+    public int getAddressId() {
+        return addressId;
+    }
+    
+    public void setAddressId(int addressId) {
+        this.addressId = addressId;
     }
     
     public String getAddressLine1() {
@@ -74,7 +82,7 @@ public class Address {
         return county;
     }
     
-    public void setCounty() {
+    public void setCounty(String county) {
         this.county = county;
     }
     

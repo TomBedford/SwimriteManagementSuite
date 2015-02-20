@@ -2,6 +2,7 @@ package swimritemanagementsuite.view;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.sql.SQLException;
 
 /**
  *
@@ -9,21 +10,24 @@ import java.awt.event.*;
  */
 public class smsMainPanel extends JPanel  {
     
-    public smsMainPanel() {
+    public smsMainPanel() throws SQLException {
         // sets the smsMainPanel JPanel attributes
         this.setPreferredSize(new Dimension(1400, 800));
         this.setVisible(true);
         this.setLayout(new BorderLayout());
         this.setBackground(Color.white);
         
-        // Adds the toolbar panel to the main panel.
+        // Creates the header panel 
         smsHeaderPanel smsHeaderPanel = new smsHeaderPanel();
         
-        // Adds the smsBodyPanel
+        // Adds the header panel to this main panel.
+        this.add(smsHeaderPanel, BorderLayout.PAGE_START);
+        
+        // Creates the Body Panel
         smsBodyPanel smsBodyPanel = new smsBodyPanel();
         
-        // Adds the main panel to the frame.
-        this.add(smsHeaderPanel, BorderLayout.PAGE_START);
+        // Adds the Body Panel to this main panel.
+        this.add(smsBodyPanel, BorderLayout.PAGE_END);
         
     }
     

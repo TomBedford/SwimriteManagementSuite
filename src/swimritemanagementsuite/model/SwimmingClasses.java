@@ -50,6 +50,8 @@ public class SwimmingClasses {
     @DatabaseField (columnName = "currentCapacity", canBeNull = false)
     private int currentCapacity;
 
+    public static final String TIMESLOT_FIELD_NAME = "timeslot"; 
+    
     /**
      * Default constructor of the Classes class.
      */
