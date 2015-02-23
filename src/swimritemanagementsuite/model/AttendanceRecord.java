@@ -14,15 +14,25 @@ import com.j256.ormlite.table.DatabaseTable;
 public class AttendanceRecord {
     
     /**
+     * The column name for the Attendance Id.
+     */
+    public static final String ATTENDANCEID_COLUMN_NAME = "attendanceId"; 
+    
+    /**
+     * The column name for the Lesson Block Id.
+     */
+    public static final String LESSONBLOCK_COLUMN_NAME = "lessonBlock"; 
+    
+    /**
      * Primary Key: Auto generated Attendance Record ID number.
      */
-    @DatabaseField(columnName = "attendanceId", generatedId = true)
+    @DatabaseField(columnName = ATTENDANCEID_COLUMN_NAME, generatedId = true)
     private int attendanceId;
     
     /**
      * Foreign Key: The lesson block of the attendance record.
      */
-    @DatabaseField (columnName = "lessonBlock", foreign = true)
+    @DatabaseField (columnName = LESSONBLOCK_COLUMN_NAME, foreign = true)
     private LessonBlock lessonBlock;
 
     /**

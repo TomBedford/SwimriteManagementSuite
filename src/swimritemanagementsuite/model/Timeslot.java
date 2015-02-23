@@ -14,24 +14,37 @@ import com.j256.ormlite.table.DatabaseTable;
 public class Timeslot {
     
     /**
+     * The column name for the Timeslot ID.
+     */
+    public static final String TIMESLOTID_COLUMN_NAME = "timeslotId";
+    
+    /**
+     * The column name for the Timeslot day.
+     */
+    public static final String DAY_COLUMN_NAME = "day";
+    
+    /**
+     * The column name for the Class ID.
+     */
+    public static final String TIME_COLUMN_NAME = "time";
+    
+    /**
      * Primary Key: Auto generated Timeslot ID number.
      */
-    @DatabaseField(columnName = "timeslotId", generatedId = true)
+    @DatabaseField(columnName = TIMESLOTID_COLUMN_NAME, generatedId = true)
     private int timeslotId;
     
     /**
      * The day of the timeslot (field cannot be null).
      */
-    @DatabaseField (columnName = "day", canBeNull = false)
+    @DatabaseField (columnName = DAY_COLUMN_NAME, canBeNull = false)
     private Day day;
     
     /**
      * The time of the timeslot (field cannot be null).
      */
-    @DatabaseField (columnName = "time", canBeNull = false)
+    @DatabaseField (columnName = TIME_COLUMN_NAME, canBeNull = false)
     private int time;
-    
-    public static final String DAY_FIELD_NAME = "day"; 
 
     /**
      * Default constructor of the timeslot class.

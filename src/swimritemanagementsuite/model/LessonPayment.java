@@ -15,33 +15,58 @@ import java.util.Date;
 public class LessonPayment {
     
     /**
+     * The column name for the Lesson Payment ID.
+     */
+    public static final String LESSONPAYMENTID_COLUMN_NAME = "lessonPaymentId"; 
+    
+    /**
+     * The column name for the Payment Type.
+     */
+    public static final String PAYMENTTYPE_COLUMN_NAME = "paymentType"; 
+    
+    /**
+     * The column name for the Payment Date.
+     */
+    public static final String PAYMENTDATE_COLUMN_NAME = "paymentDate"; 
+    
+    /**
+     * The column name for the Payment Amount.
+     */
+    public static final String PAYMENTAMOUNT_COLUMN_NAME = "paymentAmount"; 
+    
+    /**
+     * The column name for the Payment Takers Name.
+     */
+    public static final String PAYMENTTAKER_COLUMN_NAME = "paymentTaker"; 
+    
+    /**
      * Primary Key: Auto generated Payment ID number.
      */
-    @DatabaseField(columnName = "paymentId", generatedId = true)
-    private int paymentId;
+    @DatabaseField(columnName = LESSONPAYMENTID_COLUMN_NAME, generatedId = true)
+    private int lessonPaymentId;
     
     /**
      * The type of payment being made (card, cheque or cash) (field cannot be null).
      */
-    @DatabaseField (columnName = "paymentType", canBeNull = false)
+    @DatabaseField (columnName = PAYMENTTYPE_COLUMN_NAME, canBeNull = false)
     private PaymentType paymentType;
     
     /**
      * The date the payment was made on (field cannot be null).
      */
-    @DatabaseField (columnName = "paymentDate", canBeNull = false)
+    @DatabaseField (columnName = PAYMENTDATE_COLUMN_NAME, canBeNull = false)
     private Date paymentDate;
 
     /**
      * The amount of money being payed for the lesson block (field cannot be null).
      */
-    @DatabaseField (columnName = "paymentAmount", canBeNull = false)
+    @DatabaseField (columnName = PAYMENTAMOUNT_COLUMN_NAME, canBeNull = false)
     private double paymentAmount;
     
     /**
      * The taker of the payment (receptionists name) (field cannot be null).
      */
-    @DatabaseField (columnName = "paymentTaker", canBeNull = false)
+    @DatabaseField (columnName = PAYMENTTAKER_COLUMN_NAME, canBeNull = false)
     private String paymentTaker;
     
     /**
@@ -70,7 +95,7 @@ public class LessonPayment {
      * @return paymentId The auto generated payment Id.
      */
     public int getPaymentId() {
-        return paymentId;
+        return lessonPaymentId;
     }
 
     /**

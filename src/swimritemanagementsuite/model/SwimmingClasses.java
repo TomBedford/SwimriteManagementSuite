@@ -14,43 +14,71 @@ import com.j256.ormlite.table.DatabaseTable;
 public class SwimmingClasses {
     
     /**
+     * The column name for the Class ID.
+     */
+    public static final String CLASSID_COLUMN_NAME = "classId";
+    
+    /**
+     * The column name for the Class Type.
+     */
+    public static final String CLASSTYPE_COLUMN_NAME = "classType";
+    
+    /**
+     * The column name for the timeslot ID.
+     */
+    public static final String TIMESLOTID_COLUMN_NAME = "timeslotId";
+    
+    /**
+     * The column name for the Class TeacherId.
+     */
+    public static final String TEACHERID_COLUMN_NAME = "teacherId";
+    
+    /**
+     * The column name for the maximum capacity.
+     */
+    public static final String MAXCAPACITY_COLUMN_NAME = "maxCapacity";
+    
+    /**
+     * The column name for the current capacity.
+     */
+    public static final String CURRENTCAPACITY_COLUMN_NAME = "currentCapacity";
+    
+    /**
      * Primary Key: Auto generated Class ID number.
      */
-    @DatabaseField(columnName = "classId", generatedId = true)
+    @DatabaseField(columnName = CLASSID_COLUMN_NAME, generatedId = true)
     private int classId;
     
     /**
      * The type of swimming class (field cannot be null).
      */
-    @DatabaseField (columnName = "classType", canBeNull = false)
+    @DatabaseField (columnName = CLASSTYPE_COLUMN_NAME, canBeNull = false)
     private SwimmingLevel classType;
     
     
     /**
      * Foreign Key: The timeslot (day/time) of the class.
      */
-    @DatabaseField(columnName = "timeslot", canBeNull = false, foreign = true)
-    private Timeslot timeslot;
+    @DatabaseField(columnName = TIMESLOTID_COLUMN_NAME, canBeNull = false, foreign = true)
+    private Timeslot timeslotId;
     
     /**
      * Foreign Key: The teacher of the class.
      */
-    @DatabaseField(columnName = "teacher", canBeNull = false, foreign = true)
-    private Teacher teacher;
+    @DatabaseField(columnName = TEACHERID_COLUMN_NAME, canBeNull = false, foreign = true)
+    private Teacher teacherId;
     
     /**
      * The maximum capacity of swimming class (field cannot be null).
      */
-    @DatabaseField (columnName = "maxCapacity", canBeNull = false)
+    @DatabaseField (columnName = MAXCAPACITY_COLUMN_NAME, canBeNull = false)
     private int maxCapacity;
     
     /**
      * The current capacity of swimming class (field cannot be null).
      */
-    @DatabaseField (columnName = "currentCapacity", canBeNull = false)
+    @DatabaseField (columnName = CURRENTCAPACITY_COLUMN_NAME, canBeNull = false)
     private int currentCapacity;
-
-    public static final String TIMESLOT_FIELD_NAME = "timeslot"; 
     
     /**
      * Default constructor of the Classes class.
@@ -62,14 +90,14 @@ public class SwimmingClasses {
     /**
      * Parameterized constructor to create a new Class in the Classes database table.
      * @param classType The type of swimming class.
-     * @param timeslot The timeslot (day/time) of the class each week.
-     * @param teacher The teacher of the class.
+     * @param timeslotId The timeslot (day/time) of the class each week.
+     * @param teacherId The teacher of the class.
      * @param maxCapacity The maximum capacity of the swimming class.
      */
-    public SwimmingClasses(SwimmingLevel classType, Timeslot timeslot, Teacher teacher, int maxCapacity) {
+    public SwimmingClasses(SwimmingLevel classType, Timeslot timeslotId, Teacher teacherId, int maxCapacity) {
         this.classType = classType;
-        this.timeslot = timeslot;
-        this.teacher = teacher;
+        this.timeslotId = timeslotId;
+        this.teacherId = teacherId;
         this.maxCapacity = maxCapacity;
         this.currentCapacity = 0;
     }
@@ -102,32 +130,32 @@ public class SwimmingClasses {
      * Accessor to retrieve the current timeslot of the class.
      * @return timeslot The timeslot of the class.
      */
-    public Timeslot getTimeslot() {
-        return timeslot;
+    public Timeslot getTimeslotId() {
+        return timeslotId;
     }
 
     /**
      * Mutator to set the new timeslot of the class.
-     * @param timeslot The updated timeslot of the class.
+     * @param timeslotId The updated timeslot of the class.
      */
-    public void setTimeslot(Timeslot timeslot) {
-        this.timeslot = timeslot;
+    public void setTimeslotId(Timeslot timeslotId) {
+        this.timeslotId = timeslotId;
     }
 
     /**
      * Accessor to retrieve the current teacher of the class.
      * @return teacher The teacher of the class.
      */
-    public Teacher getTeacher() {
-        return teacher;
+    public Teacher getTeacherId() {
+        return teacherId;
     }
 
     /**
      * Mutator to set the new Teacher of the class.
-     * @param teacher The updated teacher of the class.
+     * @param teacherId The updated teacher of the class.
      */
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
+    public void setTeacherId(Teacher teacherId) {
+        this.teacherId = teacherId;
     }
 
     /**

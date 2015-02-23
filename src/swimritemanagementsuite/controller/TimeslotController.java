@@ -22,7 +22,7 @@ public class TimeslotController {
         QueryBuilder<Timeslot, Integer> queryBuilder = DatabaseManager.timeslotDAO.queryBuilder();
         
         // the 'day' field must equal Monday.
-        queryBuilder.where().eq(Timeslot.DAY_FIELD_NAME, day);
+        queryBuilder.where().eq(Timeslot.DAY_COLUMN_NAME, day);
         
         // prepare our sql statement
         PreparedQuery<Timeslot> preparedQuery = queryBuilder.prepare();

@@ -2,7 +2,6 @@ package swimritemanagementsuite.view;
 
 import java.awt.*;
 import java.sql.SQLException;
-import java.util.Collections;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -148,7 +147,7 @@ public class DaySchedulePanel extends JPanel {
     
     public void addSwimmingClasses(Day selectedDay) throws SQLException {
         
-        //List<SwimmingClasses> swimmingClassesList = swimmingClassesController.getSwimmingClassesForDay(selectedDay);
+        // List<SwimmingClasses> swimmingClassesList = swimmingClassesController.getSwimmingClassesForDay(selectedDay);
         
         int column = 1;
         
@@ -168,6 +167,7 @@ public class DaySchedulePanel extends JPanel {
             swimmingClassesRow[i].setPreferredSize(new Dimension(300, 150));
             swimmingClassesRow[i].setOpaque(true);
             swimmingClassesRow[i].setBorder(BorderFactory.createRaisedBevelBorder());
+            swimmingClassesRow[i].setLayout(new BorderLayout());
             swimmingClassesRow[i].setVisible(true);
             
 //            if (i + 1 <= swimmingClassesList.size()) {
@@ -177,15 +177,15 @@ public class DaySchedulePanel extends JPanel {
 //            }
             
             // TEMPLATE
-//            classTypeTemplate[i] = new JLabel();
-//            classTypeTemplate[i].setText("Class Type: Beginners");
-//            classTypeTemplate[i].setHorizontalAlignment(JLabel.RIGHT);
-//            classTypeTemplate[i].setVerticalAlignment(JLabel.BOTTOM);
-//            swimmingClassesRow[i].setPreferredSize(new Dimension(300, 150));
-//            swimmingClassesRow[i].setOpaque(true);
-//            swimmingClassesRow[i].setVisible(true);
-//            
-//            swimmingClassesRow[i].add(classTypeTemplate[i]);
+            classTypeTemplate[i] = new JLabel();
+            classTypeTemplate[i].setPreferredSize(new Dimension(300, 15));
+            classTypeTemplate[i].setOpaque(true);
+            classTypeTemplate[i].setVisible(true);
+            classTypeTemplate[i].setText("Class Type: Beginners");
+            classTypeTemplate[i].setHorizontalAlignment(JLabel.CENTER);
+            classTypeTemplate[i].setVerticalAlignment(JLabel.BOTTOM);
+            
+            swimmingClassesRow[i].add(classTypeTemplate[i], BorderLayout.PAGE_END);
             
             
             c.gridx = row;

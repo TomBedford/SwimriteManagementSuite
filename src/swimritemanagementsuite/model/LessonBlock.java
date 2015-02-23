@@ -16,135 +16,247 @@ import java.util.Date;
 public class LessonBlock {
     
     /**
+     * The column name for the Lesson Block Id.
+     */
+    public static final String BLOCKID_COLUMN_NAME = "blockId"; 
+    
+    /**
+     * The column name for the Lesson Payment Id.
+     */
+    public static final String LESSONPAYMENTID_COLUMN_NAME = "lessonPaymentId"; 
+    
+    /**
+     * The column name for the date for the 1st lesson.
+     */
+    public static final String LESSON1DATE_COLUMN_NAME = "lesson1Date"; 
+    
+    /**
+     * The column name for the attendance type for the 1st lesson.
+     */
+    public static final String LESSON1ATTENDANCE_COLUMN_NAME = "lesson1Attendance"; 
+    
+    /**
+     * The column name for the date for the 2nd lesson.
+     */
+    public static final String LESSON2DATE_COLUMN_NAME = "lesson2Date"; 
+    
+    /**
+     * The column name for the attendance type for the 2nd lesson.
+     */
+    public static final String LESSON2ATTENDANCE_COLUMN_NAME = "lesson2Attendance"; 
+    
+    /**
+     * The column name for the date for the 3rd lesson.
+     */
+    public static final String LESSON3DATE_COLUMN_NAME = "lesson3Date"; 
+    
+    /**
+     * The column name for the attendance type for the 3rd lesson.
+     */
+    public static final String LESSON3ATTENDANCE_COLUMN_NAME = "lesson3Attendance"; 
+    
+    /**
+     * The column name for the date for the 4th lesson.
+     */
+    public static final String LESSON4DATE_COLUMN_NAME = "lesson4Date"; 
+    
+    /**
+     * The column name for the attendance type for the 4th lesson.
+     */
+    public static final String LESSON4ATTENDANCE_COLUMN_NAME = "lesson4Attendance"; 
+    
+    /**
+     * The column name for the date for the 5th lesson.
+     */
+    public static final String LESSON5DATE_COLUMN_NAME = "lesson5Date"; 
+    
+    /**
+     * The column name for the attendance type for the 5th lesson.
+     */
+    public static final String LESSON5ATTENDANCE_COLUMN_NAME = "lesson5Attendance"; 
+    
+    /**
+     * The column name for the date for the 6th lesson.
+     */
+    public static final String LESSON6DATE_COLUMN_NAME = "lesson6Date"; 
+    
+    /**
+     * The column name for the attendance type for the 6th lesson.
+     */
+    public static final String LESSON6ATTENDANCE_COLUMN_NAME = "lesson6Attendance"; 
+    
+    /**
+     * The column name for the date for the 7th lesson.
+     */
+    public static final String LESSON7DATE_COLUMN_NAME = "lesson7Date"; 
+    
+    /**
+     * The column name for the attendance type for the 7th lesson.
+     */
+    public static final String LESSON7ATTENDANCE_COLUMN_NAME = "lesson7Attendance"; 
+    
+    /**
+     * The column name for the date for the 8th lesson.
+     */
+    public static final String LESSON8DATE_COLUMN_NAME = "lesson8Date"; 
+    
+    /**
+     * The column name for the attendance type for the 8th lesson.
+     */
+    public static final String LESSON8ATTENDANCE_COLUMN_NAME = "lesson8Attendance"; 
+    
+    /**
+     * The column name for the date for the 9th lesson.
+     */
+    public static final String LESSON9DATE_COLUMN_NAME = "lesson9Date"; 
+    
+    /**
+     * The column name for the attendance type for the 1st lesson.
+     */
+    public static final String LESSON9ATTENDANCE_COLUMN_NAME = "lesson9Attendance"; 
+    
+    /**
+     * The column name for the date for the 10th lesson.
+     */
+    public static final String LESSON10DATE_COLUMN_NAME = "lesson10Date"; 
+    
+    /**
+     * The column name for the attendance type for the 10th lesson.
+     */
+    public static final String LESSON10ATTENDANCE_COLUMN_NAME = "lesson10Attendance"; 
+    
+    
+    
+    /**
      * Primary Key: Auto generated Lesson Block ID number.
      */
-    @DatabaseField(columnName = "blockId", generatedId = true)
+    @DatabaseField(columnName = BLOCKID_COLUMN_NAME, generatedId = true)
     private int blockId;
     
     /**
      * Foreign Key: The payment info of the lesson block.
      */
-    @DatabaseField (columnName = "lessonPayment", foreign = true)
-    private LessonPayment lessonPayment;
+    @DatabaseField (columnName = LESSONPAYMENTID_COLUMN_NAME, foreign = true)
+    private LessonPayment lessonPaymentId;
     
     /**
      * The date of the first lesson of the lesson block (field cannot be null).
      */
-    @DatabaseField (columnName = "lesson1Date", canBeNull = false)
+    @DatabaseField (columnName = LESSON1DATE_COLUMN_NAME, canBeNull = false)
     private Date lesson1Date;
     
     /**
      * An Enum that holds the attendance type of the students attendance for the first lesson of the block.
      */
-    @DatabaseField (columnName = "lesson1Attendance")
+    @DatabaseField (columnName = LESSON1ATTENDANCE_COLUMN_NAME)
     private AttendanceType lesson1Attendance;
     
     /**
      * The date of the second lesson of the lesson block (field cannot be null).
      */
-    @DatabaseField (columnName = "lesson2Date", canBeNull = false)
+    @DatabaseField (columnName = LESSON2DATE_COLUMN_NAME, canBeNull = false)
     private Date lesson2Date;
     
     /**
      * An Enum that holds the attendance type of the students attendance for the second lesson of the block.
      */
-    @DatabaseField (columnName = "lesson2Attendance")
+    @DatabaseField (columnName = LESSON2ATTENDANCE_COLUMN_NAME)
     private AttendanceType lesson2Attendance;
     
     /**
      * The date of the third lesson of the lesson block (field cannot be null).
      */
-    @DatabaseField (columnName = "lesson3Date", canBeNull = false)
+    @DatabaseField (columnName = LESSON3DATE_COLUMN_NAME, canBeNull = false)
     private Date lesson3Date;
     
     /**
      * An Enum that holds the attendance type of the students attendance for the third lesson of the block.
      */
-    @DatabaseField (columnName = "lesson3Attendance")
+    @DatabaseField (columnName = LESSON3ATTENDANCE_COLUMN_NAME)
     private AttendanceType lesson3Attendance;
     
     /**
      * The date of the fourth lesson of the lesson block (field cannot be null).
      */
-    @DatabaseField (columnName = "lesson4Date", canBeNull = false)
+    @DatabaseField (columnName = LESSON4DATE_COLUMN_NAME, canBeNull = false)
     private Date lesson4Date;
     
     /**
      * An Enum that holds the attendance type of the students attendance for the fourth lesson of the block.
      */
-    @DatabaseField (columnName = "lesson4Attendance")
+    @DatabaseField (columnName = LESSON4ATTENDANCE_COLUMN_NAME)
     private AttendanceType lesson4Attendance;
     
     /**
      * The date of the fifth lesson of the lesson block (field cannot be null).
      */
-    @DatabaseField (columnName = "lesson5Date", canBeNull = false)
+    @DatabaseField (columnName = LESSON5DATE_COLUMN_NAME, canBeNull = false)
     private Date lesson5Date;
     
     /**
      * An Enum that holds the attendance type of the students attendance for the fifth lesson of the block.
      */
-    @DatabaseField (columnName = "lesson5Attendance")
+    @DatabaseField (columnName = LESSON5ATTENDANCE_COLUMN_NAME)
     private AttendanceType lesson5Attendance;
     
     /**
      * The date of the sixth lesson of the lesson block (field cannot be null).
      */
-    @DatabaseField (columnName = "lesson6Date", canBeNull = false)
+    @DatabaseField (columnName = LESSON6DATE_COLUMN_NAME, canBeNull = false)
     private Date lesson6Date;
     
     /**
      * An Enum that holds the attendance type of the students attendance for the sixth lesson of the block.
      */
-    @DatabaseField (columnName = "lesson6Attendance")
+    @DatabaseField (columnName = LESSON6ATTENDANCE_COLUMN_NAME)
     private AttendanceType lesson6Attendance;
     
     /**
      * The date of the seventh lesson of the lesson block (field cannot be null).
      */
-    @DatabaseField (columnName = "lesson7Date", canBeNull = false)
+    @DatabaseField (columnName = LESSON7DATE_COLUMN_NAME, canBeNull = false)
     private Date lesson7Date;
     
     /**
      * An Enum that holds the attendance type of the students attendance for the seventh lesson of the block.
      */
-    @DatabaseField (columnName = "lesson7Attendance")
+    @DatabaseField (columnName = LESSON7ATTENDANCE_COLUMN_NAME)
     private AttendanceType lesson7Attendance;
     
     /**
      * The date of the eighth lesson of the lesson block (field cannot be null).
      */
-    @DatabaseField (columnName = "lesson8Date", canBeNull = false)
+    @DatabaseField (columnName = LESSON8DATE_COLUMN_NAME, canBeNull = false)
     private Date lesson8Date;
     
     /**
      * An Enum that holds the attendance type of the students attendance for the eighth lesson of the block.
      */
-    @DatabaseField (columnName = "lesson8Attendance")
+    @DatabaseField (columnName = LESSON8ATTENDANCE_COLUMN_NAME)
     private AttendanceType lesson8Attendance;
     
     /**
      * The date of the ninth lesson of the lesson block (field cannot be null).
      */
-    @DatabaseField (columnName = "lesson9Date", canBeNull = false)
+    @DatabaseField (columnName = LESSON9DATE_COLUMN_NAME, canBeNull = false)
     private Date lesson9Date;
     
     /**
      * An Enum that holds the attendance type of the students attendance for the ninth lesson of the block.
      */
-    @DatabaseField (columnName = "lesson9Attendance")
+    @DatabaseField (columnName = LESSON9ATTENDANCE_COLUMN_NAME)
     private AttendanceType lesson9Attendance;
     
     /**
      * The date of the tenth lesson of the lesson block (field cannot be null).
      */
-    @DatabaseField (columnName = "lesson10Date", canBeNull = false)
+    @DatabaseField (columnName = LESSON10DATE_COLUMN_NAME, canBeNull = false)
     private Date lesson10Date;
     
     /**
      * An Enum that holds the attendance type of the students attendance for the tenth lesson of the block.
      */
-    @DatabaseField (columnName = "lesson10Attendance")
+    @DatabaseField (columnName = LESSON10ATTENDANCE_COLUMN_NAME)
     private AttendanceType lesson10Attendance;
     
 
@@ -172,7 +284,7 @@ public class LessonBlock {
     public LessonBlock(LessonPayment lessonPayment, Date lesson1Date, Date lesson2Date, Date lesson3Date, Date lesson4Date,
                         Date lesson5Date, Date lesson6Date, Date lesson7Date, Date lesson8Date, 
                             Date lesson9Date, Date lesson10Date) {
-        this.lessonPayment = lessonPayment;
+        this.lessonPaymentId = lessonPayment;
         this.lesson1Date = lesson1Date;
         this.lesson2Date = lesson1Date;
         this.lesson3Date = lesson1Date;
@@ -196,18 +308,18 @@ public class LessonBlock {
 
     /**
      * Accessor to retrieve the payment info of the lesson block.
-     * @return lessonPayment The payment info of the lesson block.
+     * @return lessonPaymentId The payment info of the lesson block.
      */
-    public LessonPayment getLessonPayment() {
-        return lessonPayment;
+    public LessonPayment getLessonPaymentId() {
+        return lessonPaymentId;
     }
 
     /**
      * Mutator to set the new payment info of the lesson block.
-     * @param lessonPayment The updated payment info of the lesson block.
+     * @param lessonPaymentId The updated payment info of the lesson block.
      */
-    public void setLessonPayment(LessonPayment lessonPayment) {
-        this.lessonPayment = lessonPayment;
+    public void setLessonPayment(LessonPayment lessonPaymentId) {
+        this.lessonPaymentId = lessonPaymentId;
     }
 
     /**

@@ -15,65 +15,115 @@ import java.util.Date;
 public class StudentRecord {
     
     /**
+     * The column name for the Student ID.
+     */
+    public static final String STUDENTID_COLUMN_NAME = "studentId";
+    
+    /**
+     * The column name for the Student Name.
+     */
+    public static final String STUDENTNAME_COLUMN_NAME = "studentName";
+    
+    /**
+     * The column name for the Student Date of Birth.
+     */
+    public static final String STUDENTDOB_COLUMN_NAME = "studentDOB";
+    
+    /**
+     * The column name for the Students telephone number.
+     */
+    public static final String STUDENTTELEPHONENO_COLUMN_NAME = "telephoneNo";
+    
+    /**
+     * The column name for the Students address.
+     */
+    public static final String STUDENTADDRESS_COLUMN_NAME = "studentAddress";
+    
+    /**
+     * The column name for the Students has illness.
+     */
+    public static final String HASILLNESS_COLUMN_NAME = "hasIllness";
+    
+    /**
+     * The column name for the Students parents name.
+     */
+    public static final String PARENTNAME_COLUMN_NAME = "parentName";
+    
+    /**
+     * The column name for the Students ability level.
+     */
+    public static final String ABILITYLEVEL_COLUMN_NAME = "abilityLevel";
+    
+    /**
+     * The column name for the Students swimming class Id.
+     */
+    public static final String STUDENTSWIMMINGCLASSID_COLUMN_NAME = "swimmingClassId";
+    
+    /**
+     * The column name for the Students swimming class Id.
+     */
+    public static final String STUDENTATTENDANCEID_COLUMN_NAME = "attendanceId";
+    
+    /**
      * Primary Key: Auto generated student record ID number.
      */
-    @DatabaseField(columnName = "studentId", generatedId = true)
+    @DatabaseField(columnName = STUDENTID_COLUMN_NAME, generatedId = true)
     private int studentId;
     
     /**
      * The name of the student (field cannot be null).
      */
-    @DatabaseField (columnName = "studentName", canBeNull = false)
+    @DatabaseField (columnName = STUDENTNAME_COLUMN_NAME, canBeNull = false)
     private String studentName;
     
     /**
      * The date of birth of the student (field cannot be null).
      */
-    @DatabaseField (columnName = "studentDOB", canBeNull = false)
+    @DatabaseField (columnName = STUDENTDOB_COLUMN_NAME, canBeNull = false)
     private Date studentDOB;
     
     /**
      * The telephone number of the student (field cannot be null).
      */
-    @DatabaseField (columnName = "telephoneNo", canBeNull = false)
+    @DatabaseField (columnName = STUDENTTELEPHONENO_COLUMN_NAME, canBeNull = false)
     private int telephoneNo;
     
     /**
      * The address of the student (field cannot be null).
      */
-    @DatabaseField (columnName = "studentAddress", canBeNull = false)
+    @DatabaseField (columnName = STUDENTADDRESS_COLUMN_NAME, canBeNull = false)
     private String studentAddress;
     
     /**
      * String containing information as to whether the student has any 
      * Illnesses/disabilities.
      */
-    @DatabaseField (columnName = "hasIllness")
+    @DatabaseField (columnName = HASILLNESS_COLUMN_NAME)
     private String hasIllness;
     
     /**
      * The students parents name (field cannot be null).
      */
-    @DatabaseField (columnName = "parentName", canBeNull = false)
+    @DatabaseField (columnName = PARENTNAME_COLUMN_NAME, canBeNull = false)
     private String parentName;
     
     /**
      * The ability level of the student.
      */
-    @DatabaseField (columnName = "abilityLevel")
+    @DatabaseField (columnName = ABILITYLEVEL_COLUMN_NAME)
     private SwimmingLevel abilityLevel;
     
     /**
      * Foreign Key: The swimming class that the student is currently in.
      */
-    @DatabaseField(columnName = "swimmingClass", foreign = true)
-    private SwimmingClasses swimmingClass;
+    @DatabaseField(columnName = STUDENTSWIMMINGCLASSID_COLUMN_NAME, foreign = true)
+    private SwimmingClasses swimmingClassId;
     
     /**
      * Foreign Key: The attendance record of the student (field cannot be null).
      */
-    @DatabaseField(columnName = "attendance", canBeNull = false, foreign = true)
-    private AttendanceRecord attendance;
+    @DatabaseField(columnName = STUDENTATTENDANCEID_COLUMN_NAME, canBeNull = false, foreign = true)
+    private AttendanceRecord attendanceId;
 
     /**
      * Default constructor of the Student Record class.
@@ -95,7 +145,7 @@ public class StudentRecord {
      * @param attendance The attendance record of the student.
      */
     public StudentRecord(String studentName, Date studentDOB, int telephoneNo, String studentAddress, 
-                            String hasIllness, String parentName, SwimmingLevel abilityLevel, SwimmingClasses swimmingClass, AttendanceRecord attendance) {
+                            String hasIllness, String parentName, SwimmingLevel abilityLevel, SwimmingClasses swimmingClassId, AttendanceRecord attendanceId) {
         this.studentName = studentName;
         this.studentDOB = studentDOB;
         this.telephoneNo = telephoneNo;
@@ -103,8 +153,8 @@ public class StudentRecord {
         this.hasIllness = hasIllness;
         this.parentName = parentName;
         this.abilityLevel = abilityLevel;
-        this.swimmingClass = swimmingClass;
-        this.attendance = attendance;
+        this.swimmingClassId = swimmingClassId;
+        this.attendanceId = attendanceId;
     }
 
     /**
@@ -231,32 +281,32 @@ public class StudentRecord {
      * Accessor to retrieve the class of the student. 
      * @return swimmingClass The swimming class the student is in.
      */
-    public SwimmingClasses getSwimmingClass() {
-        return swimmingClass;
+    public SwimmingClasses getSwimmingClassId() {
+        return swimmingClassId;
     }
 
     /**
      * Mutator to set the new class of the student.
-     * @param swimmingClass The updated class of the student.
+     * @param swimmingClassId The updated class of the student.
      */
-    public void setSwimmingClass(SwimmingClasses swimmingClass) {
-        this.swimmingClass = swimmingClass;
+    public void setSwimmingClassId(SwimmingClasses swimmingClassId) {
+        this.swimmingClassId = swimmingClassId;
     }
 
     /**
      * Accessor to retrieve the students attendance record.
      * @return attendance The link to the attendance record of the student.
      */
-    public AttendanceRecord getAttendance() {
-        return attendance;
+    public AttendanceRecord getAttendanceId() {
+        return attendanceId;
     }
 
     /**
      * Mutator to set the new attendance record of the student.
-     * @param attendance The updated attendance record of the student.
+     * @param attendanceId The updated attendance record of the student.
      */
-    public void setAttendance(AttendanceRecord attendance) {
-        this.attendance = attendance;
+    public void setAttendanceId(AttendanceRecord attendanceId) {
+        this.attendanceId = attendanceId;
     }
 
 }

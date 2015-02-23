@@ -14,54 +14,104 @@ import com.j256.ormlite.table.DatabaseTable;
 public class Teacher {
     
     /**
+     * The column name for the Teacher ID.
+     */
+    public static final String TEACHERID_COLUMN_NAME = "teacherId";
+    
+    /**
+     * The column name for the Teachers Name.
+     */
+    public static final String TEACHERNAME_COLUMN_NAME = "teacherName";
+    
+    /**
+     * The column name for Work Monday.
+     */
+    public static final String WORKMONDAY_COLUMN_NAME = "workMonday"; 
+    
+    /**
+     * The column name for the Work Tuesday.
+     */
+    public static final String WORKTUESDAY_COLUMN_NAME = "workTuesday"; 
+    
+    /**
+     * The column name for the Work Wednesday.
+     */
+    public static final String WORKWEDNESDAY_COLUMN_NAME = "workWednesday"; 
+    
+    /**
+     * The column name for the Work Thursday.
+     */
+    public static final String WORKTHURSDAY_COLUMN_NAME = "workThursday"; 
+    
+    /**
+     * The column name for the Work Friday.
+     */
+    public static final String WORKFRIDAY_COLUMN_NAME = "workFriday"; 
+    
+    /**
+     * The column name for the Work Saturday.
+     */
+    public static final String WORKSATURDAY_COLUMN_NAME = "workSaturday"; 
+    
+    /**
+     * The column name for the Work Sunday.
+     */
+    public static final String WORKSUNDAY_COLUMN_NAME = "workSunday"; 
+    
+    /**
      * Primary Key: Auto generated Teacher ID number.
      */
-    @DatabaseField(columnName = "teacherId", generatedId = true)
+    @DatabaseField(columnName = TEACHERID_COLUMN_NAME, generatedId = true)
     private int teacherId;
     
     /**
      * The name of the Teacher (field cannot be null and must be unique).
      */
-    @DatabaseField (columnName = "teacherName", canBeNull = false, unique = true)
+    @DatabaseField (columnName = TEACHERNAME_COLUMN_NAME, canBeNull = false, unique = true)
     private String teacherName;
     
-    @DatabaseField (columnName = "workMonday", canBeNull = false)
+    /**
+     * A Boolean field that specifies whether that teacher works on Monday or not.
+     */
+    @DatabaseField (columnName = WORKMONDAY_COLUMN_NAME, canBeNull = false)
     private Boolean workMonday;
     
-    @DatabaseField (columnName = "workTuesday", canBeNull = false)
+    /**
+     * A Boolean field that specifies whether that teacher works on Tuesday or not.
+     */
+    @DatabaseField (columnName = WORKTUESDAY_COLUMN_NAME, canBeNull = false)
     private Boolean workTuesday;
     
-    @DatabaseField (columnName = "workWednesday", canBeNull = false)
+    /**
+     * A Boolean field that specifies whether that teacher works on Wednesday or not.
+     */
+    @DatabaseField (columnName = WORKWEDNESDAY_COLUMN_NAME, canBeNull = false)
     private Boolean workWednesday;
     
-    @DatabaseField (columnName = "workThursday", canBeNull = false)
+    /**
+     * A Boolean field that specifies whether that teacher works on Thursday or not.
+     */
+    @DatabaseField (columnName = WORKTHURSDAY_COLUMN_NAME, canBeNull = false)
     private Boolean workThursday;
     
-    @DatabaseField (columnName = "workFriday", canBeNull = false)
+    /**
+     * A Boolean field that specifies whether that teacher works on Friday or not.
+     */
+    @DatabaseField (columnName = WORKFRIDAY_COLUMN_NAME, canBeNull = false)
     private Boolean workFriday;
     
-    @DatabaseField (columnName = "workSaturday", canBeNull = false)
+    /**
+     * A Boolean field that specifies whether that teacher works on Saturday or not.
+     */
+    @DatabaseField (columnName = WORKSATURDAY_COLUMN_NAME, canBeNull = false)
     private Boolean workSaturday;
     
-    @DatabaseField (columnName = "workSunday", canBeNull = false)
-    private Boolean workSunday;
+    /**
+     * A Boolean field that specifies whether that teacher works on Sunday or not.
+     */
+    @DatabaseField (columnName = WORKSUNDAY_COLUMN_NAME, canBeNull = false)
+    private Boolean workSunday;    
     
-    public static final String WORKMONDAY_FIELD_NAME = "workMonday"; 
-    
-    public static final String WORKTUESDAY_FIELD_NAME = "workTuesday"; 
-    
-    public static final String WORKWEDNESDAY_FIELD_NAME = "workWednesday"; 
-    
-    public static final String WORKTHURSDAY_FIELD_NAME = "workThursday"; 
-    
-    public static final String WORKFRIDAY_FIELD_NAME = "workFriday"; 
-    
-    public static final String WORKSATURDAY_FIELD_NAME = "workSaturday"; 
-    
-    public static final String WORKSUNDAY_FIELD_NAME = "workSunday"; 
-    
-    
-
     /**
      * Default constructor of the Teacher class.
      */
