@@ -1,4 +1,4 @@
-package swimritemanagementsuite.model;
+package uk.ac.tees.m2081433.swimritemanagementsuite.model;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -11,7 +11,7 @@ import com.j256.ormlite.table.DatabaseTable;
  * @author Thomas Bedford (m2081433)
  */
 @DatabaseTable(tableName = "Timeslot")
-public class Timeslot {
+public class Timeslot implements Comparable<Timeslot>{
     
     /**
      * The column name for the Timeslot ID.
@@ -70,6 +70,10 @@ public class Timeslot {
     public int getTimeslotId() {
         return timeslotId;
     }
+    
+    public void setTimeslotId(int timeslotId) {
+        this.timeslotId = timeslotId;
+    }
 
     /**
      * Accessor to retrieve the day of the timeslot.
@@ -101,6 +105,22 @@ public class Timeslot {
      */
     public void setTime(int time) {
         this.time = time;
+    }
+
+    @Override
+    public int compareTo(Timeslot o) {
+        // If the time of this timeslot is larger than the timeslot params time passed in return 1.
+        if (this.getTime() > o.getTime()) {
+            return 1;
+        }    
+        // If the time of this timeslot is equal to the timeslot params time passed in return 0.
+        else if (this.getTime() == o.getTime()) {
+            return 0;
+        }   
+        // Otherwise the timeslot params time passed in is larger so return -1.
+        else {
+            return -1;
+        } 
     }
 
 }

@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package swimritemanagementsuite.view;
+package uk.ac.tees.m2081433.swimritemanagementsuite.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.sql.SQLException;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import uk.ac.tees.m2081433.swimritemanagementsuite.model.Day;
 
 /**
  *
@@ -25,17 +26,17 @@ public class smsBodyPanel extends JPanel{
         this.setVisible(true);
         this.setBackground(Color.white);
         
+//        smsWelcomePanel = new smsWelcomePanel();
+//        this.add(smsWelcomePanel);
         
-        DaySchedulePanel daySchedulePanel = new DaySchedulePanel();
         
+        // CODE TO TEST DAY SCHEDULE PANEL (MONDAY).
+        DaySchedulePanel daySchedulePanel = new DaySchedulePanel(Day.MONDAY);
+                
         JScrollPane dayScheduleScrollPane = new JScrollPane(daySchedulePanel);
         dayScheduleScrollPane.setPreferredSize(new Dimension(1380, 575));
         
         this.add(dayScheduleScrollPane);
-      
-        
-//        smsWelcomePanel = new smsWelcomePanel();
-//        this.add(smsWelcomePanel);
     }
     
     public void removeWelcomePanel() {

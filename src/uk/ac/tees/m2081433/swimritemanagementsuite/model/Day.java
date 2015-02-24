@@ -1,4 +1,4 @@
-package swimritemanagementsuite.model;
+package uk.ac.tees.m2081433.swimritemanagementsuite.model;
 
 /**
  *

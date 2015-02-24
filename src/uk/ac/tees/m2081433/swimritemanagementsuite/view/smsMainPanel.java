@@ -1,4 +1,4 @@
-package swimritemanagementsuite.view;
+package uk.ac.tees.m2081433.swimritemanagementsuite.view;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;

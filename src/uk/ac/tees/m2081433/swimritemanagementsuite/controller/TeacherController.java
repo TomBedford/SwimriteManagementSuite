@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package swimritemanagementsuite.controller;
+package uk.ac.tees.m2081433.swimritemanagementsuite.controller;
 
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import java.util.List;
 import java.sql.SQLException;
-import swimritemanagementsuite.model.Day;
-import swimritemanagementsuite.model.Teacher;
+import java.util.Collections;
+import uk.ac.tees.m2081433.swimritemanagementsuite.model.Day;
+import uk.ac.tees.m2081433.swimritemanagementsuite.model.Teacher;
 
 /**
  *
@@ -71,4 +72,20 @@ public class TeacherController {
         
         return teacherList;
     }
+    
+    /**
+     * Sorts a list of teachers by the teacher id of the teacher (Ascending order).
+     * @param teacherList - The unsorted list of teachers.
+     * @return teacherList - The sorted list of teachers.
+     */
+    public List<Teacher> sortTeachersByTeacherId(List<Teacher> teacherList) {
+        // Calls the overided method CompareTo to sort by the teachers id in ascending order).
+        Collections.sort(teacherList);
+        
+        // Returns the sorted list.
+        return teacherList;
+    }
+    
+    
+    
 }

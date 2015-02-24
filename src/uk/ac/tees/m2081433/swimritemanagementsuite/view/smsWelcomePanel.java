@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package swimritemanagementsuite.view;
+package uk.ac.tees.m2081433.swimritemanagementsuite.view;
 
 import java.awt.Color;
 import java.awt.Dimension;

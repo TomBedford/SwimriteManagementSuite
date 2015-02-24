@@ -1,4 +1,4 @@
-package swimritemanagementsuite.model;
+package uk.ac.tees.m2081433.swimritemanagementsuite.model;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import java.util.Date;
@@ -55,14 +55,14 @@ public class StudentRecord {
     public static final String ABILITYLEVEL_COLUMN_NAME = "abilityLevel";
     
     /**
-     * The column name for the Students swimming class Id.
+     * The column name for the Students swimming class.
      */
-    public static final String STUDENTSWIMMINGCLASSID_COLUMN_NAME = "swimmingClassId";
+    public static final String STUDENTSWIMMINGCLASS_COLUMN_NAME = "swimmingClass";
     
     /**
-     * The column name for the Students swimming class Id.
+     * The column name for the Students attendance.
      */
-    public static final String STUDENTATTENDANCEID_COLUMN_NAME = "attendanceId";
+    public static final String STUDENTATTENDANCE_COLUMN_NAME = "attendance";
     
     /**
      * Primary Key: Auto generated student record ID number.
@@ -116,14 +116,14 @@ public class StudentRecord {
     /**
      * Foreign Key: The swimming class that the student is currently in.
      */
-    @DatabaseField(columnName = STUDENTSWIMMINGCLASSID_COLUMN_NAME, foreign = true)
-    private SwimmingClasses swimmingClassId;
+    @DatabaseField(columnName = STUDENTSWIMMINGCLASS_COLUMN_NAME, foreign = true)
+    private SwimmingClasses swimmingClass;
     
     /**
      * Foreign Key: The attendance record of the student (field cannot be null).
      */
-    @DatabaseField(columnName = STUDENTATTENDANCEID_COLUMN_NAME, canBeNull = false, foreign = true)
-    private AttendanceRecord attendanceId;
+    @DatabaseField(columnName = STUDENTATTENDANCE_COLUMN_NAME, canBeNull = false, foreign = true)
+    private AttendanceRecord attendance;
 
     /**
      * Default constructor of the Student Record class.
@@ -145,7 +145,7 @@ public class StudentRecord {
      * @param attendance The attendance record of the student.
      */
     public StudentRecord(String studentName, Date studentDOB, int telephoneNo, String studentAddress, 
-                            String hasIllness, String parentName, SwimmingLevel abilityLevel, SwimmingClasses swimmingClassId, AttendanceRecord attendanceId) {
+                            String hasIllness, String parentName, SwimmingLevel abilityLevel, SwimmingClasses swimmingClass, AttendanceRecord attendance) {
         this.studentName = studentName;
         this.studentDOB = studentDOB;
         this.telephoneNo = telephoneNo;
@@ -153,8 +153,8 @@ public class StudentRecord {
         this.hasIllness = hasIllness;
         this.parentName = parentName;
         this.abilityLevel = abilityLevel;
-        this.swimmingClassId = swimmingClassId;
-        this.attendanceId = attendanceId;
+        this.swimmingClass = swimmingClass;
+        this.attendance = attendance;
     }
 
     /**
@@ -281,32 +281,32 @@ public class StudentRecord {
      * Accessor to retrieve the class of the student. 
      * @return swimmingClass The swimming class the student is in.
      */
-    public SwimmingClasses getSwimmingClassId() {
-        return swimmingClassId;
+    public SwimmingClasses getSwimmingClass() {
+        return swimmingClass;
     }
 
     /**
      * Mutator to set the new class of the student.
-     * @param swimmingClassId The updated class of the student.
+     * @param swimmingClass The updated class of the student.
      */
-    public void setSwimmingClassId(SwimmingClasses swimmingClassId) {
-        this.swimmingClassId = swimmingClassId;
+    public void setSwimmingClass(SwimmingClasses swimmingClass) {
+        this.swimmingClass = swimmingClass;
     }
 
     /**
      * Accessor to retrieve the students attendance record.
      * @return attendance The link to the attendance record of the student.
      */
-    public AttendanceRecord getAttendanceId() {
-        return attendanceId;
+    public AttendanceRecord getAttendance() {
+        return attendance;
     }
 
     /**
      * Mutator to set the new attendance record of the student.
-     * @param attendanceId The updated attendance record of the student.
+     * @param attendance The updated attendance record of the student.
      */
-    public void setAttendanceId(AttendanceRecord attendanceId) {
-        this.attendanceId = attendanceId;
+    public void setAttendance(AttendanceRecord attendance) {
+        this.attendance = attendance;
     }
 
 }

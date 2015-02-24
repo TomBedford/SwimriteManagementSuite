@@ -1,16 +1,21 @@
-package swimritemanagementsuite.view;
+package uk.ac.tees.m2081433.swimritemanagementsuite.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
 import javax.swing.border.TitledBorder;
+import uk.ac.tees.m2081433.swimritemanagementsuite.model.Day;
 
 /**
  *
@@ -33,6 +38,9 @@ public class smsToolbarPanel extends JPanel implements ActionListener {
     JToggleButton viewAllSRButton;
     JToggleButton addStudentButton;
     JToggleButton viewAllSTButton;
+    JToggleButton addSTButton;
+    
+    smsBodyPanel smsBodyPanel;
     
     public smsToolbarPanel() {
         
@@ -51,6 +59,8 @@ public class smsToolbarPanel extends JPanel implements ActionListener {
         
         // Adds the Support Ticket tool to the toolbar.
         addSupportTicketTool();
+        
+        // smsBodyPanel = new smsBodyPanel();
     }
     
     public void addSwimmingClassesTool(){
@@ -193,7 +203,7 @@ public class smsToolbarPanel extends JPanel implements ActionListener {
         TitledBorder supportTicketBorder = BorderFactory.createTitledBorder("Support Tickets");
         supportTicketPanel.setBorder(supportTicketBorder);
         
-        // Creates and Sets attributes for the button to go on the support ticket panel.
+        // Creates and Sets attributes for the view all button to go on the support ticket panel.
         viewAllSTButton = new JToggleButton("<html> View <b> All </b> Support Tickets <html>");
         viewAllSTButton.setPreferredSize(new Dimension(200, 50));
         viewAllSTButton.addActionListener(this);
@@ -202,11 +212,22 @@ public class smsToolbarPanel extends JPanel implements ActionListener {
         // Sets the icon for the view all support tickets toggle button.
         viewAllSTButton.setIcon(new ImageIcon("images/icons/premium_support.png"));
         
-        // Adds the created button to the toolbar button group.
+        // Creates and Sets attributes for the add button to go on the support ticket panel.
+        addSTButton = new JToggleButton("<html> Add a <b> New </b> Support Tickets <html>");
+        addSTButton.setPreferredSize(new Dimension(200, 50));
+        addSTButton.addActionListener(this);
+        addSTButton.setToolTipText("<html> Click this button to add a <b> new </b> Swimrite Leisure student support ticket. </html>");
+        
+        // Sets the icon for the add a support ticket toggle button.
+        addSTButton.setIcon(new ImageIcon("images/icons/pencil_add.png"));
+        
+        // Adds the created buttons to the toolbar button group.
         toolbarButtonGroup.add(viewAllSTButton);
+        toolbarButtonGroup.add(addSTButton);
         
         // Adds all buttons to the support ticket panel.
         supportTicketPanel.add(viewAllSTButton);
+        supportTicketPanel.add(addSTButton);
         
         // Adds the student records panel to the sms toolbar panel.
         this.add(supportTicketPanel);
@@ -216,25 +237,51 @@ public class smsToolbarPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         
         if(e.getSource() == monButton) {
-            // TODO
+            
+            System.out.println("MONDAY BUTTON PRESSED!");
+            
+//            DaySchedulePanel daySchedulePanel;
+//            
+//            try {
+//                daySchedulePanel = new DaySchedulePanel(Day.MONDAY);
+//                
+//                JScrollPane dayScheduleScrollPane = new JScrollPane(daySchedulePanel);
+//                dayScheduleScrollPane.setPreferredSize(new Dimension(1380, 575));
+//                
+//                smsBodyPanel.removeWelcomePanel();
+//                smsBodyPanel.revalidate();
+//                
+//                smsBodyPanel.add(dayScheduleScrollPane);
+//                smsBodyPanel.revalidate();
+//                
+//            } catch (SQLException ex) {
+//                Logger.getLogger(smsToolbarPanel.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+            
         }
         else if(e.getSource() == tueButton) {
             // TODO
+            System.out.println("TUESDAY BUTTON PRESSED!");
         }
         else if(e.getSource() == wedButton) {
             // TODO
+            System.out.println("WEDNESDAY BUTTON PRESSED!");
         }
         else if(e.getSource() == thuButton) {
             // TODO
+            System.out.println("THURSDAY BUTTON PRESSED!");
         }
         else if(e.getSource() == friButton) {
             // TODO
+            System.out.println("FRIDAY BUTTON PRESSED!");
         }
         else if(e.getSource() == satButton) {
             // TODO
+            System.out.println("SATURDAY BUTTON PRESSED!");
         }
         else if(e.getSource() == sunButton) {
             // TODO
+            System.out.println("SUNDAY BUTTON PRESSED!");
         }
         else if(e.getSource() == regButton) {
             // TODO
@@ -246,6 +293,8 @@ public class smsToolbarPanel extends JPanel implements ActionListener {
             // TODO
         }
         else if(e.getSource() == viewAllSTButton) {
+            // TODO
+        } else if(e.getSource() == addSTButton) {
             // TODO
         }
         

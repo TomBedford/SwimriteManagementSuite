@@ -1,8 +1,12 @@
-package swimritemanagementsuite;
+package uk.ac.tees.m2081433.swimritemanagementsuite;
 
-import swimritemanagementsuite.controller.DatabaseManager;
-import swimritemanagementsuite.model.*;
-import swimritemanagementsuite.view.smsMainPanel;
+import uk.ac.tees.m2081433.swimritemanagementsuite.model.SwimmingClasses;
+import uk.ac.tees.m2081433.swimritemanagementsuite.model.SwimmingLevel;
+import uk.ac.tees.m2081433.swimritemanagementsuite.model.Timeslot;
+import uk.ac.tees.m2081433.swimritemanagementsuite.model.Day;
+import uk.ac.tees.m2081433.swimritemanagementsuite.model.Teacher;
+import uk.ac.tees.m2081433.swimritemanagementsuite.controller.DatabaseManager;
+import uk.ac.tees.m2081433.swimritemanagementsuite.view.smsMainPanel;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import java.awt.*;
 import javax.swing.*;
@@ -39,7 +43,9 @@ public class SwimriteManagementSuite {
         // Calls method to initialise the Swimrite Management Suite database connection references.
         createDbReferences();
         
-        // TESTING INPUT OF DATA INTO DB
+        /**
+         * COMMENT THE BELOW IN AND OUT TO INSERT TEST DATA
+         */
         // readAndWriteDB();
         
         // Calls method to create the swimrite management frame and panels.
@@ -155,6 +161,15 @@ public class SwimriteManagementSuite {
             timeslotTime = timeslotTime + 30;
             smsDatabaseManager.timeslotDAO.create(timeslotArray[i]);
             
+            // Creates Swimming Classes for monday
+            SwimmingClasses class1 = new SwimmingClasses(SwimmingLevel.DUCKS, timeslotArray[i], teachers[0], 5);
+            SwimmingClasses class2 = new SwimmingClasses(SwimmingLevel.BEGINNERS, timeslotArray[i], teachers[1], 5);
+            SwimmingClasses class3 = new SwimmingClasses(SwimmingLevel.GRADE_1_MINUS, timeslotArray[i], teachers[2], 5);
+
+            smsDatabaseManager.swimmingClassesDAO.create(class1);
+            smsDatabaseManager.swimmingClassesDAO.create(class2);
+            smsDatabaseManager.swimmingClassesDAO.create(class3);
+            
             Timeslot timeslot2 = new Timeslot();
             timeslot2.setDay(Day.MONDAY);
             timeslot2.setTime(timeslotTime);
@@ -162,6 +177,15 @@ public class SwimriteManagementSuite {
             timeslotArray[i] = timeslot2;
             timeslotTime = timeslotTime + 70;
             smsDatabaseManager.timeslotDAO.create(timeslotArray[i]);
+            
+            // Creates more Swimming Classes for monday
+            class1 = new SwimmingClasses(SwimmingLevel.DUCKS, timeslotArray[i], teachers[0], 5);
+            class2 = new SwimmingClasses(SwimmingLevel.BEGINNERS, timeslotArray[i], teachers[1], 5);
+            class3 = new SwimmingClasses(SwimmingLevel.GRADE_1_MINUS, timeslotArray[i], teachers[2], 5);
+
+            smsDatabaseManager.swimmingClassesDAO.create(class1);
+            smsDatabaseManager.swimmingClassesDAO.create(class2);
+            smsDatabaseManager.swimmingClassesDAO.create(class3);
         }
         
         // CREATE TUESDAY DEFAULT TIMESLOTS

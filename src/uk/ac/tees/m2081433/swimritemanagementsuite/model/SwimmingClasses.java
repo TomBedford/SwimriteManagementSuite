@@ -1,4 +1,4 @@
-package swimritemanagementsuite.model;
+package uk.ac.tees.m2081433.swimritemanagementsuite.model;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -11,7 +11,7 @@ import com.j256.ormlite.table.DatabaseTable;
  * @author Thomas Bedford (m2081433)
  */
 @DatabaseTable(tableName = "SwimmingClasses")
-public class SwimmingClasses {
+public class SwimmingClasses implements Comparable<SwimmingClasses>{
     
     /**
      * The column name for the Class ID.
@@ -24,14 +24,14 @@ public class SwimmingClasses {
     public static final String CLASSTYPE_COLUMN_NAME = "classType";
     
     /**
-     * The column name for the timeslot ID.
+     * The column name for the timeslot.
      */
-    public static final String TIMESLOTID_COLUMN_NAME = "timeslotId";
+    public static final String TIMESLOT_COLUMN_NAME = "timeslot";
     
     /**
      * The column name for the Class TeacherId.
      */
-    public static final String TEACHERID_COLUMN_NAME = "teacherId";
+    public static final String TEACHER_COLUMN_NAME = "teacher";
     
     /**
      * The column name for the maximum capacity.
@@ -59,14 +59,14 @@ public class SwimmingClasses {
     /**
      * Foreign Key: The timeslot (day/time) of the class.
      */
-    @DatabaseField(columnName = TIMESLOTID_COLUMN_NAME, canBeNull = false, foreign = true)
-    private Timeslot timeslotId;
+    @DatabaseField(columnName = TIMESLOT_COLUMN_NAME, canBeNull = false, foreign = true, foreignAutoRefresh = true)
+    private Timeslot timeslot;
     
     /**
      * Foreign Key: The teacher of the class.
      */
-    @DatabaseField(columnName = TEACHERID_COLUMN_NAME, canBeNull = false, foreign = true)
-    private Teacher teacherId;
+    @DatabaseField(columnName = TEACHER_COLUMN_NAME, canBeNull = false, foreign = true)
+    private Teacher teacher;
     
     /**
      * The maximum capacity of swimming class (field cannot be null).
@@ -90,14 +90,14 @@ public class SwimmingClasses {
     /**
      * Parameterized constructor to create a new Class in the Classes database table.
      * @param classType The type of swimming class.
-     * @param timeslotId The timeslot (day/time) of the class each week.
-     * @param teacherId The teacher of the class.
+     * @param timeslot The timeslot (day/time) of the class each week.
+     * @param teacher The teacher of the class.
      * @param maxCapacity The maximum capacity of the swimming class.
      */
-    public SwimmingClasses(SwimmingLevel classType, Timeslot timeslotId, Teacher teacherId, int maxCapacity) {
+    public SwimmingClasses(SwimmingLevel classType, Timeslot timeslot, Teacher teacher, int maxCapacity) {
         this.classType = classType;
-        this.timeslotId = timeslotId;
-        this.teacherId = teacherId;
+        this.timeslot = timeslot;
+        this.teacher = teacher;
         this.maxCapacity = maxCapacity;
         this.currentCapacity = 0;
     }
@@ -130,32 +130,32 @@ public class SwimmingClasses {
      * Accessor to retrieve the current timeslot of the class.
      * @return timeslot The timeslot of the class.
      */
-    public Timeslot getTimeslotId() {
-        return timeslotId;
+    public Timeslot getTimeslot() {
+        return timeslot;
     }
 
     /**
      * Mutator to set the new timeslot of the class.
-     * @param timeslotId The updated timeslot of the class.
+     * @param timeslot The updated timeslot of the class.
      */
-    public void setTimeslotId(Timeslot timeslotId) {
-        this.timeslotId = timeslotId;
+    public void setTimeslot(Timeslot timeslot) {
+        this.timeslot = timeslot;
     }
 
     /**
      * Accessor to retrieve the current teacher of the class.
      * @return teacher The teacher of the class.
      */
-    public Teacher getTeacherId() {
-        return teacherId;
+    public Teacher getTeacher() {
+        return teacher;
     }
 
     /**
      * Mutator to set the new Teacher of the class.
-     * @param teacherId The updated teacher of the class.
+     * @param teacher The updated teacher of the class.
      */
-    public void setTeacherId(Teacher teacherId) {
-        this.teacherId = teacherId;
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 
     /**
@@ -188,6 +188,23 @@ public class SwimmingClasses {
      */
     public void setCurrentCapacity(int currentCapacity) {
         this.currentCapacity = currentCapacity;
+    }
+
+    @Override
+    public int compareTo(SwimmingClasses o) {
+        // Compare the teacher id of this swimming class with the one passed in.
+        if (this.getTeacher().getTeacherId() > o.getTeacher().getTeacherId()) {
+            // If this swimming classes teachers id is larger return 1.
+            return 1;
+        }    
+        // If the teacher id of this swimming class is equal to the one passed in return 0.
+        else if (this.getTeacher().getTeacherId() == o.getTeacher().getTeacherId()) {
+            return 0;
+        }   
+        // Otherwise the teacher id passed in is larger so return -1.
+        else {
+            return -1;
+        } 
     }
     
 }

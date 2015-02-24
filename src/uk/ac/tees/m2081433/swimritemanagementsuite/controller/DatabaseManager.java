@@ -1,8 +1,15 @@
-package swimritemanagementsuite.controller;
+package uk.ac.tees.m2081433.swimritemanagementsuite.controller;
 
+import uk.ac.tees.m2081433.swimritemanagementsuite.model.LessonPayment;
+import uk.ac.tees.m2081433.swimritemanagementsuite.model.StudentRecord;
+import uk.ac.tees.m2081433.swimritemanagementsuite.model.AttendanceRecord;
+import uk.ac.tees.m2081433.swimritemanagementsuite.model.SwimmingClasses;
+import uk.ac.tees.m2081433.swimritemanagementsuite.model.Timeslot;
+import uk.ac.tees.m2081433.swimritemanagementsuite.model.Teacher;
+import uk.ac.tees.m2081433.swimritemanagementsuite.model.LessonBlock;
+import uk.ac.tees.m2081433.swimritemanagementsuite.model.StudentAddress;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
-import swimritemanagementsuite.model.*;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import java.sql.SQLException;

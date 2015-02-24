@@ -1,4 +1,4 @@
-package swimritemanagementsuite.model;
+package uk.ac.tees.m2081433.swimritemanagementsuite.model;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import java.util.Date;
@@ -23,7 +23,7 @@ public class LessonBlock {
     /**
      * The column name for the Lesson Payment Id.
      */
-    public static final String LESSONPAYMENTID_COLUMN_NAME = "lessonPaymentId"; 
+    public static final String LESSONPAYMENT_COLUMN_NAME = "lessonPayment"; 
     
     /**
      * The column name for the date for the 1st lesson.
@@ -136,8 +136,8 @@ public class LessonBlock {
     /**
      * Foreign Key: The payment info of the lesson block.
      */
-    @DatabaseField (columnName = LESSONPAYMENTID_COLUMN_NAME, foreign = true)
-    private LessonPayment lessonPaymentId;
+    @DatabaseField (columnName = LESSONPAYMENT_COLUMN_NAME, foreign = true)
+    private LessonPayment lessonPayment;
     
     /**
      * The date of the first lesson of the lesson block (field cannot be null).
@@ -284,7 +284,7 @@ public class LessonBlock {
     public LessonBlock(LessonPayment lessonPayment, Date lesson1Date, Date lesson2Date, Date lesson3Date, Date lesson4Date,
                         Date lesson5Date, Date lesson6Date, Date lesson7Date, Date lesson8Date, 
                             Date lesson9Date, Date lesson10Date) {
-        this.lessonPaymentId = lessonPayment;
+        this.lessonPayment = lessonPayment;
         this.lesson1Date = lesson1Date;
         this.lesson2Date = lesson1Date;
         this.lesson3Date = lesson1Date;
@@ -308,18 +308,18 @@ public class LessonBlock {
 
     /**
      * Accessor to retrieve the payment info of the lesson block.
-     * @return lessonPaymentId The payment info of the lesson block.
+     * @return lessonPayment The payment info of the lesson block.
      */
-    public LessonPayment getLessonPaymentId() {
-        return lessonPaymentId;
+    public LessonPayment getLessonPayment() {
+        return lessonPayment;
     }
 
     /**
      * Mutator to set the new payment info of the lesson block.
-     * @param lessonPaymentId The updated payment info of the lesson block.
+     * @param lessonPayment The updated payment info of the lesson block.
      */
-    public void setLessonPayment(LessonPayment lessonPaymentId) {
-        this.lessonPaymentId = lessonPaymentId;
+    public void setLessonPayment(LessonPayment lessonPayment) {
+        this.lessonPayment = lessonPayment;
     }
 
     /**

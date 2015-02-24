@@ -1,4 +1,4 @@
-package swimritemanagementsuite.model;
+package uk.ac.tees.m2081433.swimritemanagementsuite.model;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -11,7 +11,7 @@ import com.j256.ormlite.table.DatabaseTable;
  * @author Thomas Bedford (m2081433)
  */
 @DatabaseTable(tableName = "Teacher")
-public class Teacher {
+public class Teacher implements Comparable<Teacher>{
     
     /**
      * The column name for the Teacher ID.
@@ -57,6 +57,7 @@ public class Teacher {
      * The column name for the Work Sunday.
      */
     public static final String WORKSUNDAY_COLUMN_NAME = "workSunday"; 
+    
     
     /**
      * Primary Key: Auto generated Teacher ID number.
@@ -212,5 +213,21 @@ public class Teacher {
 
     public void setWorkSunday(Boolean workSunday) {
         this.workSunday = workSunday;
+    }
+
+    @Override
+    public int compareTo(Teacher o) {
+        // If the teacher id of this teacher is larger than the teacher params teacher id passed in return 1.
+        if (this.getTeacherId() > o.getTeacherId()) {
+            return 1;
+        }    
+        // If the teacher id of this teacher is equal to the teacher params teacher id passed in return 0.
+        else if (this.getTeacherId() == o.getTeacherId()) {
+            return 0;
+        }   
+        // Otherwise the teacher params teacher id passed in is larger so return -1.
+        else {
+            return -1;
+        } 
     }
 }
