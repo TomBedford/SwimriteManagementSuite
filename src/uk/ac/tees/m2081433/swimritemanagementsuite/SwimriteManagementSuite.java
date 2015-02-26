@@ -122,17 +122,13 @@ public class SwimriteManagementSuite {
          */
         
         // CREATE MONDAY DEFAULT TIMESLOTS
-        Timeslot[] timeslotArray = new Timeslot[14];
+        Timeslot[] timeslotArray = new Timeslot[18];
         
         int timeslotTime;
         
         // CREATE MONDAY DEFAULT TIMESLOTS
         timeslotTime = 1400;
         
-        
-        /**
-         * ALSO CREATES TEST DATA FOR EARLY MONDAY CLASSES TO TEST QUERIES
-         */
         for (int i = 0; i < 4; i++) {
             Timeslot timeslot = new Timeslot();
             timeslot.setDay(Day.MONDAY);
@@ -141,7 +137,7 @@ public class SwimriteManagementSuite {
             timeslotTime = timeslotTime + 15;
             smsDatabaseManager.timeslotDAO.create(timeslotArray[i]);
             
-            // Creates Swimming Classes for monday
+            // Creates Swimming Classes for Monday 14:00 - 14:45
             SwimmingClasses class1 = new SwimmingClasses(SwimmingLevel.MOMS_AND_DUCKS, timeslotArray[i], teachers[0], 5);
             SwimmingClasses class2 = new SwimmingClasses(SwimmingLevel.MOMS_AND_DUCKS, timeslotArray[i], teachers[1], 5);
             SwimmingClasses class3 = new SwimmingClasses(SwimmingLevel.MOMS_AND_DUCKS, timeslotArray[i], teachers[2], 5);
@@ -161,7 +157,7 @@ public class SwimriteManagementSuite {
             timeslotTime = timeslotTime + 30;
             smsDatabaseManager.timeslotDAO.create(timeslotArray[i]);
             
-            // Creates Swimming Classes for monday
+            // Creates Swimming Classes for Monday 15:00 - 19:00 (on the hour)
             SwimmingClasses class1 = new SwimmingClasses(SwimmingLevel.DUCKS, timeslotArray[i], teachers[0], 5);
             SwimmingClasses class2 = new SwimmingClasses(SwimmingLevel.BEGINNERS, timeslotArray[i], teachers[1], 5);
             SwimmingClasses class3 = new SwimmingClasses(SwimmingLevel.GRADE_1_MINUS, timeslotArray[i], teachers[2], 5);
@@ -178,7 +174,7 @@ public class SwimriteManagementSuite {
             timeslotTime = timeslotTime + 70;
             smsDatabaseManager.timeslotDAO.create(timeslotArray[i]);
             
-            // Creates more Swimming Classes for monday
+            // Creates more Swimming Classes for Monday 15:30 - 19:30 (on the half of the hour)
             class1 = new SwimmingClasses(SwimmingLevel.DUCKS, timeslotArray[i], teachers[0], 5);
             class2 = new SwimmingClasses(SwimmingLevel.BEGINNERS, timeslotArray[i], teachers[1], 5);
             class3 = new SwimmingClasses(SwimmingLevel.GRADE_1_MINUS, timeslotArray[i], teachers[2], 5);
@@ -187,6 +183,8 @@ public class SwimriteManagementSuite {
             smsDatabaseManager.swimmingClassesDAO.create(class2);
             smsDatabaseManager.swimmingClassesDAO.create(class3);
         }
+        
+        
         
         // CREATE TUESDAY DEFAULT TIMESLOTS
         timeslotTime = 1400;
@@ -198,6 +196,15 @@ public class SwimriteManagementSuite {
             timeslotArray[i] = timeslot;
             timeslotTime = timeslotTime + 15;
             smsDatabaseManager.timeslotDAO.create(timeslotArray[i]);
+            
+            // Creates Swimming Classes for Tuesday 14:00 - 14:45
+            SwimmingClasses class1 = new SwimmingClasses(SwimmingLevel.GRADE_1, timeslotArray[i], teachers[0], 5);
+            SwimmingClasses class2 = new SwimmingClasses(SwimmingLevel.GRADE_1, timeslotArray[i], teachers[1], 5);
+            SwimmingClasses class3 = new SwimmingClasses(SwimmingLevel.GRADE_1, timeslotArray[i], teachers[2], 5);
+
+            smsDatabaseManager.swimmingClassesDAO.create(class1);
+            smsDatabaseManager.swimmingClassesDAO.create(class2);
+            smsDatabaseManager.swimmingClassesDAO.create(class3);
         }
         
         timeslotTime = 1500;
@@ -210,6 +217,15 @@ public class SwimriteManagementSuite {
             timeslotTime = timeslotTime + 30;
             smsDatabaseManager.timeslotDAO.create(timeslotArray[i]);
             
+            // Creates Swimming Classes for Tuesday 15:00 - 19:00 (on the hour)
+            SwimmingClasses class1 = new SwimmingClasses(SwimmingLevel.DUCKS, timeslotArray[i], teachers[0], 5);
+            SwimmingClasses class2 = new SwimmingClasses(SwimmingLevel.BEGINNERS, timeslotArray[i], teachers[1], 5);
+            SwimmingClasses class3 = new SwimmingClasses(SwimmingLevel.GRADE_1_MINUS, timeslotArray[i], teachers[2], 5);
+
+            smsDatabaseManager.swimmingClassesDAO.create(class1);
+            smsDatabaseManager.swimmingClassesDAO.create(class2);
+            smsDatabaseManager.swimmingClassesDAO.create(class3);
+            
             Timeslot timeslot2 = new Timeslot();
             timeslot2.setDay(Day.TUESDAY);
             timeslot2.setTime(timeslotTime);
@@ -217,7 +233,18 @@ public class SwimriteManagementSuite {
             timeslotArray[i] = timeslot2;
             timeslotTime = timeslotTime + 70;
             smsDatabaseManager.timeslotDAO.create(timeslotArray[i]);
+            
+            // Creates more Swimming Classes for Tuesday 15:30 - 19:30 (on the half of the hour)
+            class1 = new SwimmingClasses(SwimmingLevel.DUCKS, timeslotArray[i], teachers[0], 5);
+            class2 = new SwimmingClasses(SwimmingLevel.BEGINNERS, timeslotArray[i], teachers[1], 5);
+            class3 = new SwimmingClasses(SwimmingLevel.GRADE_1_MINUS, timeslotArray[i], teachers[2], 5);
+
+            smsDatabaseManager.swimmingClassesDAO.create(class1);
+            smsDatabaseManager.swimmingClassesDAO.create(class2);
+            smsDatabaseManager.swimmingClassesDAO.create(class3);
         }
+        
+        
         
         // CREATE WEDNESDAY DEFAULT TIMESLOTS
         timeslotTime = 1400;
@@ -229,6 +256,15 @@ public class SwimriteManagementSuite {
             timeslotArray[i] = timeslot;
             timeslotTime = timeslotTime + 15;
             smsDatabaseManager.timeslotDAO.create(timeslotArray[i]);
+            
+            // Creates Swimming Classes for Wednesday 14:00 - 14:45
+            SwimmingClasses class1 = new SwimmingClasses(SwimmingLevel.GRADE_2, timeslotArray[i], teachers[0], 5);
+            SwimmingClasses class2 = new SwimmingClasses(SwimmingLevel.GRADE_2, timeslotArray[i], teachers[1], 5);
+            SwimmingClasses class3 = new SwimmingClasses(SwimmingLevel.GRADE_2, timeslotArray[i], teachers[2], 5);
+
+            smsDatabaseManager.swimmingClassesDAO.create(class1);
+            smsDatabaseManager.swimmingClassesDAO.create(class2);
+            smsDatabaseManager.swimmingClassesDAO.create(class3);
         }
         
         timeslotTime = 1500;
@@ -241,6 +277,15 @@ public class SwimriteManagementSuite {
             timeslotTime = timeslotTime + 30;
             smsDatabaseManager.timeslotDAO.create(timeslotArray[i]);
             
+            // Creates Swimming Classes for Wednesday 15:00 - 19:00 (on the hour)
+            SwimmingClasses class1 = new SwimmingClasses(SwimmingLevel.DUCKS, timeslotArray[i], teachers[0], 5);
+            SwimmingClasses class2 = new SwimmingClasses(SwimmingLevel.BEGINNERS, timeslotArray[i], teachers[1], 5);
+            SwimmingClasses class3 = new SwimmingClasses(SwimmingLevel.GRADE_1_MINUS, timeslotArray[i], teachers[2], 5);
+
+            smsDatabaseManager.swimmingClassesDAO.create(class1);
+            smsDatabaseManager.swimmingClassesDAO.create(class2);
+            smsDatabaseManager.swimmingClassesDAO.create(class3);
+            
             Timeslot timeslot2 = new Timeslot();
             timeslot2.setDay(Day.WEDNESDAY);
             timeslot2.setTime(timeslotTime);
@@ -248,7 +293,18 @@ public class SwimriteManagementSuite {
             timeslotArray[i] = timeslot2;
             timeslotTime = timeslotTime + 70;
             smsDatabaseManager.timeslotDAO.create(timeslotArray[i]);
+            
+            // Creates more Swimming Classes for Wednesday 15:30 - 19:30 (on the half of the hour)
+            class1 = new SwimmingClasses(SwimmingLevel.DUCKS, timeslotArray[i], teachers[0], 5);
+            class2 = new SwimmingClasses(SwimmingLevel.BEGINNERS, timeslotArray[i], teachers[1], 5);
+            class3 = new SwimmingClasses(SwimmingLevel.GRADE_1_MINUS, timeslotArray[i], teachers[2], 5);
+
+            smsDatabaseManager.swimmingClassesDAO.create(class1);
+            smsDatabaseManager.swimmingClassesDAO.create(class2);
+            smsDatabaseManager.swimmingClassesDAO.create(class3);
         }
+        
+        
         
         // CREATE THURSDAY DEFAULT TIMESLOTS
         timeslotTime = 1400;
@@ -260,6 +316,15 @@ public class SwimriteManagementSuite {
             timeslotArray[i] = timeslot;
             timeslotTime = timeslotTime + 15;
             smsDatabaseManager.timeslotDAO.create(timeslotArray[i]);
+            
+            // Creates Swimming Classes for Thursday 14:00 - 14:45
+            SwimmingClasses class1 = new SwimmingClasses(SwimmingLevel.GRADE_3, timeslotArray[i], teachers[0], 5);
+            SwimmingClasses class2 = new SwimmingClasses(SwimmingLevel.GRADE_3, timeslotArray[i], teachers[1], 5);
+            SwimmingClasses class3 = new SwimmingClasses(SwimmingLevel.GRADE_3, timeslotArray[i], teachers[2], 5);
+
+            smsDatabaseManager.swimmingClassesDAO.create(class1);
+            smsDatabaseManager.swimmingClassesDAO.create(class2);
+            smsDatabaseManager.swimmingClassesDAO.create(class3);
         }
         
         timeslotTime = 1500;
@@ -272,6 +337,15 @@ public class SwimriteManagementSuite {
             timeslotTime = timeslotTime + 30;
             smsDatabaseManager.timeslotDAO.create(timeslotArray[i]);
             
+            // Creates Swimming Classes for Thursday 15:00 - 19:00 (on the hour)
+            SwimmingClasses class1 = new SwimmingClasses(SwimmingLevel.DUCKS, timeslotArray[i], teachers[0], 5);
+            SwimmingClasses class2 = new SwimmingClasses(SwimmingLevel.BEGINNERS, timeslotArray[i], teachers[1], 5);
+            SwimmingClasses class3 = new SwimmingClasses(SwimmingLevel.GRADE_1_MINUS, timeslotArray[i], teachers[2], 5);
+
+            smsDatabaseManager.swimmingClassesDAO.create(class1);
+            smsDatabaseManager.swimmingClassesDAO.create(class2);
+            smsDatabaseManager.swimmingClassesDAO.create(class3);
+            
             Timeslot timeslot2 = new Timeslot();
             timeslot2.setDay(Day.THURSDAY);
             timeslot2.setTime(timeslotTime);
@@ -279,7 +353,18 @@ public class SwimriteManagementSuite {
             timeslotArray[i] = timeslot2;
             timeslotTime = timeslotTime + 70;
             smsDatabaseManager.timeslotDAO.create(timeslotArray[i]);
+            
+            // Creates more Swimming Classes for Thursday 15:30 - 19:30 (on the half of the hour)
+            class1 = new SwimmingClasses(SwimmingLevel.DUCKS, timeslotArray[i], teachers[0], 5);
+            class2 = new SwimmingClasses(SwimmingLevel.BEGINNERS, timeslotArray[i], teachers[1], 5);
+            class3 = new SwimmingClasses(SwimmingLevel.GRADE_1_MINUS, timeslotArray[i], teachers[2], 5);
+
+            smsDatabaseManager.swimmingClassesDAO.create(class1);
+            smsDatabaseManager.swimmingClassesDAO.create(class2);
+            smsDatabaseManager.swimmingClassesDAO.create(class3);
         }
+        
+        
         
         // CREATE FRIDAY DEFAULT TIMESLOTS
         timeslotTime = 1400;
@@ -291,6 +376,15 @@ public class SwimriteManagementSuite {
             timeslotArray[i] = timeslot;
             timeslotTime = timeslotTime + 15;
             smsDatabaseManager.timeslotDAO.create(timeslotArray[i]);
+            
+            // Creates Swimming Classes for Friday 14:00 - 14:45
+            SwimmingClasses class1 = new SwimmingClasses(SwimmingLevel.GRADE_4, timeslotArray[i], teachers[0], 5);
+            SwimmingClasses class2 = new SwimmingClasses(SwimmingLevel.GRADE_4, timeslotArray[i], teachers[1], 5);
+            SwimmingClasses class3 = new SwimmingClasses(SwimmingLevel.GRADE_4, timeslotArray[i], teachers[2], 5);
+
+            smsDatabaseManager.swimmingClassesDAO.create(class1);
+            smsDatabaseManager.swimmingClassesDAO.create(class2);
+            smsDatabaseManager.swimmingClassesDAO.create(class3);
         }
         
         timeslotTime = 1500;
@@ -303,6 +397,15 @@ public class SwimriteManagementSuite {
             timeslotTime = timeslotTime + 30;
             smsDatabaseManager.timeslotDAO.create(timeslotArray[i]);
             
+            // Creates Swimming Classes for Friday 15:00 - 19:00 (on the hour)
+            SwimmingClasses class1 = new SwimmingClasses(SwimmingLevel.DUCKS, timeslotArray[i], teachers[0], 5);
+            SwimmingClasses class2 = new SwimmingClasses(SwimmingLevel.BEGINNERS, timeslotArray[i], teachers[1], 5);
+            SwimmingClasses class3 = new SwimmingClasses(SwimmingLevel.GRADE_1_MINUS, timeslotArray[i], teachers[2], 5);
+
+            smsDatabaseManager.swimmingClassesDAO.create(class1);
+            smsDatabaseManager.swimmingClassesDAO.create(class2);
+            smsDatabaseManager.swimmingClassesDAO.create(class3);
+            
             Timeslot timeslot2 = new Timeslot();
             timeslot2.setDay(Day.FRIDAY);
             timeslot2.setTime(timeslotTime);
@@ -310,29 +413,38 @@ public class SwimriteManagementSuite {
             timeslotArray[i] = timeslot2;
             timeslotTime = timeslotTime + 70;
             smsDatabaseManager.timeslotDAO.create(timeslotArray[i]);
+            
+            // Creates more Swimming Classes for Friday 15:30 - 19:30 (on the half of the hour)
+            class1 = new SwimmingClasses(SwimmingLevel.DUCKS, timeslotArray[i], teachers[0], 5);
+            class2 = new SwimmingClasses(SwimmingLevel.BEGINNERS, timeslotArray[i], teachers[1], 5);
+            class3 = new SwimmingClasses(SwimmingLevel.GRADE_1_MINUS, timeslotArray[i], teachers[2], 5);
+
+            smsDatabaseManager.swimmingClassesDAO.create(class1);
+            smsDatabaseManager.swimmingClassesDAO.create(class2);
+            smsDatabaseManager.swimmingClassesDAO.create(class3);
         }
+        
+        
         
         // CREATE SATURDAY DEFAULT TIMESLOTS
-        timeslotTime = 1400;
+        timeslotTime = 900;
         
-        for (int i = 0; i < 4; i++) {
-            Timeslot timeslot = new Timeslot();
-            timeslot.setDay(Day.SATURDAY);
-            timeslot.setTime(timeslotTime);
-            timeslotArray[i] = timeslot;
-            timeslotTime = timeslotTime + 15;
-            smsDatabaseManager.timeslotDAO.create(timeslotArray[i]);
-        }
-        
-        timeslotTime = 1500;
-        
-        for (int i = 4; i < 14; i++) {
+        for (int i = 0; i < 17; i++) {
             Timeslot timeslot1 = new Timeslot();
             timeslot1.setDay(Day.SATURDAY);
             timeslot1.setTime(timeslotTime);
             timeslotArray[i] = timeslot1;
             timeslotTime = timeslotTime + 30;
             smsDatabaseManager.timeslotDAO.create(timeslotArray[i]);
+            
+            // Creates Swimming Classes for Saturday 15:00 - 19:00 (on the hour)
+            SwimmingClasses class1 = new SwimmingClasses(SwimmingLevel.DUCKS, timeslotArray[i], teachers[0], 5);
+            SwimmingClasses class2 = new SwimmingClasses(SwimmingLevel.BEGINNERS, timeslotArray[i], teachers[1], 5);
+            SwimmingClasses class3 = new SwimmingClasses(SwimmingLevel.GRADE_1_MINUS, timeslotArray[i], teachers[2], 5);
+
+            smsDatabaseManager.swimmingClassesDAO.create(class1);
+            smsDatabaseManager.swimmingClassesDAO.create(class2);
+            smsDatabaseManager.swimmingClassesDAO.create(class3);
             
             Timeslot timeslot2 = new Timeslot();
             timeslot2.setDay(Day.SATURDAY);
@@ -341,29 +453,39 @@ public class SwimriteManagementSuite {
             timeslotArray[i] = timeslot2;
             timeslotTime = timeslotTime + 70;
             smsDatabaseManager.timeslotDAO.create(timeslotArray[i]);
+            
+            // Creates more Swimming Classes for Saturday 15:30 - 19:30 (on the half of the hour)
+            class1 = new SwimmingClasses(SwimmingLevel.DUCKS, timeslotArray[i], teachers[0], 5);
+            class2 = new SwimmingClasses(SwimmingLevel.BEGINNERS, timeslotArray[i], teachers[1], 5);
+            class3 = new SwimmingClasses(SwimmingLevel.GRADE_1_MINUS, timeslotArray[i], teachers[2], 5);
+
+            smsDatabaseManager.swimmingClassesDAO.create(class1);
+            smsDatabaseManager.swimmingClassesDAO.create(class2);
+            smsDatabaseManager.swimmingClassesDAO.create(class3);
         }
+        
+        
         
         // CREATE SUNDAY DEFAULT TIMESLOTS
-        timeslotTime = 1400;
         
-        for (int i = 0; i < 4; i++) {
-            Timeslot timeslot = new Timeslot();
-            timeslot.setDay(Day.SUNDAY);
-            timeslot.setTime(timeslotTime);
-            timeslotArray[i] = timeslot;
-            timeslotTime = timeslotTime + 15;
-            smsDatabaseManager.timeslotDAO.create(timeslotArray[i]);
-        }
+        timeslotTime = 900;
         
-        timeslotTime = 1500;
-        
-        for (int i = 4; i < 14; i++) {
+        for (int i = 0; i < 11; i++) {
             Timeslot timeslot1 = new Timeslot();
             timeslot1.setDay(Day.SUNDAY);
             timeslot1.setTime(timeslotTime);
             timeslotArray[i] = timeslot1;
             timeslotTime = timeslotTime + 30;
             smsDatabaseManager.timeslotDAO.create(timeslotArray[i]);
+            
+            // Creates Swimming Classes for Sunday 15:00 - 19:00 (on the hour)
+            SwimmingClasses class1 = new SwimmingClasses(SwimmingLevel.DUCKS, timeslotArray[i], teachers[0], 5);
+            SwimmingClasses class2 = new SwimmingClasses(SwimmingLevel.BEGINNERS, timeslotArray[i], teachers[1], 5);
+            SwimmingClasses class3 = new SwimmingClasses(SwimmingLevel.GRADE_1_MINUS, timeslotArray[i], teachers[2], 5);
+
+            smsDatabaseManager.swimmingClassesDAO.create(class1);
+            smsDatabaseManager.swimmingClassesDAO.create(class2);
+            smsDatabaseManager.swimmingClassesDAO.create(class3);
             
             Timeslot timeslot2 = new Timeslot();
             timeslot2.setDay(Day.SUNDAY);
@@ -372,26 +494,15 @@ public class SwimriteManagementSuite {
             timeslotArray[i] = timeslot2;
             timeslotTime = timeslotTime + 70;
             smsDatabaseManager.timeslotDAO.create(timeslotArray[i]);
+            
+            // Creates more Swimming Classes for Sunday 15:30 - 19:30 (on the half of the hour)
+            class1 = new SwimmingClasses(SwimmingLevel.GRADE_8, timeslotArray[i], teachers[0], 5);
+            class2 = new SwimmingClasses(SwimmingLevel.GRADE_9, timeslotArray[i], teachers[1], 5);
+            class3 = new SwimmingClasses(SwimmingLevel.HONOURS, timeslotArray[i], teachers[2], 5);
+
+            smsDatabaseManager.swimmingClassesDAO.create(class1);
+            smsDatabaseManager.swimmingClassesDAO.create(class2);
+            smsDatabaseManager.swimmingClassesDAO.create(class3);
         }
-        
-        /////////////////////////////////////////////////////////////////////////////////////////////////////
-        
-        
-//        // create attendance record
-//        AttendanceRecord attendance = new AttendanceRecord();
-//        smsDatabaseManager.attendanceRecordDAO.create(attendance);
-//        
-//        
-//        // Create student records for mondays class
-//        Date dob = new Date();
-//        Calendar cal = Calendar.getInstance();
-//        cal.set(Calendar.MONTH, 1);
-//        cal.set(Calendar.DATE, 1);
-//        cal.set(Calendar.YEAR, 1990);
-//        dob = cal.getTime();
-        
-//        StudentRecord studentRecord1 = new StudentRecord("John Doe", dob, 0, "line1, line2, city, count, P05T C0D3", "No", "Jane Doe", SwimmingLevel.BEGINNERS, class1,attendance);
-//        
-//        smsDatabaseManager.studentRecordDAO.create(studentRecord1);
     }
 }

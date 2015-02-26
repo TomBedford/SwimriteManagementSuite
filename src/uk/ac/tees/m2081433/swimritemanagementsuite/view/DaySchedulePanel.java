@@ -39,7 +39,7 @@ public class DaySchedulePanel extends JPanel {
         swimmingClassesController = new SwimmingClassesController();
         
         // sets the smsMainPanel JPanel attributes
-        this.setPreferredSize(new Dimension(1350, 3000));
+        this.setPreferredSize(new Dimension(1360, 3500));
         this.setVisible(true);
         this.setBackground(Color.white);
         this.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -275,9 +275,5 @@ public class DaySchedulePanel extends JPanel {
                 
             }
         }
-        
-        
-        
     }
-    
 }

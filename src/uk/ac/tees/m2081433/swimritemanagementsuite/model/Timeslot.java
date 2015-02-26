@@ -1,6 +1,8 @@
 package uk.ac.tees.m2081433.swimritemanagementsuite.model;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
+import java.util.Collection;
 
 /**
  * This class represents the Timeslot database table showing different timeslots
@@ -45,6 +47,9 @@ public class Timeslot implements Comparable<Timeslot>{
      */
     @DatabaseField (columnName = TIME_COLUMN_NAME, canBeNull = false)
     private int time;
+    
+    @ForeignCollectionField
+    private Collection<SwimmingClasses> swimmingClass;
 
     /**
      * Default constructor of the timeslot class.
@@ -101,10 +106,26 @@ public class Timeslot implements Comparable<Timeslot>{
 
     /**
      * Mutator to set the new time of the timeslot.
-     * @param time The updared time of the timeslot.
+     * @param time The updated time of the timeslot.
      */
     public void setTime(int time) {
         this.time = time;
+    }
+    
+    /**
+     * Accessor to retrieve the swimming classes associated with the timeslot.
+     * @return swimmingClass The swimming class
+     */
+    public Collection<SwimmingClasses> getSwimmingClass() {
+        return swimmingClass;
+    }
+
+    /**
+     * Mutator to set the new swimming classes associated with this timeslot.
+     * @param swimmingClass The updated swimming classes for this timeslot.
+     */
+    public void setSwimmingClass(Collection<SwimmingClasses> swimmingClass) {
+        this.swimmingClass = swimmingClass;
     }
 
     @Override
