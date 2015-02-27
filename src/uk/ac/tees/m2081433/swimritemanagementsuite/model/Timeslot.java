@@ -48,8 +48,11 @@ public class Timeslot implements Comparable<Timeslot>{
     @DatabaseField (columnName = TIME_COLUMN_NAME, canBeNull = false)
     private int time;
     
+    /**
+     * Shows that a timeslot can be associated with multiple swimming classes in a 0 to many relationship.
+     */
     @ForeignCollectionField
-    private Collection<SwimmingClasses> swimmingClass;
+    private Collection<SwimmingClasses> swimmingClasses;
 
     /**
      * Default constructor of the timeslot class.
@@ -114,18 +117,18 @@ public class Timeslot implements Comparable<Timeslot>{
     
     /**
      * Accessor to retrieve the swimming classes associated with the timeslot.
-     * @return swimmingClass The swimming class
+     * @return swimmingClass The swimming classes associated with this timeslot.
      */
-    public Collection<SwimmingClasses> getSwimmingClass() {
-        return swimmingClass;
+    public Collection<SwimmingClasses> getSwimmingClasses() {
+        return swimmingClasses;
     }
 
     /**
      * Mutator to set the new swimming classes associated with this timeslot.
-     * @param swimmingClass The updated swimming classes for this timeslot.
+     * @param swimmingClasses The updated swimming classes for this timeslot.
      */
-    public void setSwimmingClass(Collection<SwimmingClasses> swimmingClass) {
-        this.swimmingClass = swimmingClass;
+    public void setSwimmingClasses(Collection<SwimmingClasses> swimmingClasses) {
+        this.swimmingClasses = swimmingClasses;
     }
 
     @Override

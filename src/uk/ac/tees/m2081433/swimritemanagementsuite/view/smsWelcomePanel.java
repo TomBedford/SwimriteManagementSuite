@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package uk.ac.tees.m2081433.swimritemanagementsuite.view;
 
 import java.awt.BorderLayout;
@@ -14,13 +9,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
- *
- * @author Bedford
+ * The default welcome panel / Homepage when the application loads up.
  */
 public class smsWelcomePanel extends JPanel{
     
+    /**
+     * The default welcome panel of the app, defines the default welcome panel attributes.
+     */
     public smsWelcomePanel() {
-        // sets the smsMainPanel JPanel attributes
+        // sets the smsWelcomePanel JPanels default attributes
         this.setPreferredSize(new Dimension(1375, 565));
         this.setVisible(true);
         this.setBackground(Color.white);
@@ -28,7 +25,7 @@ public class smsWelcomePanel extends JPanel{
         this.setLayout(new BorderLayout());
         
         // Declares the label and label attributes to hold the welcome logo
-        JLabel smsWelcomeLogoLabel = new JLabel();
+        final JLabel smsWelcomeLogoLabel = new JLabel();
         smsWelcomeLogoLabel.setPreferredSize(new Dimension(1375, 565));
         smsWelcomeLogoLabel.setOpaque(true);
         smsWelcomeLogoLabel.setVisible(true);

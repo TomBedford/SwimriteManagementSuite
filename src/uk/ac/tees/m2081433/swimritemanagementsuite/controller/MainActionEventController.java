@@ -14,7 +14,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JToggleButton;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.Day;
 import uk.ac.tees.m2081433.swimritemanagementsuite.view.smsBodyPanel;
@@ -276,27 +275,10 @@ public class MainActionEventController implements ActionListener, MouseListener 
         
     }
     
-    public void displayInitialiseDB() {
+    public void displayInitialiseDB() throws SQLException {
         
-        int answer = JOptionPane.showConfirmDialog(null, 
-                "<HTML> Do you want to <b> <font color='red'> delete </font> </b> <u>all</u> </HTML> \n"
-                        + "- Timeslot Records\n"
-                        + "- Teacher Records\n"
-                        + "- Swimming Class Records\n"
-                        + "<HTML>and reset them to the <u>default</u> values? </HTML>"
-                        , "Format Database?!", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        InitialiseDefaultDatabase initialiseDefaultDatabase = new InitialiseDefaultDatabase();
         
-        // ADD PROPER RED CROSS IMAGE TO DIALOG
-        // ADD PASSWORD CONFIRMATION FOR YES
-        // IF YES DROP TABLE DATA AND INITIALISE DEFAULT DB
-        
-        
-        switch (answer) {
-            case 0:  System.out.println("yes");
-                     break;
-            case 1:  System.out.println("no");
-                     break;
-        }
     }
     
     public void displayWelcomeScreen() {

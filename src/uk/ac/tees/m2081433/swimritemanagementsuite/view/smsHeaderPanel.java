@@ -19,7 +19,7 @@ public class smsHeaderPanel extends JPanel{
     // Declares the name of the smsLogoLabel (to be used as static references in the MouseListener class).
     public static final String SMSLOGOLABEL_NAME = "smsLogoLabel";
     
-    public smsHeaderPanel(smsBodyPanel smsBodyPanel) throws SQLException {
+    public smsHeaderPanel(smsBodyPanel smsBodyPanel) {
         
         // Sets the HomeController JPanel attributes
         this.setPreferredSize(new Dimension(1400, 180));

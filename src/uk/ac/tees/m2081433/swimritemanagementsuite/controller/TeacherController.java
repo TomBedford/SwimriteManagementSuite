@@ -23,7 +23,11 @@ public class TeacherController {
         
     }
     
-    public List<Teacher> getTeachersForDay(Day day) throws SQLException {
+    public List<Teacher> getTeachersForDay(Day day) {
+        
+        List<Teacher> teacherList = null;
+        
+        try {
         // get our query builder from the DAO
         QueryBuilder<Teacher, Integer> queryBuilder = DatabaseManager.teacherDAO.queryBuilder();
         
@@ -68,7 +72,11 @@ public class TeacherController {
         PreparedQuery<Teacher> preparedQuery = queryBuilder.prepare();
         
         // query for all teachers that have the specified work day field set to true.
-        List<Teacher> teacherList = DatabaseManager.teacherDAO.query(preparedQuery);
+        teacherList = DatabaseManager.teacherDAO.query(preparedQuery);
+        
+        } catch (SQLException e) {
+            System.out.println("getTeacherssForDay: Error getting teachers for a specific day.");
+        }
         
         return teacherList;
     }

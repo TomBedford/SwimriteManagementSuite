@@ -18,7 +18,11 @@ public class TimeslotController {
         
     }
     
-    public List<Timeslot> getTimeslotsForDay(Day day) throws SQLException {
+    public List<Timeslot> getTimeslotsForDay(Day day) {
+        
+        List<Timeslot> timeslotList = null;
+        
+        try {
         // get our query builder from the DAO
         QueryBuilder<Timeslot, Integer> queryBuilder = DatabaseManager.timeslotDAO.queryBuilder();
         
@@ -29,9 +33,14 @@ public class TimeslotController {
         PreparedQuery<Timeslot> preparedQuery = queryBuilder.prepare();
         
         // query for all accounts that have "qwerty" as a password
-        List<Timeslot> timeslotList = DatabaseManager.timeslotDAO.query(preparedQuery);
+        timeslotList = DatabaseManager.timeslotDAO.query(preparedQuery);
+        
+        } catch (SQLException e) {
+            System.out.println("getTimeslotsForDay: Error getting timeslots for a specific day.");
+        }
         
         return timeslotList;
+        
     }
     
     /**

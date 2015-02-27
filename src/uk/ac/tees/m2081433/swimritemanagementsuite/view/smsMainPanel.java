@@ -1,16 +1,16 @@
 package uk.ac.tees.m2081433.swimritemanagementsuite.view;
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.*;
-import java.sql.SQLException;
 
 /**
- *
- * @author Bedford
+ * The main panel that holds the header and body panels.
  */
 public class smsMainPanel extends JPanel  {
     
-    public smsMainPanel() throws SQLException {
+    /**
+     * Defines default attributes of the panel and adds the header and body panels to itself.
+     */
+    public smsMainPanel() {
         // sets the smsMainPanel JPanel attributes
         this.setPreferredSize(new Dimension(1400, 800));
         this.setVisible(true);
@@ -18,19 +18,15 @@ public class smsMainPanel extends JPanel  {
         this.setBackground(Color.white);
         
         // Creates the Body Panel
-        smsBodyPanel smsBodyPanel = new smsBodyPanel();
+        final smsBodyPanel smsBodyPanel = new smsBodyPanel();
         
         // Adds the Body Panel to this main panel.
         this.add(smsBodyPanel, BorderLayout.PAGE_END);
         
         // Creates the header panel 
-        smsHeaderPanel smsHeaderPanel = new smsHeaderPanel(smsBodyPanel);
+        final smsHeaderPanel smsHeaderPanel = new smsHeaderPanel(smsBodyPanel);
         
         // Adds the header panel to this main panel.
         this.add(smsHeaderPanel, BorderLayout.PAGE_START);
-        
-        
-        
     }
-    
 }

@@ -27,29 +27,51 @@ public class SwimmingClassesController {
      * @return
      * @throws SQLException 
      */
-    public List<SwimmingClasses> getClassesByDay(Day day) throws SQLException {
+    public List<SwimmingClasses> getClassesByDay(Day day) {
         
-        // Would have liked to have used the query builder, however ORMlite had problems.
+//        // NEW METHOD (EFFICIENT)
+        
+        List<SwimmingClasses> swimmingClassesList = null;
+        
+        try {
+        
         Timeslot timeslot = new Timeslot();
         timeslot.setDay(day);
         
-        List<Timeslot> timeslotList = new ArrayList<>();
+        List<Timeslot> ts2;
+        swimmingClassesList = new ArrayList<>();
         
-        timeslotList = DatabaseManager.timeslotDAO.queryForMatching(timeslot);
-        
-        List<SwimmingClasses> swimmingClassesList = new ArrayList<>();
-        
-        for(Timeslot t : timeslotList) {
+        ts2 = DatabaseManager.timeslotDAO.queryForMatching(timeslot);  
             
-            SwimmingClasses sc = new SwimmingClasses();
-            sc.setTimeslot(t);
-            
-            List<SwimmingClasses> swimmingClassesByTimeslot = new ArrayList<>();
-            swimmingClassesByTimeslot = DatabaseManager.swimmingClassesDAO.queryForMatching(sc);
-            swimmingClassesList.addAll(swimmingClassesList.size()  , swimmingClassesByTimeslot);
+        for (Timeslot t : ts2) {
+            swimmingClassesList.addAll(swimmingClassesList.size(), t.getSwimmingClasses());
+        }
+        
+        } catch (SQLException e) {
+            System.out.println("getTeacherssForDay: Error getting teachers for a specific day.");
         }
         
         return swimmingClassesList;
+        
+        //        // METHOD 1 (OLD AND NOT EFFICIENT).
+//        Timeslot timeslot = new Timeslot();
+//        timeslot.setDay(day);
+//        
+//        List<Timeslot> timeslotList = new ArrayList<>();
+//        
+//        timeslotList = DatabaseManager.timeslotDAO.queryForMatching(timeslot);
+//        
+//        List<SwimmingClasses> swimmingClassesList = new ArrayList<>();
+//        
+//        for(Timeslot t : timeslotList) {
+//            
+//            SwimmingClasses sc = new SwimmingClasses();
+//            sc.setTimeslot(t);
+//            
+//            List<SwimmingClasses> swimmingClassesByTimeslot = new ArrayList<>();
+//            swimmingClassesByTimeslot = DatabaseManager.swimmingClassesDAO.queryForMatching(sc);
+//            swimmingClassesList.addAll(swimmingClassesList.size()  , swimmingClassesByTimeslot);
+//        }
     }
     
     /**

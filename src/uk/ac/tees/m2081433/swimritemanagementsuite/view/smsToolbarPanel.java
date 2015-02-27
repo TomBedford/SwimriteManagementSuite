@@ -3,7 +3,6 @@ package uk.ac.tees.m2081433.swimritemanagementsuite.view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.sql.SQLException;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -51,7 +50,7 @@ public class smsToolbarPanel extends JPanel {
     
     MainActionEventController mainActionEventControllerRef;
     
-    public smsToolbarPanel(MainActionEventController mainActionEventController) throws SQLException {
+    public smsToolbarPanel(MainActionEventController mainActionEventController) {
         
         mainActionEventControllerRef = mainActionEventController;
         

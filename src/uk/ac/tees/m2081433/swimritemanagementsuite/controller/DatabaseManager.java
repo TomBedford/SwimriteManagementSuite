@@ -37,6 +37,10 @@ public class DatabaseManager {
      */
     private final String dbPassword = "root";
     
+    /**
+     * This is the connection source to the Swimrite Management System database.
+     */
+    public static JdbcConnectionSource connectionSource;
     
     /**
      * The Data Access Object used to access the Teacher table in the mySQL database.
@@ -77,13 +81,6 @@ public class DatabaseManager {
      * The Data Access Object used to access the Timeslot table in the mySQL database.
      */
     public static Dao<Timeslot, Integer> timeslotDAO;
-    
-    /**
-     * Default constructor of the database manager class.
-     */
-    public void DatabaseManager() {
-
-    }
 
     /**
      * Creates and returns the database JDBC connection source that links to the Swimrite Management Suite online MySQL
@@ -93,7 +90,7 @@ public class DatabaseManager {
      */
     public JdbcConnectionSource createDatabaseConnection() {
         
-        JdbcConnectionSource connectionSource = null;
+        connectionSource = null;
 
         try {
             // create our data source.
@@ -136,7 +133,7 @@ public class DatabaseManager {
      *
      * @param connectionSource The JBDC connection source to the Swimrite Management Suite MySQL database.
      */
-    public void initializeDaos(JdbcConnectionSource connectionSource) throws Exception {
+    public void initializeDaos(JdbcConnectionSource connectionSource) {
         
         try {
             studentAddressDAO = DaoManager.createDao(connectionSource, StudentAddress.class);

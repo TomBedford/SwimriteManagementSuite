@@ -1,6 +1,8 @@
 package uk.ac.tees.m2081433.swimritemanagementsuite.model;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
+import java.util.Collection;
 
 /**
  * This class represents the Teacher database table showing teachers working at 
@@ -114,6 +116,12 @@ public class Teacher implements Comparable<Teacher>{
     private Boolean workSunday;    
     
     /**
+     * Shows that a Teacher can be associated with multiple swimming classes in a 0 to many relationship.
+     */
+    @ForeignCollectionField
+    private Collection<SwimmingClasses> swimmingClasses;
+    
+    /**
      * Default constructor of the Teacher class.
      */
     public Teacher() {
@@ -213,6 +221,22 @@ public class Teacher implements Comparable<Teacher>{
 
     public void setWorkSunday(Boolean workSunday) {
         this.workSunday = workSunday;
+    }
+    
+    /**
+     * Accessor to retrieve the swimming classes associated with the teacher.
+     * @return swimmingClasses The swimming classes the teacher is associated with
+     */
+    public Collection<SwimmingClasses> getSwimmingClasses() {
+        return swimmingClasses;
+    }
+
+    /**
+     * Mutator to set the new swimming classes associated with this teacher.
+     * @param swimmingClasses The updated swimming classes for this teacher.
+     */
+    public void setSwimmingClasses(Collection<SwimmingClasses> swimmingClasses) {
+        this.swimmingClasses = swimmingClasses;
     }
 
     @Override
