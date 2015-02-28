@@ -63,6 +63,8 @@ public class StudentRecord {
      */
     public static final String STUDENTATTENDANCE_COLUMN_NAME = "attendance";
     
+    
+    
     /**
      * Primary Key: Auto generated student record ID number.
      */
@@ -90,7 +92,7 @@ public class StudentRecord {
     /**
      * The address of the student (field cannot be null).
      */
-    @DatabaseField (columnName = STUDENTADDRESS_COLUMN_NAME, foreign = true, canBeNull = false)
+    @DatabaseField (columnName = STUDENTADDRESS_COLUMN_NAME, canBeNull = false, foreign = true)
     StudentAddress studentAddress;
     
     /**
@@ -123,6 +125,8 @@ public class StudentRecord {
      */
     @DatabaseField(columnName = STUDENTATTENDANCE_COLUMN_NAME, canBeNull = false, foreign = true)
     private AttendanceRecord attendance;
+    
+    
 
     /**
      * Default constructor of the Student Record class.
@@ -155,6 +159,8 @@ public class StudentRecord {
         this.swimmingClass = swimmingClass;
         this.attendance = attendance;
     }
+    
+    
 
     /**
      * Accessor to retrieve the auto generated Student Id.
