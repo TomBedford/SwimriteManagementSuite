@@ -1,4 +1,5 @@
 package uk.ac.tees.m2081433.swimritemanagementsuite.model;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -7,8 +8,6 @@ import com.j256.ormlite.table.DatabaseTable;
  * their lesson blocks, declaring database fields and specific attributes of the fields. 
  * Accessor and mutator methods are also available for each of the fields 
  * (except a mutator for the auto generated ID).
- * 
- * @author Thomas Bedford (m2081433)
  */
 @DatabaseTable(tableName = "AttendanceRecord")
 public class AttendanceRecord {
@@ -23,6 +22,8 @@ public class AttendanceRecord {
      */
     public static final String LESSONBLOCK_COLUMN_NAME = "lessonBlock"; 
     
+    
+    
     /**
      * Primary Key: Auto generated Attendance Record ID number.
      */
@@ -35,6 +36,8 @@ public class AttendanceRecord {
     @DatabaseField (columnName = LESSONBLOCK_COLUMN_NAME, foreign = true)
     private LessonBlock lessonBlock;
 
+    
+    
     /**
      * Default constructor of the Attendance Record class.
      */
@@ -50,6 +53,8 @@ public class AttendanceRecord {
         this.lessonBlock = lessonBlock;
     }
 
+    
+    
     /**
      * Accessor to retrieve the auto generated attendance record Id.
      * @return attendanceId The auto generated attendance record Id.

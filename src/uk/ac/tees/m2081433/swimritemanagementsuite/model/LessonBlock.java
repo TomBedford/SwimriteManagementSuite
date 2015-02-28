@@ -1,4 +1,5 @@
 package uk.ac.tees.m2081433.swimritemanagementsuite.model;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import java.util.Date;
@@ -9,8 +10,6 @@ import java.util.Date;
  * specific attributes of the fields. 
  * Accessor and mutator methods are also available for each of the fields 
  * (except a mutator for the auto generated ID).
- * 
- * @author Thomas Bedford (m2081433)
  */
 @DatabaseTable(tableName = "LessonBlock")
 public class LessonBlock {
@@ -260,6 +259,7 @@ public class LessonBlock {
     private AttendanceType lesson10Attendance;
     
 
+    
     /**
      * Default constructor of the Lesson Block class.
      */
@@ -297,6 +297,8 @@ public class LessonBlock {
         this.lesson10Date = lesson1Date;
         
     }
+    
+    
 
     /**
      * Accessor to retrieve the auto generated Lesson Block Id.

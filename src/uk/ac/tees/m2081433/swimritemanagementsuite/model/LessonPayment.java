@@ -1,4 +1,5 @@
 package uk.ac.tees.m2081433.swimritemanagementsuite.model;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import java.util.Date;
@@ -8,8 +9,6 @@ import java.util.Date;
  * lesson block payments, declaring database fields and specific attributes of the fields. 
  * Accessor and mutator methods are also available for each of the fields 
  * (except a mutator for the auto generated ID).
- * 
- * @author Thomas Bedford (m2081433)
  */
 @DatabaseTable(tableName = "LessonPayment")
 public class LessonPayment {
@@ -38,6 +37,8 @@ public class LessonPayment {
      * The column name for the Payment Takers Name.
      */
     public static final String PAYMENTTAKER_COLUMN_NAME = "paymentTaker"; 
+    
+    
     
     /**
      * Primary Key: Auto generated Payment ID number.
@@ -69,6 +70,8 @@ public class LessonPayment {
     @DatabaseField (columnName = PAYMENTTAKER_COLUMN_NAME, canBeNull = false)
     private String paymentTaker;
     
+    
+    
     /**
      * Default constructor of the Lesson Payment class.
      */
@@ -89,6 +92,8 @@ public class LessonPayment {
         this.paymentAmount = paymentAmount;
         this.paymentTaker = paymentTaker;
     }
+    
+    
 
     /**
      * Accessor to retrieve the auto generated payment Id.

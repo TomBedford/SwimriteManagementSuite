@@ -1,17 +1,16 @@
 package uk.ac.tees.m2081433.swimritemanagementsuite.model;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 /**
- * This class represents the Swimming Classes database table showing all classes running at 
- Swimrite Leisure, declaring database fields and specific attributes of the fields. 
+ * This class represents the Swimming Classes database table showing all classes running at
+ * Swimrite Leisure, declaring database fields and specific attributes of the fields. 
  * Accessor and mutator methods are also available for each of the fields 
  * (except a mutator for the auto generated ID).
- * 
- * @author Thomas Bedford (m2081433)
  */
 @DatabaseTable(tableName = "SwimmingClasses")
-public class SwimmingClasses implements Comparable<SwimmingClasses>{
+public class SwimmingClasses implements Comparable<SwimmingClasses> {
     
     /**
      * The column name for the Class ID.
@@ -43,6 +42,8 @@ public class SwimmingClasses implements Comparable<SwimmingClasses>{
      */
     public static final String CURRENTCAPACITY_COLUMN_NAME = "currentCapacity";
     
+    
+    
     /**
      * Primary Key: Auto generated Class ID number.
      */
@@ -54,7 +55,6 @@ public class SwimmingClasses implements Comparable<SwimmingClasses>{
      */
     @DatabaseField (columnName = CLASSTYPE_COLUMN_NAME, canBeNull = false)
     private SwimmingLevel classType;
-    
     
     /**
      * Foreign Key: The timeslot (day/time) of the class.
@@ -80,6 +80,8 @@ public class SwimmingClasses implements Comparable<SwimmingClasses>{
     @DatabaseField (columnName = CURRENTCAPACITY_COLUMN_NAME, canBeNull = false)
     private int currentCapacity;
     
+    
+    
     /**
      * Default constructor of the Classes class.
      */
@@ -101,6 +103,8 @@ public class SwimmingClasses implements Comparable<SwimmingClasses>{
         this.maxCapacity = maxCapacity;
         this.currentCapacity = 0;
     }
+    
+    
 
     /**
      * Accessor to retrieve the auto generated class Id.
@@ -189,20 +193,27 @@ public class SwimmingClasses implements Comparable<SwimmingClasses>{
     public void setCurrentCapacity(int currentCapacity) {
         this.currentCapacity = currentCapacity;
     }
+    
+    
 
+    /**
+     * Overided method to compare and sort Swimming Classes by their Teachers ID (in ascending order).
+     * @param o The swimming class to compare against.
+     * @return Int - Result changes depending on the outcome of the comparison.
+     */
     @Override
     public int compareTo(SwimmingClasses o) {
         // Compare the teacher id of this swimming class with the one passed in.
         if (this.getTeacher().getTeacherId() > o.getTeacher().getTeacherId()) {
             // If this swimming classes teachers id is larger return 1.
             return 1;
-        }    
+         
         // If the teacher id of this swimming class is equal to the one passed in return 0.
-        else if (this.getTeacher().getTeacherId() == o.getTeacher().getTeacherId()) {
+        } else if (this.getTeacher().getTeacherId() == o.getTeacher().getTeacherId()) {
             return 0;
-        }   
+            
         // Otherwise the teacher id passed in is larger so return -1.
-        else {
+        } else {
             return -1;
         } 
     }

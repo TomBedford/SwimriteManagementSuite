@@ -1,9 +1,21 @@
 package uk.ac.tees.m2081433.swimritemanagementsuite.model;
 
 /**
- *
- * @author Bedford
+ * Enum for the different types of payment for a lesson payment.
  */
 public enum PaymentType {
-    CARD, CHEQUE, CASH
+    /**
+     * Payment by credit or debit card.
+     */
+    CARD, 
+    
+    /**
+     * Payment by cheque.
+     */
+    CHEQUE, 
+    
+    /**
+     * Payment by cash.
+     */
+    CASH
 }

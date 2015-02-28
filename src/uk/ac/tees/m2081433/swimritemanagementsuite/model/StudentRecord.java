@@ -1,4 +1,5 @@
 package uk.ac.tees.m2081433.swimritemanagementsuite.model;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import java.util.Date;
@@ -8,8 +9,6 @@ import java.util.Date;
  * information etc, declaring database fields and specific attributes of the fields. 
  * Accessor and mutator methods are also available for each of the fields 
  * (except a mutator for the auto generated ID).
- * 
- * @author Thomas Bedford (m2081433)
  */
 @DatabaseTable(tableName = "StudentRecord")
 public class StudentRecord {
@@ -91,8 +90,8 @@ public class StudentRecord {
     /**
      * The address of the student (field cannot be null).
      */
-    @DatabaseField (columnName = STUDENTADDRESS_COLUMN_NAME, canBeNull = false)
-    private String studentAddress;
+    @DatabaseField (columnName = STUDENTADDRESS_COLUMN_NAME, foreign = true, canBeNull = false)
+    StudentAddress studentAddress;
     
     /**
      * String containing information as to whether the student has any 
@@ -144,7 +143,7 @@ public class StudentRecord {
      * @param swimmingClass The class the student is in.
      * @param attendance The attendance record of the student.
      */
-    public StudentRecord(String studentName, Date studentDOB, int telephoneNo, String studentAddress, 
+    public StudentRecord(String studentName, Date studentDOB, int telephoneNo, StudentAddress studentAddress, 
                             String hasIllness, String parentName, SwimmingLevel abilityLevel, SwimmingClasses swimmingClass, AttendanceRecord attendance) {
         this.studentName = studentName;
         this.studentDOB = studentDOB;
@@ -217,7 +216,7 @@ public class StudentRecord {
      * Accessor to retrieve the address of the student.
      * @return studentAddress The address of the student.
      */
-    public String getStudentAddress() {
+    public StudentAddress getStudentAddress() {
         return studentAddress;
     }
 
@@ -225,7 +224,7 @@ public class StudentRecord {
      * Mutator to set the new address of the student.
      * @param studentAddress The updated address of the student.
      */
-    public void setStudentAddress(String studentAddress) {
+    public void setStudentAddress(StudentAddress studentAddress) {
         this.studentAddress = studentAddress;
     }
 

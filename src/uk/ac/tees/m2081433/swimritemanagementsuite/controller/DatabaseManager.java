@@ -43,11 +43,6 @@ public class DatabaseManager {
     public static JdbcConnectionSource connectionSource;
     
     /**
-     * The Data Access Object used to access the Teacher table in the mySQL database.
-     */
-    public static Dao<StudentAddress, Integer> studentAddressDAO;
-    
-    /**
      * The data access object used to access the Attendance Record table in the mySQL database.
      */
     public static Dao<AttendanceRecord, Integer> attendanceRecordDAO;
@@ -61,6 +56,11 @@ public class DatabaseManager {
      * The Data Access Object used to access the Lesson Payment table in the mySQL database.
      */
     public static Dao<LessonPayment, Integer> lessonPaymentDAO;
+    
+    /**
+     * The Data Access Object used to access the Student Address table in the mySQL database.
+     */
+    public static Dao<StudentAddress, Integer> studentAddressDAO;
     
     /**
      * The Data Access Object used to access the Student Record table in the mySQL database.
@@ -93,9 +93,8 @@ public class DatabaseManager {
         connectionSource = null;
 
         try {
-            // create our data source.
+            // Create our data source.
             connectionSource = new JdbcConnectionSource(DATABASE_URL, dbUsername, dbPassword);
-            System.out.println("Connection Source set up correctly");
         } catch (SQLException e) {
             // print stack trace to help diagnose error + appropriate message to console.
             e.printStackTrace();
@@ -112,18 +111,18 @@ public class DatabaseManager {
     public void setupDatabase(JdbcConnectionSource connectionSource) {
 
         try {
-            //Creates all tables within the database if they do not already exist.
-            TableUtils.createTableIfNotExists(connectionSource, StudentAddress.class);
+            // Creates all tables within the database if they do not already exist.
             TableUtils.createTableIfNotExists(connectionSource, AttendanceRecord.class);
             TableUtils.createTableIfNotExists(connectionSource, SwimmingClasses.class);
             TableUtils.createTableIfNotExists(connectionSource, LessonBlock.class);
             TableUtils.createTableIfNotExists(connectionSource, LessonPayment.class);
+            TableUtils.createTableIfNotExists(connectionSource, StudentAddress.class);
             TableUtils.createTableIfNotExists(connectionSource, StudentRecord.class);
             TableUtils.createTableIfNotExists(connectionSource, Teacher.class);
             TableUtils.createTableIfNotExists(connectionSource, Timeslot.class);
         } catch (SQLException e) {
-            // print stack trace to help diagnose error + appropriate message to console.
-            //e.printStackTrace();
+            // Print stack trace to help diagnose error + appropriate message to console.
+            e.printStackTrace();
             System.out.println("setupDatabase: Error creating database tables");
         }
     }
@@ -136,18 +135,19 @@ public class DatabaseManager {
     public void initializeDaos(JdbcConnectionSource connectionSource) {
         
         try {
-            studentAddressDAO = DaoManager.createDao(connectionSource, StudentAddress.class);
+            // Initialises all database acces objects for each table within the db.
             attendanceRecordDAO = DaoManager.createDao(connectionSource, AttendanceRecord.class);
             lessonBlockDAO = DaoManager.createDao(connectionSource, LessonBlock.class);
             lessonPaymentDAO = DaoManager.createDao(connectionSource, LessonPayment.class);
+            studentAddressDAO = DaoManager.createDao(connectionSource, StudentAddress.class);
             studentRecordDAO = DaoManager.createDao(connectionSource, StudentRecord.class);
             swimmingClassesDAO = DaoManager.createDao(connectionSource, SwimmingClasses.class);
             teacherDAO = DaoManager.createDao(connectionSource, Teacher.class);
             timeslotDAO = DaoManager.createDao(connectionSource, Timeslot.class);
         } catch (SQLException e) {
-            // print stack trace to help diagnose error + appropriate message to console.
+            // Print stack trace to help diagnose error + appropriate message to console.
             e.printStackTrace();
-            System.out.println("initializeDaos: Error initializing the Address database access objects");
+            System.out.println("initializeDaos: Error initializing the database access objects");
         }
     }
 }

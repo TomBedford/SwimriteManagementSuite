@@ -1,4 +1,5 @@
 package uk.ac.tees.m2081433.swimritemanagementsuite.model;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
@@ -9,11 +10,9 @@ import java.util.Collection;
  * available for classes, declaring database fields and specific attributes of the fields. 
  * Accessor and mutator methods are also available for each of the fields 
  * (except a mutator for the auto generated ID).
- * 
- * @author Thomas Bedford (m2081433)
  */
 @DatabaseTable(tableName = "Timeslot")
-public class Timeslot implements Comparable<Timeslot>{
+public class Timeslot implements Comparable<Timeslot> {
     
     /**
      * The column name for the Timeslot ID.
@@ -29,6 +28,8 @@ public class Timeslot implements Comparable<Timeslot>{
      * The column name for the Class ID.
      */
     public static final String TIME_COLUMN_NAME = "time";
+    
+    
     
     /**
      * Primary Key: Auto generated Timeslot ID number.
@@ -53,6 +54,8 @@ public class Timeslot implements Comparable<Timeslot>{
      */
     @ForeignCollectionField
     private Collection<SwimmingClasses> swimmingClasses;
+    
+    
 
     /**
      * Default constructor of the timeslot class.
@@ -70,6 +73,8 @@ public class Timeslot implements Comparable<Timeslot>{
         this.day = day;
         this.time = time;
     }
+    
+    
 
     /**
      * Accessor to retrieve the auto generated timeslot Id.
@@ -77,10 +82,6 @@ public class Timeslot implements Comparable<Timeslot>{
      */
     public int getTimeslotId() {
         return timeslotId;
-    }
-    
-    public void setTimeslotId(int timeslotId) {
-        this.timeslotId = timeslotId;
     }
 
     /**
@@ -130,19 +131,25 @@ public class Timeslot implements Comparable<Timeslot>{
     public void setSwimmingClasses(Collection<SwimmingClasses> swimmingClasses) {
         this.swimmingClasses = swimmingClasses;
     }
-
+    
+    
+    /**
+     * Overided method to compare and sort Timeslots by their Time field (in ascending order).
+     * @param o The Timeslot to compare against.
+     * @return Int - Result changes depending on the outcome of the comparison.
+     */
     @Override
     public int compareTo(Timeslot o) {
         // If the time of this timeslot is larger than the timeslot params time passed in return 1.
         if (this.getTime() > o.getTime()) {
             return 1;
-        }    
+            
         // If the time of this timeslot is equal to the timeslot params time passed in return 0.
-        else if (this.getTime() == o.getTime()) {
+        } else if (this.getTime() == o.getTime()) {
             return 0;
-        }   
+           
         // Otherwise the timeslot params time passed in is larger so return -1.
-        else {
+        } else {
             return -1;
         } 
     }

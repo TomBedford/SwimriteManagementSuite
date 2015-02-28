@@ -1,4 +1,5 @@
 package uk.ac.tees.m2081433.swimritemanagementsuite.model;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
@@ -9,11 +10,9 @@ import java.util.Collection;
  * Swimrite Leisure, declaring database fields and specific attributes of the fields. 
  * Accessor and mutator methods are also available for each of the fields 
  * (except a mutator for the auto generated ID).
- * 
- * @author Thomas Bedford (m2081433)
  */
 @DatabaseTable(tableName = "Teacher")
-public class Teacher implements Comparable<Teacher>{
+public class Teacher implements Comparable<Teacher> {
     
     /**
      * The column name for the Teacher ID.
@@ -59,6 +58,7 @@ public class Teacher implements Comparable<Teacher>{
      * The column name for the Work Sunday.
      */
     public static final String WORKSUNDAY_COLUMN_NAME = "workSunday"; 
+    
     
     
     /**
@@ -121,6 +121,8 @@ public class Teacher implements Comparable<Teacher>{
     @ForeignCollectionField
     private Collection<SwimmingClasses> swimmingClasses;
     
+    
+    
     /**
      * Default constructor of the Teacher class.
      */
@@ -142,6 +144,8 @@ public class Teacher implements Comparable<Teacher>{
         this.workSaturday = false;
         this.workSunday = false;
     }
+    
+    
 
     /**
      * Accessor to retrieve the auto generated teacher Id.
@@ -167,58 +171,114 @@ public class Teacher implements Comparable<Teacher>{
         this.teacherName = teacherName;
     }
 
+    /**
+     * Accessor to retrieve the boolean as to whether the teacher works on Monday.
+     * @return workMonday boolean as to whether the teacher works on Monday
+     */
     public Boolean getWorkMonday() {
         return workMonday;
     }
 
+    /**
+     * Mutator to set whether a teacher works on Monday or not.
+     * @param workMonday The new boolean as to whether they work on Monday or not.
+     */
     public void setWorkMonday(Boolean workMonday) {
         this.workMonday = workMonday;
     }
 
+    /**
+     * Accessor to retrieve the boolean as to whether the teacher works on Tuesday.
+     * @return workTuesday boolean as to whether the teacher works on Tuesday
+     */
     public Boolean getWorkTuesday() {
         return workTuesday;
     }
 
+    /**
+     * Mutator to set whether a teacher works on Tuesday or not.
+     * @param workTuesday The new boolean as to whether they work on Tuesday or not.
+     */
     public void setWorkTuesday(Boolean workTuesday) {
         this.workTuesday = workTuesday;
     }
 
+    /**
+     * Accessor to retrieve the boolean as to whether the teacher works on Wednesday.
+     * @return workWednesday boolean as to whether the teacher works on Wednesday
+     */
     public Boolean getWorkWednesday() {
         return workWednesday;
     }
 
+    /**
+     * Mutator to set whether a teacher works on Wednesday or not.
+     * @param workWednesday The new boolean as to whether they work on Wednesday or not.
+     */
     public void setWorkWednesday(Boolean workWednesday) {
         this.workWednesday = workWednesday;
     }
 
+    /**
+     * Accessor to retrieve the boolean as to whether the teacher works on Thursday.
+     * @return workThursday boolean as to whether the teacher works on Thursday.
+     */
     public Boolean getWorkThursday() {
         return workThursday;
     }
 
+    /**
+     * Mutator to set whether a teacher works on Thursday or not.
+     * @param workThursday The new boolean as to whether they work on Thursday or not.
+     */
     public void setWorkThursday(Boolean workThursday) {
         this.workThursday = workThursday;
     }
 
+    /**
+     * Accessor to retrieve the boolean as to whether the teacher works on Friday.
+     * @return workFriday boolean as to whether the teacher works on Friday
+     */
     public Boolean getWorkFriday() {
         return workFriday;
     }
 
+    /**
+     * Mutator to set whether a teacher works on Friday or not.
+     * @param workFriday The new boolean as to whether they work on Friday or not.
+     */
     public void setWorkFriday(Boolean workFriday) {
         this.workFriday = workFriday;
     }
 
+    /**
+     * Accessor to retrieve the boolean as to whether the teacher works on Saturday.
+     * @return workSaturday boolean as to whether the teacher works on Saturday
+     */
     public Boolean getWorkSaturday() {
         return workSaturday;
     }
 
+    /**
+     * Mutator to set whether a teacher works on Saturday or not.
+     * @param workSaturday The new boolean as to whether they work on Saturday or not.
+     */
     public void setWorkSaturday(Boolean workSaturday) {
         this.workSaturday = workSaturday;
     }
 
+    /**
+     * Accessor to retrieve the boolean as to whether the teacher works on Sunday.
+     * @return workSunday boolean as to whether the teacher works on Sunday
+     */
     public Boolean getWorkSunday() {
         return workSunday;
     }
 
+    /**
+     * Mutator to set whether a teacher works on Sunday or not.
+     * @param workSunday The new boolean as to whether they work on Sunday or not.
+     */
     public void setWorkSunday(Boolean workSunday) {
         this.workSunday = workSunday;
     }
@@ -238,19 +298,26 @@ public class Teacher implements Comparable<Teacher>{
     public void setSwimmingClasses(Collection<SwimmingClasses> swimmingClasses) {
         this.swimmingClasses = swimmingClasses;
     }
-
+    
+    
+    
+    /**
+     * Overided method to compare and sort Teachers by their Teachers ID (in ascending order).
+     * @param o The Teacher to compare against.
+     * @return Int - Result changes depending on the outcome of the comparison.
+     */
     @Override
     public int compareTo(Teacher o) {
         // If the teacher id of this teacher is larger than the teacher params teacher id passed in return 1.
         if (this.getTeacherId() > o.getTeacherId()) {
             return 1;
-        }    
+            
         // If the teacher id of this teacher is equal to the teacher params teacher id passed in return 0.
-        else if (this.getTeacherId() == o.getTeacherId()) {
+        } else if (this.getTeacherId() == o.getTeacherId()) {
             return 0;
-        }   
+           
         // Otherwise the teacher params teacher id passed in is larger so return -1.
-        else {
+        } else {
             return -1;
         } 
     }
