@@ -252,11 +252,11 @@ public class MainActionEventController implements ActionListener, MouseListener 
     }
     
     public void displayViewAllSR() {
-        
+        smsBodyPanelRef.addViewAllSRPanel();
     }
     
     public void displayAddSR() {
-        
+        smsBodyPanelRef.addAddSRPanel();
     }
     
     public void displayViewAllST() {

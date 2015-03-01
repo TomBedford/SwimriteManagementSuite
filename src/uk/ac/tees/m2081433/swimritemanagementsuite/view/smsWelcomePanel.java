@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 /**
  * The default welcome panel / Homepage when the application loads up.
  */
-public class smsWelcomePanel extends JPanel{
+public class smsWelcomePanel extends JPanel {
     
     /**
      * The default welcome panel of the app, defines the default welcome panel attributes.

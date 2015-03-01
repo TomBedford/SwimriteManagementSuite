@@ -43,11 +43,6 @@ public class DatabaseManager {
     public static JdbcConnectionSource connectionSource;
     
     /**
-     * The data access object used to access the Attendance Record table in the mySQL database.
-     */
-    public static Dao<AttendanceRecord, Integer> attendanceRecordDAO;
-    
-    /**
      * The Data Access Object used to access the Lesson Block table in the mySQL database.
      */
     public static Dao<LessonBlock, Integer> lessonBlockDAO;
@@ -112,7 +107,6 @@ public class DatabaseManager {
 
         try {
             // Creates all tables within the database if they do not already exist.
-            TableUtils.createTableIfNotExists(connectionSource, AttendanceRecord.class);
             TableUtils.createTableIfNotExists(connectionSource, SwimmingClasses.class);
             TableUtils.createTableIfNotExists(connectionSource, LessonBlock.class);
             TableUtils.createTableIfNotExists(connectionSource, LessonPayment.class);
@@ -136,7 +130,6 @@ public class DatabaseManager {
         
         try {
             // Initialises all database acces objects for each table within the db.
-            attendanceRecordDAO = DaoManager.createDao(connectionSource, AttendanceRecord.class);
             lessonBlockDAO = DaoManager.createDao(connectionSource, LessonBlock.class);
             lessonPaymentDAO = DaoManager.createDao(connectionSource, LessonPayment.class);
             studentAddressDAO = DaoManager.createDao(connectionSource, StudentAddress.class);

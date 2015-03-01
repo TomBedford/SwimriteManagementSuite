@@ -10,7 +10,6 @@ import uk.ac.tees.m2081433.swimritemanagementsuite.model.Timeslot;
 
 /**
  *
- * @author Bedford
  */
 public class TimeslotController {
     

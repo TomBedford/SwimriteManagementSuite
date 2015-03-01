@@ -35,6 +35,20 @@ public class smsBodyPanel extends JPanel {
     }
     
     /**
+     * Adds a panel to this body panel and sets it as the currently displayed panel.
+     * @param panelToDisplay The JPanel to display on the body panel.
+     */
+    public void addCurrentlyDisplayedPanel(JPanel panelToDisplay) {
+        // Adds the panel provided as a param to the currently displayed panel scroll pane and sets the size of it.
+        currentlyDisplayedPanel = new JScrollPane(panelToDisplay);
+        currentlyDisplayedPanel.setPreferredSize(new Dimension(1380, 575));
+        
+        // Adds the scroll pane to the body panel and updates the ui.
+        this.add(currentlyDisplayedPanel);
+        this.updateUI(); 
+    }
+    
+    /**
      * Removes the currently displayed panel on the body panel.
      */
     public void removeCurrentlyDisplayedPanel() {
@@ -52,13 +66,7 @@ public class smsBodyPanel extends JPanel {
         // initialises the welcome panel.
         smsWelcomePanel = new smsWelcomePanel();
         
-        // Adds the welcome panel to a scroll pane and sets the size of it.
-        currentlyDisplayedPanel = new JScrollPane(smsWelcomePanel);
-        currentlyDisplayedPanel.setPreferredSize(new Dimension(1380, 575));
-        
-        // Adds the scroll pane to the body panel and updates the ui.
-        this.add(currentlyDisplayedPanel);
-        this.updateUI(); 
+        addCurrentlyDisplayedPanel(smsWelcomePanel);
     }
     
     /**
@@ -66,7 +74,7 @@ public class smsBodyPanel extends JPanel {
      * @param day The specified day to load the schedule for.
      */
     public void addSchedulePanel(Day day) {
-        // Removes the currently displayed panel.
+        // Removes the currently displayed panel from this body panel.
         removeCurrentlyDisplayedPanel();
         
         // sets the correct toggle button to the selected on the toolbar (when selected from the menu bar)
@@ -89,14 +97,30 @@ public class smsBodyPanel extends JPanel {
         // creates the schedule panel for the specified day
         DaySchedulePanel daySchedulePanel = new DaySchedulePanel(day);
         
-        // Adds the schedule panel to the scroll pane and sets the size of the scroll pane
-        currentlyDisplayedPanel = new JScrollPane(daySchedulePanel);
-        currentlyDisplayedPanel.setPreferredSize(new Dimension(1380, 575));
-        
-        // Adds the scroll pane to this body panel.
-        this.add(currentlyDisplayedPanel);
+        // Adds the day schedule panel as the curretly displayed panel on this body panel.
+        addCurrentlyDisplayedPanel(daySchedulePanel);
     }
     
+    public void addAddSRPanel() {
+        // Removes the currently displayed panel from this body panel.
+        removeCurrentlyDisplayedPanel();
+        
+        // creates the add student record panel
+        AddSRPanel addSRPanel = new AddSRPanel();
+        
+        // Adds the add student record panel as the curretly displayed panel on this body panel.
+        addCurrentlyDisplayedPanel(addSRPanel);
+    }
     
+    public void addViewAllSRPanel() {
+        // Removes the currently displayed panel from this body panel.
+        removeCurrentlyDisplayedPanel();
+        
+        // creates the view all student record panel
+        ViewAllSRPanel viewAllSRPanel = new ViewAllSRPanel();
+        
+        // Adds the add student record panel as the curretly displayed panel on this body panel.
+        addCurrentlyDisplayedPanel(viewAllSRPanel);
+    }
     
 }

@@ -2,7 +2,6 @@ package uk.ac.tees.m2081433.swimritemanagementsuite.model;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-import java.util.Date;
 
 /**
  * This class represents the Student Record database table holding student private 
@@ -24,9 +23,19 @@ public class StudentRecord {
     public static final String STUDENTNAME_COLUMN_NAME = "studentName";
     
     /**
-     * The column name for the Student Date of Birth.
+     * The column name for the Students Date of Birth Day.
      */
-    public static final String STUDENTDOB_COLUMN_NAME = "studentDOB";
+    public static final String STUDENTDOBDAY_COLUMN_NAME = "studentDOBDay";
+    
+    /**
+     * The column name for the Students Date of Birth Month.
+     */
+    public static final String STUDENTDOBMONTH_COLUMN_NAME = "studentDOBMonth";
+    
+    /**
+     * The column name for the Students Date of Birth Year.
+     */
+    public static final String STUDENTDOBYEAR_COLUMN_NAME = "studentDOBYear";
     
     /**
      * The column name for the Students telephone number.
@@ -49,9 +58,9 @@ public class StudentRecord {
     public static final String PARENTNAME_COLUMN_NAME = "parentName";
     
     /**
-     * The column name for the Students ability level.
+     * The column name for the Students swimming level.
      */
-    public static final String ABILITYLEVEL_COLUMN_NAME = "abilityLevel";
+    public static final String SWIMMINGLEVEL_COLUMN_NAME = "abilityLevel";
     
     /**
      * The column name for the Students swimming class.
@@ -59,9 +68,9 @@ public class StudentRecord {
     public static final String STUDENTSWIMMINGCLASS_COLUMN_NAME = "swimmingClass";
     
     /**
-     * The column name for the Students attendance.
+     * The column name for the Lesson Block Id.
      */
-    public static final String STUDENTATTENDANCE_COLUMN_NAME = "attendance";
+    public static final String LESSONBLOCK_COLUMN_NAME = "lessonBlock"; 
     
     
     
@@ -78,16 +87,28 @@ public class StudentRecord {
     private String studentName;
     
     /**
-     * The date of birth of the student (field cannot be null).
+     * The Day of the date of birth of the student (field cannot be null).
      */
-    @DatabaseField (columnName = STUDENTDOB_COLUMN_NAME, canBeNull = false)
-    private Date studentDOB;
+    @DatabaseField (columnName = STUDENTDOBDAY_COLUMN_NAME, canBeNull = false)
+    private int studentDOBDay;
+    
+    /**
+     * The Month of the date of birth of the student (field cannot be null).
+     */
+    @DatabaseField (columnName = STUDENTDOBMONTH_COLUMN_NAME, canBeNull = false)
+    private int studentDOBMonth;
+    
+    /**
+     * The Year of the date of birth of the student (field cannot be null).
+     */
+    @DatabaseField (columnName = STUDENTDOBYEAR_COLUMN_NAME, canBeNull = false)
+    private int studentDOBYear;
     
     /**
      * The telephone number of the student (field cannot be null).
      */
     @DatabaseField (columnName = STUDENTTELEPHONENO_COLUMN_NAME, canBeNull = false)
-    private int telephoneNo;
+    private String telephoneNo;
     
     /**
      * The address of the student (field cannot be null).
@@ -99,7 +120,7 @@ public class StudentRecord {
      * String containing information as to whether the student has any 
      * Illnesses/disabilities.
      */
-    @DatabaseField (columnName = HASILLNESS_COLUMN_NAME)
+    @DatabaseField (columnName = HASILLNESS_COLUMN_NAME, canBeNull = false)
     private String hasIllness;
     
     /**
@@ -111,8 +132,8 @@ public class StudentRecord {
     /**
      * The ability level of the student.
      */
-    @DatabaseField (columnName = ABILITYLEVEL_COLUMN_NAME)
-    private SwimmingLevel abilityLevel;
+    @DatabaseField (columnName = SWIMMINGLEVEL_COLUMN_NAME, canBeNull = false)
+    private SwimmingLevel swimmingLevel;
     
     /**
      * Foreign Key: The swimming class that the student is currently in.
@@ -121,10 +142,10 @@ public class StudentRecord {
     private SwimmingClasses swimmingClass;
     
     /**
-     * Foreign Key: The attendance record of the student (field cannot be null).
+     * Foreign Key: The lesson block of the attendance record.
      */
-    @DatabaseField(columnName = STUDENTATTENDANCE_COLUMN_NAME, canBeNull = false, foreign = true)
-    private AttendanceRecord attendance;
+    @DatabaseField (columnName = LESSONBLOCK_COLUMN_NAME, foreign = true)
+    private LessonBlock lessonBlock;
     
     
 
@@ -138,30 +159,30 @@ public class StudentRecord {
     /**
      * Parameterized constructor to create a new Student Record in the Student Record database table.
      * @param studentName The name of the student.
-     * @param studentDOB The date of birth of the student.
+     * @param studentDOBDay The day of the date of birth of the student.
+     * @param studentDOBMonth The month of the date of birth of the student.
+     * @param studentDOBYear The year of the date of birth of the student.
      * @param telephoneNo The telephone number of the student.
      * @param studentAddress The home address of the student.
      * @param hasIllness Information as to whether the student has any illnesses/disabilities
      * @param parentName The students parents name.
      * @param abilityLevel The ability level of the student.
-     * @param swimmingClass The class the student is in.
-     * @param attendance The attendance record of the student.
      */
-    public StudentRecord(String studentName, Date studentDOB, int telephoneNo, StudentAddress studentAddress, 
-                            String hasIllness, String parentName, SwimmingLevel abilityLevel, SwimmingClasses swimmingClass, AttendanceRecord attendance) {
+    public StudentRecord(String studentName, int studentDOBDay, int studentDOBMonth, int studentDOBYear, String telephoneNo, StudentAddress studentAddress, 
+                            String hasIllness, String parentName, SwimmingLevel swimmingLevel) {
         this.studentName = studentName;
-        this.studentDOB = studentDOB;
+        this.studentDOBDay = studentDOBDay;
+        this.studentDOBMonth = studentDOBMonth;
+        this.studentDOBYear = studentDOBYear;
         this.telephoneNo = telephoneNo;
         this.studentAddress = studentAddress;
         this.hasIllness = hasIllness;
         this.parentName = parentName;
-        this.abilityLevel = abilityLevel;
-        this.swimmingClass = swimmingClass;
-        this.attendance = attendance;
+        this.swimmingLevel = swimmingLevel;
     }
-    
-    
 
+    
+    
     /**
      * Accessor to retrieve the auto generated Student Id.
      * @return studentId The auto generated Student Id.
@@ -185,28 +206,60 @@ public class StudentRecord {
     public void setStudentName(String studentName) {
         this.studentName = studentName;
     }
-
+    
     /**
-     * Accessor to retrieve the students date of birth.
-     * @return studentDOB the date of birth of the student.
+     * Accessor to retrieve the day of the date of birth of the student.
+     * @return studentDOBDay The day of the date of birth of the student
      */
-    public Date getStudentDOB() {
-        return studentDOB;
+    public int getStudentDOBDay() {
+        return studentDOBDay;
     }
 
     /**
-     * Mutator to set the new date of birth of the student.
-     * @param studentDOB The updated date of birth of the student.
+     * Mutator to set the new day of the date of birth of the student.
+     * @param studentDOBDay The updated day of the date of birth of the student.
      */
-    public void setStudentDOB(Date studentDOB) {
-        this.studentDOB = studentDOB;
+    public void setStudentDOBDay(int studentDOBDay) {
+        this.studentDOBDay = studentDOBDay;
+    }
+
+    /**
+     * Accessor to retrieve the month of the date of birth of the student.
+     * @return studentDOBMonth The month of the date of birth of the student
+     */
+    public int getStudentDOBMonth() {
+        return studentDOBMonth;
+    }
+
+    /**
+     * Mutator to set the new month of the date of birth of the student.
+     * @param studentDOBMonth The updated month of the date of birth of the student.
+     */
+    public void setStudentDOBMonth(int studentDOBMonth) {
+        this.studentDOBMonth = studentDOBMonth;
+    }
+
+    /**
+     * Accessor to retrieve the year of the date of birth of the student.
+     * @return studentDOBYear The year of the date of birth of the student
+     */
+    public int getStudentDOBYear() {
+        return studentDOBYear;
+    }
+
+    /**
+     * Mutator to set the new year of the date of birth of the student.
+     * @param studentDOBYear The updated year of the date of birth of the student.
+     */
+    public void setStudentDOBYear(int studentDOBYear) {
+        this.studentDOBYear = studentDOBYear;
     }
 
     /**
      * Accessor to retrieve the telephone number of the student.
      * @return telephoneNo The telephone number of the student.
      */
-    public int getTelephoneNo() {
+    public String getTelephoneNo() {
         return telephoneNo;
     }
 
@@ -214,7 +267,7 @@ public class StudentRecord {
      * Mutator to set the new telephone number of the student.
      * @param telephoneNo The updated telephone number of the student.
      */
-    public void setTelephoneNo(int telephoneNo) {
+    public void setTelephoneNo(String telephoneNo) {
         this.telephoneNo = telephoneNo;
     }
 
@@ -267,21 +320,21 @@ public class StudentRecord {
     }
 
     /**
-     * Accessor to retrieve the ability level of the student.
+     * Accessor to retrieve the swimming/ability level of the student.
      * @return abilityLevel The students ability level.
      */
-    public SwimmingLevel getAbilityLevel() {
-        return abilityLevel;
+    public SwimmingLevel getSwimmingLevel() {
+        return swimmingLevel;
     }
 
     /**
-     * Mutator to set the new ability level of the student.
-     * @param abilityLevel The updated ability level of the student.
+     * Mutator to set the new swimming/ability level of the student.
+     * @param swimmingLevel The updated swimming level of the student.
      */
-    public void setAbilityLevel(SwimmingLevel abilityLevel) {
-        this.abilityLevel = abilityLevel;
+    public void setSwimmingLevel(SwimmingLevel swimmingLevel) {
+        this.swimmingLevel = swimmingLevel;
     }
-
+    
     /**
      * Accessor to retrieve the class of the student. 
      * @return swimmingClass The swimming class the student is in.
@@ -299,19 +352,18 @@ public class StudentRecord {
     }
 
     /**
-     * Accessor to retrieve the students attendance record.
-     * @return attendance The link to the attendance record of the student.
+     * Accessor to retrieve the lesson block of the student. 
+     * @return lessonBlock The lesson block of the student.
      */
-    public AttendanceRecord getAttendance() {
-        return attendance;
+    public LessonBlock getLessonBlock() {
+        return lessonBlock;
     }
 
     /**
-     * Mutator to set the new attendance record of the student.
-     * @param attendance The updated attendance record of the student.
+     * Mutator to set the new lesson block of the student.
+     * @param lessonBlock The updated lesson block of the student.
      */
-    public void setAttendance(AttendanceRecord attendance) {
-        this.attendance = attendance;
+    public void setLessonBlock(LessonBlock lessonBlock) {
+        this.lessonBlock = lessonBlock;
     }
-
 }
