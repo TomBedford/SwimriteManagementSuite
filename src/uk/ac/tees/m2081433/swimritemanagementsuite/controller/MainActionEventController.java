@@ -10,8 +10,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JToggleButton;
@@ -39,143 +37,133 @@ public class MainActionEventController implements ActionListener, MouseListener 
         
         // Checks what the source of the action event is
         if (e.getSource() instanceof JToggleButton) {
-            // If it's a toggle button cast the source to the toggle button b.
+            // If it's a toggle button cast the source to the toggle button.
             JToggleButton toggleButtonPressed = (JToggleButton) e.getSource();
             
-            // Surrounded by try catch for the possible SQL Exceptions
-            try {
-                // Checks the text of the button pressed against all the button names in the toolbar.
-                switch (toggleButtonPressed.getText()) {
-                    case smsToolbarPanel.MONBUTTON_NAME:
-                        displayMondaySchedule();
-                        break;
+            // Checks the text of the button pressed against all the button names in the toolbar.
+            switch (toggleButtonPressed.getText()) {
+                case smsToolbarPanel.MONBUTTON_NAME:
+                    displayMondaySchedule();
+                    break;
 
-                    case smsToolbarPanel.TUEBUTTON_NAME:
-                        displayTuesdaySchedule();
-                        break;
+                case smsToolbarPanel.TUEBUTTON_NAME:
+                    displayTuesdaySchedule();
+                    break;
 
-                    case smsToolbarPanel.WEDBUTTON_NAME:
-                        displayWednesdaySchedule();
-                        break;
+                case smsToolbarPanel.WEDBUTTON_NAME:
+                    displayWednesdaySchedule();
+                    break;
 
-                    case smsToolbarPanel.THUBUTTON_NAME:
-                        displayThursdaySchedule();
-                        break;
+                case smsToolbarPanel.THUBUTTON_NAME:
+                    displayThursdaySchedule();
+                    break;
 
-                    case smsToolbarPanel.FRIBUTTON_NAME:
-                        displayFridaySchedule();
-                        break;
+                case smsToolbarPanel.FRIBUTTON_NAME:
+                    displayFridaySchedule();
+                    break;
 
-                    case smsToolbarPanel.SATBUTTON_NAME:
-                        displaySaturdaySchedule();
-                        break;
+                case smsToolbarPanel.SATBUTTON_NAME:
+                    displaySaturdaySchedule();
+                    break;
 
-                    case smsToolbarPanel.SUNBUTTON_NAME:
-                        displaySundaySchedule();
-                        break;
+                case smsToolbarPanel.SUNBUTTON_NAME:
+                    displaySundaySchedule();
+                    break;
 
-                    case smsToolbarPanel.REGBUTTON_NAME:
-                        displayRegisterClasses();
-                        break;
+                case smsToolbarPanel.REGBUTTON_NAME:
+                    displayRegisterClasses();
+                    break;
 
-                    case smsToolbarPanel.VIEWALLSRBUTTON_NAME:
-                        displayViewAllSR();
-                        break;
+                case smsToolbarPanel.VIEWALLSRBUTTON_NAME:
+                    displayViewAllSR();
+                    break;
 
-                    case smsToolbarPanel.ADDSRBUTTON_NAME:
-                        displayAddSR();
-                        break;
+                case smsToolbarPanel.ADDSRBUTTON_NAME:
+                    displayAddSR();
+                    break;
 
-                    case smsToolbarPanel.VIEWALLSTBUTTON_NAME:
-                        displayViewAllST();
-                        break;
+                case smsToolbarPanel.VIEWALLSTBUTTON_NAME:
+                    displayViewAllST();
+                    break;
 
-                    case smsToolbarPanel.ADDSTBUTTON_NAME:
-                        displayAddST();
-                        break;
+                case smsToolbarPanel.ADDSTBUTTON_NAME:
+                    displayAddST();
+                    break;
 
-                    default:
-                        System.out.println("ERROR: default switch case for JToggleButton reached!");
-                        break;
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(MainActionEventController.class.getName()).log(Level.SEVERE, null, ex);
+                default:
+                    System.out.println("ERROR: default switch case for JToggleButton reached!");
+                    break;
             }
         // Otherwise the source of the action event is a JMenuItem (only other possibility)
         } else {
             // casts the source to a JMenuItem.
             JMenuItem menuItemPressed = (JMenuItem) e.getSource();
             
-            // Surrounded by try catch for the possible SQL Exceptions
-            try {
-                // Checks the text of the button pressed against all the button names in the toolbar.
-                switch (menuItemPressed.getText()) {
-                    case smsMenuBar.MONMENUITEM_NAME:
-                        displayMondaySchedule();
-                        break;
+            // Checks the text of the button pressed against all the button names in the toolbar.
+            switch (menuItemPressed.getText()) {
+                case smsMenuBar.MONMENUITEM_NAME:
+                    displayMondaySchedule();
+                    break;
 
-                    case smsMenuBar.TUEMENUITEM_NAME:
-                        displayTuesdaySchedule();
-                        break;
+                case smsMenuBar.TUEMENUITEM_NAME:
+                    displayTuesdaySchedule();
+                    break;
 
-                    case smsMenuBar.WEDMENUITEM_NAME:
-                        displayWednesdaySchedule();
-                        break;
+                case smsMenuBar.WEDMENUITEM_NAME:
+                    displayWednesdaySchedule();
+                    break;
 
-                    case smsMenuBar.THUMENUITEM_NAME:
-                        displayThursdaySchedule();
-                        break;
+                case smsMenuBar.THUMENUITEM_NAME:
+                    displayThursdaySchedule();
+                    break;
 
-                    case smsMenuBar.FRIMENUITEM_NAME:
-                        displayFridaySchedule();
-                        break;
+                case smsMenuBar.FRIMENUITEM_NAME:
+                    displayFridaySchedule();
+                    break;
 
-                    case smsMenuBar.SATMENUITEM_NAME:
-                        displaySaturdaySchedule();
-                        break;
+                case smsMenuBar.SATMENUITEM_NAME:
+                    displaySaturdaySchedule();
+                    break;
 
-                    case smsMenuBar.SUNMENUITEM_NAME:
-                        displaySundaySchedule();
-                        break;
+                case smsMenuBar.SUNMENUITEM_NAME:
+                    displaySundaySchedule();
+                    break;
 
-                    case smsMenuBar.REGMENUITEM_NAME:
-                        displayRegisterClasses();
-                        break;
+                case smsMenuBar.REGMENUITEM_NAME:
+                    displayRegisterClasses();
+                    break;
 
-                    case smsMenuBar.VIEWALLSRMENUITEM_NAME:
-                        displayViewAllSR();
-                        break;
+                case smsMenuBar.VIEWALLSRMENUITEM_NAME:
+                    displayViewAllSR();
+                    break;
 
-                    case smsMenuBar.ADDSRMENUITEM_NAME:
-                        displayAddSR();
-                        break;
+                case smsMenuBar.ADDSRMENUITEM_NAME:
+                    displayAddSR();
+                    break;
 
-                    case smsMenuBar.VIEWALLSTMENUITEM_NAME:
-                        displayViewAllST();
-                        break;
+                case smsMenuBar.VIEWALLSTMENUITEM_NAME:
+                    displayViewAllST();
+                    break;
 
-                    case smsMenuBar.ADDSTMENUITEM_NAME:
-                        displayAddST();
-                        break;
+                case smsMenuBar.ADDSTMENUITEM_NAME:
+                    displayAddST();
+                    break;
 
-                    case smsMenuBar.CEDTEACHERSMENUITEM_NAME:
-                        displayCEDTeachers();
-                        break;
+                case smsMenuBar.CEDTEACHERSMENUITEM_NAME:
+                    displayCEDTeachers();
+                    break;
 
-                    case smsMenuBar.CEDLOGINACCOUNTSMENUITEM_NAME:
-                        displayCEDLoginAccounts();
-                        break;
+                case smsMenuBar.CEDLOGINACCOUNTSMENUITEM_NAME:
+                    displayCEDLoginAccounts();
+                    break;
 
-                    case smsMenuBar.INITIALISEDBMENUITEM_NAME:
-                        displayInitialiseDB();
-                        break;
+                case smsMenuBar.INITIALISEDBMENUITEM_NAME:
+                    displayInitialiseDB();
+                    break;
 
-                    default:
-                        System.out.println("ERROR: default switch case for JMenuItem reached!");
-                        break;
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(MainActionEventController.class.getName()).log(Level.SEVERE, null, ex);
+                default:
+                    System.out.println("ERROR: default switch case for JMenuItem reached!");
+                    break;
             }
         }
     }
@@ -219,31 +207,31 @@ public class MainActionEventController implements ActionListener, MouseListener 
     
     
     
-    public void displayMondaySchedule() throws SQLException {
+    public void displayMondaySchedule() {
         smsBodyPanelRef.addSchedulePanel(Day.MONDAY);
     }
     
-    public void displayTuesdaySchedule() throws SQLException {
+    public void displayTuesdaySchedule() {
         smsBodyPanelRef.addSchedulePanel(Day.TUESDAY);
     }
     
-    public void displayWednesdaySchedule() throws SQLException {
+    public void displayWednesdaySchedule() {
         smsBodyPanelRef.addSchedulePanel(Day.WEDNESDAY);
     }
     
-    public void displayThursdaySchedule() throws SQLException {
+    public void displayThursdaySchedule() {
         smsBodyPanelRef.addSchedulePanel(Day.THURSDAY);
     }
     
-    public void displayFridaySchedule() throws SQLException {
+    public void displayFridaySchedule() {
         smsBodyPanelRef.addSchedulePanel(Day.FRIDAY);
     }
     
-    public void displaySaturdaySchedule() throws SQLException {
+    public void displaySaturdaySchedule() {
         smsBodyPanelRef.addSchedulePanel(Day.SATURDAY);
     }
     
-    public void displaySundaySchedule() throws SQLException {
+    public void displaySundaySchedule() {
         smsBodyPanelRef.addSchedulePanel(Day.SUNDAY);
     }
     
@@ -275,7 +263,7 @@ public class MainActionEventController implements ActionListener, MouseListener 
         
     }
     
-    public void displayInitialiseDB() throws SQLException {
+    public void displayInitialiseDB() {
         
         InitialiseDefaultDatabase initialiseDefaultDatabase = new InitialiseDefaultDatabase();
         

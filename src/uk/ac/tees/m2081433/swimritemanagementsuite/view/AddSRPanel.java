@@ -26,7 +26,7 @@ import uk.ac.tees.m2081433.swimritemanagementsuite.model.SwimmingLevel;
 public class AddSRPanel extends JPanel implements ActionListener {
     
     /**
-     * The Timeslot controller for when running db queries on the Timeslot table.
+     * The Student Record controller for when inserting records into the Student Record table.
      */
     StudentRecordController studentRecordController;
     
@@ -216,7 +216,7 @@ public class AddSRPanel extends JPanel implements ActionListener {
         labelFont = new Font("Arial", Font.PLAIN, 18);
         
         // Adds spacing components to the layout (purely for aesthetic purposes)
-        createLayoutSpacing();
+        addLayoutSpacing();
         
         // Loads all form components for the create student record form
         loadSRForm();
@@ -225,7 +225,7 @@ public class AddSRPanel extends JPanel implements ActionListener {
     /**
      * Adds invisible labels for spacing out other components aesthetically in the gridbag layout.
      */
-    public void createLayoutSpacing() {
+    public void addLayoutSpacing() {
         // First invisible label (top left) pushing the form to the right
         JLabel spacingLabel1 = new JLabel();
         spacingLabel1.setPreferredSize(new Dimension(450, 50));
@@ -571,7 +571,7 @@ public class AddSRPanel extends JPanel implements ActionListener {
         
         // Initialises the submit button with its attributes (inc button tooltip and icon)
         submitButton = new JButton("SUBMIT");
-        submitButton.setPreferredSize(new Dimension(200,50));
+        submitButton.setPreferredSize(new Dimension(200, 50));
         submitButton.setFont(labelFont);
         submitButton.addActionListener(this);
         submitButton.setToolTipText("<html> Click this button to <b> submit </b> the new student record. </html>");
@@ -584,7 +584,7 @@ public class AddSRPanel extends JPanel implements ActionListener {
         
         // Initialises the clear button with its attributes (inc button tooltip and icon)
         clearButton = new JButton("Clear Fields");
-        clearButton.setPreferredSize(new Dimension(200,50));
+        clearButton.setPreferredSize(new Dimension(200, 50));
         clearButton.setFont(labelFont);
         clearButton.addActionListener(this);
         clearButton.setToolTipText("<html> Click this button to <b> clear </b> all fields on the student record form. </html>");

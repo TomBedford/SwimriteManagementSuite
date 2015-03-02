@@ -3,7 +3,11 @@ package uk.ac.tees.m2081433.swimritemanagementsuite;
 import uk.ac.tees.m2081433.swimritemanagementsuite.controller.DatabaseManager;
 import uk.ac.tees.m2081433.swimritemanagementsuite.view.smsMainPanel;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import java.sql.SQLException;
 import javax.swing.*;
+import uk.ac.tees.m2081433.swimritemanagementsuite.model.StudentAddress;
+import uk.ac.tees.m2081433.swimritemanagementsuite.model.StudentRecord;
+import uk.ac.tees.m2081433.swimritemanagementsuite.model.SwimmingLevel;
 
 /**
  * This is the main class of the Swimrite Management Suite where the database and its tables 
@@ -32,6 +36,8 @@ public class SwimriteManagementSuite {
         
         // Calls method to initialise the Swimrite Management Suite database connection references.
         createDbReferences();
+        
+        // addStudentRecords();
         
         // Calls method to create the swimrite management frame and panels.
         createSMSWindow();
@@ -79,5 +85,30 @@ public class SwimriteManagementSuite {
         smsFrame.setSize(1400, 800);
         smsFrame.setVisible(true);
         smsFrame.setResizable(false);
+    }
+    
+    public static void addStudentRecords() {
+        
+        for (int i = 0; i < 10; i++) {
+            
+            try {
+                StudentAddress sa = new StudentAddress(i + " Line", "Second Line", "City", "County", i + " P05TC");
+
+                DatabaseManager.studentAddressDAO.create(sa);
+
+
+                StudentRecord sr = new StudentRecord("John Doe" + i, 10 + i, i, 2000, "01234567891", sa,
+                        "n/a", "Jane Doe", SwimmingLevel.BEGINNERS);
+
+                DatabaseManager.studentRecordDAO.create(sr);
+            } catch (SQLException e) {
+                System.out.println("adding Test SR's: Error creating the test student addresses & records.");
+            }
+            
+            
+            
+        }
+        
+        
     }
 }

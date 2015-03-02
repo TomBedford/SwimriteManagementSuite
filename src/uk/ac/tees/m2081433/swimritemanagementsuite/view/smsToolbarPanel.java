@@ -18,7 +18,7 @@ import uk.ac.tees.m2081433.swimritemanagementsuite.controller.MainActionEventCon
 public class smsToolbarPanel extends JPanel {
     
     // Creates a button group to contain all the toggle buttons in the toolbar.
-    ButtonGroup toolbarButtonGroup = new ButtonGroup();
+    ButtonGroup toolbarButtonGroup;
     
     // Declares all button names for each button (to be used as static references in the ActionListener class).
     public static final String MONBUTTON_NAME = "Mon";
@@ -51,6 +51,8 @@ public class smsToolbarPanel extends JPanel {
     MainActionEventController mainActionEventControllerRef;
     
     public smsToolbarPanel(MainActionEventController mainActionEventController) {
+        
+        toolbarButtonGroup = new ButtonGroup();
         
         mainActionEventControllerRef = mainActionEventController;
         

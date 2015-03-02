@@ -89,9 +89,6 @@ public class DaySchedulePanel extends JPanel {
         
         // Invisible label used to push all other components in the layout to the top.
         JLabel pullComponentsUp = new JLabel();
-        pullComponentsUp.setPreferredSize(new Dimension(0, 0));
-        pullComponentsUp.setOpaque(false);
-        pullComponentsUp.setVisible(true);
         
         c.gridx = 0;
         c.gridy = 1000;

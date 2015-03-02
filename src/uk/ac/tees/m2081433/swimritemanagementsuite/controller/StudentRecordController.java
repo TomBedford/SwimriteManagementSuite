@@ -1,6 +1,10 @@
 package uk.ac.tees.m2081433.swimritemanagementsuite.controller;
 
+import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.StudentAddress;
@@ -51,4 +55,36 @@ public class StudentRecordController {
         return false;
     }
     
+    public List<StudentRecord> getAllStudentRecords() {
+        
+        List<StudentRecord> studentRecordList = null;
+        
+        try {
+            // query for all accounts that have "qwerty" as a password
+            studentRecordList = DatabaseManager.studentRecordDAO.queryForAll();
+        } catch (SQLException e) {
+            System.out.println("getAllStudentRecords: Error getting all student records (controller).");
+        }
+        
+        return studentRecordList;
+    }
+    
+    public List<StudentRecord> getEnrolledStudentRecords() {
+        
+        List<StudentRecord> allStudentRecordList = getAllStudentRecords();
+        
+        List<StudentRecord> enrolledStudentRecordList = new ArrayList();
+        
+        for (int i = 0; i < allStudentRecordList.size(); i++) {
+            
+            if (allStudentRecordList.get(i).getSwimmingClass() != null) {
+                enrolledStudentRecordList.add(allStudentRecordList.get(i));
+            }
+            
+        }
+        
+        System.out.println("enrolled SR: " + enrolledStudentRecordList.size());
+        
+        return enrolledStudentRecordList;
+    }
 }
