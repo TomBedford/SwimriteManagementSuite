@@ -4,9 +4,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -14,16 +15,20 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.JToggleButton;
+import javax.swing.RowFilter;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import uk.ac.tees.m2081433.swimritemanagementsuite.controller.StudentRecordController;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.StudentRecord;
 
 /**
  * This panel displays all student records within the Swimrite Management Suite database.
  */
-public class ViewAllSRPanel extends JPanel implements ActionListener{
+public class ViewAllSRPanel extends JPanel implements ActionListener, KeyListener {
     
     /**
      * The Student Record controller for when inserting records into the Student Record table.
@@ -36,27 +41,64 @@ public class ViewAllSRPanel extends JPanel implements ActionListener{
     List<StudentRecord> studentRecordList;
     
     /**
-     * Array of JPanels that hold each individual students details.
+     * Radio button to filter student records by all students.
      */
-    JPanel[] studentRecordPanels;
+    JRadioButton allFilterButton;
+       
+    /**
+     * Radio button to filter student records by enrolled students.
+     */
+    JRadioButton enrolledFilterButton;
+        
+    /**
+     * Radio button to filter student records by unenrolled (waiting list) students.
+     */
+    JRadioButton waitingListFilterButton;
+    
+    /**
+     * Button to filter student records by all students.
+     */
+    JButton searchButton;
+    
+    /**
+     * The search student records (by student name) text input field.
+     */
+    JTextField searchSRField;
+    
+    /**
+     * Scroll Pane to hold the student record table within.
+     */
+    JScrollPane tableScrollPane;
+    
+    /**
+     * Sorting object for filtering students by student name and filtering by column heading.
+     */
+    TableRowSorter<TableModel> sorter;
+    
+    /**
+     * An array of String to hold the column names for the student record table.
+     */
+    String[] columnNames;
     
     /**
      * The grid bag constraint to manipulate when adding components to the layout. 
      */
     GridBagConstraints c;
     
+    
+    
+    /**
+     * Panel that displays student records in a table with a variety of filtering options.
+     */
     public ViewAllSRPanel() {
         // Initialises the student record controller needed to add a student record to the db
         studentRecordController = new StudentRecordController();
         
-        // Gets all the student records from the database
-        getAllStudentRecords();
-        
-        // Calculates what the height of the view all student records panel
-        int panelHeight = calculateViewAllSRPanelHeight();
+        // Gets all the student records from the database and puts into list
+        studentRecordList = studentRecordController.getAllStudentRecords();
         
         // sets the ViewAllSRPanel JPanels default attributes
-        this.setPreferredSize(new Dimension(1360, panelHeight));
+        this.setPreferredSize(new Dimension(1360, 565));
         this.setVisible(true);
         this.setBackground(Color.white);
         this.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -65,107 +107,123 @@ public class ViewAllSRPanel extends JPanel implements ActionListener{
         // Initialises the grid bag layout constraint
         c = new GridBagConstraints();
         
+        
+        // Loads the filtering option (all, enrolled and waiting list) components onto this layout
         loadFilterOptions();
         
+        // Loads the search bar components onto this layout
         loadSearchBar();
         
+        // Adds spacing components to the layout for aesthetic purposes
         addLayoutSpacing();
         
-        loadTableHeadings();
+        // Loads the student records table component (using all student records) and adds it to this layout.
+        loadSRTable(studentRecordList);
         
-        loadStudentRecordPanels();
         
         // Invisible label used to push all other components in the layout to the top.
-        JLabel pullComponentsUp = new JLabel();
+        final JLabel pullComponentsUp = new JLabel();
         
+        // The coordinates for where to add this component to the layout
         c.gridx = 0;
-        c.gridy = 1000;
+        c.gridy = 99999;
         c.weighty = 1.0;
         c.fill = 1;
-        
         this.add(pullComponentsUp, c);
+        
+        // Resets these values so as not to mess with the placement of other layout components that are loaded on runtime
+        c.weighty = 0;
+        c.fill = 0;
     }
     
-    public void getAllStudentRecords() {
-        studentRecordList = studentRecordController.getAllStudentRecords();
-    }
-    
-    public int calculateViewAllSRPanelHeight() {
-        // Gets the amount of student records from the size of the student records to display list.
-        int amountOfSR = studentRecordList.size();
-        
-        // Calculates the height of the panel as each student records panels is 50 height.
-        int panelHeight = (amountOfSR * 50) +  200;
-        
-        // If the panel height is less than the smallest required, set it to the smallest size.
-        if (panelHeight < 575) {
-            panelHeight = 575;
-        }
-        
-        return panelHeight;
-    }
-    
+    /**
+     * Adds a 'filter by' title label and the radio button filter options (all, enrolled and waiting list)
+     * to a panel to be placed on this layout. 
+     */
     public void loadFilterOptions() {
         
-        ButtonGroup filterButtonGroup = new ButtonGroup();
+        // Button group for the radio button filter options
+        final ButtonGroup filterButtonGroup = new ButtonGroup();
         
-        JPanel filterButtonPanel = new JPanel();
-        filterButtonPanel.setPreferredSize(new Dimension(600, 50));
-        filterButtonPanel.setBackground(Color.white);
-        filterButtonPanel.setOpaque(true);
-        filterButtonPanel.setVisible(true);
+        // The filter toolbar panel to hold the 'filter by' title label and filter options on, setting attributes
+        final JPanel filterToolbarPanel = new JPanel();
+        // note: panel width is double the standard width of a column so gridwidth = 2 to stretch across two cells.
+        filterToolbarPanel.setPreferredSize(new Dimension(600, 50));
+        filterToolbarPanel.setBackground(Color.white);
+        filterToolbarPanel.setOpaque(true);
+        filterToolbarPanel.setVisible(true);
         
-        JLabel filterLabel = new JLabel("Filter Student Records By:");
+        // The filter label containing the 'filter by' title text, setting attributes 
+        final JLabel filterLabel = new JLabel("Filter Student Records By:");
         filterLabel.setPreferredSize(new Dimension(175, 50));
         filterLabel.setHorizontalAlignment(SwingConstants.LEFT);
         filterLabel.setBackground(Color.white);
         filterLabel.setOpaque(true);
         filterLabel.setVisible(true);
         
-        filterButtonPanel.add(filterLabel);
+        // Adds the filter label to the filter toolbar panel
+        filterToolbarPanel.add(filterLabel);
         
-        JRadioButton allFilterButton = new JRadioButton("All");
-        allFilterButton.setName("All SR");
+        /**
+         * The filter button for the option 'All' to display all student records in the table. 
+         * setting listener, default selected, adding to the button group and adding it to the panel.
+         */
+        allFilterButton = new JRadioButton("All");
         allFilterButton.addActionListener(this);
         allFilterButton.setSelected(true);
         filterButtonGroup.add(allFilterButton);
-        filterButtonPanel.add(allFilterButton);
+        filterToolbarPanel.add(allFilterButton);
         
-        JRadioButton enrolledFilterButton = new JRadioButton("Enrolled");
-        enrolledFilterButton.setName("Enrolled SR");
+        /**
+         * The filter button for the option 'Enrolled' to display enrolled student records in the table. 
+         * setting listener, default selected, adding to the button group and adding it to the panel.
+         */
+        enrolledFilterButton = new JRadioButton("Enrolled");
         enrolledFilterButton.addActionListener(this);
         filterButtonGroup.add(enrolledFilterButton);
-        filterButtonPanel.add(enrolledFilterButton);
+        filterToolbarPanel.add(enrolledFilterButton);
         
-        JRadioButton waitingListFilterButton = new JRadioButton("Waiting List");
-        waitingListFilterButton.setName("Waiting List SR");
+        /**
+         * The filter button for the option 'Waiting List' to display students currently unenrolled from
+         * a swimming class to display in the table. 
+         * setting listener, default selected, adding to the button group and adding it to the panel.
+         */
+        waitingListFilterButton = new JRadioButton("Waiting List");
         waitingListFilterButton.addActionListener(this);
         filterButtonGroup.add(waitingListFilterButton);
-        filterButtonPanel.add(waitingListFilterButton);
+        filterToolbarPanel.add(waitingListFilterButton);
         
+        // The layout constraints to place the filter toolbar panel correctly on this panel.
         c.gridx = 0;
         c.gridy = 1;
+        // Allows the panel to stretch across two grids.
         c.gridwidth = 2;
-        
-        this.add(filterButtonPanel, c);
+        this.add(filterToolbarPanel, c);
         
         // Resets the grid width so other components do not also take up other grid spaces
         c.gridwidth = 1;
     }
     
+    /**
+     * Adds a text field (used for searching student records by student name) and a search button 
+     * to this panel.
+     */
     public void loadSearchBar() {
-        JTextField searchSRField = new JTextField(24);
+        // The text field used for inputing search/filter text
+        searchSRField = new JTextField(24);
+        // Adds a key listener so the user can press 'enter' to search/filter
+        searchSRField.addKeyListener(this);
         
         // The coordinates for where to add this component to the layout
         c.gridx = 2;
         c.gridy = 1;
         this.add(searchSRField, c);
         
-        JButton searchButton = new JButton("Search");
+        // The search button, setting attributes 
+        searchButton = new JButton("Search");
         searchButton.setPreferredSize(new Dimension(300, 25));
-        //searchButton.addActionListener(this);
+        searchButton.addActionListener(this);
         searchButton.setToolTipText("<html> Click this button to <b> search </b> all student records by the students name. </html>");
-        //searchButton.setIcon(new ImageIcon("images/icons/delete.png"));
         
         // The coordinates for where to add this component to the layout
         c.gridx = 3;
@@ -173,9 +231,12 @@ public class ViewAllSRPanel extends JPanel implements ActionListener{
         this.add(searchButton, c);
     }
     
+    /**
+     * Adds spacing components to this panel for aesthetic purposes.
+     */
     public void addLayoutSpacing() {
         // First invisible label putting spacing between the top of the panel and the search bar
-        JLabel spacingLabel1 = new JLabel();
+        final JLabel spacingLabel1 = new JLabel();
         spacingLabel1.setPreferredSize(new Dimension(300, 15));
         spacingLabel1.setOpaque(false);
         spacingLabel1.setVisible(true);
@@ -186,7 +247,7 @@ public class ViewAllSRPanel extends JPanel implements ActionListener{
         this.add(spacingLabel1, c);
         
         // Second invisible label putting spacing between the search bar and the student records table
-        JLabel spacingLabel2 = new JLabel();
+        final JLabel spacingLabel2 = new JLabel();
         spacingLabel2.setPreferredSize(new Dimension(300, 15));
         spacingLabel2.setOpaque(false);
         spacingLabel2.setVisible(true);
@@ -197,161 +258,198 @@ public class ViewAllSRPanel extends JPanel implements ActionListener{
         this.add(spacingLabel2, c);
     }
     
-    public void loadTableHeadings() {
-        // Label to hold the student name table column header.
-        JLabel studentNameColumnLabel = new JLabel("Student Name");
-        setLabelAttributes(studentNameColumnLabel);
+    /**
+     * Loads a list of student records into the table that is then displayed on this panel.
+     * @param srListToDisplay The list of student records to load into the table.
+     */
+    public void loadSRTable(List<StudentRecord> srListToDisplay) {
         
+        // The an array of column names for the table
+        columnNames = new String[]{" Student Name",
+                                " Date of Birth",
+                                " Current Swimming Level",
+                                " Swimming Class"};
+        
+        // Creates a table model to hold the student records (converted from a list) and the column names
+        final TableModel model = new DefaultTableModel(convertListForTable(srListToDisplay), columnNames);
+        
+        // The student record JTable (attributes initialised within the class) initialised using the model
+        final StudentRecordTable srTable = new StudentRecordTable(model);
+        
+        // Initializes a sorter to filter table rows (student records by student name)
+        sorter = new TableRowSorter<TableModel>(model);
+        
+        // Adds the sorter for the table
+        srTable.setRowSorter(sorter);
+        
+        // Initializes the scroll pane to hold the student record table, setting attributes
+        tableScrollPane = new JScrollPane(srTable);
+        tableScrollPane.setPreferredSize(new Dimension(1200, 475));
+
         // The coordinates for where to add this component to the layout
         c.gridx = 0;
         c.gridy = 3;
-        this.add(studentNameColumnLabel, c);
+        c.gridwidth = 4;
+        this.add(tableScrollPane, c);
+    }
+
+    /**
+     * Converts a list of student records into a two dimensional array of objects suitable for the student records
+     * tables parameters.
+     * @param studentRecordList The list of student records to convert
+     * @return 2 Dimensional array of object containing the formatted student records list.
+     */
+    public Object[][] convertListForTable(List<StudentRecord> studentRecordList) {
+
+        /**
+         * The two dimensional array to hold the student records.
+         * size of the student record list is used for the first array size.
+         * size of the column names (the amount of different data columns to put into the object for the table)
+         */
+        final Object[][] tableStudentRecord = new Object[studentRecordList.size()][columnNames.length];
         
-        // Label to hold the students date of birth table column header.
-        JLabel studentDOBColumnLabel = new JLabel("Date of Birth");
-        setLabelAttributes(studentDOBColumnLabel);
-        
-        // The coordinates for where to add this component to the layout
-        c.gridx = 1;
-        c.gridy = 3;
-        this.add(studentDOBColumnLabel, c);
-        
-        // Label to hold the students swimming/ability level table column header.
-        JLabel swimmingLevelColumnLabel = new JLabel("Swimming/Ability Level");
-        setLabelAttributes(swimmingLevelColumnLabel);
-        
-        // The coordinates for where to add this component to the layout
-        c.gridx = 2;
-        c.gridy = 3;
-        this.add(swimmingLevelColumnLabel, c);
-        
-        // Label to hold the students current swimming class table column header.
-        JLabel swimmingClassColumnLabel = new JLabel("Current Swimming Class");
-        setLabelAttributes(swimmingClassColumnLabel);
-        
-        // The coordinates for where to add this component to the layout
-        c.gridx = 3;
-        c.gridy = 3;
-        this.add(swimmingClassColumnLabel, c);
+        // Loops through the entire student record list to add the correct data from the list to the object array
+        for (int i = 0; i < studentRecordList.size(); i++) {
+            // Adds the students name to that index of the object array
+            tableStudentRecord[i][0] = studentRecordList.get(i).getStudentName();
+            // Adds the students date of birth to that index of the object array
+            tableStudentRecord[i][1] = studentRecordList.get(i).getStudentDOB();
+            // Adds the students swimming level to that index of the object array
+            tableStudentRecord[i][2] = studentRecordList.get(i).getSwimmingLevel();
+            
+            // The string to hold the swimming class text for the student record.
+            String swimmingClassText;
+            
+            // If the student is not in a swimming class display 'Waiting List', otherwise...
+            if (studentRecordList.get(i).getSwimmingClass() == null) {
+                swimmingClassText = "Waiting List";
+            } else {
+                // Converts the timeslot time into a string.
+                final String defaultTime = Integer.toString(studentRecordList.get(i).getSwimmingClass().getTimeslot().getTime());
+                
+                // Formats the time string with a colon so that it looks like a time (eg, 1300 -> 13:00)
+                final String formattedTime = new StringBuilder(defaultTime).insert(defaultTime.length() - 2, ":").toString();
+                
+                // Concatinates the time and day together 
+                swimmingClassText = formattedTime + " " + studentRecordList.get(i).getSwimmingClass().getTimeslot().getDay();
+            }
+            // Adds the students swimming class to that index of the object array
+            tableStudentRecord[i][3] = swimmingClassText;
+        }
+        // Returns the converted 2 dimensional objecty array
+        return tableStudentRecord;
     }
     
     /**
-     * Sets the standard attributes of the labels used for table headings (avoiding repetition).
-     * @param label The JLabel to set the standard attributes of
+     * Action Listener for when filter option radio buttons or the search button is pressed.
+     * @param e 
      */
-    public void setLabelAttributes(JLabel label) {
-        label.setHorizontalAlignment(SwingConstants.CENTER);
-        label.setBorder(BorderFactory.createRaisedBevelBorder());
-        label.setPreferredSize(new Dimension(300, 50));
-        label.setOpaque(true);
-        label.setVisible(true);
-    }
-    
-    public void loadStudentRecordPanels() {
-        
-        // Creates an array of labels to hold the details for each student record.
-        studentRecordPanels = new JPanel[studentRecordList.size()];
-        
-        for (int i = 0; i < studentRecordList.size(); i++) {
-        
-            studentRecordPanels[i] = new JPanel();
-            studentRecordPanels[i].setPreferredSize(new Dimension(1200, 50));
-            studentRecordPanels[i].setBorder(BorderFactory.createLineBorder(Color.black));
-            studentRecordPanels[i].setLayout(new GridLayout(1, 4));
-            studentRecordPanels[i].setOpaque(true);
-            studentRecordPanels[i].setVisible(true);
-
-            JLabel studentNameLabel = new JLabel(studentRecordList.get(i).getStudentName());
-            studentNameLabel.setPreferredSize(new Dimension(300, 50));
-            studentNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
-            studentNameLabel.setBackground(Color.white);
-            studentNameLabel.setOpaque(true);
-            studentNameLabel.setVisible(true);
-            studentRecordPanels[i].add(studentNameLabel);
-            
-            String studentDOB = studentRecordList.get(i).getStudentDOBDay() + "/" + studentRecordList.get(i).getStudentDOBMonth() 
-                                    + "/" + studentRecordList.get(i).getStudentDOBYear();
-
-            JLabel studentDOBLabel = new JLabel(studentDOB);
-            studentDOBLabel.setPreferredSize(new Dimension(300, 50));
-            studentDOBLabel.setHorizontalAlignment(SwingConstants.CENTER);
-            studentDOBLabel.setBackground(Color.white);
-            studentDOBLabel.setOpaque(true);
-            studentDOBLabel.setVisible(true);
-            studentRecordPanels[i].add(studentDOBLabel);
-
-            JLabel swimmingLevelLabel = new JLabel("" + studentRecordList.get(i).getSwimmingLevel());
-            swimmingLevelLabel.setPreferredSize(new Dimension(300, 50));
-            swimmingLevelLabel.setHorizontalAlignment(SwingConstants.CENTER);
-            swimmingLevelLabel.setBackground(Color.white);
-            swimmingLevelLabel.setOpaque(true);
-            swimmingLevelLabel.setVisible(true);
-            studentRecordPanels[i].add(swimmingLevelLabel);
-            
-            JLabel swimmingClassLabel = new JLabel();
-            swimmingClassLabel.setPreferredSize(new Dimension(290, 50));
-            swimmingClassLabel.setHorizontalAlignment(SwingConstants.CENTER);
-            swimmingClassLabel.setBackground(Color.white);
-            swimmingClassLabel.setOpaque(true);
-            swimmingClassLabel.setVisible(true);
-            
-            if (studentRecordList.get(i).getSwimmingClass() == null) {
-                swimmingClassLabel.setText("Waiting List");
-            } else {
-                swimmingClassLabel.setText("" + studentRecordList.get(i).getSwimmingClass());
-            }
-            
-            studentRecordPanels[i].add(swimmingClassLabel);
-
-            // The coordinates for where to add this component to the layout
-            c.gridx = 0;
-            c.gridy = 4 + i;
-            c.gridwidth = 4;
-            this.add(studentRecordPanels[i], c);
-        }
-        
-    }
-    
-    public void removeCurrentlyDisplayedSR() {
-        for (int i = 0; i < studentRecordPanels.length; i++) {
-                    this.remove(studentRecordPanels[i]);
-                }
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         
         // Checks what the source of the action event is
         if (e.getSource() instanceof JRadioButton) {
-            // If it's a radio button cast the source to the radio button.
-            JRadioButton radioButtonPressed = (JRadioButton) e.getSource();
+            // If it's a radio button cast the source to a radio button
+            final JRadioButton radioButtonPressed = (JRadioButton) e.getSource();
             
-            if (radioButtonPressed.getName() == "All SR") {
-                System.out.println("ALL");
-            } else if (radioButtonPressed.getName() == "Enrolled SR") {
+            // Checks which radio button has had the action
+            if (radioButtonPressed == allFilterButton) {
                 
-                System.out.println("Enrolled");
+                // removes the current table from this layout
+                this.remove(tableScrollPane);
                 
-                removeCurrentlyDisplayedSR();
-                
-                // empty list to store enrolled student records
+                // Clears the list of student records
                 studentRecordList.clear();
                 
-                studentRecordList = studentRecordController.getEnrolledStudentRecords();
+                // Loads the list of All student records
+                studentRecordList = studentRecordController.getAllStudentRecords();
                 
+                // loads the student record table with the new list
+                loadSRTable(studentRecordList);
+                
+                // Updates the graphical user interface (GUI)
                 this.updateUI();
                 
-            } else if (radioButtonPressed.getName() == "Waiting List SR") {
-                System.out.println("Waiting list");
+            } else if (radioButtonPressed == enrolledFilterButton) {
+                
+                // removes the current table from this layout
+                this.remove(tableScrollPane);
+                
+                // Clears the list of student records
+                studentRecordList.clear();
+                
+                // Loads the list of all Enrolled student records
+                studentRecordList = studentRecordController.getEnrolledStudentRecords();
+                
+                // loads the student record table with the new list
+                loadSRTable(studentRecordList);
+                
+                // Updates the graphical user interface (GUI)
+                this.updateUI();
+                
+            } else if (radioButtonPressed == waitingListFilterButton) {
+                
+                // removes the current table from this layout
+                this.remove(tableScrollPane);
+                
+                // Clears the list of student records
+                studentRecordList.clear();
+                
+                // Loads the list of all unenrolled/waiting list student records
+                studentRecordList = studentRecordController.getWaitingListStudentRecords();
+                
+                // loads the student record table with the new list
+                loadSRTable(studentRecordList);
+                
+                // Updates the graphical user interface (GUI)
+                this.updateUI();
             }
-            
-    
         } else if (e.getSource() instanceof JButton) {
-        
+            // If it's a button cast the source to a button
+            final JButton buttonPressed = (JButton) e.getSource();
+            
+            // Checks that the button pressed was the search button
+            if (buttonPressed == searchButton) {
+                // Calls the method to search/filter the student records in the table by the text field input
+                searchStudentRecordTable();
+            }
         }
+    }
+
+    /**
+     * Key Pressed Listener for when the enter key is pressed in the search text field to search.
+     * @param e the key pressed.
+     */
+    @Override
+    public void keyPressed(KeyEvent e) {
+        // If the key pressed was the 'Enter' key
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            // Calls the method to search/filter the student records in the table by the text field input
+            searchStudentRecordTable();
+        }
+    }
     
-    
-    
-    
+    /**
+     * Method to filter records in the student records table by the input from the search text field.
+     */
+    public void searchStudentRecordTable() {
+        // Gets the text from the search text field
+        final String searchText = searchSRField.getText();
+                
+        // If the search text is empty filter by nothing (showing all records in the list)
+        if (searchText.length() == 0) {
+            sorter.setRowFilter(null);
+        } else {
+            // Otherwise search/filter using the search text (ignoring case), searching on column 0 (student name)
+            sorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText, 0));
+        }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
     }
 }

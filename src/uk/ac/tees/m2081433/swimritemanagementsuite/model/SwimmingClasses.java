@@ -1,7 +1,9 @@
 package uk.ac.tees.m2081433.swimritemanagementsuite.model;
 
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
+import java.util.Collection;
 
 /**
  * This class represents the Swimming Classes database table showing all classes running at
@@ -79,6 +81,12 @@ public class SwimmingClasses implements Comparable<SwimmingClasses> {
      */
     @DatabaseField (columnName = CURRENTCAPACITY_COLUMN_NAME, canBeNull = false)
     private int currentCapacity;
+    
+    /**
+     * Shows that a timeslot can be associated with multiple swimming classes in a 0 to many relationship.
+     */
+    @ForeignCollectionField
+    private Collection<StudentRecord> studentRecords;
     
     
     
@@ -193,6 +201,23 @@ public class SwimmingClasses implements Comparable<SwimmingClasses> {
     public void setCurrentCapacity(int currentCapacity) {
         this.currentCapacity = currentCapacity;
     }
+
+    /**
+     * Accessor to retrieve the student records associated with the swimming class.
+     * @return studentRecords The student records associated with this swimming class.
+     */
+    public Collection<StudentRecord> getStudentRecords() {
+        return studentRecords;
+    }
+
+    /**
+     * Mutator to set the new student records associated with this swimming class.
+     * @param studentRecords The updated student records for this swimming class.
+     */
+    public void setStudentRecords(Collection<StudentRecord> studentRecords) {
+        this.studentRecords = studentRecords;
+    }
+    
     
     
 

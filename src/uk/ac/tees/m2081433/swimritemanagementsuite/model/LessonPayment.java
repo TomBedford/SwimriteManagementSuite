@@ -56,7 +56,7 @@ public class LessonPayment {
      * The date the payment was made on (field cannot be null).
      */
     @DatabaseField (columnName = PAYMENTDATE_COLUMN_NAME, canBeNull = false)
-    private Date paymentDate;
+    private String paymentDate;
 
     /**
      * The amount of money being payed for the lesson block (field cannot be null).
@@ -86,7 +86,7 @@ public class LessonPayment {
      * @param paymentAmount The payment amount.
      * @param paymentTaker The taker of the payment.
      */
-    public LessonPayment(PaymentType paymentType, Date paymentDate, double paymentAmount, String paymentTaker) {
+    public LessonPayment(PaymentType paymentType, String paymentDate, double paymentAmount, String paymentTaker) {
         this.paymentType = paymentType;
         this.paymentDate = paymentDate;
         this.paymentAmount = paymentAmount;
@@ -123,7 +123,7 @@ public class LessonPayment {
      * Accessor to retrieve the date the payment was made.
      * @return paymentDate The date payment was made.
      */
-    public Date getPaymentDate() {
+    public String getPaymentDate() {
         return paymentDate;
     }
 
@@ -131,7 +131,7 @@ public class LessonPayment {
      * Mutator to set the new date the payment was made on.
      * @param paymentDate The updated date payment was made on.
      */
-    public void setPaymentDate(Date paymentDate) {
+    public void setPaymentDate(String paymentDate) {
         this.paymentDate = paymentDate;
     }
 

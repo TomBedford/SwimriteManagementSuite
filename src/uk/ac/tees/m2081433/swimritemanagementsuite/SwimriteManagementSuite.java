@@ -4,6 +4,8 @@ import uk.ac.tees.m2081433.swimritemanagementsuite.controller.DatabaseManager;
 import uk.ac.tees.m2081433.swimritemanagementsuite.view.smsMainPanel;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.*;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.StudentAddress;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.StudentRecord;
@@ -37,7 +39,7 @@ public class SwimriteManagementSuite {
         // Calls method to initialise the Swimrite Management Suite database connection references.
         createDbReferences();
         
-        // addStudentRecords();
+        //addStudentRecords();
         
         // Calls method to create the swimrite management frame and panels.
         createSMSWindow();
@@ -92,23 +94,35 @@ public class SwimriteManagementSuite {
         for (int i = 0; i < 10; i++) {
             
             try {
-                StudentAddress sa = new StudentAddress(i + " Line", "Second Line", "City", "County", i + " P05TC");
+                StudentAddress sa = new StudentAddress(i + " Line", "Second Line", "City", "County", "P05 C0D3");
 
                 DatabaseManager.studentAddressDAO.create(sa);
 
 
-                StudentRecord sr = new StudentRecord("John Doe" + i, 10 + i, i, 2000, "01234567891", sa,
+                StudentRecord sr = new StudentRecord("John Doe " + i, "01/12/200" + i, "0123456789" + i, sa,
                         "n/a", "Jane Doe", SwimmingLevel.BEGINNERS);
 
                 DatabaseManager.studentRecordDAO.create(sr);
             } catch (SQLException e) {
                 System.out.println("adding Test SR's: Error creating the test student addresses & records.");
             }
-            
-            
-            
         }
         
-        
+        for (int i = 0; i < 10; i++) {
+            
+            try {
+                StudentAddress sa = new StudentAddress(i + " Line", "Second Line", "City", "County", "P05 C0D3");
+
+                DatabaseManager.studentAddressDAO.create(sa);
+
+
+                StudentRecord sr = new StudentRecord("Andrew Smith " + i, "30/01/199" + i, "0123456789" + i, sa,
+                        "n/a", "John Smith", SwimmingLevel.HONOURS);
+
+                DatabaseManager.studentRecordDAO.create(sr);
+            } catch (SQLException e) {
+                System.out.println("adding Test SR's: Error creating the test student addresses & records.");
+            }
+        }
     }
 }

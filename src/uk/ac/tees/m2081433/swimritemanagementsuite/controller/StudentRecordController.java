@@ -21,10 +21,6 @@ public class StudentRecordController {
                                             String addressCounty, String addressPostcode, String hasIllness, String parentName,
                                                 SwimmingLevel abilityLevel) {
         
-        int dobDay = Integer.parseInt(studentDOBDay);
-        int dobMonth = Integer.parseInt(studentDOBMonth);
-        int dobYear = Integer.parseInt(studentDOBYear);
-        
         StudentAddress studentAddress = new StudentAddress(addressLine1, addressLine2, addressCity, addressCounty, addressPostcode);
         
         try {
@@ -34,7 +30,7 @@ public class StudentRecordController {
         }
         
         
-        StudentRecord studentRecord = new StudentRecord(studentName, dobDay, dobMonth, dobYear, studentTelephoneNo, studentAddress, 
+        StudentRecord studentRecord = new StudentRecord(studentName, studentDOBDay + "/" + studentDOBMonth + "/" + studentDOBYear, studentTelephoneNo, studentAddress, 
                                                             hasIllness, parentName, abilityLevel);
         
         try {
@@ -62,8 +58,27 @@ public class StudentRecordController {
         try {
             // query for all accounts that have "qwerty" as a password
             studentRecordList = DatabaseManager.studentRecordDAO.queryForAll();
+            
         } catch (SQLException e) {
             System.out.println("getAllStudentRecords: Error getting all student records (controller).");
+        }
+        
+        for (int i = 0; i < studentRecordList.size(); i++) {
+            
+            if (studentRecordList.get(i).getSwimmingClass() != null) {
+                
+                try {
+                
+                    DatabaseManager.swimmingClassesDAO.refresh(studentRecordList.get(i).getSwimmingClass());
+                    
+                    DatabaseManager.timeslotDAO.refresh(studentRecordList.get(i).getSwimmingClass().getTimeslot());
+                
+                } catch (SQLException e) {
+                    System.out.println("getAllStudentRecords: Error getting all student records (controller).");
+                }
+                
+            }
+            
         }
         
         return studentRecordList;
@@ -71,20 +86,41 @@ public class StudentRecordController {
     
     public List<StudentRecord> getEnrolledStudentRecords() {
         
+        // Gets all student records
         List<StudentRecord> allStudentRecordList = getAllStudentRecords();
         
+        // New List to hold all student records where their swimming class field is not null
         List<StudentRecord> enrolledStudentRecordList = new ArrayList();
         
+        // Loops through the all of the student records in the allStudentRecordList list
         for (int i = 0; i < allStudentRecordList.size(); i++) {
             
+            // If the swimming class field is NOT equal to null (they are registered to a swimming class)
             if (allStudentRecordList.get(i).getSwimmingClass() != null) {
+                // Add that student record to the enrolled student record list
                 enrolledStudentRecordList.add(allStudentRecordList.get(i));
             }
-            
         }
-        
-        System.out.println("enrolled SR: " + enrolledStudentRecordList.size());
-        
         return enrolledStudentRecordList;
+    }
+    
+    public List<StudentRecord> getWaitingListStudentRecords() {
+        
+        // Gets all student records
+        List<StudentRecord> allStudentRecordList = getAllStudentRecords();
+        
+        // New List to hold all student records where their swimming class field null
+        List<StudentRecord> waitingListStudentRecordList = new ArrayList();
+        
+        // Loops through the all of the student records in the allStudentRecordList list
+        for (int i = 0; i < allStudentRecordList.size(); i++) {
+            
+            // If the swimming class field is equal to null (they are not registered to a swimming class)
+            if (allStudentRecordList.get(i).getSwimmingClass() == null) {
+                // Add that student record to the waiting list student record list
+                waitingListStudentRecordList.add(allStudentRecordList.get(i));
+            }
+        }
+        return waitingListStudentRecordList;
     }
 }

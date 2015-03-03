@@ -142,7 +142,7 @@ public class LessonBlock {
      * The date of the first lesson of the lesson block (field cannot be null).
      */
     @DatabaseField (columnName = LESSON1DATE_COLUMN_NAME, canBeNull = false)
-    private Date lesson1Date;
+    private String lesson1Date;
     
     /**
      * An Enum that holds the attendance type of the students attendance for the first lesson of the block.
@@ -154,7 +154,7 @@ public class LessonBlock {
      * The date of the second lesson of the lesson block (field cannot be null).
      */
     @DatabaseField (columnName = LESSON2DATE_COLUMN_NAME, canBeNull = false)
-    private Date lesson2Date;
+    private String lesson2Date;
     
     /**
      * An Enum that holds the attendance type of the students attendance for the second lesson of the block.
@@ -166,7 +166,7 @@ public class LessonBlock {
      * The date of the third lesson of the lesson block (field cannot be null).
      */
     @DatabaseField (columnName = LESSON3DATE_COLUMN_NAME, canBeNull = false)
-    private Date lesson3Date;
+    private String lesson3Date;
     
     /**
      * An Enum that holds the attendance type of the students attendance for the third lesson of the block.
@@ -178,7 +178,7 @@ public class LessonBlock {
      * The date of the fourth lesson of the lesson block (field cannot be null).
      */
     @DatabaseField (columnName = LESSON4DATE_COLUMN_NAME, canBeNull = false)
-    private Date lesson4Date;
+    private String lesson4Date;
     
     /**
      * An Enum that holds the attendance type of the students attendance for the fourth lesson of the block.
@@ -190,7 +190,7 @@ public class LessonBlock {
      * The date of the fifth lesson of the lesson block (field cannot be null).
      */
     @DatabaseField (columnName = LESSON5DATE_COLUMN_NAME, canBeNull = false)
-    private Date lesson5Date;
+    private String lesson5Date;
     
     /**
      * An Enum that holds the attendance type of the students attendance for the fifth lesson of the block.
@@ -202,7 +202,7 @@ public class LessonBlock {
      * The date of the sixth lesson of the lesson block (field cannot be null).
      */
     @DatabaseField (columnName = LESSON6DATE_COLUMN_NAME, canBeNull = false)
-    private Date lesson6Date;
+    private String lesson6Date;
     
     /**
      * An Enum that holds the attendance type of the students attendance for the sixth lesson of the block.
@@ -214,7 +214,7 @@ public class LessonBlock {
      * The date of the seventh lesson of the lesson block (field cannot be null).
      */
     @DatabaseField (columnName = LESSON7DATE_COLUMN_NAME, canBeNull = false)
-    private Date lesson7Date;
+    private String lesson7Date;
     
     /**
      * An Enum that holds the attendance type of the students attendance for the seventh lesson of the block.
@@ -226,7 +226,7 @@ public class LessonBlock {
      * The date of the eighth lesson of the lesson block (field cannot be null).
      */
     @DatabaseField (columnName = LESSON8DATE_COLUMN_NAME, canBeNull = false)
-    private Date lesson8Date;
+    private String lesson8Date;
     
     /**
      * An Enum that holds the attendance type of the students attendance for the eighth lesson of the block.
@@ -238,7 +238,7 @@ public class LessonBlock {
      * The date of the ninth lesson of the lesson block (field cannot be null).
      */
     @DatabaseField (columnName = LESSON9DATE_COLUMN_NAME, canBeNull = false)
-    private Date lesson9Date;
+    private String lesson9Date;
     
     /**
      * An Enum that holds the attendance type of the students attendance for the ninth lesson of the block.
@@ -250,7 +250,7 @@ public class LessonBlock {
      * The date of the tenth lesson of the lesson block (field cannot be null).
      */
     @DatabaseField (columnName = LESSON10DATE_COLUMN_NAME, canBeNull = false)
-    private Date lesson10Date;
+    private String lesson10Date;
     
     /**
      * An Enum that holds the attendance type of the students attendance for the tenth lesson of the block.
@@ -281,9 +281,9 @@ public class LessonBlock {
      * @param lesson9Date The date of the ninth lesson of the lesson block.
      * @param lesson10Date The date of the tenth lesson of the lesson block.
      */
-    public LessonBlock(LessonPayment lessonPayment, Date lesson1Date, Date lesson2Date, Date lesson3Date, Date lesson4Date,
-                        Date lesson5Date, Date lesson6Date, Date lesson7Date, Date lesson8Date, 
-                            Date lesson9Date, Date lesson10Date) {
+    public LessonBlock(LessonPayment lessonPayment, String lesson1Date, String lesson2Date, String lesson3Date, String lesson4Date,
+                        String lesson5Date, String lesson6Date, String lesson7Date, String lesson8Date, 
+                            String lesson9Date, String lesson10Date) {
         this.lessonPayment = lessonPayment;
         this.lesson1Date = lesson1Date;
         this.lesson2Date = lesson1Date;
@@ -328,7 +328,7 @@ public class LessonBlock {
      * Accessor to retrieve the date of lesson 1.
      * @return lesson1Date The date of lesson 1.
      */
-    public Date getLesson1Date() {
+    public String getLesson1Date() {
         return lesson1Date;
     }
 
@@ -336,7 +336,7 @@ public class LessonBlock {
      * Mutator to set the new date of lesson 1.
      * @param lesson1Date the updated date of lesson 1.
      */
-    public void setLesson1Date(Date lesson1Date) {
+    public void setLesson1Date(String lesson1Date) {
         this.lesson1Date = lesson1Date;
     }
 
@@ -360,7 +360,7 @@ public class LessonBlock {
      * Accessor to retrieve the date of lesson 2.
      * @return lesson2Date The date of lesson 2.
      */
-    public Date getLesson2Date() {
+    public String getLesson2Date() {
         return lesson2Date;
     }
 
@@ -368,7 +368,7 @@ public class LessonBlock {
      * Mutator to set the new date of lesson 2.
      * @param lesson2Date the updated date of lesson 2.
      */
-    public void setLesson2Date(Date lesson2Date) {
+    public void setLesson2Date(String lesson2Date) {
         this.lesson2Date = lesson2Date;
     }
 
@@ -392,7 +392,7 @@ public class LessonBlock {
      * Accessor to retrieve the date of lesson 3.
      * @return lesson3Date The date of lesson 3.
      */
-    public Date getLesson3Date() {
+    public String getLesson3Date() {
         return lesson3Date;
     }
 
@@ -400,7 +400,7 @@ public class LessonBlock {
      * Mutator to set the new date of lesson 3.
      * @param lesson3Date the updated date of lesson 3.
      */
-    public void setLesson3Date(Date lesson3Date) {
+    public void setLesson3Date(String lesson3Date) {
         this.lesson3Date = lesson3Date;
     }
 
@@ -424,7 +424,7 @@ public class LessonBlock {
      * Accessor to retrieve the date of lesson 4.
      * @return lesson4Date The date of lesson 4.
      */
-    public Date getLesson4Date() {
+    public String getLesson4Date() {
         return lesson4Date;
     }
 
@@ -432,7 +432,7 @@ public class LessonBlock {
      * Mutator to set the new date of lesson 4.
      * @param lesson4Date the updated date of lesson 4.
      */
-    public void setLesson4Date(Date lesson4Date) {
+    public void setLesson4Date(String lesson4Date) {
         this.lesson4Date = lesson4Date;
     }
 
@@ -456,7 +456,7 @@ public class LessonBlock {
      * Accessor to retrieve the date of lesson 5.
      * @return lesson5Date The date of lesson 5.
      */
-    public Date getLesson5Date() {
+    public String getLesson5Date() {
         return lesson5Date;
     }
 
@@ -464,7 +464,7 @@ public class LessonBlock {
      * Mutator to set the new date of lesson 5.
      * @param lesson5Date the updated date of lesson 5.
      */
-    public void setLesson5Date(Date lesson5Date) {
+    public void setLesson5Date(String lesson5Date) {
         this.lesson5Date = lesson5Date;
     }
 
@@ -488,7 +488,7 @@ public class LessonBlock {
      * Accessor to retrieve the date of lesson 6.
      * @return lesson6Date The date of lesson 6.
      */
-    public Date getLesson6Date() {
+    public String getLesson6Date() {
         return lesson6Date;
     }
 
@@ -496,7 +496,7 @@ public class LessonBlock {
      * Mutator to set the new date of lesson 6.
      * @param lesson6Date the updated date of lesson 6.
      */
-    public void setLesson6Date(Date lesson6Date) {
+    public void setLesson6Date(String lesson6Date) {
         this.lesson6Date = lesson6Date;
     }
 
@@ -520,7 +520,7 @@ public class LessonBlock {
      * Accessor to retrieve the date of lesson 7.
      * @return lesson7Date The date of lesson 7.
      */
-    public Date getLesson7Date() {
+    public String getLesson7Date() {
         return lesson7Date;
     }
 
@@ -528,7 +528,7 @@ public class LessonBlock {
      * Mutator to set the new date of lesson 7.
      * @param lesson7Date the updated date of lesson 7.
      */
-    public void setLesson7Date(Date lesson7Date) {
+    public void setLesson7Date(String lesson7Date) {
         this.lesson7Date = lesson7Date;
     }
 
@@ -552,7 +552,7 @@ public class LessonBlock {
      * Accessor to retrieve the date of lesson 8.
      * @return lesson1Date The date of lesson 8.
      */
-    public Date getLesson8Date() {
+    public String getLesson8Date() {
         return lesson8Date;
     }
 
@@ -560,7 +560,7 @@ public class LessonBlock {
      * Mutator to set the new date of lesson 8.
      * @param lesson8Date the updated date of lesson 8.
      */
-    public void setLesson8Date(Date lesson8Date) {
+    public void setLesson8Date(String lesson8Date) {
         this.lesson8Date = lesson8Date;
     }
 
@@ -584,7 +584,7 @@ public class LessonBlock {
      * Accessor to retrieve the date of lesson 9.
      * @return lesson9Date The date of lesson 9.
      */
-    public Date getLesson9Date() {
+    public String getLesson9Date() {
         return lesson9Date;
     }
 
@@ -592,7 +592,7 @@ public class LessonBlock {
      * Mutator to set the new date of lesson 9.
      * @param lesson9Date the updated date of lesson 9.
      */
-    public void setLesson9Date(Date lesson9Date) {
+    public void setLesson9Date(String lesson9Date) {
         this.lesson9Date = lesson9Date;
     }
 
@@ -616,7 +616,7 @@ public class LessonBlock {
      * Accessor to retrieve the date of lesson 10.
      * @return lesson10Date The date of lesson 10.
      */
-    public Date getLesson10Date() {
+    public String getLesson10Date() {
         return lesson10Date;
     }
 
@@ -624,7 +624,7 @@ public class LessonBlock {
      * Mutator to set the new date of lesson 10.
      * @param lesson10Date the updated date of lesson 10.
      */
-    public void setLesson10Date(Date lesson10Date) {
+    public void setLesson10Date(String lesson10Date) {
         this.lesson10Date = lesson10Date;
     }
 

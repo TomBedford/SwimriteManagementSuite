@@ -23,19 +23,9 @@ public class StudentRecord {
     public static final String STUDENTNAME_COLUMN_NAME = "studentName";
     
     /**
-     * The column name for the Students Date of Birth Day.
+     * The column name for the Students Date of Birth.
      */
-    public static final String STUDENTDOBDAY_COLUMN_NAME = "studentDOBDay";
-    
-    /**
-     * The column name for the Students Date of Birth Month.
-     */
-    public static final String STUDENTDOBMONTH_COLUMN_NAME = "studentDOBMonth";
-    
-    /**
-     * The column name for the Students Date of Birth Year.
-     */
-    public static final String STUDENTDOBYEAR_COLUMN_NAME = "studentDOBYear";
+    public static final String STUDENTDOB_COLUMN_NAME = "studentDOB";
     
     /**
      * The column name for the Students telephone number.
@@ -87,22 +77,10 @@ public class StudentRecord {
     private String studentName;
     
     /**
-     * The Day of the date of birth of the student (field cannot be null).
+     * The date of birth of the student (field cannot be null).
      */
-    @DatabaseField (columnName = STUDENTDOBDAY_COLUMN_NAME, canBeNull = false)
-    private int studentDOBDay;
-    
-    /**
-     * The Month of the date of birth of the student (field cannot be null).
-     */
-    @DatabaseField (columnName = STUDENTDOBMONTH_COLUMN_NAME, canBeNull = false)
-    private int studentDOBMonth;
-    
-    /**
-     * The Year of the date of birth of the student (field cannot be null).
-     */
-    @DatabaseField (columnName = STUDENTDOBYEAR_COLUMN_NAME, canBeNull = false)
-    private int studentDOBYear;
+    @DatabaseField (columnName = STUDENTDOB_COLUMN_NAME, canBeNull = false)
+    private String studentDOB;
     
     /**
      * The telephone number of the student (field cannot be null).
@@ -159,21 +137,17 @@ public class StudentRecord {
     /**
      * Parameterized constructor to create a new Student Record in the Student Record database table.
      * @param studentName The name of the student.
-     * @param studentDOBDay The day of the date of birth of the student.
-     * @param studentDOBMonth The month of the date of birth of the student.
-     * @param studentDOBYear The year of the date of birth of the student.
+     * @param studentDOB The date of birth of the student.
      * @param telephoneNo The telephone number of the student.
      * @param studentAddress The home address of the student.
      * @param hasIllness Information as to whether the student has any illnesses/disabilities
      * @param parentName The students parents name.
-     * @param abilityLevel The ability level of the student.
+     * @param swimmingLevel The swimming/ability level of the student.
      */
-    public StudentRecord(String studentName, int studentDOBDay, int studentDOBMonth, int studentDOBYear, String telephoneNo, StudentAddress studentAddress, 
+    public StudentRecord(String studentName, String studentDOB, String telephoneNo, StudentAddress studentAddress, 
                             String hasIllness, String parentName, SwimmingLevel swimmingLevel) {
         this.studentName = studentName;
-        this.studentDOBDay = studentDOBDay;
-        this.studentDOBMonth = studentDOBMonth;
-        this.studentDOBYear = studentDOBYear;
+        this.studentDOB = studentDOB;
         this.telephoneNo = telephoneNo;
         this.studentAddress = studentAddress;
         this.hasIllness = hasIllness;
@@ -208,51 +182,19 @@ public class StudentRecord {
     }
     
     /**
-     * Accessor to retrieve the day of the date of birth of the student.
-     * @return studentDOBDay The day of the date of birth of the student
+     * Accessor to retrieve the date of birth of the student.
+     * @return studentDOB The date of birth of the student
      */
-    public int getStudentDOBDay() {
-        return studentDOBDay;
+    public String getStudentDOB() {
+        return studentDOB;
     }
 
     /**
-     * Mutator to set the new day of the date of birth of the student.
-     * @param studentDOBDay The updated day of the date of birth of the student.
+     * Mutator to set the new date of birth of the student.
+     * @param studentDOB The updated date of birth of the student.
      */
-    public void setStudentDOBDay(int studentDOBDay) {
-        this.studentDOBDay = studentDOBDay;
-    }
-
-    /**
-     * Accessor to retrieve the month of the date of birth of the student.
-     * @return studentDOBMonth The month of the date of birth of the student
-     */
-    public int getStudentDOBMonth() {
-        return studentDOBMonth;
-    }
-
-    /**
-     * Mutator to set the new month of the date of birth of the student.
-     * @param studentDOBMonth The updated month of the date of birth of the student.
-     */
-    public void setStudentDOBMonth(int studentDOBMonth) {
-        this.studentDOBMonth = studentDOBMonth;
-    }
-
-    /**
-     * Accessor to retrieve the year of the date of birth of the student.
-     * @return studentDOBYear The year of the date of birth of the student
-     */
-    public int getStudentDOBYear() {
-        return studentDOBYear;
-    }
-
-    /**
-     * Mutator to set the new year of the date of birth of the student.
-     * @param studentDOBYear The updated year of the date of birth of the student.
-     */
-    public void setStudentDOBYear(int studentDOBYear) {
-        this.studentDOBYear = studentDOBYear;
+    public void setStudentDOB(String studentDOB) {
+        this.studentDOB = studentDOB;
     }
 
     /**

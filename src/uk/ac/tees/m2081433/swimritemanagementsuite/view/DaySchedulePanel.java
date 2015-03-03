@@ -121,11 +121,6 @@ public class DaySchedulePanel extends JPanel {
         // Calculates the height of the panel as each timeslot label is 150 height.
         int panelHeight = (amountOfTimeslots * 150) +  100;
         
-        // If the panel height is less than the smallest required, set it to the smallest size.
-        if (panelHeight < 575) {
-            panelHeight = 575;
-        }
-        
         return panelHeight;
     }
     
