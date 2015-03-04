@@ -122,7 +122,7 @@ public class StudentRecord {
     /**
      * Foreign Key: The lesson block of the attendance record.
      */
-    @DatabaseField (columnName = LESSONBLOCK_COLUMN_NAME, foreign = true)
+    @DatabaseField (columnName = LESSONBLOCK_COLUMN_NAME, canBeNull = false, foreign = true)
     private LessonBlock lessonBlock;
     
     
@@ -143,9 +143,10 @@ public class StudentRecord {
      * @param hasIllness Information as to whether the student has any illnesses/disabilities
      * @param parentName The students parents name.
      * @param swimmingLevel The swimming/ability level of the student.
+     * @param lessonBlock The first lesson block of the student record
      */
     public StudentRecord(String studentName, String studentDOB, String telephoneNo, StudentAddress studentAddress, 
-                            String hasIllness, String parentName, SwimmingLevel swimmingLevel) {
+                            String hasIllness, String parentName, SwimmingLevel swimmingLevel, LessonBlock lessonBlock) {
         this.studentName = studentName;
         this.studentDOB = studentDOB;
         this.telephoneNo = telephoneNo;
@@ -153,6 +154,7 @@ public class StudentRecord {
         this.hasIllness = hasIllness;
         this.parentName = parentName;
         this.swimmingLevel = swimmingLevel;
+        this.lessonBlock = lessonBlock;
     }
 
     

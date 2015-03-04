@@ -227,7 +227,7 @@ public class AddSRPanel extends JPanel implements ActionListener {
      */
     public void addLayoutSpacing() {
         // First invisible label (top left) pushing the form to the right
-        JLabel spacingLabel1 = new JLabel();
+        final JLabel spacingLabel1 = new JLabel();
         spacingLabel1.setPreferredSize(new Dimension(450, 50));
         spacingLabel1.setOpaque(false);
         spacingLabel1.setVisible(true);
@@ -238,7 +238,7 @@ public class AddSRPanel extends JPanel implements ActionListener {
         this.add(spacingLabel1, c);
         
         // Second invisible label (bottom right, inbetween the form and the buttons) pushing buttons to right corner
-        JLabel spacingLabel2 = new JLabel();
+        final JLabel spacingLabel2 = new JLabel();
         spacingLabel2.setPreferredSize(new Dimension(75, 50));
         spacingLabel2.setOpaque(false);
         spacingLabel2.setVisible(true);
@@ -283,7 +283,7 @@ public class AddSRPanel extends JPanel implements ActionListener {
      */
     public void loadStudentNameRow() {
         // Label to hold the student name form field text.
-        JLabel studentNameLabel = new JLabel("Student Name:");
+        final JLabel studentNameLabel = new JLabel("Student Name:");
         setLabelAttributes(studentNameLabel);
 
         // The coordinates for where to add this component to the layout.
@@ -300,6 +300,21 @@ public class AddSRPanel extends JPanel implements ActionListener {
         c.gridx = 2;
         c.gridy = 0;
         this.add(studentNameField, c);
+        
+        // Label to hold the information tooltip and tooltip icon for the student name form field
+        final JLabel info1Label = new JLabel();
+        // Sets the standard attributes for a info label
+        setInfoLabelAttributes(info1Label);
+        // The info image icon for the label
+        info1Label.setIcon(new ImageIcon("images/icons/information.png"));
+        // The tooltip on mouse hover for the icon
+        info1Label.setToolTipText("<HTML> The <b> Student Name </b> field cannot: "
+                + "be empty, or contain anything other than letters and spaces. </HTML>");
+        
+        // The coordinates for where to add this component to the layout.
+        c.gridx = 3;
+        c.gridy = 0;
+        this.add(info1Label, c);
     }
 
     /**
@@ -307,7 +322,7 @@ public class AddSRPanel extends JPanel implements ActionListener {
      */
     public void loadStudentDOBRow() {
         // Label to hold the student date of birth form field text
-        JLabel studentDOBLabel = new JLabel("Date of Birth (DOB):");
+        final JLabel studentDOBLabel = new JLabel("Date of Birth (DOB):");
         setLabelAttributes(studentDOBLabel);
 
         // The coordinates for where to add this component to the layout
@@ -316,7 +331,7 @@ public class AddSRPanel extends JPanel implements ActionListener {
         this.add(studentDOBLabel, c);
         
         // Label to hold all the fields for the DOB
-        JPanel dobFieldHolderLabel = new JPanel();
+        final JPanel dobFieldHolderLabel = new JPanel();
         dobFieldHolderLabel.setPreferredSize(new Dimension(200, 50));
         dobFieldHolderLabel.setBackground(Color.white);
         dobFieldHolderLabel.setOpaque(true);
@@ -329,7 +344,7 @@ public class AddSRPanel extends JPanel implements ActionListener {
         dobFieldHolderLabel.add(studentDOBDayField);
         
         // Label to hold a '/' SLASH inbetween the day and month of the students date of birth.
-        JLabel firstSlashLabel = new JLabel("<html><span style='font-size:16px'>/</span></html>");
+        final JLabel firstSlashLabel = new JLabel("<html><span style='font-size:16px'>/</span></html>");
         firstSlashLabel.setPreferredSize(new Dimension(15, 50));
         firstSlashLabel.setBackground(Color.white);
         firstSlashLabel.setOpaque(true);
@@ -343,7 +358,7 @@ public class AddSRPanel extends JPanel implements ActionListener {
         dobFieldHolderLabel.add(studentDOBMonthField);
         
         // Label to hold a '/' SLASH inbetween the month and year of the students date of birth.
-        JLabel secondSlashLabel = new JLabel("<html><span style='font-size:16px'>/</span></html>");
+        final JLabel secondSlashLabel = new JLabel("<html><span style='font-size:16px'>/</span></html>");
         secondSlashLabel.setPreferredSize(new Dimension(15, 50));
         secondSlashLabel.setBackground(Color.white);
         secondSlashLabel.setOpaque(true);
@@ -360,6 +375,21 @@ public class AddSRPanel extends JPanel implements ActionListener {
         c.gridx = 2;
         c.gridy = 1;
         this.add(dobFieldHolderLabel, c);
+        
+        // Label to hold the information tooltip and tooltip icon for the student date of birth form fields
+        final JLabel info2Label = new JLabel();
+        // Sets the standard attributes for a info label
+        setInfoLabelAttributes(info2Label);
+        // The info image icon for the label
+        info2Label.setIcon(new ImageIcon("images/icons/information.png"));
+        // The tooltip on mouse hover for the icon
+        info2Label.setToolTipText("<HTML> The <b> Student DOB </b>field cannot: "
+                + "be empty, or contain anything other than valid numbers for day, month, year. <b> (Format: DD/MM/YYYY) </b> </HTML>");
+        
+        // The coordinates for where to add this component to the layout.
+        c.gridx = 3;
+        c.gridy = 1;
+        this.add(info2Label, c);
     }
 
     /**
@@ -367,7 +397,7 @@ public class AddSRPanel extends JPanel implements ActionListener {
      */
     public void loadStudentTelephoneNoRow() {
         // Label to hold the student telephone number form field text.
-        JLabel studentTelephoneNoLabel = new JLabel("Telephone Number:");
+        final JLabel studentTelephoneNoLabel = new JLabel("Telephone Number:");
         setLabelAttributes(studentTelephoneNoLabel);
 
         // The coordinates for where to add this component to the layout.
@@ -384,6 +414,21 @@ public class AddSRPanel extends JPanel implements ActionListener {
         c.gridx = 2;
         c.gridy = 2;
         this.add(studentTelephoneNoField, c);
+        
+        // Label to hold the information tooltip and tooltip icon for the student telephone number form field
+        final JLabel info3Label = new JLabel();
+        // Sets the standard attributes for a info label
+        setInfoLabelAttributes(info3Label);
+        // The info image icon for the label
+        info3Label.setIcon(new ImageIcon("images/icons/information.png"));
+        // The tooltip on mouse hover for the icon
+        info3Label.setToolTipText("<HTML> The <b> Telephone no. </b>field cannot: "
+                + "be empty, contain anything other than numbers, and must be 11 characters in length (eg. 07123456789). </HTML>");
+        
+        // The coordinates for where to add this component to the layout.
+        c.gridx = 3;
+        c.gridy = 2;
+        this.add(info3Label, c);
     }
 
     /**
@@ -391,7 +436,7 @@ public class AddSRPanel extends JPanel implements ActionListener {
      */
     public void loadStudentAddressRow() {
         // Label to hold the student address line 1 form field text.
-        JLabel addressLine1Label = new JLabel("Address Line 1:");
+        final JLabel addressLine1Label = new JLabel("Address Line 1:");
         setLabelAttributes(addressLine1Label);
 
         // The coordinates for where to add this component to the layout.
@@ -409,10 +454,25 @@ public class AddSRPanel extends JPanel implements ActionListener {
         c.gridy = 3;
         this.add(addressLine1Field, c);
         
+        // Label to hold the information tooltip and tooltip icon for the address line 1 form field
+        final JLabel info4Label = new JLabel();
+        // Sets the standard attributes for a info label
+        setInfoLabelAttributes(info4Label);
+        // The info image icon for the label
+        info4Label.setIcon(new ImageIcon("images/icons/information.png"));
+        // The tooltip on mouse hover for the icon
+        info4Label.setToolTipText("<HTML> The <b> Address Line 1 </b>field cannot: "
+                        + "be empty, or contain anything other than letters, numbers and spaces. </HTML>");
+        
+        // The coordinates for where to add this component to the layout.
+        c.gridx = 3;
+        c.gridy = 3;
+        this.add(info4Label, c);
+        
         
         
         // Label to hold the student address line 2 form field text.
-        JLabel addressLine2Label = new JLabel("Address Line 2:");
+        final JLabel addressLine2Label = new JLabel("Address Line 2:");
         setLabelAttributes(addressLine2Label);
 
         // The coordinates for where to add this component to the layout.
@@ -430,10 +490,25 @@ public class AddSRPanel extends JPanel implements ActionListener {
         c.gridy = 4;
         this.add(addressLine2Field, c);
         
+        // Label to hold the information tooltip and tooltip icon for the address line 2 form field
+        final JLabel info5Label = new JLabel();
+        // Sets the standard attributes for a info label
+        setInfoLabelAttributes(info5Label);
+        // The info image icon for the label
+        info5Label.setIcon(new ImageIcon("images/icons/information.png"));
+        // The tooltip on mouse hover for the icon
+        info5Label.setToolTipText("<HTML> The <b> Address Line 2 </b>field cannot: "
+                                    + "be empty, or contain anything other than letters and spaces. </HTML>");
+        
+        // The coordinates for where to add this component to the layout.
+        c.gridx = 3;
+        c.gridy = 4;
+        this.add(info5Label, c);
+        
         
         
         // Label to hold the student city for their address form field text
-        JLabel addressCityLabel = new JLabel("City:");
+        final JLabel addressCityLabel = new JLabel("City:");
         setLabelAttributes(addressCityLabel);
 
         // The coordinates for where to add this component to the layout.
@@ -451,10 +526,25 @@ public class AddSRPanel extends JPanel implements ActionListener {
         c.gridy = 5;
         this.add(addressCityField, c);
         
+        // Label to hold the information tooltip and tooltip icon for the city address form field
+        final JLabel info6Label = new JLabel();
+        // Sets the standard attributes for a info label
+        setInfoLabelAttributes(info6Label);
+        // The info image icon for the label
+        info6Label.setIcon(new ImageIcon("images/icons/information.png"));
+        // The tooltip on mouse hover for the icon
+        info6Label.setToolTipText("<HTML> The <b> Addresses City </b>field cannot: "
+                                    + "be empty, or contain anything other than letters and spaces. </HTML>");
+        
+        // The coordinates for where to add this component to the layout.
+        c.gridx = 3;
+        c.gridy = 5;
+        this.add(info6Label, c);
+        
         
         
         // Label to hold the student county for their address form field text
-        JLabel addressCountyLabel = new JLabel("County:");
+        final JLabel addressCountyLabel = new JLabel("County:");
         setLabelAttributes(addressCountyLabel);
 
         // The coordinates for where to add this component to the layout.
@@ -472,10 +562,25 @@ public class AddSRPanel extends JPanel implements ActionListener {
         c.gridy = 6;
         this.add(addressCountyField, c);
         
+        // Label to hold the information tooltip and tooltip icon for the city address form field
+        final JLabel info7Label = new JLabel();
+        // Sets the standard attributes for a info label
+        setInfoLabelAttributes(info7Label);
+        // The info image icon for the label
+        info7Label.setIcon(new ImageIcon("images/icons/information.png"));
+        // The tooltip on mouse hover for the icon
+        info7Label.setToolTipText("<HTML> The <b> Addresses County </b>field cannot: "
+                                    + "be empty, or contain anything other than letters and spaces.  </HTML>");
+        
+        // The coordinates for where to add this component to the layout.
+        c.gridx = 3;
+        c.gridy = 6;
+        this.add(info7Label, c);
+        
         
         
         // Label to hold the student postcode for their address form field text
-        JLabel addressPostcodeLabel = new JLabel("Postcode:");
+        final JLabel addressPostcodeLabel = new JLabel("Postcode:");
         setLabelAttributes(addressPostcodeLabel);
 
         // The coordinates for where to add this component to the layout.
@@ -492,6 +597,21 @@ public class AddSRPanel extends JPanel implements ActionListener {
         c.gridx = 2;
         c.gridy = 7;
         this.add(addressPostcodeField, c);
+        
+        // Label to hold the information tooltip and tooltip icon for the postcode form field
+        final JLabel info8Label = new JLabel();
+        // Sets the standard attributes for a info label
+        setInfoLabelAttributes(info8Label);
+        // The info image icon for the label
+        info8Label.setIcon(new ImageIcon("images/icons/information.png"));
+        // The tooltip on mouse hover for the icon
+        info8Label.setToolTipText("<HTML> The <b> Addresses Postcode </b>field cannot: "
+                                    + "be empty, contain anything other than letters, numbers or spaces, and must be between 6 - 8 characters long (eg. TS1 2PS). </HTML>");
+        
+        // The coordinates for where to add this component to the layout.
+        c.gridx = 3;
+        c.gridy = 7;
+        this.add(info8Label, c);
     }
 
     /**
@@ -499,7 +619,7 @@ public class AddSRPanel extends JPanel implements ActionListener {
      */
     public void loadHasIllnessRow() {
         // Label to hold the has illness form field text
-        JLabel hasIllnessLabel = new JLabel("Any Illnesses or Disabilities:");
+        final JLabel hasIllnessLabel = new JLabel("Any Illnesses or Disabilities:");
         setLabelAttributes(hasIllnessLabel);
 
         // The coordinates for where to add this component to the layout.
@@ -516,6 +636,21 @@ public class AddSRPanel extends JPanel implements ActionListener {
         c.gridx = 2;
         c.gridy = 8;
         this.add(hasIllnessField, c);
+        
+        // Label to hold the information tooltip and tooltip icon for the has illnesses or disabilities form field
+        final JLabel info9Label = new JLabel();
+        // Sets the standard attributes for a info label
+        setInfoLabelAttributes(info9Label);
+        // The info image icon for the label
+        info9Label.setIcon(new ImageIcon("images/icons/information.png"));
+        // The tooltip on mouse hover for the icon
+        info9Label.setToolTipText("<HTML> The <b> Has Illnesses or Disabilities </b>field cannot: "
+                                    + "be empty, or contain over 255 characters. </HTML>");
+        
+        // The coordinates for where to add this component to the layout.
+        c.gridx = 3;
+        c.gridy = 8;
+        this.add(info9Label, c);
     }
 
     /**
@@ -523,7 +658,7 @@ public class AddSRPanel extends JPanel implements ActionListener {
      */
     public void loadParentNameRow() {
         // Label to hold the parents name form field text
-        JLabel parentNameLabel = new JLabel("Parents Name:");
+        final JLabel parentNameLabel = new JLabel("Parents Name:");
         setLabelAttributes(parentNameLabel);
 
         // The coordinates for where to add this component to the layout
@@ -540,6 +675,21 @@ public class AddSRPanel extends JPanel implements ActionListener {
         c.gridx = 2;
         c.gridy = 9;
         this.add(parentNameField, c);
+        
+        // Label to hold the information tooltip and tooltip icon for the parents name form field
+        final JLabel info10Label = new JLabel();
+        // Sets the standard attributes for a info label
+        setInfoLabelAttributes(info10Label);
+        // The info image icon for the label
+        info10Label.setIcon(new ImageIcon("images/icons/information.png"));
+        // The tooltip on mouse hover for the icon
+        info10Label.setToolTipText("<HTML> The <b> Parents Name </b>field cannot: "
+                                    + "be empty, or contain anything other than letters and spaces. </HTML>");
+        
+        // The coordinates for where to add this component to the layout.
+        c.gridx = 3;
+        c.gridy = 9;
+        this.add(info10Label, c);
     }
 
     /**
@@ -547,7 +697,7 @@ public class AddSRPanel extends JPanel implements ActionListener {
      */
     public void loadSwimmingLevelRow() {
         // Label to hold the ability level form field text
-        JLabel swimmingLevelLabel = new JLabel("Current Swimming Level:");
+        final JLabel swimmingLevelLabel = new JLabel("Current Swimming Level:");
         setLabelAttributes(swimmingLevelLabel);
 
         // The coordinates for where to add this component to the layout
@@ -609,6 +759,17 @@ public class AddSRPanel extends JPanel implements ActionListener {
         label.setOpaque(true);
         label.setVisible(true);
     }
+    
+    /**
+     * Sets the standard attributes of the info labels for this form (avoiding repetition).
+     * @param label The info JLabel to set the standard attributes of
+     */
+    public void setInfoLabelAttributes(JLabel label) {
+        label.setBackground(Color.white);
+        label.setPreferredSize(new Dimension(50, 50));
+        label.setOpaque(true);
+        label.setVisible(true);
+    }
 
     
     /**
@@ -622,64 +783,40 @@ public class AddSRPanel extends JPanel implements ActionListener {
         if (e.getSource() == submitButton) {
             
             // boolean used as a flag if any form field is left empty
-            boolean nullField = false;
+            boolean invalidField = true;
             
-            // Checks if any form fields are empty, if so changes boolean flag and sets the background of the form field to yellow
-            if (studentNameField.getText().equals("")) {
-                nullField = true;
-                studentNameField.setBackground(Color.yellow);
+            inputVerifier.verify(studentNameField);
+            inputVerifier.verify(studentDOBDayField);
+            inputVerifier.verify(studentDOBMonthField);
+            inputVerifier.verify(studentDOBYearField);
+            inputVerifier.verify(studentTelephoneNoField);
+            inputVerifier.verify(addressLine1Field);
+            inputVerifier.verify(addressLine2Field);
+            inputVerifier.verify(addressCityField);
+            inputVerifier.verify(addressCountyField);
+            inputVerifier.verify(addressPostcodeField);
+            inputVerifier.verify(hasIllnessField);
+            inputVerifier.verify(parentNameField);
+            
+            // if any of the textfields backgrounds are not white flag as a field being invalid.
+            if (studentNameField.getBackground() == Color.white && studentDOBDayField.getBackground() == Color.white 
+                    && studentDOBMonthField.getBackground() == Color.white && studentDOBYearField.getBackground() == Color.white
+                        && studentTelephoneNoField.getBackground() == Color.white && addressLine1Field.getBackground() == Color.white
+                            && addressLine2Field.getBackground() == Color.white && addressCityField.getBackground() == Color.white
+                                && addressCountyField.getBackground() == Color.white && addressPostcodeField.getBackground() == Color.white
+                                    && hasIllnessField.getBackground() == Color.white && parentNameField.getBackground() == Color.white) {
+                invalidField = false;
             }
-            if (studentDOBDayField.getText().equals("")) {
-                nullField = true;
-                studentDOBDayField.setBackground(Color.yellow);
-            }
-            if (studentDOBMonthField.getText().equals("")) {
-                nullField = true;
-                studentDOBMonthField.setBackground(Color.yellow);
-            }
-            if (studentDOBYearField.getText().equals("")) {
-                nullField = true;
-                studentDOBYearField.setBackground(Color.yellow);
-            }
-            if (studentTelephoneNoField.getText().equals("")) {
-                nullField = true;
-                studentTelephoneNoField.setBackground(Color.yellow);
-            }
-            if (addressLine1Field.getText().equals("")) {
-                nullField = true;
-                addressLine1Field.setBackground(Color.yellow);
-            }
-            if (addressLine2Field.getText().equals("")) {
-                nullField = true;
-                addressLine2Field.setBackground(Color.yellow);
-            }
-            if (addressCityField.getText().equals("")) {
-                nullField = true;
-                addressCityField.setBackground(Color.yellow);
-            }
-            if (addressCountyField.getText().equals("")) {
-                nullField = true;
-                addressCountyField.setBackground(Color.yellow);
-            }
-            if (addressPostcodeField.getText().equals("")) {
-                nullField = true;
-                addressPostcodeField.setBackground(Color.yellow);
-            }
-            if (hasIllnessField.getText().equals("")) {
-                nullField = true;
-                hasIllnessField.setBackground(Color.yellow);
-            }
-            if (parentNameField.getText().equals("")) {
-                nullField = true;
-                parentNameField.setBackground(Color.yellow);
-            }
+            
+            
             
             // If any form fields were empty display an error message
-            if (nullField == true) {
+            if (invalidField == true) {
                 JOptionPane.showMessageDialog(null,
-                                "A field(s) has been left empty!\n"
-                                        + "Empty field(s) highlighted in yellow\n"
-                                        + "Please complete the form correctly.",
+                                "A field(s) has been left empty or contains an invalid entry\n"
+                                        + "Invalid field(s) highlighted in yellow\n"
+                                        + "Please complete the form correctly.\n"
+                                        + "(Tip: Hover over the information icon next to the invalid field to view what types of entrys are invaid)",
                                 "Error Empty Field(s)",
                                 JOptionPane.ERROR_MESSAGE);
             } else {
@@ -687,7 +824,7 @@ public class AddSRPanel extends JPanel implements ActionListener {
                  * Otherwise form is ok to submit information as a new student record.
                  * boolean returned as to whether the student record was added to the db successfully.
                  */
-                boolean successfullyAdded = studentRecordController.createStudentRecord(studentNameField.getText(),
+                final boolean successfullyAdded = studentRecordController.createStudentRecord(studentNameField.getText(),
                                                                     studentDOBDayField.getText(),
                                                                     studentDOBMonthField.getText(),
                                                                     studentDOBYearField.getText(),
@@ -703,36 +840,59 @@ public class AddSRPanel extends JPanel implements ActionListener {
                 
                 // If the Student Record was successfully added reset all form fields back to empty
                 if (successfullyAdded) {
-                    studentNameField.setText("");
-                    studentDOBDayField.setText("");
-                    studentDOBMonthField.setText("");
-                    studentDOBYearField.setText("");
-                    studentTelephoneNoField.setText("");
-                    addressLine1Field.setText("");
-                    addressLine2Field.setText("");
-                    addressCityField.setText("");
-                    addressCountyField.setText("");
-                    addressPostcodeField.setText("");
-                    hasIllnessField.setText("");
-                    parentNameField.setText("");
+                    // Resets the text fields
+                    resetTextFields();
+                    
+                    JOptionPane.showMessageDialog(null,
+                                "Student Record has been successfully created and added to the database!",
+                                "Student Record created successfully!",
+                                JOptionPane.INFORMATION_MESSAGE,
+                                new ImageIcon("images/icons/add.png"));
+                } else {
+                    // Display error message that the student record could not be added to the db
+                    JOptionPane.showMessageDialog(null,
+                                "The student record was unsuccessfully added to the database!",
+                                "Error inserting student record into the database",
+                                JOptionPane.ERROR_MESSAGE);
                 }
             }
         // If the clear form button is pressed...
         } else if (e.getSource() == clearButton) {
-            
-            // Resets all form text fields to empty
-            studentNameField.setText("");
-            studentDOBDayField.setText("");
-            studentDOBMonthField.setText("");
-            studentDOBYearField.setText("");
-            studentTelephoneNoField.setText("");
-            addressLine1Field.setText("");
-            addressLine2Field.setText("");
-            addressCityField.setText("");
-            addressCountyField.setText("");
-            addressPostcodeField.setText("");
-            hasIllnessField.setText("");
-            parentNameField.setText("");
+            // Resets the text fields
+            resetTextFields();
         }
+    }
+    
+    /**
+     * Resets the text fields to be empty and the background to white.
+     */
+    public void resetTextFields() { 
+        // Resets all form text fields to empty
+        studentNameField.setText("");
+        studentDOBDayField.setText("");
+        studentDOBMonthField.setText("");
+        studentDOBYearField.setText("");
+        studentTelephoneNoField.setText("");
+        addressLine1Field.setText("");
+        addressLine2Field.setText("");
+        addressCityField.setText("");
+        addressCountyField.setText("");
+        addressPostcodeField.setText("");
+        hasIllnessField.setText("");
+        parentNameField.setText("");
+            
+        // Resets all the form background colour to white
+        studentNameField.setBackground(Color.white);
+        studentDOBDayField.setBackground(Color.white);
+        studentDOBMonthField.setBackground(Color.white);
+        studentDOBYearField.setBackground(Color.white);
+        studentTelephoneNoField.setBackground(Color.white);
+        addressLine1Field.setBackground(Color.white);
+        addressLine2Field.setBackground(Color.white);
+        addressCityField.setBackground(Color.white);
+        addressCountyField.setBackground(Color.white);
+        addressPostcodeField.setBackground(Color.white);
+        hasIllnessField.setBackground(Color.white);
+        parentNameField.setBackground(Color.white);
     }
 }

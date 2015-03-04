@@ -139,9 +139,9 @@ public class LessonBlock {
     private LessonPayment lessonPayment;
     
     /**
-     * The date of the first lesson of the lesson block (field cannot be null).
+     * The date of the first lesson of the lesson block.
      */
-    @DatabaseField (columnName = LESSON1DATE_COLUMN_NAME, canBeNull = false)
+    @DatabaseField (columnName = LESSON1DATE_COLUMN_NAME)
     private String lesson1Date;
     
     /**
@@ -151,9 +151,9 @@ public class LessonBlock {
     private AttendanceType lesson1Attendance;
     
     /**
-     * The date of the second lesson of the lesson block (field cannot be null).
+     * The date of the second lesson of the lesson block.
      */
-    @DatabaseField (columnName = LESSON2DATE_COLUMN_NAME, canBeNull = false)
+    @DatabaseField (columnName = LESSON2DATE_COLUMN_NAME)
     private String lesson2Date;
     
     /**
@@ -163,9 +163,9 @@ public class LessonBlock {
     private AttendanceType lesson2Attendance;
     
     /**
-     * The date of the third lesson of the lesson block (field cannot be null).
+     * The date of the third lesson of the lesson block.
      */
-    @DatabaseField (columnName = LESSON3DATE_COLUMN_NAME, canBeNull = false)
+    @DatabaseField (columnName = LESSON3DATE_COLUMN_NAME)
     private String lesson3Date;
     
     /**
@@ -175,9 +175,9 @@ public class LessonBlock {
     private AttendanceType lesson3Attendance;
     
     /**
-     * The date of the fourth lesson of the lesson block (field cannot be null).
+     * The date of the fourth lesson of the lesson block.
      */
-    @DatabaseField (columnName = LESSON4DATE_COLUMN_NAME, canBeNull = false)
+    @DatabaseField (columnName = LESSON4DATE_COLUMN_NAME)
     private String lesson4Date;
     
     /**
@@ -187,9 +187,9 @@ public class LessonBlock {
     private AttendanceType lesson4Attendance;
     
     /**
-     * The date of the fifth lesson of the lesson block (field cannot be null).
+     * The date of the fifth lesson of the lesson block.
      */
-    @DatabaseField (columnName = LESSON5DATE_COLUMN_NAME, canBeNull = false)
+    @DatabaseField (columnName = LESSON5DATE_COLUMN_NAME)
     private String lesson5Date;
     
     /**
@@ -199,9 +199,9 @@ public class LessonBlock {
     private AttendanceType lesson5Attendance;
     
     /**
-     * The date of the sixth lesson of the lesson block (field cannot be null).
+     * The date of the sixth lesson of the lesson block.
      */
-    @DatabaseField (columnName = LESSON6DATE_COLUMN_NAME, canBeNull = false)
+    @DatabaseField (columnName = LESSON6DATE_COLUMN_NAME)
     private String lesson6Date;
     
     /**
@@ -211,9 +211,9 @@ public class LessonBlock {
     private AttendanceType lesson6Attendance;
     
     /**
-     * The date of the seventh lesson of the lesson block (field cannot be null).
+     * The date of the seventh lesson of the lesson block.
      */
-    @DatabaseField (columnName = LESSON7DATE_COLUMN_NAME, canBeNull = false)
+    @DatabaseField (columnName = LESSON7DATE_COLUMN_NAME)
     private String lesson7Date;
     
     /**
@@ -223,9 +223,9 @@ public class LessonBlock {
     private AttendanceType lesson7Attendance;
     
     /**
-     * The date of the eighth lesson of the lesson block (field cannot be null).
+     * The date of the eighth lesson of the lesson block.
      */
-    @DatabaseField (columnName = LESSON8DATE_COLUMN_NAME, canBeNull = false)
+    @DatabaseField (columnName = LESSON8DATE_COLUMN_NAME)
     private String lesson8Date;
     
     /**
@@ -235,9 +235,9 @@ public class LessonBlock {
     private AttendanceType lesson8Attendance;
     
     /**
-     * The date of the ninth lesson of the lesson block (field cannot be null).
+     * The date of the ninth lesson of the lesson block.
      */
-    @DatabaseField (columnName = LESSON9DATE_COLUMN_NAME, canBeNull = false)
+    @DatabaseField (columnName = LESSON9DATE_COLUMN_NAME)
     private String lesson9Date;
     
     /**
@@ -247,9 +247,9 @@ public class LessonBlock {
     private AttendanceType lesson9Attendance;
     
     /**
-     * The date of the tenth lesson of the lesson block (field cannot be null).
+     * The date of the tenth lesson of the lesson block.
      */
-    @DatabaseField (columnName = LESSON10DATE_COLUMN_NAME, canBeNull = false)
+    @DatabaseField (columnName = LESSON10DATE_COLUMN_NAME)
     private String lesson10Date;
     
     /**
@@ -267,36 +267,36 @@ public class LessonBlock {
         // ORMLite needs a no-arg constructor
     }
 
-    /**
-     * Parameterized constructor to create a new block of lessons in the Lesson Block database table.
-     * @param lessonPayment The corresponding payment Id of the lesson blocks
-     * @param lesson1Date The date of the first lesson of the lesson block.
-     * @param lesson2Date The date of the second lesson of the lesson block.
-     * @param lesson3Date The date of the third lesson of the lesson block.
-     * @param lesson4Date The date of the fourth lesson of the lesson block.
-     * @param lesson5Date The date of the fifth lesson of the lesson block.
-     * @param lesson6Date The date of the sixth lesson of the lesson block.
-     * @param lesson7Date The date of the seventh lesson of the lesson block.
-     * @param lesson8Date The date of the eighth lesson of the lesson block.
-     * @param lesson9Date The date of the ninth lesson of the lesson block.
-     * @param lesson10Date The date of the tenth lesson of the lesson block.
-     */
-    public LessonBlock(LessonPayment lessonPayment, String lesson1Date, String lesson2Date, String lesson3Date, String lesson4Date,
-                        String lesson5Date, String lesson6Date, String lesson7Date, String lesson8Date, 
-                            String lesson9Date, String lesson10Date) {
-        this.lessonPayment = lessonPayment;
-        this.lesson1Date = lesson1Date;
-        this.lesson2Date = lesson1Date;
-        this.lesson3Date = lesson1Date;
-        this.lesson4Date = lesson1Date;
-        this.lesson5Date = lesson1Date;
-        this.lesson6Date = lesson1Date;
-        this.lesson7Date = lesson1Date;
-        this.lesson8Date = lesson1Date;
-        this.lesson9Date = lesson1Date;
-        this.lesson10Date = lesson1Date;
-        
-    }
+//    /**
+//     * Parameterized constructor to create a new block of lessons in the Lesson Block database table.
+//     * @param lessonPayment The corresponding payment Id of the lesson blocks
+//     * @param lesson1Date The date of the first lesson of the lesson block.
+//     * @param lesson2Date The date of the second lesson of the lesson block.
+//     * @param lesson3Date The date of the third lesson of the lesson block.
+//     * @param lesson4Date The date of the fourth lesson of the lesson block.
+//     * @param lesson5Date The date of the fifth lesson of the lesson block.
+//     * @param lesson6Date The date of the sixth lesson of the lesson block.
+//     * @param lesson7Date The date of the seventh lesson of the lesson block.
+//     * @param lesson8Date The date of the eighth lesson of the lesson block.
+//     * @param lesson9Date The date of the ninth lesson of the lesson block.
+//     * @param lesson10Date The date of the tenth lesson of the lesson block.
+//     */
+//    public LessonBlock(LessonPayment lessonPayment, String lesson1Date, String lesson2Date, String lesson3Date, String lesson4Date,
+//                        String lesson5Date, String lesson6Date, String lesson7Date, String lesson8Date, 
+//                            String lesson9Date, String lesson10Date) {
+//        this.lessonPayment = lessonPayment;
+//        this.lesson1Date = lesson1Date;
+//        this.lesson2Date = lesson1Date;
+//        this.lesson3Date = lesson1Date;
+//        this.lesson4Date = lesson1Date;
+//        this.lesson5Date = lesson1Date;
+//        this.lesson6Date = lesson1Date;
+//        this.lesson7Date = lesson1Date;
+//        this.lesson8Date = lesson1Date;
+//        this.lesson9Date = lesson1Date;
+//        this.lesson10Date = lesson1Date;
+//        
+//    }
     
     
 

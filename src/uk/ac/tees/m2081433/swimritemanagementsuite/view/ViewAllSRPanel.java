@@ -277,7 +277,7 @@ public class ViewAllSRPanel extends JPanel implements ActionListener, KeyListene
         final StudentRecordTable srTable = new StudentRecordTable(model);
         
         // Initializes a sorter to filter table rows (student records by student name)
-        sorter = new TableRowSorter<TableModel>(model);
+        sorter = new TableRowSorter(model);
         
         // Adds the sorter for the table
         srTable.setRowSorter(sorter);

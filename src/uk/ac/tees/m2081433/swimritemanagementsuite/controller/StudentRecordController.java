@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import uk.ac.tees.m2081433.swimritemanagementsuite.model.LessonBlock;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.StudentAddress;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.StudentRecord;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.SwimmingLevel;
@@ -27,21 +28,25 @@ public class StudentRecordController {
             DatabaseManager.studentAddressDAO.create(studentAddress);
         } catch (SQLException e) {
             System.out.println("createStudentRecord: Error creating the student address for the student record.");
+            return false;
+        }
+        
+        
+        LessonBlock lessonBlock = new LessonBlock();
+        
+        try {
+            DatabaseManager.lessonBlockDAO.create(lessonBlock);
+        } catch (SQLException e) {
+            System.out.println("createStudentRecord: Error creating the lesson block for the student record.");
+            return false;
         }
         
         
         StudentRecord studentRecord = new StudentRecord(studentName, studentDOBDay + "/" + studentDOBMonth + "/" + studentDOBYear, studentTelephoneNo, studentAddress, 
-                                                            hasIllness, parentName, abilityLevel);
+                                                            hasIllness, parentName, abilityLevel, lessonBlock);
         
         try {
             DatabaseManager.studentRecordDAO.create(studentRecord);
-            
-            JOptionPane.showMessageDialog(null,
-                                "Student Record has been successfully created and added to the database!",
-                                "Student Record created successfully!",
-                                JOptionPane.INFORMATION_MESSAGE,
-                                new ImageIcon("images/icons/add.png"));
-            
             return true;
             
         } catch (SQLException e) {
