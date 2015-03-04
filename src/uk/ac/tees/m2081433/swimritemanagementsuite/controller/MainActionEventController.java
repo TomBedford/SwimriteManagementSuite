@@ -170,6 +170,7 @@ public class MainActionEventController implements ActionListener, MouseListener 
     
     
     
+    @Override
     public void mouseClicked(MouseEvent e) {
         // Checks what the source of the mouse event is
         if (e.getSource() instanceof JLabel) {
@@ -187,22 +188,18 @@ public class MainActionEventController implements ActionListener, MouseListener 
 
     @Override
     public void mousePressed(MouseEvent e) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

@@ -6,6 +6,7 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import uk.ac.tees.m2081433.swimritemanagementsuite.view.AddSRPanel;
+import uk.ac.tees.m2081433.swimritemanagementsuite.view.ViewIndividualSRPanel;
 
 /**
  * Validates inputs in Text Fields in the add new Student Record Form.
@@ -30,7 +31,7 @@ public class SRFormInputVerifier extends InputVerifier {
          * If a text field input is determined to be invalid the text field will turn YELLOW and an appropriate
          * error message will be displayed.
          */
-        if (componentName.equals(AddSRPanel.studentNameFieldName)) {
+        if (componentName.equals(AddSRPanel.studentNameFieldName) || componentName.equals(ViewIndividualSRPanel.studentNameFieldName)) {
             
             // If the text field contains anything other than a-z and A-Z and spaces or is larger than max characters stored in db column
             if (!fieldText.matches("[a-zA-Z ]+") || fieldText.length() > 255) {
@@ -38,7 +39,7 @@ public class SRFormInputVerifier extends InputVerifier {
                 return true;
             } 
             
-        } else if (componentName.equals(AddSRPanel.dobDayFieldName)) {
+        } else if (componentName.equals(AddSRPanel.dobDayFieldName) || componentName.equals(ViewIndividualSRPanel.dobDayFieldName)) {
             
             // If the text field contains anything other numbers and is more than 2 characters in length (valid day)
             if (!fieldText.matches("[0-9]+") || fieldText.length() > 2) {
@@ -55,7 +56,7 @@ public class SRFormInputVerifier extends InputVerifier {
                 }
             }
             
-        } else if (componentName.equals(AddSRPanel.dobMonthFieldName)) {
+        } else if (componentName.equals(AddSRPanel.dobMonthFieldName) || componentName.equals(ViewIndividualSRPanel.dobMonthFieldName)) {
             
             // If the text field contains anything other numbers and is more than 2 characters in length (valid month) 
             if (!fieldText.matches("[0-9]+") || fieldText.length() > 2) {
@@ -72,7 +73,7 @@ public class SRFormInputVerifier extends InputVerifier {
                 }
             }
             
-        } else if (componentName.equals(AddSRPanel.dobYearFieldName)) {
+        } else if (componentName.equals(AddSRPanel.dobYearFieldName) || componentName.equals(ViewIndividualSRPanel.dobYearFieldName)) {
             
             // If the text field contains anything other numbers and is not 4 characters in length (valid year) 
             if (!fieldText.matches("[0-9]+") || fieldText.length() != 4) {
@@ -80,7 +81,7 @@ public class SRFormInputVerifier extends InputVerifier {
                 return true;
             } 
             
-        } else if (componentName.equals(AddSRPanel.telephoneNoFieldName)) {
+        } else if (componentName.equals(AddSRPanel.telephoneNoFieldName) || componentName.equals(ViewIndividualSRPanel.telephoneNoFieldName)) {
             
             // If the text field contains anything other numbers and is not 11 characters long (valid phone number length) 
             if (!fieldText.matches("[0-9]+") || fieldText.length() != 11) {
@@ -88,7 +89,7 @@ public class SRFormInputVerifier extends InputVerifier {
                 return true;
             } 
             
-        } else if (componentName.equals(AddSRPanel.addressLine1FieldName)) {
+        } else if (componentName.equals(AddSRPanel.addressLine1FieldName) || componentName.equals(ViewIndividualSRPanel.addressLine1FieldName)) {
             
             // If the text field contains anything other a-z or A-Z or numbers or spaces
             if (!fieldText.matches("[0-9a-zA-Z ]+")) {
@@ -96,7 +97,7 @@ public class SRFormInputVerifier extends InputVerifier {
                 return true;
             } 
             
-        } else if (componentName.equals(AddSRPanel.addressLine2FieldName)) {
+        } else if (componentName.equals(AddSRPanel.addressLine2FieldName) || componentName.equals(ViewIndividualSRPanel.addressLine2FieldName)) {
             
             // If the text field contains anything other a-z or A-Z or spaces 
             if (!fieldText.matches("[a-zA-Z ]+")) {
@@ -104,7 +105,7 @@ public class SRFormInputVerifier extends InputVerifier {
                 return true;
             } 
             
-        } else if (componentName.equals(AddSRPanel.addressCityFieldName)) {
+        } else if (componentName.equals(AddSRPanel.addressCityFieldName) || componentName.equals(ViewIndividualSRPanel.addressCityFieldName)) {
             
             // If the text field contains anything other a-z or A-Z or spaces 
             if (!fieldText.matches("[a-zA-Z ]+")) {
@@ -112,7 +113,7 @@ public class SRFormInputVerifier extends InputVerifier {
                 return true;
             } 
             
-        } else if (componentName.equals(AddSRPanel.addressCountyFieldName)) {
+        } else if (componentName.equals(AddSRPanel.addressCountyFieldName) || componentName.equals(ViewIndividualSRPanel.addressCountyFieldName)) {
             
             // If the text field contains anything other a-z or A-Z or spaces 
             if (!fieldText.matches("[a-zA-Z ]+")) {
@@ -120,7 +121,7 @@ public class SRFormInputVerifier extends InputVerifier {
                 return true;
             } 
             
-        } else if (componentName.equals(AddSRPanel.addressPostcodeFieldName)) {
+        } else if (componentName.equals(AddSRPanel.addressPostcodeFieldName) || componentName.equals(ViewIndividualSRPanel.addressPostcodeFieldName)) {
             
             // If the text field contains anything other a-z or A-Z or numbers or spaces and must be between 6 and 9 characters (valid postcode) 
             if (!fieldText.matches("[0-9a-zA-Z ]+") || fieldText.length() < 6 || fieldText.length() > 9) {
@@ -128,7 +129,7 @@ public class SRFormInputVerifier extends InputVerifier {
                 return true;
             } 
             
-        } else if (componentName.equals(AddSRPanel.hasIllnessFieldName)) {
+        } else if (componentName.equals(AddSRPanel.hasIllnessFieldName) || componentName.equals(ViewIndividualSRPanel.hasIllnessFieldName)) {
             
             // If the text field is empty or is larger than max characters allowed to be stored in db. 
             if (fieldText.length() == 0 || fieldText.length() > 255) {
@@ -136,7 +137,7 @@ public class SRFormInputVerifier extends InputVerifier {
                 return true;
             } 
             
-        } else if (componentName.equals(AddSRPanel.parentNameFieldName)) {
+        } else if (componentName.equals(AddSRPanel.parentNameFieldName) || componentName.equals(ViewIndividualSRPanel.parentNameFieldName)) {
             
             // If the text field contains anything other a-z or A-Z or spaces or is larger than max characters stored in db column 
             if (!fieldText.matches("[a-zA-Z ]+") || fieldText.length() > 255) {

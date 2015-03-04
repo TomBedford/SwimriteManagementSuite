@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -28,7 +30,12 @@ import uk.ac.tees.m2081433.swimritemanagementsuite.model.StudentRecord;
 /**
  * This panel displays all student records within the Swimrite Management Suite database.
  */
-public class ViewAllSRPanel extends JPanel implements ActionListener, KeyListener {
+public class ViewAllSRPanel extends JPanel implements ActionListener, KeyListener, MouseListener {
+    
+    /**
+     * The swimrite management suite body panel referenced for displaying an individual student record.
+     */
+    smsBodyPanel smsBodyPanelRef;
     
     /**
      * The Student Record controller for when inserting records into the Student Record table.
@@ -39,6 +46,13 @@ public class ViewAllSRPanel extends JPanel implements ActionListener, KeyListene
      * List to contain all the student records to be displayed on the panel.
      */
     List<StudentRecord> studentRecordList;
+    
+    /**
+     * The grid bag constraint to manipulate when adding components to the layout. 
+     */
+    GridBagConstraints c;
+    
+    
     
     /**
      * Radio button to filter student records by all students.
@@ -65,10 +79,17 @@ public class ViewAllSRPanel extends JPanel implements ActionListener, KeyListene
      */
     JTextField searchSRField;
     
+    
+    
     /**
      * Scroll Pane to hold the student record table within.
      */
     JScrollPane tableScrollPane;
+    
+    /**
+     * The extended JTable specifically for holding student records.
+     */
+    StudentRecordTable srTable;
     
     /**
      * Sorting object for filtering students by student name and filtering by column heading.
@@ -80,17 +101,16 @@ public class ViewAllSRPanel extends JPanel implements ActionListener, KeyListene
      */
     String[] columnNames;
     
-    /**
-     * The grid bag constraint to manipulate when adding components to the layout. 
-     */
-    GridBagConstraints c;
-    
     
     
     /**
      * Panel that displays student records in a table with a variety of filtering options.
+     * @param smsBodyPanel Reference to the body panel this panel is on.
      */
-    public ViewAllSRPanel() {
+    public ViewAllSRPanel(smsBodyPanel smsBodyPanel) {
+        // Initialises the sms Body Panel reference used for changing panels on the body panel.
+        smsBodyPanelRef = smsBodyPanel;
+        
         // Initialises the student record controller needed to add a student record to the db
         studentRecordController = new StudentRecordController();
         
@@ -274,7 +294,10 @@ public class ViewAllSRPanel extends JPanel implements ActionListener, KeyListene
         final TableModel model = new DefaultTableModel(convertListForTable(srListToDisplay), columnNames);
         
         // The student record JTable (attributes initialised within the class) initialised using the model
-        final StudentRecordTable srTable = new StudentRecordTable(model);
+        srTable = new StudentRecordTable(model);
+        
+        // Adds a mouse listener for when users want to see the details of a specific student record
+        srTable.addMouseListener(this);
         
         // Initializes a sorter to filter table rows (student records by student name)
         sorter = new TableRowSorter(model);
@@ -451,5 +474,40 @@ public class ViewAllSRPanel extends JPanel implements ActionListener, KeyListene
 
     @Override
     public void keyReleased(KeyEvent e) {
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+        // Checks if it was a double click
+        if (e.getClickCount() == 2) { 
+            // Gets the index from the row that is selected/was clicked
+            final int index = srTable.getSelectedRow();
+            
+            /**
+             * If results are filtered then line below is needed to covert the selected index of the row into
+             * the real index of the row in the data model to be used to get the correct student record.
+             */
+            final int realIndex = srTable.convertRowIndexToModel(index);
+            
+            // Calls the method to display an individual student record sending the student record to be displayed.
+            smsBodyPanelRef.addViewIndividualSRPanel(studentRecordList.get(realIndex));
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
     }
 }

@@ -70,10 +70,15 @@ public class StudentRecordController {
         
         for (int i = 0; i < studentRecordList.size(); i++) {
             
+            try {
+                DatabaseManager.studentAddressDAO.refresh(studentRecordList.get(i).getStudentAddress());
+            } catch (SQLException e) {
+                System.out.println("getAllStudentRecords: Error getting all student records (controller).");
+            }
+            
             if (studentRecordList.get(i).getSwimmingClass() != null) {
                 
                 try {
-                
                     DatabaseManager.swimmingClassesDAO.refresh(studentRecordList.get(i).getSwimmingClass());
                     
                     DatabaseManager.timeslotDAO.refresh(studentRecordList.get(i).getSwimmingClass().getTimeslot());
@@ -127,5 +132,17 @@ public class StudentRecordController {
             }
         }
         return waitingListStudentRecordList;
+    }
+    
+    /** 
+     * Method to unformat the date of birth string separating the Day, Month and Year as separate strings.
+     * @param dobString The string containing the day, month and year of the students date of birth
+     * @return unformattedDOB array the date of birth separated into 3 strings (day, month and year)
+     */
+    public String[] unformatDOB(String dobString) {
+        
+        final String[] unformattedDOB = dobString.split("/");
+        
+        return unformattedDOB;
     }
 }

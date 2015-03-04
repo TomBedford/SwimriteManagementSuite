@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.Day;
+import uk.ac.tees.m2081433.swimritemanagementsuite.model.StudentRecord;
 
 /**
  * The body panel that holds all components that will dynamically swap in and out of view.
@@ -94,7 +95,7 @@ public class smsBodyPanel extends JPanel {
             smsToolbarPanel.sunButton.setSelected(true);
         }
         
-        // creates the schedule panel for the specified day
+        // Creates the schedule panel for the specified day
         DaySchedulePanel daySchedulePanel = new DaySchedulePanel(day);
         
         // Adds the day schedule panel as the curretly displayed panel on this body panel.
@@ -105,7 +106,7 @@ public class smsBodyPanel extends JPanel {
         // Removes the currently displayed panel from this body panel.
         removeCurrentlyDisplayedPanel();
         
-        // creates the add student record panel
+        // Creates the add student record panel
         AddSRPanel addSRPanel = new AddSRPanel();
         
         // Adds the add student record panel as the curretly displayed panel on this body panel.
@@ -116,11 +117,22 @@ public class smsBodyPanel extends JPanel {
         // Removes the currently displayed panel from this body panel.
         removeCurrentlyDisplayedPanel();
         
-        // creates the view all student record panel
-        ViewAllSRPanel viewAllSRPanel = new ViewAllSRPanel();
+        // Creates the view all student record panel
+        ViewAllSRPanel viewAllSRPanel = new ViewAllSRPanel(this);
         
         // Adds the add student record panel as the curretly displayed panel on this body panel.
         addCurrentlyDisplayedPanel(viewAllSRPanel);
+    }
+    
+    public void addViewIndividualSRPanel(StudentRecord sr) {
+        // Removes the currently displayed panel from this body panel.
+        removeCurrentlyDisplayedPanel();
+        
+        // Creates the view individual student record panel sending the student record to be displayed as a param.
+        ViewIndividualSRPanel viewIndividualSRPanel = new ViewIndividualSRPanel(sr);
+        
+        // Adds the add student record panel as the curretly displayed panel on this body panel.
+        addCurrentlyDisplayedPanel(viewIndividualSRPanel);
     }
     
 }
