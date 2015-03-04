@@ -1,7 +1,10 @@
 package uk.ac.tees.m2081433.swimritemanagementsuite.model;
 
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * This class represents the Student Record database table holding student private 
@@ -91,7 +94,7 @@ public class StudentRecord {
     /**
      * The address of the student (field cannot be null).
      */
-    @DatabaseField (columnName = STUDENTADDRESS_COLUMN_NAME, canBeNull = false, foreign = true)
+    @DatabaseField (columnName = STUDENTADDRESS_COLUMN_NAME, canBeNull = false, foreign = true, foreignAutoRefresh = true)
     StudentAddress studentAddress;
     
     /**
@@ -116,14 +119,14 @@ public class StudentRecord {
     /**
      * Foreign Key: The swimming class that the student is currently in.
      */
-    @DatabaseField(columnName = STUDENTSWIMMINGCLASS_COLUMN_NAME, foreign = true)
+    @DatabaseField(columnName = STUDENTSWIMMINGCLASS_COLUMN_NAME, foreign = true, foreignAutoRefresh = true)
     private SwimmingClasses swimmingClass;
     
     /**
-     * Foreign Key: The lesson block of the attendance record.
+     * Foreign collection field: Shows that a student record can have 0 - many lesson blocks. 
      */
-    @DatabaseField (columnName = LESSONBLOCK_COLUMN_NAME, canBeNull = false, foreign = true)
-    private LessonBlock lessonBlock;
+    @ForeignCollectionField
+    private Collection<LessonBlock> lessonBlock;
     
     
 
@@ -146,7 +149,7 @@ public class StudentRecord {
      * @param lessonBlock The first lesson block of the student record
      */
     public StudentRecord(String studentName, String studentDOB, String telephoneNo, StudentAddress studentAddress, 
-                            String hasIllness, String parentName, SwimmingLevel swimmingLevel, LessonBlock lessonBlock) {
+                            String hasIllness, String parentName, SwimmingLevel swimmingLevel) {
         this.studentName = studentName;
         this.studentDOB = studentDOB;
         this.telephoneNo = telephoneNo;
@@ -154,7 +157,6 @@ public class StudentRecord {
         this.hasIllness = hasIllness;
         this.parentName = parentName;
         this.swimmingLevel = swimmingLevel;
-        this.lessonBlock = lessonBlock;
     }
 
     
@@ -296,18 +298,18 @@ public class StudentRecord {
     }
 
     /**
-     * Accessor to retrieve the lesson block of the student. 
+     * Accessor to retrieve the lesson blocks of the student. 
      * @return lessonBlock The lesson block of the student.
      */
-    public LessonBlock getLessonBlock() {
+    public Collection<LessonBlock> getLessonBlock() {
         return lessonBlock;
     }
 
     /**
-     * Mutator to set the new lesson block of the student.
+     * Mutator to set the new lesson blocks of the student.
      * @param lessonBlock The updated lesson block of the student.
      */
-    public void setLessonBlock(LessonBlock lessonBlock) {
+    public void setLessonBlock(Collection<LessonBlock> lessonBlock) {
         this.lessonBlock = lessonBlock;
     }
 }

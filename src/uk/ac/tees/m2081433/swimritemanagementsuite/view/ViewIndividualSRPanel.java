@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -12,8 +13,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import uk.ac.tees.m2081433.swimritemanagementsuite.controller.LessonBlockController;
 import uk.ac.tees.m2081433.swimritemanagementsuite.controller.SRFormInputVerifier;
 import uk.ac.tees.m2081433.swimritemanagementsuite.controller.StudentRecordController;
+import uk.ac.tees.m2081433.swimritemanagementsuite.model.LessonBlock;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.StudentRecord;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.SwimmingLevel;
 
@@ -33,14 +36,24 @@ public class ViewIndividualSRPanel extends JPanel {
     GridBagConstraints c;
     
     /**
-     * The Student Record controller for when inserting records into the Student Record table.
+     * The Student Record controller for querying from the Student Record database table.
      */
     StudentRecordController studentRecordController;
+    
+    /**
+     * The Lesson Block controller for when querying the Lesson Block database table.
+     */
+    LessonBlockController lessonBlockController;
     
     /**
      * The input verifier for the student record form (validates text field inputs).
      */
     SRFormInputVerifier inputVerifier;
+    
+    /**
+     * Holds all Timeslots for the specified day.
+     */
+    List<LessonBlock> lessonBlockList;
     
     /**
      * The font (defining font style, font type and font size) for all form text labels.
@@ -182,8 +195,11 @@ public class ViewIndividualSRPanel extends JPanel {
         // Initialises the student record to be displayed using the student record provided as a param.
         studentRecord = sr;
         
-        // Initialises the student record controller needed to add a student record to the db.
+        // Initialises the student record controller needed to update the student record in the student record table
         studentRecordController = new StudentRecordController();
+        
+        // Initialises the lesson block controller needed to query and update lesson blocks in the lesson block table
+        lessonBlockController = new LessonBlockController();
         
         // The input verifier for each text field input in this form.
         inputVerifier = new SRFormInputVerifier();
@@ -718,15 +734,9 @@ public class ViewIndividualSRPanel extends JPanel {
      */
     public void loadLessonBlocks() {
         
+        lessonBlockList = lessonBlockController.getLessonBlocksByStudent(studentRecord);
         
-        
-        
-        
-        
-        
-        
-        
-        
+        System.out.println("size o lb: " + lessonBlockList.size());
         
         
         

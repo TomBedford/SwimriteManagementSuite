@@ -38,7 +38,7 @@ public class ViewAllSRPanel extends JPanel implements ActionListener, KeyListene
     smsBodyPanel smsBodyPanelRef;
     
     /**
-     * The Student Record controller for when inserting records into the Student Record table.
+     * The Student Record controller for querying the Student Record database table.
      */
     StudentRecordController studentRecordController;
     
@@ -108,10 +108,10 @@ public class ViewAllSRPanel extends JPanel implements ActionListener, KeyListene
      * @param smsBodyPanel Reference to the body panel this panel is on.
      */
     public ViewAllSRPanel(smsBodyPanel smsBodyPanel) {
-        // Initialises the sms Body Panel reference used for changing panels on the body panel.
+        // Initialises the sms Body Panel reference used for changing panels on the body panel
         smsBodyPanelRef = smsBodyPanel;
         
-        // Initialises the student record controller needed to add a student record to the db
+        // Initialises the student record controller needed to query the student record db table
         studentRecordController = new StudentRecordController();
         
         // Gets all the student records from the database and puts into list

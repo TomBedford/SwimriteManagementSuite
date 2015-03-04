@@ -67,7 +67,7 @@ public class SwimmingClasses implements Comparable<SwimmingClasses> {
     /**
      * Foreign Key: The teacher of the class.
      */
-    @DatabaseField(columnName = TEACHER_COLUMN_NAME, canBeNull = false, foreign = true)
+    @DatabaseField(columnName = TEACHER_COLUMN_NAME, canBeNull = false, foreign = true, foreignAutoRefresh = true)
     private Teacher teacher;
     
     /**

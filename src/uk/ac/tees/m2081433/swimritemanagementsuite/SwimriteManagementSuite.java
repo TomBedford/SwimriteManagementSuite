@@ -4,8 +4,6 @@ import uk.ac.tees.m2081433.swimritemanagementsuite.controller.DatabaseManager;
 import uk.ac.tees.m2081433.swimritemanagementsuite.view.smsMainPanel;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.swing.*;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.LessonBlock;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.StudentAddress;
@@ -40,7 +38,7 @@ public class SwimriteManagementSuite {
         // Calls method to initialise the Swimrite Management Suite database connection references.
         createDbReferences();
         
-        //addStudentRecords();
+        addStudentRecords();
         
         // Calls method to create the swimrite management frame and panels.
         createSMSWindow();
@@ -97,14 +95,13 @@ public class SwimriteManagementSuite {
             try {
                 final StudentAddress sa = new StudentAddress(i + " Line", "Second Line", "City", "County", "P05 C0D3");
                 DatabaseManager.studentAddressDAO.create(sa);
-
-                final LessonBlock lb = new LessonBlock();
-                DatabaseManager.lessonBlockDAO.create(lb);
                 
-
                 final StudentRecord sr = new StudentRecord("John Doe " + i, "01/12/200" + i, "0123456789" + i, sa,
-                        "n/a", "Jane Doe", SwimmingLevel.BEGINNERS, lb);
+                        "n/a", "Jane Doe", SwimmingLevel.BEGINNERS);
                 DatabaseManager.studentRecordDAO.create(sr);
+                
+                final LessonBlock lb = new LessonBlock(sr);
+                DatabaseManager.lessonBlockDAO.create(lb);
             } catch (SQLException e) {
                 System.out.println("adding Test SR's: Error creating the test student addresses & records.");
             }
@@ -116,12 +113,12 @@ public class SwimriteManagementSuite {
                 final StudentAddress sa = new StudentAddress(i + " Line", "Second Line", "City", "County", "P05 C0D3");
                 DatabaseManager.studentAddressDAO.create(sa);
 
-                final LessonBlock lb = new LessonBlock();
-                DatabaseManager.lessonBlockDAO.create(lb);
-                
                 final StudentRecord sr = new StudentRecord("Andrew Smith " + i, "30/01/199" + i, "0123456789" + i, sa,
-                        "n/a", "John Smith", SwimmingLevel.HONOURS, lb);
+                        "n/a", "John Smith", SwimmingLevel.HONOURS);
                 DatabaseManager.studentRecordDAO.create(sr);
+                
+                final LessonBlock lb = new LessonBlock(sr);
+                DatabaseManager.lessonBlockDAO.create(lb);
             } catch (SQLException e) {
                 System.out.println("adding Test SR's: Error creating the test student addresses & records.");
             }

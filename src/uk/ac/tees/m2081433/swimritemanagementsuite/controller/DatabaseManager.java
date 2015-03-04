@@ -2,7 +2,6 @@ package uk.ac.tees.m2081433.swimritemanagementsuite.controller;
 
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.LessonPayment;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.StudentRecord;
-import uk.ac.tees.m2081433.swimritemanagementsuite.model.AttendanceRecord;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.SwimmingClasses;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.Timeslot;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.Teacher;

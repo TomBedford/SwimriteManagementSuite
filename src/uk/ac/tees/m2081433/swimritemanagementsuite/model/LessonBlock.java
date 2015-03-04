@@ -2,7 +2,6 @@ package uk.ac.tees.m2081433.swimritemanagementsuite.model;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-import java.util.Date;
 
 /**
  * This class represents the Lesson block database table that records an individual lesson
@@ -20,7 +19,12 @@ public class LessonBlock {
     public static final String BLOCKID_COLUMN_NAME = "blockId"; 
     
     /**
-     * The column name for the Lesson Payment Id.
+     * The column name for student record associated with this lesson block.
+     */
+    public static final String STUDENTRECORD_COLUMN_NAME = "studentRecord"; 
+    
+    /**
+     * The column name for the Lesson Payment.
      */
     public static final String LESSONPAYMENT_COLUMN_NAME = "lessonPayment"; 
     
@@ -133,9 +137,15 @@ public class LessonBlock {
     private int blockId;
     
     /**
+     * Foreign Key: The student record associated with this lesson block.
+     */
+    @DatabaseField (columnName = STUDENTRECORD_COLUMN_NAME, foreign = true, foreignAutoRefresh = true)
+    private StudentRecord studentRecord;
+    
+    /**
      * Foreign Key: The payment info of the lesson block.
      */
-    @DatabaseField (columnName = LESSONPAYMENT_COLUMN_NAME, foreign = true)
+    @DatabaseField (columnName = LESSONPAYMENT_COLUMN_NAME, foreign = true, foreignAutoRefresh = true)
     private LessonPayment lessonPayment;
     
     /**
@@ -267,36 +277,13 @@ public class LessonBlock {
         // ORMLite needs a no-arg constructor
     }
 
-//    /**
-//     * Parameterized constructor to create a new block of lessons in the Lesson Block database table.
-//     * @param lessonPayment The corresponding payment Id of the lesson blocks
-//     * @param lesson1Date The date of the first lesson of the lesson block.
-//     * @param lesson2Date The date of the second lesson of the lesson block.
-//     * @param lesson3Date The date of the third lesson of the lesson block.
-//     * @param lesson4Date The date of the fourth lesson of the lesson block.
-//     * @param lesson5Date The date of the fifth lesson of the lesson block.
-//     * @param lesson6Date The date of the sixth lesson of the lesson block.
-//     * @param lesson7Date The date of the seventh lesson of the lesson block.
-//     * @param lesson8Date The date of the eighth lesson of the lesson block.
-//     * @param lesson9Date The date of the ninth lesson of the lesson block.
-//     * @param lesson10Date The date of the tenth lesson of the lesson block.
-//     */
-//    public LessonBlock(LessonPayment lessonPayment, String lesson1Date, String lesson2Date, String lesson3Date, String lesson4Date,
-//                        String lesson5Date, String lesson6Date, String lesson7Date, String lesson8Date, 
-//                            String lesson9Date, String lesson10Date) {
-//        this.lessonPayment = lessonPayment;
-//        this.lesson1Date = lesson1Date;
-//        this.lesson2Date = lesson1Date;
-//        this.lesson3Date = lesson1Date;
-//        this.lesson4Date = lesson1Date;
-//        this.lesson5Date = lesson1Date;
-//        this.lesson6Date = lesson1Date;
-//        this.lesson7Date = lesson1Date;
-//        this.lesson8Date = lesson1Date;
-//        this.lesson9Date = lesson1Date;
-//        this.lesson10Date = lesson1Date;
-//        
-//    }
+    /**
+     * Constructor that sets the student record associated with this lesson block.
+     * @param studentRecord The student record associated with this lesson block.
+     */
+    public LessonBlock(StudentRecord studentRecord) {
+        this.studentRecord = studentRecord;
+    }
     
     
 
@@ -306,6 +293,22 @@ public class LessonBlock {
      */
     public int getBlocktId() {
         return blockId;
+    }
+
+    /**
+     * Accessor to retrieve the student record associated with this lesson block.
+     * @return studentRecord The student record associated with this lesson block.
+     */
+    public StudentRecord getStudentRecord() {
+        return studentRecord;
+    }
+
+    /**
+     * Mutator to set the new student record associated with this lesson block.
+     * @param studentRecord The updated student record associated with this lesson block.
+     */
+    public void setStudentRecord(StudentRecord studentRecord) {
+        this.studentRecord = studentRecord;
     }
 
     /**
