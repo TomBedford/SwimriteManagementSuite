@@ -906,5 +906,8 @@ public class AddSRPanel extends JPanel implements ActionListener {
         addressPostcodeField.setBackground(Color.white);
         hasIllnessField.setBackground(Color.white);
         parentNameField.setBackground(Color.white);
+        
+        // Sets the selected item in the combo box back to normal.
+        swimmingLevelList.setSelectedIndex(0);
     }
 }

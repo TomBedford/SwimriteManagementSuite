@@ -38,7 +38,7 @@ public class SwimriteManagementSuite {
         // Calls method to initialise the Swimrite Management Suite database connection references.
         createDbReferences();
         
-        addStudentRecords();
+        //addStudentRecords();
         
         // Calls method to create the swimrite management frame and panels.
         createSMSWindow();

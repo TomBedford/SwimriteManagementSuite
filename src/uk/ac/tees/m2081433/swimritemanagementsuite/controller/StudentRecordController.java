@@ -109,6 +109,16 @@ public class StudentRecordController {
         return waitingListStudentRecordList;
     }
     
+    public Boolean updateStudentRecord(StudentRecord studentRecord) {
+        try {
+            DatabaseManager.studentRecordDAO.update(studentRecord);
+        } catch (SQLException e) {
+            System.out.println("getAllStudentRecords: Error getting all student records (controller).");
+            return false;
+        }
+        return true;
+    }
+    
     /**
      * Formats/Concatenates the date of birth params provided into a string suitable for db storage.
      * @param dobDay The student day of their date of birth

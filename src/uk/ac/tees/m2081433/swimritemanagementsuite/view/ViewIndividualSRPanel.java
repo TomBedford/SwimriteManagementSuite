@@ -5,11 +5,15 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -23,7 +27,7 @@ import uk.ac.tees.m2081433.swimritemanagementsuite.model.SwimmingLevel;
 /**
  *
  */
-public class ViewIndividualSRPanel extends JPanel {
+public class ViewIndividualSRPanel extends JPanel implements ActionListener {
     
     /**
      * The student record to display.
@@ -191,6 +195,30 @@ public class ViewIndividualSRPanel extends JPanel {
     
     
     
+    /**
+     * The panel that holds all buttons for this layout.
+     */
+    JPanel buttonPanel;
+    
+    /**
+     * The edit button to edit the fields of the student record.
+     */
+    JButton editButton;
+    
+    /**
+     * The update button to update the student record with the new field entries.
+     * 
+     */
+    JButton updateButton;
+    
+    /**
+     * The cancel button to cancel the editing of the student record.
+     * 
+     */
+    JButton cancelButton;
+    
+    
+    
     public ViewIndividualSRPanel(StudentRecord sr) {
         // Initialises the student record to be displayed using the student record provided as a param.
         studentRecord = sr;
@@ -215,6 +243,8 @@ public class ViewIndividualSRPanel extends JPanel {
         c = new GridBagConstraints();
         
         loadSRForm();
+        
+        loadButtons();
         
         loadLessonBlocks();
     }
@@ -729,6 +759,31 @@ public class ViewIndividualSRPanel extends JPanel {
         label.setVisible(true);
     }
     
+    public void loadButtons() {
+        // Creates the panel to hold the buttons and sets the JPanels attributes
+        buttonPanel = new JPanel();
+        buttonPanel.setPreferredSize(new Dimension(200, 50));
+        buttonPanel.setVisible(true);
+        buttonPanel.setBackground(Color.white);
+      
+        // Initialises the submit button with its attributes (inc button tooltip and icon)
+        editButton = new JButton("Edit");
+        editButton.setPreferredSize(new Dimension(100, 40));
+        editButton.addActionListener(this);
+        editButton.setToolTipText("<html> Click this button to <b> edit </b> the student record. </html>");
+        editButton.setIcon(new ImageIcon("images/icons/bullet_edit.png"));
+        buttonPanel.add(editButton);
+        
+        // The coordinates for where to add this component to the layout.
+        c.gridx = 3;
+        c.gridy = 10;
+        c.gridwidth = 2;
+        this.add(buttonPanel, c);
+        
+        // Resets the grid width constraint for when adding other components and components on runtime.
+        c.gridwidth = 1;
+    }
+    
     /**
      * Adds the students lesson blocks to this panel.
      */
@@ -742,5 +797,187 @@ public class ViewIndividualSRPanel extends JPanel {
         
         
         
+    }
+    
+    /**
+     * Exits edit mode making form inputs unaccessible via interaction.
+     */
+    public void exitEditMode() {
+        // Disables all text fields and the combo box disabling interaction from the user.
+        studentNameField.setEditable(false);
+        studentDOBDayField.setEditable(false);
+        studentDOBMonthField.setEditable(false);
+        studentDOBYearField.setEditable(false);
+        studentTelephoneNoField.setEditable(false);
+        addressLine1Field.setEditable(false);
+        addressLine2Field.setEditable(false);
+        addressCityField.setEditable(false);
+        addressCountyField.setEditable(false);
+        addressPostcodeField.setEditable(false);
+        hasIllnessField.setEditable(false);
+        parentNameField.setEditable(false);
+        swimmingLevelList.setEnabled(false);
+        
+        // Resets all the form background colour to white
+        studentNameField.setBackground(Color.white);
+        studentDOBDayField.setBackground(Color.white);
+        studentDOBMonthField.setBackground(Color.white);
+        studentDOBYearField.setBackground(Color.white);
+        studentTelephoneNoField.setBackground(Color.white);
+        addressLine1Field.setBackground(Color.white);
+        addressLine2Field.setBackground(Color.white);
+        addressCityField.setBackground(Color.white);
+        addressCountyField.setBackground(Color.white);
+        addressPostcodeField.setBackground(Color.white);
+        hasIllnessField.setBackground(Color.white);
+        parentNameField.setBackground(Color.white);
+        
+        buttonPanel.remove(updateButton);
+        buttonPanel.remove(cancelButton);
+        
+        buttonPanel.add(editButton);
+        
+        this.updateUI();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+        // If the source of the button press was the edit button...
+        if (e.getSource() == editButton) {
+            // Enables all text fields and the combo box to be interacted with by the user.
+            studentNameField.setEditable(true);
+            studentDOBDayField.setEditable(true);
+            studentDOBMonthField.setEditable(true);
+            studentDOBYearField.setEditable(true);
+            studentTelephoneNoField.setEditable(true);
+            addressLine1Field.setEditable(true);
+            addressLine2Field.setEditable(true);
+            addressCityField.setEditable(true);
+            addressCountyField.setEditable(true);
+            addressPostcodeField.setEditable(true);
+            hasIllnessField.setEditable(true);
+            parentNameField.setEditable(true);
+            swimmingLevelList.setEnabled(true);
+            
+            // Removes the edit button from the button panel
+            buttonPanel.remove(editButton);
+            
+            // Creates the update button and sets its attributes
+            updateButton = new JButton("Update");
+            updateButton.setPreferredSize(new Dimension(90, 40));
+            updateButton.addActionListener(this);
+            updateButton.setToolTipText("<html> Click this button to <b> update </b> the student record with the new text field values. </html>");
+            updateButton.setIcon(new ImageIcon("images/icons/accept.png"));
+            buttonPanel.add(updateButton);
+            
+            // Creates the cancel button and sets its attributes
+            cancelButton = new JButton("Cancel");
+            cancelButton.setPreferredSize(new Dimension(90, 40));
+            cancelButton.addActionListener(this);
+            cancelButton.setToolTipText("<html> Click this button to <b> update </b> the student record with the new text field values. </html>");
+            cancelButton.setIcon(new ImageIcon("images/icons/cancel.png"));
+            buttonPanel.add(cancelButton);
+            
+            this.updateUI();
+        // If the source of the button press was the update button
+        } else if (e.getSource() == updateButton) {
+            
+            // boolean used as a flag if any form field is left empty
+            boolean invalidField = true;
+            
+            inputVerifier.verify(studentNameField);
+            inputVerifier.verify(studentDOBDayField);
+            inputVerifier.verify(studentDOBMonthField);
+            inputVerifier.verify(studentDOBYearField);
+            inputVerifier.verify(studentTelephoneNoField);
+            inputVerifier.verify(addressLine1Field);
+            inputVerifier.verify(addressLine2Field);
+            inputVerifier.verify(addressCityField);
+            inputVerifier.verify(addressCountyField);
+            inputVerifier.verify(addressPostcodeField);
+            inputVerifier.verify(hasIllnessField);
+            inputVerifier.verify(parentNameField);
+            
+            // if any of the textfields backgrounds are not white flag as a field being invalid.
+            if (studentNameField.getBackground() == Color.white && studentDOBDayField.getBackground() == Color.white 
+                    && studentDOBMonthField.getBackground() == Color.white && studentDOBYearField.getBackground() == Color.white
+                        && studentTelephoneNoField.getBackground() == Color.white && addressLine1Field.getBackground() == Color.white
+                            && addressLine2Field.getBackground() == Color.white && addressCityField.getBackground() == Color.white
+                                && addressCountyField.getBackground() == Color.white && addressPostcodeField.getBackground() == Color.white
+                                    && hasIllnessField.getBackground() == Color.white && parentNameField.getBackground() == Color.white) {
+                invalidField = false;
+            }
+            
+            
+            
+            // If any form fields were empty display an error message
+            if (invalidField == true) {
+                JOptionPane.showMessageDialog(null,
+                                "A field(s) has been left empty or contains an invalid entry\n"
+                                        + "Invalid field(s) highlighted in yellow\n"
+                                        + "Please complete the form correctly.\n"
+                                        + "(Tip: Hover over the information icon next to the invalid field to view what types of entrys are invaid)",
+                                "Error Empty Field(s)",
+                                JOptionPane.ERROR_MESSAGE);
+            } else {
+                studentRecord.setStudentName(studentNameField.getText());
+                studentRecord.setStudentDOB(studentRecordController.formatDOB(studentDOBDayField.getText(), 
+                                                studentDOBMonthField.getText(), studentDOBYearField.getText()));
+                studentRecord.setTelephoneNo(studentTelephoneNoField.getText());
+                studentRecord.getStudentAddress().setAddressLine1(addressLine1Field.getText());
+                studentRecord.getStudentAddress().setAddressLine2(addressLine2Field.getText());
+                studentRecord.getStudentAddress().setCity(addressCityField.getText());
+                studentRecord.getStudentAddress().setCounty(addressCountyField.getText());
+                studentRecord.getStudentAddress().setPostcode(addressPostcodeField.getText());
+                studentRecord.setHasIllness(hasIllnessField.getText());
+                studentRecord.setParentName(parentNameField.getText());
+                
+                Boolean successfullyUpdated = studentRecordController.updateStudentRecord(studentRecord);
+                
+                // If the Student Record was successfully updated 
+                if (successfullyUpdated) {
+                    JOptionPane.showMessageDialog(null,
+                                "Student Record has been successfully updated!",
+                                "Student Record updated successfully!",
+                                JOptionPane.INFORMATION_MESSAGE,
+                                new ImageIcon("images/icons/thumb_up.png"));
+                    exitEditMode();
+                    
+                } else {
+                    // Display error message that the student record could not be updated successfully
+                    JOptionPane.showMessageDialog(null,
+                                "The student record was unsuccessfully updated!",
+                                "Error updating student record",
+                                JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        // If the source of the button press was the cancel button  
+        } else if (e.getSource() == cancelButton) {
+            
+            // resets the input fields to their correct values
+            studentNameField.setText(studentRecord.getStudentName());
+
+            final String[] studentDOB = studentRecordController.unformatDOB(studentRecord.getStudentDOB());
+            studentDOBDayField.setText(studentDOB[0]);
+            studentDOBMonthField.setText(studentDOB[1]);
+            studentDOBYearField.setText(studentDOB[2]);
+
+            studentTelephoneNoField.setText(studentRecord.getTelephoneNo());
+
+            addressLine1Field.setText(studentRecord.getStudentAddress().getAddressLine1());
+            addressLine2Field.setText(studentRecord.getStudentAddress().getAddressLine2());
+            addressCityField.setText(studentRecord.getStudentAddress().getCity());
+            addressCountyField.setText(studentRecord.getStudentAddress().getCounty());
+            addressPostcodeField.setText(studentRecord.getStudentAddress().getPostcode());
+
+            hasIllnessField.setText(studentRecord.getHasIllness());
+
+            parentNameField.setText(studentRecord.getParentName());
+
+            swimmingLevelList.setSelectedItem(studentRecord.getSwimmingLevel());
+            
+            exitEditMode();
+        }
     }
 }
