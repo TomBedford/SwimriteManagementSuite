@@ -42,15 +42,6 @@ public class StudentRecordController {
             System.out.println("createStudentRecord: Error creating the student record.");
         }
         
-        LessonBlock lessonBlock = new LessonBlock(studentRecord);
-        
-        try {
-            DatabaseManager.lessonBlockDAO.create(lessonBlock);
-        } catch (SQLException e) {
-            System.out.println("createStudentRecord: Error creating the lesson block for the student record.");
-            return false;
-        }
-        
         return false;
     }
     
@@ -113,10 +104,26 @@ public class StudentRecordController {
         try {
             DatabaseManager.studentRecordDAO.update(studentRecord);
         } catch (SQLException e) {
-            System.out.println("getAllStudentRecords: Error getting all student records (controller).");
+            System.out.println("updateStudentRecords: Error updating student record (controller).");
             return false;
         }
         return true;
+    }
+    
+    public void deleteStudentRecord(StudentRecord studentRecord) {
+        try {
+            DatabaseManager.studentRecordDAO.delete(studentRecord);
+            
+            List<LessonBlock> studentLessonBlocks = null;
+            studentLessonBlocks = DatabaseManager.lessonBlockDAO.queryForEq(LessonBlock.STUDENTRECORD_COLUMN_NAME, studentRecord);
+            
+            for (LessonBlock studentLessonBlock : studentLessonBlocks) {
+                DatabaseManager.lessonBlockDAO.delete(studentLessonBlock);
+            }
+            
+        } catch (SQLException e) {
+            System.out.println("deleteStudentRecord: Error deleting the student record (controller).");
+        }
     }
     
     /**

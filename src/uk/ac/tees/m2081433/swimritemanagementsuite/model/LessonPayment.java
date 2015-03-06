@@ -62,7 +62,7 @@ public class LessonPayment {
      * The amount of money being payed for the lesson block (field cannot be null).
      */
     @DatabaseField (columnName = PAYMENTAMOUNT_COLUMN_NAME, canBeNull = false)
-    private double paymentAmount;
+    private String paymentAmount;
     
     /**
      * The taker of the payment (receptionists name) (field cannot be null).
@@ -86,7 +86,7 @@ public class LessonPayment {
      * @param paymentAmount The payment amount.
      * @param paymentTaker The taker of the payment.
      */
-    public LessonPayment(PaymentType paymentType, String paymentDate, double paymentAmount, String paymentTaker) {
+    public LessonPayment(PaymentType paymentType, String paymentDate, String paymentAmount, String paymentTaker) {
         this.paymentType = paymentType;
         this.paymentDate = paymentDate;
         this.paymentAmount = paymentAmount;
@@ -139,7 +139,7 @@ public class LessonPayment {
      * Accessor to retrieve the amount of payment made.
      * @return paymentAmount The amount of payment made.
      */
-    public double getPaymentAmount() {
+    public String getPaymentAmount() {
         return paymentAmount;
     }
 
@@ -147,7 +147,7 @@ public class LessonPayment {
      * Mutator to set the new amount of payment made.
      * @param paymentAmount The updated amount of payment.
      */
-    public void setPaymentAmount(double paymentAmount) {
+    public void setPaymentAmount(String paymentAmount) {
         this.paymentAmount = paymentAmount;
     }
 

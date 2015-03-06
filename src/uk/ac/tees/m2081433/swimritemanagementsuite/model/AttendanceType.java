@@ -15,12 +15,12 @@ public enum AttendanceType {
     ABSENT, 
     
     /**
-     * The student is ill and is absent for their lesson.
+     * The student is absent for their lesson, but has been granted a fun swim.
      */
-    ILL, 
+    FUN_SWIM, 
     
     /**
-     * The student is on holiday and is absent for their lesson.
+     * The student had been granted a fun swim and has used the fun swim.
      */
-    HOLIDAY
+    FUN_SWIM_TAKEN
 }

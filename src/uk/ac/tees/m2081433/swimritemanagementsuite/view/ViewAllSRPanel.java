@@ -118,7 +118,7 @@ public class ViewAllSRPanel extends JPanel implements ActionListener, KeyListene
         studentRecordList = studentRecordController.getAllStudentRecords();
         
         // sets the ViewAllSRPanel JPanels default attributes
-        this.setPreferredSize(new Dimension(1360, 565));
+        this.setPreferredSize(new Dimension(1360, 605));
         this.setVisible(true);
         this.setBackground(Color.white);
         this.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -307,7 +307,7 @@ public class ViewAllSRPanel extends JPanel implements ActionListener, KeyListene
         
         // Initializes the scroll pane to hold the student record table, setting attributes
         tableScrollPane = new JScrollPane(srTable);
-        tableScrollPane.setPreferredSize(new Dimension(1200, 475));
+        tableScrollPane.setPreferredSize(new Dimension(1200, 515));
 
         // The coordinates for where to add this component to the layout
         c.gridx = 0;

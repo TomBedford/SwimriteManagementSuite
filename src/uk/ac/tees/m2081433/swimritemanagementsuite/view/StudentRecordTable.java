@@ -55,7 +55,7 @@ public class StudentRecordTable extends JTable {
         super(model);
         
         //Sets the max size of the table until scrolling is used
-        this.setPreferredScrollableViewportSize(new Dimension(1200, 475));
+        this.setPreferredScrollableViewportSize(new Dimension(1200, 515));
         // Makes sure the table is always big enough to fill the container
         this.setFillsViewportHeight(true);
         // Hides the grid lines both horizontal and vertical

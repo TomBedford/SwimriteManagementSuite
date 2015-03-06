@@ -18,7 +18,7 @@ public class smsWelcomePanel extends JPanel {
      */
     public smsWelcomePanel() {
         // sets the smsWelcomePanel JPanels default attributes
-        this.setPreferredSize(new Dimension(1375, 565));
+        this.setPreferredSize(new Dimension(1375, 605));
         this.setVisible(true);
         this.setBackground(Color.white);
         this.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -26,7 +26,7 @@ public class smsWelcomePanel extends JPanel {
         
         // Declares the label and label attributes to hold the welcome logo
         final JLabel smsWelcomeLogoLabel = new JLabel();
-        smsWelcomeLogoLabel.setPreferredSize(new Dimension(1375, 565));
+        smsWelcomeLogoLabel.setPreferredSize(new Dimension(1375, 605));
         smsWelcomeLogoLabel.setOpaque(true);
         smsWelcomeLogoLabel.setVisible(true);
         

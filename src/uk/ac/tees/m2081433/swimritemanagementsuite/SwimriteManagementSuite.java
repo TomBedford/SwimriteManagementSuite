@@ -3,6 +3,7 @@ package uk.ac.tees.m2081433.swimritemanagementsuite;
 import uk.ac.tees.m2081433.swimritemanagementsuite.controller.DatabaseManager;
 import uk.ac.tees.m2081433.swimritemanagementsuite.view.smsMainPanel;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import java.awt.Toolkit;
 import java.sql.SQLException;
 import javax.swing.*;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.LessonBlock;
@@ -81,9 +82,27 @@ public class SwimriteManagementSuite {
         // Adds the main panel to the frame.
         smsFrame.add(smsMainPanel);
         
-        // settings for the frame
+        // Creates a toolkit to gather screen size from the computer
+        final Toolkit tk = Toolkit.getDefaultToolkit();
+        // Gets the width of the computers screen size
+        int xSize = ((int) tk.getScreenSize().getWidth());
+        // Gets the height of the computers screen size
+        int ySize = ((int) tk.getScreenSize().getHeight());
+
+        // sets the minimum width the frame can be
+        if (xSize < 1400) {
+            xSize = 1400;
+        }
+        
+        // sets the minimum height the frame can be
+        if (ySize < 850) {
+            ySize = 850;
+        }
+        
+        // settings for the frame (setting the size of the frame to the minimum size required or stretching to the screen
         smsFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        smsFrame.setSize(1400, 800);
+        //smsFrame.setSize(1400, 850);
+        smsFrame.setSize(xSize, ySize);
         smsFrame.setVisible(true);
         smsFrame.setResizable(false);
     }
@@ -99,9 +118,6 @@ public class SwimriteManagementSuite {
                 final StudentRecord sr = new StudentRecord("John Doe " + i, "01/12/200" + i, "0123456789" + i, sa,
                         "n/a", "Jane Doe", SwimmingLevel.BEGINNERS);
                 DatabaseManager.studentRecordDAO.create(sr);
-                
-                final LessonBlock lb = new LessonBlock(sr);
-                DatabaseManager.lessonBlockDAO.create(lb);
             } catch (SQLException e) {
                 System.out.println("adding Test SR's: Error creating the test student addresses & records.");
             }
@@ -116,9 +132,6 @@ public class SwimriteManagementSuite {
                 final StudentRecord sr = new StudentRecord("Andrew Smith " + i, "30/01/199" + i, "0123456789" + i, sa,
                         "n/a", "John Smith", SwimmingLevel.HONOURS);
                 DatabaseManager.studentRecordDAO.create(sr);
-                
-                final LessonBlock lb = new LessonBlock(sr);
-                DatabaseManager.lessonBlockDAO.create(lb);
             } catch (SQLException e) {
                 System.out.println("adding Test SR's: Error creating the test student addresses & records.");
             }

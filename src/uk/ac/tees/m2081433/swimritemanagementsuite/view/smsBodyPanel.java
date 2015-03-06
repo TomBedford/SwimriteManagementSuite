@@ -27,7 +27,7 @@ public class smsBodyPanel extends JPanel {
      */
     public smsBodyPanel() {
         // sets the smsBodyPanel JPanel attributes.
-        this.setPreferredSize(new Dimension(1400, 595));
+        this.setPreferredSize(new Dimension(1400, 625));
         this.setVisible(true);
         this.setBackground(Color.white);
         
@@ -42,7 +42,7 @@ public class smsBodyPanel extends JPanel {
     public void addCurrentlyDisplayedPanel(JPanel panelToDisplay) {
         // Adds the panel provided as a param to the currently displayed panel scroll pane and sets the size of it.
         currentlyDisplayedPanel = new JScrollPane(panelToDisplay);
-        currentlyDisplayedPanel.setPreferredSize(new Dimension(1380, 575));
+        currentlyDisplayedPanel.setPreferredSize(new Dimension(1380, 615));
         
         // Adds the scroll pane to the body panel and updates the ui.
         this.add(currentlyDisplayedPanel);
@@ -129,7 +129,7 @@ public class smsBodyPanel extends JPanel {
         removeCurrentlyDisplayedPanel();
         
         // Creates the view individual student record panel sending the student record to be displayed as a param.
-        ViewIndividualSRPanel viewIndividualSRPanel = new ViewIndividualSRPanel(sr);
+        ViewIndividualSRPanel viewIndividualSRPanel = new ViewIndividualSRPanel(sr, this);
         
         // Adds the add student record panel as the curretly displayed panel on this body panel.
         addCurrentlyDisplayedPanel(viewIndividualSRPanel);

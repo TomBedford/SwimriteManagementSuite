@@ -11,7 +11,7 @@ import com.j256.ormlite.table.DatabaseTable;
  * (except a mutator for the auto generated ID).
  */
 @DatabaseTable(tableName = "LessonBlock")
-public class LessonBlock {
+public class LessonBlock implements Comparable<LessonBlock> {
     
     /**
      * The column name for the Lesson Block Id.
@@ -347,7 +347,7 @@ public class LessonBlock {
      * Accessor to retrieve whether the student attended lesson 1.
      * @return lesson1Attendance Enum as to their attendance type for lesson 1.
      */
-    public AttendanceType isLesson1Attendance() {
+    public AttendanceType getLesson1Attendance() {
         return lesson1Attendance;
     }
 
@@ -379,7 +379,7 @@ public class LessonBlock {
      * Accessor to retrieve whether the student attended lesson 2.
      * @return lesson2Attendance Enum as to their attendance type for lesson 2.
      */
-    public AttendanceType isLesson2Attendance() {
+    public AttendanceType getLesson2Attendance() {
         return lesson2Attendance;
     }
 
@@ -411,7 +411,7 @@ public class LessonBlock {
      * Accessor to retrieve whether the student attended lesson 3.
      * @return lesson3Attendance Enum as to their attendance type for lesson 3.
      */
-    public AttendanceType isLesson3Attendance() {
+    public AttendanceType getLesson3Attendance() {
         return lesson3Attendance;
     }
 
@@ -443,7 +443,7 @@ public class LessonBlock {
      * Accessor to retrieve whether the student attended lesson 4.
      * @return lesson4Attendance Enum as to their attendance type for lesson 4.
      */
-    public AttendanceType isLesson4Attendance() {
+    public AttendanceType getLesson4Attendance() {
         return lesson4Attendance;
     }
 
@@ -475,7 +475,7 @@ public class LessonBlock {
      * Accessor to retrieve whether the student attended lesson 5.
      * @return lesson5Attendance Enum as to their attendance type for lesson 5.
      */
-    public AttendanceType isLesson5Attendance() {
+    public AttendanceType getLesson5Attendance() {
         return lesson5Attendance;
     }
 
@@ -507,7 +507,7 @@ public class LessonBlock {
      * Accessor to retrieve whether the student attended lesson 6.
      * @return lesson6Attendance Enum as to their attendance type for lesson 6.
      */
-    public AttendanceType isLesson6Attendance() {
+    public AttendanceType getLesson6Attendance() {
         return lesson6Attendance;
     }
 
@@ -539,7 +539,7 @@ public class LessonBlock {
      * Accessor to retrieve whether the student attended lesson 7.
      * @return lesson7Attendance Enum as to their attendance type for lesson 7.
      */
-    public AttendanceType isLesson7Attendance() {
+    public AttendanceType getLesson7Attendance() {
         return lesson7Attendance;
     }
 
@@ -571,7 +571,7 @@ public class LessonBlock {
      * Accessor to retrieve whether the student attended lesson 8.
      * @return lesson8Attendance Enum as to their attendance type for lesson 8.
      */
-    public AttendanceType isLesson8Attendance() {
+    public AttendanceType getLesson8Attendance() {
         return lesson8Attendance;
     }
 
@@ -603,7 +603,7 @@ public class LessonBlock {
      * Accessor to retrieve whether the student attended lesson 9.
      * @return lesson9Attendance Enum as to their attendance type for lesson 9.
      */
-    public AttendanceType isLesson9Attendance() {
+    public AttendanceType getLesson9Attendance() {
         return lesson9Attendance;
     }
 
@@ -635,7 +635,7 @@ public class LessonBlock {
      * Accessor to retrieve whether the student attended lesson 10.
      * @return lesson10Attendance Enum as to their attendance type for lesson 10.
      */
-    public  AttendanceType isLesson10Attendance() {
+    public  AttendanceType getLesson10Attendance() {
         return lesson10Attendance;
     }
 
@@ -647,4 +647,24 @@ public class LessonBlock {
         this.lesson10Attendance = lesson10Attendance;
     }
     
+    /**
+     * Overided method to compare and sort Lesson Blocks by their Lesson Block ID (in descending order).
+     * @param o The Lesson Block to compare against.
+     * @return Int - Result changes depending on the outcome of the comparison.
+     */
+    @Override
+    public int compareTo(LessonBlock o) {
+        // If the teacher id of this teacher is larger than the teacher params teacher id passed in return 1.
+        if (this.getBlocktId() > o.getBlocktId()) {
+            return -1;
+            
+        // If the teacher id of this teacher is equal to the teacher params teacher id passed in return 0.
+        } else if (this.getBlocktId() == o.getBlocktId()) {
+            return 0;
+           
+        // Otherwise the teacher params teacher id passed in is larger so return -1.
+        } else {
+            return -1;
+        } 
+    }
 }

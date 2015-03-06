@@ -2,6 +2,7 @@ package uk.ac.tees.m2081433.swimritemanagementsuite.view;
 
 import java.awt.Color;
 import javax.swing.Box;
+import javax.swing.ImageIcon;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -89,6 +90,7 @@ public class smsMenuBar extends JMenuBar {
         
         JMenuItem regMenuItem = new JMenuItem(REGMENUITEM_NAME);
         regMenuItem.addActionListener(swapBodyPanelControllerRef);
+        regMenuItem.setIcon(new ImageIcon("images/icons/16x16/page_edit.png"));
         
         swimmingClassesMenu.add(classDayMenu);
         
@@ -105,12 +107,14 @@ public class smsMenuBar extends JMenuBar {
         
         JMenuItem viewAllSRMenuItem = new JMenuItem(VIEWALLSRMENUITEM_NAME);
         viewAllSRMenuItem.addActionListener(swapBodyPanelControllerRef);
+        viewAllSRMenuItem.setIcon(new ImageIcon("images/icons/16x16/users.png"));
         studentRecordsMenu.add(viewAllSRMenuItem);
         
         studentRecordsMenu.addSeparator();
         
         JMenuItem addSRMenuItem = new JMenuItem(ADDSRMENUITEM_NAME);
         addSRMenuItem.addActionListener(swapBodyPanelControllerRef);
+        addSRMenuItem.setIcon(new ImageIcon("images/icons/16x16/user_add.png"));
         studentRecordsMenu.add(addSRMenuItem);
         
         this.add(studentRecordsMenu);
@@ -122,10 +126,12 @@ public class smsMenuBar extends JMenuBar {
         
         JMenuItem viewAllSTMenuItem = new JMenuItem(VIEWALLSTMENUITEM_NAME);
         viewAllSTMenuItem.addActionListener(swapBodyPanelControllerRef);
+        viewAllSTMenuItem.setIcon(new ImageIcon("images/icons/16x16/premium_support.png"));
         supportTicketsMenu.add(viewAllSTMenuItem);
         
         JMenuItem addSTMenuItem = new JMenuItem(ADDSTMENUITEM_NAME);
         addSTMenuItem.addActionListener(swapBodyPanelControllerRef);
+        addSTMenuItem.setIcon(new ImageIcon("images/icons/16x16/pencil_add.png"));
         supportTicketsMenu.add(addSTMenuItem);
         
         this.add(supportTicketsMenu);

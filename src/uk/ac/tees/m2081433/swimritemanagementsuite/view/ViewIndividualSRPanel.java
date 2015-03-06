@@ -35,6 +35,11 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
     StudentRecord studentRecord;
     
     /**
+     * The swimrite management suite body panel referenced for displaying an individual student record.
+     */
+    smsBodyPanel smsBodyPanelRef;
+    
+    /**
      * The grid bag constraint to manipulate when adding components to the layout. 
      */
     GridBagConstraints c;
@@ -62,7 +67,7 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
     /**
      * The font (defining font style, font type and font size) for all form text labels.
      */
-    Font labelFont = new Font("Arial", Font.PLAIN, 17);
+    Font textFont = new Font("Arial", Font.PLAIN, 17);
     
     
     
@@ -206,6 +211,11 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
     JButton editButton;
     
     /**
+     * The delete button to delete the student record from the database.
+     */
+    JButton deleteButton;
+    
+    /**
      * The update button to update the student record with the new field entries.
      * 
      */
@@ -217,11 +227,18 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
      */
     JButton cancelButton;
     
+    JButton addLBButton;
+    
+    JPanel addLBButtonPanel;
     
     
-    public ViewIndividualSRPanel(StudentRecord sr) {
+    
+    public ViewIndividualSRPanel(StudentRecord sr, smsBodyPanel smsBodyPanel) {
         // Initialises the student record to be displayed using the student record provided as a param.
         studentRecord = sr;
+        
+        // Initialises the sms Body Panel reference used for changing panels on the body panel
+        smsBodyPanelRef = smsBodyPanel;
         
         // Initialises the student record controller needed to update the student record in the student record table
         studentRecordController = new StudentRecordController();
@@ -232,8 +249,10 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
         // The input verifier for each text field input in this form.
         inputVerifier = new SRFormInputVerifier();
         
+        int panelWidth = calculatePanelWidth();
+        
         // sets the ViewIndividualSRPanel JPanels default attributes
-        this.setPreferredSize(new Dimension(1360, 565));
+        this.setPreferredSize(new Dimension(panelWidth, 565));
         this.setVisible(true);
         this.setBackground(Color.white);
         this.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -246,7 +265,24 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
         
         loadButtons();
         
+        loadAddLessonBlockButton();
+        
         loadLessonBlocks();
+    }
+    
+    public int calculatePanelWidth() {
+        
+        lessonBlockList = lessonBlockController.getLessonBlocksByStudent(studentRecord);
+        
+        int lessonBlockNo = 0;
+        
+        int panelWidth = 1375;
+        
+        if (lessonBlockList.size() > 1) {
+            panelWidth = panelWidth + (450 * (lessonBlockList.size() - 1)) + 5;
+        }
+        
+        return panelWidth;
     }
     
     /**
@@ -280,7 +316,7 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
      */
     public void loadStudentNameRow() {
         // Label to hold the student name form field text.
-        final JLabel studentNameLabel = new JLabel("Student Name:");
+        final JLabel studentNameLabel = new JLabel("  Student Name:");
         setLabelAttributes(studentNameLabel);
 
         // The coordinates for where to add this component to the layout.
@@ -320,7 +356,7 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
      */
     public void loadStudentDOBRow() {
         // Label to hold the student date of birth form field text
-        final JLabel studentDOBLabel = new JLabel("Date of Birth (DOB):");
+        final JLabel studentDOBLabel = new JLabel("  Date of Birth (DOB):");
         setLabelAttributes(studentDOBLabel);
 
         // The coordinates for where to add this component to the layout
@@ -400,7 +436,7 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
      */
     public void loadStudentTelephoneNoRow() {
         // Label to hold the student telephone number form field text.
-        final JLabel studentTelephoneNoLabel = new JLabel("Telephone Number:");
+        final JLabel studentTelephoneNoLabel = new JLabel("  Telephone Number:");
         setLabelAttributes(studentTelephoneNoLabel);
 
         // The coordinates for where to add this component to the layout.
@@ -440,7 +476,7 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
      */
     public void loadStudentAddressRow() {
         // Label to hold the student address line 1 form field text.
-        final JLabel addressLine1Label = new JLabel("Address Line 1:");
+        final JLabel addressLine1Label = new JLabel("  Address Line 1:");
         setLabelAttributes(addressLine1Label);
 
         // The coordinates for where to add this component to the layout.
@@ -477,7 +513,7 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
         
         
         // Label to hold the student address line 2 form field text.
-        final JLabel addressLine2Label = new JLabel("Address Line 2:");
+        final JLabel addressLine2Label = new JLabel("  Address Line 2:");
         setLabelAttributes(addressLine2Label);
 
         // The coordinates for where to add this component to the layout.
@@ -514,7 +550,7 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
         
         
         // Label to hold the student city for their address form field text
-        final JLabel addressCityLabel = new JLabel("City:");
+        final JLabel addressCityLabel = new JLabel("  City:");
         setLabelAttributes(addressCityLabel);
 
         // The coordinates for where to add this component to the layout.
@@ -551,7 +587,7 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
         
         
         // Label to hold the student county for their address form field text
-        final JLabel addressCountyLabel = new JLabel("County:");
+        final JLabel addressCountyLabel = new JLabel("  County:");
         setLabelAttributes(addressCountyLabel);
 
         // The coordinates for where to add this component to the layout.
@@ -588,7 +624,7 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
         
         
         // Label to hold the student postcode for their address form field text
-        final JLabel addressPostcodeLabel = new JLabel("Postcode:");
+        final JLabel addressPostcodeLabel = new JLabel("  Postcode:");
         setLabelAttributes(addressPostcodeLabel);
 
         // The coordinates for where to add this component to the layout.
@@ -628,7 +664,7 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
      */
     public void loadHasIllnessRow() {
         // Label to hold the has illness form field text
-        final JLabel hasIllnessLabel = new JLabel("Any Illnesses or Disabilities:");
+        final JLabel hasIllnessLabel = new JLabel("  Any Illnesses or Disabilities:");
         setLabelAttributes(hasIllnessLabel);
 
         // The coordinates for where to add this component to the layout.
@@ -668,7 +704,7 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
      */
     public void loadParentNameRow() {
         // Label to hold the parents name form field text
-        final JLabel parentNameLabel = new JLabel("Parents Name:");
+        final JLabel parentNameLabel = new JLabel("  Parents Name:");
         setLabelAttributes(parentNameLabel);
 
         // The coordinates for where to add this component to the layout
@@ -708,7 +744,7 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
      */
     public void loadSwimmingLevelRow() {
         // Label to hold the ability level form field text
-        final JLabel swimmingLevelLabel = new JLabel("Current Swimming Level:");
+        final JLabel swimmingLevelLabel = new JLabel("  Current Swimming Level:");
         setLabelAttributes(swimmingLevelLabel);
 
         // The coordinates for where to add this component to the layout
@@ -720,7 +756,7 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
         swimmingLevelList = new JComboBox(SwimmingLevel.values());
         swimmingLevelList.setSelectedItem(studentRecord.getSwimmingLevel());
         swimmingLevelList.setEnabled(false);
-        swimmingLevelList.setFont(labelFont);
+        swimmingLevelList.setFont(textFont);
         
         // The coordinates for where to add this component to the layout
         c.gridx = 2;
@@ -735,7 +771,7 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
     public void setLabelAttributes(JLabel label) {
         // Text is on the left, with label background being white and the label font defined also
         label.setHorizontalAlignment(SwingConstants.LEFT);
-        label.setFont(labelFont);
+        label.setFont(textFont);
         label.setBackground(Color.white);
         label.setPreferredSize(new Dimension(225, 50));
         label.setOpaque(true);
@@ -745,7 +781,7 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
     public void setTextFieldAttributes(JTextField textField) {
         textField.setInputVerifier(inputVerifier);
         textField.setEditable(false);
-        textField.setFont(labelFont);
+        textField.setFont(textFont);
     }
     
     /**
@@ -766,13 +802,21 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
         buttonPanel.setVisible(true);
         buttonPanel.setBackground(Color.white);
       
-        // Initialises the submit button with its attributes (inc button tooltip and icon)
+        // Initialises the edit button with its attributes (inc button tooltip and icon)
         editButton = new JButton("Edit");
-        editButton.setPreferredSize(new Dimension(100, 40));
+        editButton.setPreferredSize(new Dimension(90, 45));
         editButton.addActionListener(this);
         editButton.setToolTipText("<html> Click this button to <b> edit </b> the student record. </html>");
         editButton.setIcon(new ImageIcon("images/icons/bullet_edit.png"));
         buttonPanel.add(editButton);
+        
+        // Initialises the delete button with its attributes (inc button tooltip and icon)
+        deleteButton = new JButton("Delete");
+        deleteButton.setPreferredSize(new Dimension(90, 45));
+        deleteButton.addActionListener(this);
+        deleteButton.setToolTipText("<html> Click this button to <b> delete </b> the student record. </html>");
+        deleteButton.setIcon(new ImageIcon("images/icons/delete.png"));
+        buttonPanel.add(deleteButton);
         
         // The coordinates for where to add this component to the layout.
         c.gridx = 3;
@@ -785,14 +829,52 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
     }
     
     /**
+     * 
+     */
+    public void loadAddLessonBlockButton() {
+        
+        addLBButtonPanel = new JPanel();
+        addLBButtonPanel.setBackground(Color.white);
+        addLBButtonPanel.setPreferredSize(new Dimension(275, 50));
+        addLBButtonPanel.setOpaque(true);
+        addLBButtonPanel.setVisible(true);
+        
+        // Initialises the delete button with its attributes (inc button tooltip and icon)
+        addLBButton = new JButton("Add Lesson Block");
+        addLBButton.setPreferredSize(new Dimension(150, 45));
+        addLBButton.addActionListener(this);
+        addLBButton.setToolTipText("<html> Click this button to <b> add </b> a lesson block. </html>");
+        addLBButton.setIcon(new ImageIcon("images/icons/add.png"));
+        addLBButtonPanel.add(addLBButton);
+        
+        // The coordinates for where to add this component to the layout.
+        c.gridx = 5;
+        c.gridy = 10;
+        this.add(addLBButtonPanel, c);
+    }
+    
+    
+    /**
      * Adds the students lesson blocks to this panel.
      */
     public void loadLessonBlocks() {
         
-        lessonBlockList = lessonBlockController.getLessonBlocksByStudent(studentRecord);
+        lessonBlockList = lessonBlockController.sortLessonBlockssByLessonBlockId(lessonBlockList);
         
         System.out.println("size o lb: " + lessonBlockList.size());
         
+        for (int i = 0; i < lessonBlockList.size(); i++) {
+            
+            LessonBlockPanel lessonBlockPanel = new LessonBlockPanel(lessonBlockList.get(i), lessonBlockList.size() - i, smsBodyPanelRef, studentRecord);
+            
+            // The coordinates for where to add this component to the layout.
+            c.gridx = 6 + i;
+            c.gridy = 0;
+            c.gridheight = 11;
+            this.add(lessonBlockPanel, c);
+            
+            c.gridheight = 0;
+        }
         
         
         
@@ -836,6 +918,7 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
         buttonPanel.remove(cancelButton);
         
         buttonPanel.add(editButton);
+        buttonPanel.add(deleteButton);
         
         this.updateUI();
     }
@@ -862,10 +945,11 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
             
             // Removes the edit button from the button panel
             buttonPanel.remove(editButton);
+            buttonPanel.remove(deleteButton);
             
             // Creates the update button and sets its attributes
             updateButton = new JButton("Update");
-            updateButton.setPreferredSize(new Dimension(90, 40));
+            updateButton.setPreferredSize(new Dimension(90, 45));
             updateButton.addActionListener(this);
             updateButton.setToolTipText("<html> Click this button to <b> update </b> the student record with the new text field values. </html>");
             updateButton.setIcon(new ImageIcon("images/icons/accept.png"));
@@ -873,14 +957,31 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
             
             // Creates the cancel button and sets its attributes
             cancelButton = new JButton("Cancel");
-            cancelButton.setPreferredSize(new Dimension(90, 40));
+            cancelButton.setPreferredSize(new Dimension(90, 45));
             cancelButton.addActionListener(this);
-            cancelButton.setToolTipText("<html> Click this button to <b> update </b> the student record with the new text field values. </html>");
+            cancelButton.setToolTipText("<html> Click this button to <b> cancel </b> the editting of the student record and keep the old field values. </html>");
             cancelButton.setIcon(new ImageIcon("images/icons/cancel.png"));
             buttonPanel.add(cancelButton);
             
             this.updateUI();
         // If the source of the button press was the update button
+        } else if (e.getSource() == deleteButton) {
+            
+            int answer = JOptionPane.showConfirmDialog(null, 
+                "<HTML> Do you want to <b> <font color='red'> delete</font> </b> </HTML> \n"
+                        + studentRecord.getStudentName() + "s" + " Student Record?"
+                        , "Delete Student Record?", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            
+            // Switch to determine users choice.
+            switch (answer) {
+                // The user wants to delete the student record from the db.
+                case 0: studentRecordController.deleteStudentRecord(studentRecord);
+                        smsBodyPanelRef.addViewAllSRPanel();
+                         break;
+                // The user does not want to format the db so don't do anything.
+                case 1:  break;
+                default: break;
+            }
         } else if (e.getSource() == updateButton) {
             
             // boolean used as a flag if any form field is left empty
@@ -918,7 +1019,7 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
                                         + "Invalid field(s) highlighted in yellow\n"
                                         + "Please complete the form correctly.\n"
                                         + "(Tip: Hover over the information icon next to the invalid field to view what types of entrys are invaid)",
-                                "Error Empty Field(s)",
+                                "Error Empty or Invalid Field(s)",
                                 JOptionPane.ERROR_MESSAGE);
             } else {
                 studentRecord.setStudentName(studentNameField.getText());
@@ -978,6 +1079,9 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
             swimmingLevelList.setSelectedItem(studentRecord.getSwimmingLevel());
             
             exitEditMode();
+        } else if (e.getSource() == addLBButton) {
+            lessonBlockController.createLessonBlock(studentRecord);
+            smsBodyPanelRef.addViewIndividualSRPanel(studentRecord);
         }
     }
 }
