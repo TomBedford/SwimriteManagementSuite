@@ -86,10 +86,10 @@ public class LessonPayment {
      * @param paymentAmount The payment amount.
      * @param paymentTaker The taker of the payment.
      */
-    public LessonPayment(PaymentType paymentType, String paymentDate, String paymentAmount, String paymentTaker) {
+    public LessonPayment(String paymentAmount, PaymentType paymentType, String paymentDate, String paymentTaker) {
+        this.paymentAmount = paymentAmount;
         this.paymentType = paymentType;
         this.paymentDate = paymentDate;
-        this.paymentAmount = paymentAmount;
         this.paymentTaker = paymentTaker;
     }
     

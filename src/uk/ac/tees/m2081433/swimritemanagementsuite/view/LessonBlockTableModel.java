@@ -5,18 +5,37 @@ import javax.swing.table.AbstractTableModel;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.AttendanceType;
 
 /**
- *
+ * The table model for the lesson block table
  */
 class LessonBlockTableModel extends AbstractTableModel {
     
+    /**
+     * Two dimensional object array to hold the data for the table.
+     */
     private Object[][] data;
+    
+    /**
+     * Array of string to hold the table headers.
+     */
     private String[] headers;
+    
+    /**
+     * Boolean as to whether the date column is editable.
+     */
     private boolean dateEditable;
 
-    public LessonBlockTableModel(Object[][] data, String[] headerss) {
+    /**
+     * Initializes the table model calling the super class and setting the data for the rows and the headers.
+     * @param data the data to be stored in the table.
+     * @param headers The headers for the table.
+     */
+    public LessonBlockTableModel(Object[][] data, String[] headers) {
         super();
+        // Sets the data to be stored in the table
         this.data = data;
-        this.headers = headerss;
+        // Sets the table headers
+        this.headers = headers;
+        // Initializes the date column not to be editable.
         dateEditable = false;
     }
 
@@ -35,15 +54,26 @@ class LessonBlockTableModel extends AbstractTableModel {
         return headers[col];
     }
 
+    /**
+     * Overridden method to render image icons in the attendance type column.
+     * @param row the row of the cell to render
+     * @param col the column of the cell to render
+     * @return the object to store in that cell
+     */
     @Override
     public Object getValueAt(int row, int col) {
         
+        // If the column is not equal to the attendance type column
         if (col != 1) {
+            // Return the normal object data
             return data[row][col];
+        // Otherwise it is the attendance type column
         } else {
             
+            // If the data in that cell is not equal to null
             if (data[row][col] != null) {
             
+                // return the appropriate image icon for the attendance type
                 if (data[row][col].equals(AttendanceType.PRESENT)) {
                     return new ImageIcon("images/icons/16x16/accept.png");
                 } else if (data[row][col].equals(AttendanceType.ABSENT)) {
@@ -61,6 +91,11 @@ class LessonBlockTableModel extends AbstractTableModel {
         }
     }
 
+    /**
+     * Returns the proper class types for each column as the attendance type column should now be image icon.
+     * @param col the column to check the class type of
+     * @return the class type of that column
+     */
     @Override
     public Class<?> getColumnClass(int col) {
         if (col != 1) {
@@ -70,20 +105,37 @@ class LessonBlockTableModel extends AbstractTableModel {
         }
     }
     
+    /**
+     * Overridden method to determine whether the date column cells are editable.
+     * @param row the row of the cell to check if it is editable
+     * @param col the column of the cell to check if it is editable
+     * @return whether the column is editable or not.
+     */
     @Override
     public boolean isCellEditable(int row, int col) {
-     switch (col) {
-         case 0:
-             return dateEditable;
-         default:
-             return false;
-      }
+        switch (col) {
+            // If the column is the date column check whether the column is set to editable
+            case 0:
+                    return dateEditable;
+            default:
+                    return false;
+        }
     }
     
+    /**
+     * Sets whether the date column in the lesson block table is editable or not.
+     * @param isEditable The new boolean value as to whether the date column in the lesson block table is editable
+     */
     public void setDateEditable(Boolean isEditable) {
         dateEditable = isEditable;
     }
     
+    /**
+     * Overridden method to set the appropriate values of each cell in the table.
+     * @param value the object to put in the cell
+     * @param row the row of the cell to input data
+     * @param col the column of the cell to input data
+     */
     @Override
     public void setValueAt(Object value, int row, int col) {
         data[row][col] = value;

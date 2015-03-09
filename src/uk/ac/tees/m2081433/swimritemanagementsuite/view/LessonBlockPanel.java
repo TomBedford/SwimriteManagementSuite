@@ -8,6 +8,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -19,20 +20,31 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
+import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import uk.ac.tees.m2081433.swimritemanagementsuite.controller.LessonBlockController;
+import uk.ac.tees.m2081433.swimritemanagementsuite.controller.LessonBlockDateInputVerifier;
+import uk.ac.tees.m2081433.swimritemanagementsuite.controller.LessonBlockPaymentInputVerifier;
+import uk.ac.tees.m2081433.swimritemanagementsuite.controller.LessonPaymentController;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.AttendanceType;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.LessonBlock;
+import uk.ac.tees.m2081433.swimritemanagementsuite.model.LessonPayment;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.PaymentType;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.StudentRecord;
 
 /**
- *
+ * This class loads an individual lesson block record onto this lesson block panel.
  */
-public class LessonBlockPanel extends JPanel implements ActionListener{
+public class LessonBlockPanel extends JPanel implements ActionListener {
     
+    /**
+     * The lesson block to load onto the panel.
+     */
     LessonBlock lessonBlockRef;
     
+    /**
+     * The number of the lesson block.
+     */
     int lessonBlockNumberRef;
     
     /**
@@ -40,14 +52,37 @@ public class LessonBlockPanel extends JPanel implements ActionListener{
      */
     smsBodyPanel smsBodyPanelRef;
     
+    /**
+     * The student record sent as a param when reloading the view individual student record after deletion of this lb.
+     */
     StudentRecord studentRecordRef;
     
+    /**
+     * The controller to edit/update and delete lesson blocks from the database.
+     */
     LessonBlockController lessonBlockController;
+    
+    /**
+     * The controller to create, edit/update lesson payments from the database.
+     */
+    LessonPaymentController lessonPaymentController;
+    
+    /**
+     * The input verifier used for the lesson payment form.
+     */
+    LessonBlockPaymentInputVerifier lessonBlockPaymentInputVerifier;
+    
+    /**
+     * The input verifier used for the dates in the lesson block table.
+     */
+    LessonBlockDateInputVerifier lessonBlockDateInputVerifier;
     
     /**
      * The grid bag constraint to manipulate when adding components to the layout. 
      */
     GridBagConstraints c;
+    
+    
     
     /**
      * The font for the title label of the lesson block.
@@ -79,6 +114,8 @@ public class LessonBlockPanel extends JPanel implements ActionListener{
     */
     Color alternateRowColor = new Color(211, 211, 211);
     
+    
+    
     /**
      * The Payment Amount field text field name needed for referencing in the input verifier.
      */
@@ -97,38 +134,77 @@ public class LessonBlockPanel extends JPanel implements ActionListener{
     /**
      *  The year of the payment date field text field name needed for referencing in the input verifier.
      */
-    public static String paymentFieldName = "Payment Year Field";
+    public static String paymentYearFieldName = "Payment Year Field";
     
     /**
      * The payment taker field text field name needed for referencing in the input verifier.
      */
     public static String paymentTakerFieldName = "Payment Taker Field";
     
+    
+    
+    /**
+     * The text field for the payment amount for the lesson payment.
+     */
     JTextField paymentAmountField;
     
+    /**
+     * The combo boc for the different possible payment types for the lesson payment.
+     */
     JComboBox paymentTypeList;
     
+    /**
+     * The text field for the payment date (day) for the lesson payment.
+     */
     JTextField paymentDayField;
     
+    /**
+     * The text field for the payment date (month) for the lesson payment.
+     */
     JTextField paymentMonthField;
     
+    /**
+     * The text field for the payment date (year) for the lesson payment.
+     */
     JTextField paymentYearField;
     
+    /**
+     * The text field for the payment taker for the lesson payment.
+     */
     JTextField paymentTakerField;
+    
+    
     
     /**
      * An array of String to hold the column names for the lesson block table.
      */
     String[] columnNames;
     
+    /**
+     * The default cell editor for the lesson block attendance table.
+     */
+    DefaultCellEditor lessonBlockTableEditor;
+    
+    /**
+     * The JTable to hold the lesson block attendance and date columns.
+     */
     JTable lessonBlockTable;
     
+    /**
+     * The table model for the lesson block table.
+     */
     LessonBlockTableModel lessonBlockTableModel;
             
     
     
+    /**
+     * The button panel to hold the edit, delete, update and cancel buttons.
+     */
     JPanel buttonPanel;
     
+    /**
+     * The edit button to start editing a lesson block and lesson payment for that block.
+     */
     JButton editButton;
     
     /**
@@ -136,55 +212,111 @@ public class LessonBlockPanel extends JPanel implements ActionListener{
      */
     JButton deleteButton;
     
+    /**
+     * The update button to update the lesson block and lesson payment for that block.
+     */
     JButton updateButton;
     
+    /**
+     * The cancel button to cancel editing for the lesson block and lesson payment for that block.
+     */
     JButton cancelButton;
     
+    
+    
+    /**
+     * The attendance editing button panel to hold the buttons used for editing the attendance of the lesson block.
+     */
     JPanel attendanceEditingPanel;
     
+    /**
+     * The array for all the buttons to change attendance of the appropriate attendance row to present.
+     */
     JButton[] presentButton;
     
+    /**
+     * The array for all the buttons to change attendance of the appropriate attendance row to absent.
+     */
     JButton[] absentButton;
     
+    /**
+     * The array for all the buttons to change attendance of the appropriate attendance row to fun swim.
+     */
     JButton[] funSwimButton;
     
+    /**
+     * The array for all the buttons to change attendance of the appropriate attendance row to fun swim taken.
+     */
     JButton[] funSwimTakenButton;
     
+    /**
+     * The array for all the buttons to change attendance of the appropriate attendance row to null/clear it.
+     */
     JButton[] clearAttendanceButton;
     
+    
+    
+    /**
+     * Adds the title for the lesson block, the lesson payment form and lesson block table to this panel.
+     * @param lessonBlock The lesson block to load onto the panel.
+     * @param lessonBlockNumber The number of this lesson block.
+     * @param smsBodyPanel The reference to the body panel to change panels.
+     * @param studentRecord The student record associated with this lesson block.
+     */
     public LessonBlockPanel(LessonBlock lessonBlock, int lessonBlockNumber, smsBodyPanel smsBodyPanel, StudentRecord studentRecord) {
         
+        // The lesson block to load onto this lesson block panel.
         lessonBlockRef = lessonBlock;
         
+        // The number that this lesson block is.
         lessonBlockNumberRef = lessonBlockNumber;
         
         // Initialises the sms Body Panel reference used for changing panels on the body panel
         smsBodyPanelRef = smsBodyPanel;
         
+        // The student record associated with this lesson block
         studentRecordRef = studentRecord;
         
+        // The controller to edit/update and delete this lesson block in the database
         lessonBlockController = new LessonBlockController();
+        
+        // The controller to create, edit/update and delete lesson payments associated with this lesson block
+        lessonPaymentController = new LessonPaymentController();
+        
+        // The input verifier for the lesson payment form
+        lessonBlockPaymentInputVerifier = new LessonBlockPaymentInputVerifier();
+        
+        // The input verifier for the lesson block date column in the lesson block table.
+        lessonBlockDateInputVerifier = new LessonBlockDateInputVerifier();
         
         // Initialises the grid bag layout constraint
         c = new GridBagConstraints();
         
         // sets the ViewIndividualSRPanel JPanels default attributes
-        this.setPreferredSize(new Dimension(450, 550));
+        this.setPreferredSize(new Dimension(463, 550));
         this.setVisible(true);
         this.setBackground(Color.white);
         this.setLayout(new GridBagLayout());
         
+        // Adds the title of this lesson block to this panel
         addTitleLabel();
         
-        addPaymentDetails();
+        // Adds the lesson payment form to this panel
+        addLessonPaymentForm();
         
+        // Adds the lesson block table to this form
         addLessonBlockTable();
         
+        // Adds the button panel to contain edit, delete, update and cancel buttons.
         addButtonPanel();
     }
     
+    /**
+     * Adds a label containing the title of this lesson block panel to this panel.
+     */
     public void addTitleLabel() {
-        JLabel titleLabel = new JLabel();
+        // creates, initialises and sets the attributes for the title label
+        final JLabel titleLabel = new JLabel();
         titleLabel.setPreferredSize(new Dimension(450, 30));
         titleLabel.setOpaque(true);
         titleLabel.setVisible(true);
@@ -192,6 +324,7 @@ public class LessonBlockPanel extends JPanel implements ActionListener{
         titleLabel.setFont(titleLabelFont);
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         
+        // Sets the text for the label
         titleLabel.setText("Lesson Block No. " + lessonBlockNumberRef);
         
         // The coordinates for where to add this component to the layout.
@@ -204,14 +337,17 @@ public class LessonBlockPanel extends JPanel implements ActionListener{
         c.gridwidth = 1;
     }
     
-    public void addPaymentDetails() {
+    /**
+     * Adds the lesson payment form components to the lesson payment form panel to this panel.
+     */
+    public void addLessonPaymentForm() {
         /**
          * The JPanel to hold all payment detail labels and text fields and spacing components.
          */
-        JPanel paymentDetailsPanel = new JPanel();
-        paymentDetailsPanel.setPreferredSize(new Dimension(450, 90));
-        paymentDetailsPanel.setVisible(true);
-        paymentDetailsPanel.setBackground(Color.white);
+        final JPanel lessonPaymentFormPanel = new JPanel();
+        lessonPaymentFormPanel.setPreferredSize(new Dimension(450, 90));
+        lessonPaymentFormPanel.setVisible(true);
+        lessonPaymentFormPanel.setBackground(Color.white);
         
         
         
@@ -221,14 +357,13 @@ public class LessonBlockPanel extends JPanel implements ActionListener{
         final JLabel paymentAmountLabel = new JLabel("Payment Amount:   £");
         paymentAmountLabel.setPreferredSize(new Dimension(125, 20));
         setLabelAttributes(paymentAmountLabel);
-        paymentDetailsPanel.add(paymentAmountLabel);
-        
+        lessonPaymentFormPanel.add(paymentAmountLabel);
         
         paymentAmountField = new JTextField(4);
         paymentAmountField.setName(paymentAmountFieldName);
         paymentAmountField.setPreferredSize(new Dimension(30, 20));
         setTextFieldAttributes(paymentAmountField);
-        paymentDetailsPanel.add(paymentAmountField);
+        lessonPaymentFormPanel.add(paymentAmountField);
         
         
         
@@ -238,13 +373,12 @@ public class LessonBlockPanel extends JPanel implements ActionListener{
         final JLabel paymentTypeLabel = new JLabel("Payment Type:");
         paymentTypeLabel.setPreferredSize(new Dimension(100, 20));
         setLabelAttributes(paymentTypeLabel);
-        paymentDetailsPanel.add(paymentTypeLabel);
+        lessonPaymentFormPanel.add(paymentTypeLabel);
         
-        // The combo box for the students current swimming/ability level
         paymentTypeList = new JComboBox(PaymentType.values());
         paymentTypeList.setFont(textFont);
         paymentTypeList.setEnabled(false);
-        paymentDetailsPanel.add(paymentTypeList);
+        lessonPaymentFormPanel.add(paymentTypeList);
         
         
         
@@ -254,15 +388,14 @@ public class LessonBlockPanel extends JPanel implements ActionListener{
         final JLabel paymentDateLabel = new JLabel("Payment Date:");
         paymentDateLabel.setPreferredSize(new Dimension(100, 20));
         setLabelAttributes(paymentDateLabel);
-        paymentDetailsPanel.add(paymentDateLabel);
+        lessonPaymentFormPanel.add(paymentDateLabel);
         
-        
-        // The text field input for the students day of their date of birth
+        // Payment day for date field
         paymentDayField = new JTextField(2);
         paymentDayField.setName(paymentDayFieldName);
         paymentDayField.setPreferredSize(new Dimension(20, 20));
         setTextFieldAttributes(paymentDayField);
-        paymentDetailsPanel.add(paymentDayField);
+        lessonPaymentFormPanel.add(paymentDayField);
         
         
         // Label to hold a '/' SLASH inbetween the day and month of the payment date
@@ -271,15 +404,14 @@ public class LessonBlockPanel extends JPanel implements ActionListener{
         firstSlashLabel.setBackground(Color.white);
         firstSlashLabel.setOpaque(true);
         firstSlashLabel.setVisible(true);
-        paymentDetailsPanel.add(firstSlashLabel);
+        lessonPaymentFormPanel.add(firstSlashLabel);
         
-        
-        // The text field input for the students month of their date of birth
+        // Payment month for date field
         paymentMonthField = new JTextField(2);
         paymentMonthField.setName(paymentMonthFieldName);
         paymentMonthField.setPreferredSize(new Dimension(20, 20));
         setTextFieldAttributes(paymentMonthField);
-        paymentDetailsPanel.add(paymentMonthField);
+        lessonPaymentFormPanel.add(paymentMonthField);
         
         
         // Label to hold a '/' SLASH inbetween the month and year of the payment date 
@@ -288,15 +420,14 @@ public class LessonBlockPanel extends JPanel implements ActionListener{
         secondSlashLabel.setBackground(Color.white);
         secondSlashLabel.setOpaque(true);
         secondSlashLabel.setVisible(true);
-        paymentDetailsPanel.add(secondSlashLabel);
+        lessonPaymentFormPanel.add(secondSlashLabel);
         
-        
-        // The text field input for the students year of their date of birth
+        // Payment year for dat field
         paymentYearField = new JTextField(3);
-        paymentYearField.setName(paymentFieldName);
+        paymentYearField.setName(paymentYearFieldName);
         paymentYearField.setPreferredSize(new Dimension(25, 20));
         setTextFieldAttributes(paymentYearField);
-        paymentDetailsPanel.add(paymentYearField);
+        lessonPaymentFormPanel.add(paymentYearField);
         
         
         
@@ -304,7 +435,7 @@ public class LessonBlockPanel extends JPanel implements ActionListener{
         final JLabel spacingLabel1 = new JLabel();
         spacingLabel1.setPreferredSize(new Dimension(140, 20));
         spacingLabel1.setOpaque(false);
-        paymentDetailsPanel.add(spacingLabel1);
+        lessonPaymentFormPanel.add(spacingLabel1);
         
         
         
@@ -314,14 +445,14 @@ public class LessonBlockPanel extends JPanel implements ActionListener{
         final JLabel paymentTakerLabel = new JLabel("Payment Taker: ");
         paymentTakerLabel.setPreferredSize(new Dimension(100, 20));
         setLabelAttributes(paymentTakerLabel);
-        paymentDetailsPanel.add(paymentTakerLabel);
+        lessonPaymentFormPanel.add(paymentTakerLabel);
         
-        
+        // The payment taker field
         paymentTakerField = new JTextField(15);
         paymentTakerField.setName(paymentTakerFieldName);
         paymentTakerField.setPreferredSize(new Dimension(50, 20));
         setTextFieldAttributes(paymentTakerField);
-        paymentDetailsPanel.add(paymentTakerField);
+        lessonPaymentFormPanel.add(paymentTakerField);
         
         
         
@@ -329,7 +460,7 @@ public class LessonBlockPanel extends JPanel implements ActionListener{
         final JLabel spacingLabel2 = new JLabel();
         spacingLabel2.setPreferredSize(new Dimension(120, 20));
         spacingLabel2.setOpaque(false);
-        paymentDetailsPanel.add(spacingLabel2);
+        lessonPaymentFormPanel.add(spacingLabel2);
         
         
         
@@ -337,7 +468,7 @@ public class LessonBlockPanel extends JPanel implements ActionListener{
         if (lessonBlockRef.getLessonPayment() != null) {
             paymentAmountField.setText(lessonBlockRef.getLessonPayment().getPaymentAmount());
             paymentTypeList.setSelectedItem(lessonBlockRef.getLessonPayment().getPaymentType());
-            final String[] paymentDate = lessonBlockController.unformatPaymentDate(lessonBlockRef.getLessonPayment().getPaymentDate());
+            final String[] paymentDate = lessonPaymentController.unformatPaymentDate(lessonBlockRef.getLessonPayment().getPaymentDate());
             paymentDayField.setText(paymentDate[0]);
             paymentMonthField.setText(paymentDate[1]);
             paymentYearField.setText(paymentDate[2]);
@@ -346,16 +477,20 @@ public class LessonBlockPanel extends JPanel implements ActionListener{
         
         
         
-        // The coordinates for where to add this component to the layout.
+        // The coordinates for where to add the lesson payment form panel component to the layout.
         c.gridx = 0;
         c.gridy = 1;
         c.gridwidth = 2;
-        this.add(paymentDetailsPanel, c);
+        this.add(lessonPaymentFormPanel, c);
         
         // Resets the grid width for other components added
         c.gridwidth = 1;
     }
     
+    /**
+     * Sets the default attributes for lesson payment labels on the lesson payment form panel.
+     * @param label the label to set the attributes for
+     */
     public void setLabelAttributes(JLabel label) {
         label.setHorizontalAlignment(SwingConstants.LEFT);
         label.setFont(textFont);
@@ -364,19 +499,45 @@ public class LessonBlockPanel extends JPanel implements ActionListener{
         label.setVisible(true);
     }
     
+    /**
+     * Sets the default attributes for the text fields on the lesson payment form panel.
+     * @param textField the text field to set the attributes for
+     */
     public void setTextFieldAttributes(JTextField textField) {
-        //textField.setInputVerifier(inputVerifier);
+        textField.setInputVerifier(lessonBlockPaymentInputVerifier);
         textField.setEditable(false);
         textField.setFont(textFont);
     }
     
+    /**
+     * Adds the lesson block table to this layout.
+     */
     public void addLessonBlockTable() {
         
         // The an array of column names for the lesson block attendance table
         columnNames = new String[]{" Lesson Date",
                                 " Attendance"};
         
+        // initialises the adapted table editor for the lesson block table to edit the date column
+        createLessonBlockTableEditor();
+        
+        // Creates a new lesson block table using the table editor (will contain table data) and the array of column names
         lessonBlockTable = new JTable(convertLessonBlockForTable(), columnNames) {
+            @Override
+            public TableCellEditor getCellEditor(int row, int column) {
+                // Gets the column index from the table
+                final int modelColumn = convertColumnIndexToModel(column);
+
+                // If the index is 0 then this is the date column and return the lesso block table editor to endable date editing
+                if (modelColumn == 0) {
+                    return lessonBlockTableEditor;
+                } else {
+                    // Otherwise return the default table cell editor
+                    return super.getCellEditor(row, column);
+                }
+            }
+            
+            // Renders the colours of the rows to have interleaving colours
             @Override
             public Component prepareRenderer(TableCellRenderer r, int data, int column) {
                 // Gets the component to manipulate
@@ -399,12 +560,12 @@ public class LessonBlockPanel extends JPanel implements ActionListener{
             }
         };
         
+        // The lesson block table model using data and column names
         lessonBlockTableModel = new LessonBlockTableModel(convertLessonBlockForTable(), columnNames);
         
+        // Sets the lesson blocks table model (to load data and column values)
         lessonBlockTable.setModel(lessonBlockTableModel);
         
-        //Sets the max size of the table until scrolling is used
-        //lessonBlockTable.setPreferredScrollableViewportSize(new Dimension(1200, 475));
         // Makes sure the table is always big enough to fill the container
         lessonBlockTable.setFillsViewportHeight(true);
         // Shows the grid lines both horizontal and vertical
@@ -422,8 +583,8 @@ public class LessonBlockPanel extends JPanel implements ActionListener{
         // Sets the size of the header row
         lessonBlockTable.getTableHeader().setPreferredSize(new Dimension(120, 40));
         
-        // Initializes the scroll pane to hold the student record table, setting attributes
-        JScrollPane tableScrollPane = new JScrollPane(lessonBlockTable);
+        // Initializes the scroll pane to hold the lesson block attendance table, setting attributes
+        final JScrollPane tableScrollPane = new JScrollPane(lessonBlockTable);
         tableScrollPane.setPreferredSize(new Dimension(240, 395));
 
         // The coordinates for where to add this component to the layout
@@ -440,8 +601,7 @@ public class LessonBlockPanel extends JPanel implements ActionListener{
     public Object[][] convertLessonBlockForTable() {
 
         /**
-         * The two dimensional array to hold the lesson block attendance details
-         * size of the student record list is used for the first array size.
+         * The two dimensional array to hold the lesson block attendance details.
          * size of the column names (the amount of different data columns to put into the object for the table)
          */
         final Object[][] tableLessonBlock = new Object[10][2];
@@ -481,18 +641,53 @@ public class LessonBlockPanel extends JPanel implements ActionListener{
         return tableLessonBlock;
     }
     
+    /**
+     * initializes the table editor for the lesson block table.
+     * @return 
+     */
+    private void createLessonBlockTableEditor() {
+        // initialises the table editor delcaring it will use a text field
+        lessonBlockTableEditor = new DefaultCellEditor(new JTextField()) {
+            {
+                // Sets the input verifier for the date column
+                getComponent().setInputVerifier(lessonBlockDateInputVerifier);
+            }
+
+            // Determines whether the table cell should yeild depending on the validity of the data entered
+            @Override
+            public boolean stopCellEditing() {
+                if (!lessonBlockDateInputVerifier.shouldYieldFocus(getComponent())) {
+                    return true;
+                }
+                return super.stopCellEditing();
+            }
+
+            // Gets the cell component in the table that is being edited
+            @Override
+            public JTextField getComponent() {
+                return (JTextField) super.getComponent();
+            }
+        };
+    }
+    
+    /**
+     * Adds the button panel to this layout that will hold the edit, delete, update and cancel buttons.
+     */
     public void addButtonPanel() {
+        // The button panel to hold the edit, delete, update and cancel buttons
         buttonPanel = new JPanel();
         buttonPanel.setPreferredSize(new Dimension(210, 35));
         buttonPanel.setBackground(Color.white);
         buttonPanel.setVisible(true);
         
-        // Initialises the submit button with its attributes (inc button tooltip and icon)
+        // Initialises the edit button with its attributes (inc button tooltip and icon)
         editButton = new JButton("Edit");
         editButton.setPreferredSize(new Dimension(100, 30));
         editButton.addActionListener(this);
         editButton.setToolTipText("<html> Click this button to <b> edit </b> the lesson block records. </html>");
         editButton.setIcon(new ImageIcon("images/icons/bullet_edit.png"));
+        
+        // Adds the edit button to the button panel
         buttonPanel.add(editButton);
         
         // Initialises the delete button with its attributes (inc button tooltip and icon)
@@ -501,36 +696,50 @@ public class LessonBlockPanel extends JPanel implements ActionListener{
         deleteButton.addActionListener(this);
         deleteButton.setToolTipText("<html> Click this button to <b> delete </b> the lesson block record. </html>");
         deleteButton.setIcon(new ImageIcon("images/icons/16x16/delete.png"));
+        
+        // Adds the delete button to the button panel
         buttonPanel.add(deleteButton);
         
-        // The coordinates for where to add this component to the layout.
+        // The coordinates for where to add the button panel component to the layout.
         c.gridx = 1;
         c.gridy = 3;
         this.add(buttonPanel, c);
     }
     
+    /**
+     * Adds the attendance editing panel to this layout so that attendance types for the lesson block can be edited.
+     */
     public void addAttendanceEditingPanel() {
+        // The panel to hold the attendance editing buttons
         attendanceEditingPanel = new JPanel();
         attendanceEditingPanel.setPreferredSize(new Dimension(210, 395));
         attendanceEditingPanel.setBackground(Color.white);
         attendanceEditingPanel.setVisible(true);
         
-        JLabel spacingLabel1 = new JLabel();
+        // Adds a spacing component to this layout (space next to the tables column title)
+        final JLabel spacingLabel1 = new JLabel();
         spacingLabel1.setPreferredSize(new Dimension(210, 32));
         spacingLabel1.setOpaque(false);
         attendanceEditingPanel.add(spacingLabel1);
         
+        // Initialises the array to hold the buttons to edit the attendance type to present
         presentButton = new JButton[10];
         
+        // Initialises the array to hold the buttons to edit the attendance type to absent
         absentButton = new JButton[10];
         
+        // Initialises the array to hold the buttons to edit the attendance type to fun swim
         funSwimButton = new JButton[10];
         
+        // Initialises the array to hold the buttons to edit the attendance type to fun swim
         funSwimTakenButton = new JButton[10];
         
+        // Initialises the array to hold the buttons to edit the attendance type to null
         clearAttendanceButton = new JButton[10];
         
-        for (int i = 0; i < 10; i++) {
+        // Iterates through the amount of rows in the table to add all the attendance editing buttons
+        for (int i = 0; i < lessonBlockTable.getRowCount(); i++) {
+            // Initialises a present button for that row and adds it to the attendance editing panel
             presentButton[i] = new JButton();
             presentButton[i].setPreferredSize(new Dimension(30, 30));
             presentButton[i].addActionListener(this);
@@ -538,6 +747,7 @@ public class LessonBlockPanel extends JPanel implements ActionListener{
             presentButton[i].setIcon(new ImageIcon("images/icons/16x16/accept.png"));
             attendanceEditingPanel.add(presentButton[i]);
             
+            // Initialises a absent button for that row and adds it to the attendance editing panel
             absentButton[i] = new JButton();
             absentButton[i].setPreferredSize(new Dimension(30, 30));
             absentButton[i].addActionListener(this);
@@ -545,6 +755,7 @@ public class LessonBlockPanel extends JPanel implements ActionListener{
             absentButton[i].setIcon(new ImageIcon("images/icons/16x16/cancel.png"));
             attendanceEditingPanel.add(absentButton[i]);
             
+            // Initialises a fun swim button for that row and adds it to the attendance editing panel
             funSwimButton[i] = new JButton();
             funSwimButton[i].setPreferredSize(new Dimension(30, 30));
             funSwimButton[i].addActionListener(this);
@@ -552,6 +763,7 @@ public class LessonBlockPanel extends JPanel implements ActionListener{
             funSwimButton[i].setIcon(new ImageIcon("images/icons/16x16/fun_swim.png"));
             attendanceEditingPanel.add(funSwimButton[i]);
             
+            // Initialises a fun swim taken button for that row and adds it to the attendance editing panel
             funSwimTakenButton[i] = new JButton();
             funSwimTakenButton[i].setPreferredSize(new Dimension(30, 30));
             funSwimTakenButton[i].addActionListener(this);
@@ -559,6 +771,7 @@ public class LessonBlockPanel extends JPanel implements ActionListener{
             funSwimTakenButton[i].setIcon(new ImageIcon("images/icons/16x16/fun_swim_taken.png"));
             attendanceEditingPanel.add(funSwimTakenButton[i]);
             
+            // Initialises a clear button for that row and adds it to the attendance editing panel
             clearAttendanceButton[i] = new JButton();
             clearAttendanceButton[i].setPreferredSize(new Dimension(30, 30));
             clearAttendanceButton[i].addActionListener(this);
@@ -566,13 +779,14 @@ public class LessonBlockPanel extends JPanel implements ActionListener{
             clearAttendanceButton[i].setIcon(new ImageIcon("images/icons/16x16/blank.png"));
             attendanceEditingPanel.add(clearAttendanceButton[i]);
             
-            JLabel spacingLabel2 = new JLabel();
+            // Adds a spacing label (at the end of this row) so that the next row of buttons starts on the next row.
+            final JLabel spacingLabel2 = new JLabel();
             spacingLabel2.setPreferredSize(new Dimension(30, 30));
             spacingLabel2.setOpaque(false);
             attendanceEditingPanel.add(spacingLabel2);
         }
         
-        // The coordinates for where to add this component to the layout.
+        // The coordinates for where to add the attendance editing panel component to this layout.
         c.gridx = 1;
         c.gridy = 2;
         this.add(attendanceEditingPanel, c);
@@ -591,13 +805,13 @@ public class LessonBlockPanel extends JPanel implements ActionListener{
             paymentYearField.setEditable(true);
             paymentTakerField.setEditable(true);
             
+            // Enables the date column in the lesson block table to be editable
             lessonBlockTableModel.setDateEditable(true);
-            lessonBlockTable.setModel(lessonBlockTableModel);
             
-            // Displays the editing buttons for the JTables attendance column
+            // Displays the attendance editing buttons for the JTables attendance column
             addAttendanceEditingPanel();
             
-            // Removes the edit button from the button panel
+            // Removes the edit & delete button from the button panel
             buttonPanel.remove(editButton);
             buttonPanel.remove(deleteButton);
             
@@ -607,6 +821,8 @@ public class LessonBlockPanel extends JPanel implements ActionListener{
             updateButton.addActionListener(this);
             updateButton.setToolTipText("<html> Click this button to <b> update </b> the lesson block record with the new field values. </html>");
             updateButton.setIcon(new ImageIcon("images/icons/16x16/accept.png"));
+            
+            // Adds the update button to the button panel
             buttonPanel.add(updateButton);
             
             // Creates the cancel button and sets its attributes
@@ -615,57 +831,53 @@ public class LessonBlockPanel extends JPanel implements ActionListener{
             cancelButton.addActionListener(this);
             cancelButton.setToolTipText("<html> Click this button to <b> cancel </b> the editting of the lesson block record and keep the old field values. </html>");
             cancelButton.setIcon(new ImageIcon("images/icons/16x16/cancel.png"));
+            
+            // Adds the cancel button to the button panel
             buttonPanel.add(cancelButton);
             
+            // Updates the UI after panel changes
             this.updateUI();
+            
         // If the source of the button press was the update button
         } else if (e.getSource() == deleteButton) {
-            
-            int answer = JOptionPane.showConfirmDialog(null, 
-                "<HTML> Do you want to <b> <font color='red'> delete</font> </b> this lesson block?</HTML>"
+            // Confirms with the user that they want to delete this lesson block
+            final int answer = JOptionPane.showConfirmDialog(null, 
+                "<HTML> Do you want to <b> <font color='red'> delete</font> </b> Lesson Block No. " + lessonBlockNumberRef + "?</HTML>"
                         , "Delete Lesson Block?", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             
             // Switch to determine users choice.
             switch (answer) {
-                // The user wants to delete the student record from the db.
+                // The user wants to delete the lesson block from the db.
                 case 0: lessonBlockController.deleteLessonBlock(lessonBlockRef);
+                            
+                        // re-loads the panel to display the individual student again
                         smsBodyPanelRef.addViewIndividualSRPanel(studentRecordRef);
                          break;
                 // The user does not want to format the db so don't do anything.
                 case 1:  break;
                 default: break;
             } 
-        }else if (e.getSource() == updateButton) {
+        // If the source of the button press was the update button
+        } else if (e.getSource() == updateButton) {
             
             // boolean used as a flag if any form field is left empty
             boolean invalidField = true;
             
-//            inputVerifier.verify(studentNameField);
-//            inputVerifier.verify(paymentDayField);
-//            inputVerifier.verify(paymentMonthField);
-//            inputVerifier.verify(paymentYearField);
-//            inputVerifier.verify(studentTelephoneNoField);
-//            inputVerifier.verify(addressLine1Field);
-//            inputVerifier.verify(addressLine2Field);
-//            inputVerifier.verify(addressCityField);
-//            inputVerifier.verify(addressCountyField);
-//            inputVerifier.verify(addressPostcodeField);
-//            inputVerifier.verify(hasIllnessField);
-//            inputVerifier.verify(parentNameField);
+            // Verifies all text fields on the lesson payment form
+            lessonBlockPaymentInputVerifier.verify(paymentAmountField);
+            lessonBlockPaymentInputVerifier.verify(paymentDayField);
+            lessonBlockPaymentInputVerifier.verify(paymentMonthField);
+            lessonBlockPaymentInputVerifier.verify(paymentYearField);
+            lessonBlockPaymentInputVerifier.verify(paymentTakerField);
             
-//            // if any of the textfields backgrounds are not white flag as a field being invalid.
-//            if (studentNameField.getBackground() == Color.white && paymentDayField.getBackground() == Color.white 
-//                    && paymentMonthField.getBackground() == Color.white && paymentYearField.getBackground() == Color.white
-//                        && studentTelephoneNoField.getBackground() == Color.white && addressLine1Field.getBackground() == Color.white
-//                            && addressLine2Field.getBackground() == Color.white && addressCityField.getBackground() == Color.white
-//                                && addressCountyField.getBackground() == Color.white && addressPostcodeField.getBackground() == Color.white
-//                                    && hasIllnessField.getBackground() == Color.white && parentNameField.getBackground() == Color.white) {
-//                invalidField = false;
-//            }
+            // if any of the textfields backgrounds are not white flag as a field(s) being invalid.
+            if (paymentAmountField.getBackground() == Color.white && paymentDayField.getBackground() == Color.white 
+                    && paymentMonthField.getBackground() == Color.white && paymentYearField.getBackground() == Color.white
+                        && paymentTakerField.getBackground() == Color.white) {
+                invalidField = false;
+            }
             
-            
-            
-            // If any form fields were empty display an error message
+            // If any form fields were invalid display an error message
             if (invalidField == true) {
                 JOptionPane.showMessageDialog(null,
                                 "A field(s) has been left empty or contains an invalid entry\n"
@@ -673,52 +885,202 @@ public class LessonBlockPanel extends JPanel implements ActionListener{
                                         + "Please complete the lesson block form correctly.\n",
                                 "Error Empty or Invalid Field(s)",
                                 JOptionPane.ERROR_MESSAGE);
+            // Otherwise the fields contain valid values
             } else {
-//                studentRecord.setStudentName(studentNameField.getText());
-//                studentRecord.setStudentDOB(studentRecordController.formatDOB(paymentDayField.getText(), 
-//                                                paymentMonthField.getText(), paymentYearField.getText()));
-//                studentRecord.setTelephoneNo(studentTelephoneNoField.getText());
-//                studentRecord.getStudentAddress().setAddressLine1(addressLine1Field.getText());
-//                studentRecord.getStudentAddress().setAddressLine2(addressLine2Field.getText());
-//                studentRecord.getStudentAddress().setCity(addressCityField.getText());
-//                studentRecord.getStudentAddress().setCounty(addressCountyField.getText());
-//                studentRecord.getStudentAddress().setPostcode(addressPostcodeField.getText());
-//                studentRecord.setHasIllness(hasIllnessField.getText());
-//                studentRecord.setParentName(parentNameField.getText());
-//                
-//                Boolean successfullyUpdated = studentRecordController.updateStudentRecord(studentRecord);
-//                
-//                // If the Student Record was successfully updated 
-//                if (successfullyUpdated) {
-//                    JOptionPane.showMessageDialog(null,
-//                                "Student Record has been successfully updated!",
-//                                "Student Record updated successfully!",
-//                                JOptionPane.INFORMATION_MESSAGE,
-//                                new ImageIcon("images/icons/thumb_up.png"));
-//                    exitEditMode();
-//                    
-//                } else {
-//                    // Display error message that the student record could not be updated successfully
-//                    JOptionPane.showMessageDialog(null,
-//                                "The student record was unsuccessfully updated!",
-//                                "Error updating student record",
-//                                JOptionPane.ERROR_MESSAGE);
-//                }
+                
+                // If the lesson payment for the lesson block is not null set the new values and update in db
+                if (lessonBlockRef.getLessonPayment() != null) {
+                    lessonBlockRef.getLessonPayment().setPaymentAmount(paymentAmountField.getText());
+                    lessonBlockRef.getLessonPayment().setPaymentType((PaymentType) paymentTypeList.getSelectedItem());
+                    lessonBlockRef.getLessonPayment().setPaymentDate(
+                                                        lessonPaymentController.formatpaymentDate(paymentDayField.getText(),
+                                                            paymentMonthField.getText(), paymentYearField.getText()));
+                    lessonBlockRef.getLessonPayment().setPaymentTaker(paymentTakerField.getText());
+                    
+                    lessonPaymentController.updateLessonPayment(lessonBlockRef.getLessonPayment());
+                // Otherwise create a lesson payment for the lesson block with the set values and add to db.
+                } else {
+                    // Creates a lesson payment with the field values given by the user.
+                    final LessonPayment lessonPayment = new LessonPayment(paymentAmountField.getText(), 
+                                    (PaymentType) paymentTypeList.getSelectedItem(), 
+                                        lessonPaymentController.formatpaymentDate(paymentDayField.getText(),
+                                            paymentMonthField.getText(), paymentYearField.getText()), 
+                                                paymentTakerField.getText());
+                    
+                    // Creates a record of that lesson payment in the database
+                    lessonPaymentController.createLessonPayment(lessonPayment);
+                    
+                    // Sets the lesson payment of the lesson block to the newly created instance
+                    lessonBlockRef.setLessonPayment(lessonPayment);
+                }
+                
+                    
+                // Loops through the tables rows
+                for (int i = 0; i < lessonBlockTable.getRowCount(); i++) {
+                    // Checks if the date value is not equal to null
+                    if (lessonBlockTableModel.getValueAt(i, 0) != null) {
+                        // Checks which row the value came from and updates/sets the appropriate numbered lesson date
+                        if (i == 0) {
+                            lessonBlockRef.setLesson1Date(lessonBlockTableModel.getValueAt(0, 0).toString());
+                        } else if (i == 1) {
+                            lessonBlockRef.setLesson2Date(lessonBlockTableModel.getValueAt(1, 0).toString());
+                        } else if (i == 2) {
+                            lessonBlockRef.setLesson3Date(lessonBlockTableModel.getValueAt(2, 0).toString());
+                        } else if (i == 3) {
+                            lessonBlockRef.setLesson4Date(lessonBlockTableModel.getValueAt(3, 0).toString());
+                        } else if (i == 4) {
+                            lessonBlockRef.setLesson5Date(lessonBlockTableModel.getValueAt(4, 0).toString());
+                        } else if (i == 5) {
+                            lessonBlockRef.setLesson6Date(lessonBlockTableModel.getValueAt(5, 0).toString());
+                        } else if (i == 6) {
+                            lessonBlockRef.setLesson7Date(lessonBlockTableModel.getValueAt(6, 0).toString());
+                        } else if (i == 7) {
+                            lessonBlockRef.setLesson8Date(lessonBlockTableModel.getValueAt(7, 0).toString());
+                        } else if (i == 8) {
+                            lessonBlockRef.setLesson9Date(lessonBlockTableModel.getValueAt(8, 0).toString());
+                        } else if (i == 9) {
+                            lessonBlockRef.setLesson10Date(lessonBlockTableModel.getValueAt(9, 0).toString());
+                        }
+                    // Otherwise the value is equal to null
+                    } else {
+                        // Checks which row the value came from and updates/sets the appropriate numbered lesson date
+                        if (i == 0) {
+                            lessonBlockRef.setLesson1Date(null);
+                        } else if (i == 1) {
+                            lessonBlockRef.setLesson2Date(null);
+                        } else if (i == 2) {
+                            lessonBlockRef.setLesson3Date(null);
+                        } else if (i == 3) {
+                            lessonBlockRef.setLesson4Date(null);
+                        } else if (i == 4) {
+                            lessonBlockRef.setLesson5Date(null);
+                        } else if (i == 5) {
+                            lessonBlockRef.setLesson6Date(null);
+                        } else if (i == 6) {
+                            lessonBlockRef.setLesson7Date(null);
+                        } else if (i == 7) {
+                            lessonBlockRef.setLesson8Date(null);
+                        } else if (i == 8) {
+                            lessonBlockRef.setLesson9Date(null);
+                        } else if (i == 9) {
+                            lessonBlockRef.setLesson10Date(null);
+                        }
+                    }
+                    
+                    // Checks if the attendance type value is not equal to null
+                    if (lessonBlockTableModel.getValueAt(i, 1) != null) {
+                        // Sets attendance type to null
+                        AttendanceType attendanceType = null;
+                        
+                        // Sets the attendance type to the appropriate value dependant on what the cell currently contains
+                        if (lessonBlockTableModel.getValueAt(i, 1).toString().equals("images/icons/16x16/accept.png")) {
+                            attendanceType = AttendanceType.PRESENT;
+                        } else if (lessonBlockTableModel.getValueAt(i, 1).toString().equals("images/icons/16x16/cancel.png")) {
+                            attendanceType = AttendanceType.ABSENT;
+                        } else if (lessonBlockTableModel.getValueAt(i, 1).toString().equals("images/icons/16x16/fun_swim.png")) {
+                            attendanceType = AttendanceType.FUN_SWIM;
+                        } else if (lessonBlockTableModel.getValueAt(i, 1).toString().equals("images/icons/16x16/fun_swim_taken.png")) {
+                            attendanceType = AttendanceType.FUN_SWIM_TAKEN;
+                        }
+                        
+                        // Checks which row the value came from and updates/sets the appropriate Numbered lesson attendance
+                        if (i == 0) {
+                            lessonBlockRef.setLesson1Attendance(attendanceType);
+                        } else if (i == 1) {
+                            lessonBlockRef.setLesson2Attendance(attendanceType);
+                        } else if (i == 2) {
+                            lessonBlockRef.setLesson3Attendance(attendanceType);
+                        } else if (i == 3) {
+                            lessonBlockRef.setLesson4Attendance(attendanceType);
+                        } else if (i == 4) {
+                            lessonBlockRef.setLesson5Attendance(attendanceType);
+                        } else if (i == 5) {
+                            lessonBlockRef.setLesson6Attendance(attendanceType);
+                        } else if (i == 6) {
+                            lessonBlockRef.setLesson7Attendance(attendanceType);
+                        } else if (i == 7) {
+                            lessonBlockRef.setLesson8Attendance(attendanceType);
+                        } else if (i == 8) {
+                            lessonBlockRef.setLesson9Attendance(attendanceType);
+                        } else if (i == 9) {
+                            lessonBlockRef.setLesson10Attendance(attendanceType);
+                        }
+                    // Otherwise the value is equal to null
+                    } else {
+                        // Checks which row the value came from and updates/sets the appropriate Numbered lesson attendance.
+                        if (i == 0) {
+                            lessonBlockRef.setLesson1Attendance(null);
+                        } else if (i == 1) {
+                            lessonBlockRef.setLesson2Attendance(null);
+                        } else if (i == 2) {
+                            lessonBlockRef.setLesson3Attendance(null);
+                        } else if (i == 3) {
+                            lessonBlockRef.setLesson4Attendance(null);
+                        } else if (i == 4) {
+                            lessonBlockRef.setLesson5Attendance(null);
+                        } else if (i == 5) {
+                            lessonBlockRef.setLesson6Attendance(null);
+                        } else if (i == 6) {
+                            lessonBlockRef.setLesson7Attendance(null);
+                        } else if (i == 7) {
+                            lessonBlockRef.setLesson8Attendance(null);
+                        } else if (i == 8) {
+                            lessonBlockRef.setLesson9Attendance(null);
+                        } else if (i == 9) {
+                            lessonBlockRef.setLesson10Attendance(null);
+                        }
+                    }
+                }
+                
+                // Updates the lesson block with the updated values
+                lessonBlockController.updateLessonBlock(lessonBlockRef);
+                
+                // Disables all text fields and the combo box from interaction by the user.
+                paymentAmountField.setEditable(false);
+                paymentTypeList.setEnabled(false);
+                paymentDayField.setEditable(false);
+                paymentMonthField.setEditable(false);
+                paymentYearField.setEditable(false);
+                paymentTakerField.setEditable(false);
+
+                // Disables the date column in the lesson block table from being editable
+                lessonBlockTableModel.setDateEditable(false);
+                
+                // Removes the attendance editing panel to exit editing mode
+                this.remove(attendanceEditingPanel);
+            
+                // Removes the button panel containing the update & cancel buttons
+                this.remove(buttonPanel);
+
+                // Adds the button panel back with the edit & delete buttons
+                addButtonPanel();
+                
+                // Updates the lesson block panel after panel changes
+                this.updateUI();
             }
         // If the source of the button press was the cancel button  
         } else if (e.getSource() == cancelButton) {
             
-            // Sets all of the payment detail field values if the lesson payment record exists
+            // Sets all of the payment detail field values back to their original values if the lesson payment record exists
             if (lessonBlockRef.getLessonPayment() != null) {
                 paymentAmountField.setText(lessonBlockRef.getLessonPayment().getPaymentAmount());
                 paymentTypeList.setSelectedItem(lessonBlockRef.getLessonPayment().getPaymentType());
-                final String[] paymentDate = lessonBlockController.unformatPaymentDate(lessonBlockRef.getLessonPayment().getPaymentDate());
+                final String[] paymentDate = lessonPaymentController.unformatPaymentDate(lessonBlockRef.getLessonPayment().getPaymentDate());
                 paymentDayField.setText(paymentDate[0]);
                 paymentMonthField.setText(paymentDate[1]);
                 paymentYearField.setText(paymentDate[2]);
                 paymentTakerField.setText(lessonBlockRef.getLessonPayment().getPaymentTaker());
             }
             
+            // Sets the background colour of all the text fields back to white
+            paymentAmountField.setBackground(Color.white);
+            paymentTypeList.setBackground(Color.white);
+            paymentDayField.setBackground(Color.white);
+            paymentMonthField.setBackground(Color.white);
+            paymentYearField.setBackground(Color.white);
+            paymentTakerField.setBackground(Color.white);
+            
+            // Disables all text fields and the combo box from interaction by the user.
             paymentAmountField.setEditable(false);
             paymentTypeList.setEnabled(false);
             paymentDayField.setEditable(false);
@@ -726,21 +1088,31 @@ public class LessonBlockPanel extends JPanel implements ActionListener{
             paymentYearField.setEditable(false);
             paymentTakerField.setEditable(false);
             
+            // Disables the date column in the lesson block table from being editable
             lessonBlockTableModel.setDateEditable(false);
             
+            // Resets the data held within the lesson block table
             lessonBlockTableModel = new LessonBlockTableModel(convertLessonBlockForTable(), columnNames);
             
+            // Resets the table model for the table with the origional values
             lessonBlockTable.setModel(lessonBlockTableModel);
             
+            // Removes the attendance editing panel to exit editing mode
             this.remove(attendanceEditingPanel);
             
+            // Removes the button panel containing the update & cancel buttons
             this.remove(buttonPanel);
             
+            // Adds the button panel back with the edit & delete buttons
             addButtonPanel();
             
+            // Updates the lesson block panel after panel changes
             this.updateUI();
+        // Otherwise the action event came from one of the attendance editing buttons
         } else {
+            // Loops through the amount of the present type of button (10) (all buttons will have the same amount)
             for (int i = 0; i < presentButton.length; i++) {
+                // Checks where the source came from and updates the appropriate cell with the appropriate value
                 if (e.getSource() == presentButton[i]) {
                     lessonBlockTableModel.setValueAt(AttendanceType.PRESENT, i, 1);
                 } else if (e.getSource() == absentButton[i]) {

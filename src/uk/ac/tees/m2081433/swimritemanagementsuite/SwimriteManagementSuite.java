@@ -6,7 +6,6 @@ import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import java.awt.Toolkit;
 import java.sql.SQLException;
 import javax.swing.*;
-import uk.ac.tees.m2081433.swimritemanagementsuite.model.LessonBlock;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.StudentAddress;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.StudentRecord;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.SwimmingLevel;
@@ -88,20 +87,19 @@ public class SwimriteManagementSuite {
         int xSize = ((int) tk.getScreenSize().getWidth());
         // Gets the height of the computers screen size
         int ySize = ((int) tk.getScreenSize().getHeight());
-
+        
         // sets the minimum width the frame can be
-        if (xSize < 1400) {
-            xSize = 1400;
+        if (xSize < 1440) {
+            xSize = 1440;
         }
         
         // sets the minimum height the frame can be
-        if (ySize < 850) {
-            ySize = 850;
+        if (ySize < 900) {
+            ySize = 900;
         }
         
         // settings for the frame (setting the size of the frame to the minimum size required or stretching to the screen
         smsFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //smsFrame.setSize(1400, 850);
         smsFrame.setSize(xSize, ySize);
         smsFrame.setVisible(true);
         smsFrame.setResizable(false);

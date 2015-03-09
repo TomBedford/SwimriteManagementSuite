@@ -7,39 +7,72 @@ import uk.ac.tees.m2081433.swimritemanagementsuite.model.LessonBlock;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.StudentRecord;
 
 /**
- *
+ * This controller interacts (create, update and delete) with the lesson block table within the database.
  */
 public class LessonBlockController {
     
+    /**
+     * Creates a lesson block record in the database associated with the student record provided as param.
+     * @param studentRecord The student record to associate the lesson block with
+     */
     public void createLessonBlock(StudentRecord studentRecord) {
         
-        LessonBlock lessonBlock = new LessonBlock(studentRecord);
+        // Creates and initializes a new lesson block associated with the student record
+        final LessonBlock lessonBlock = new LessonBlock(studentRecord);
         
         try {
+            // Creates the lesson block in the database.
             DatabaseManager.lessonBlockDAO.create(lessonBlock);
         } catch (SQLException e) {
-            System.out.println("createStudentRecord: Error creating the student address for the student record.");
+            System.out.println("createLessonBlock: Error creating the lesson block in the db.");
         }
     }
     
-    
-    
+    /**
+     * Gets all lesson blocks associated with a specified student record provided as a param.
+     * @param studentRecord The student record to gather all the lesson blocks from
+     * @return The list of lesson blocks associated with the student record
+     */
     public List<LessonBlock> getLessonBlocksByStudent(StudentRecord studentRecord) {
         
+        // Initialises the list to hold the lesson blocks
         List<LessonBlock> studentLessonBlocks = null;
         
         try {
+            // Queries the db for where the student record column in the lesson block matches the student record provided
             studentLessonBlocks = DatabaseManager.lessonBlockDAO.queryForEq(LessonBlock.STUDENTRECORD_COLUMN_NAME, studentRecord);
         } catch (SQLException e) {
             System.out.println("getLessonBlocksByStudent: Error getting lesson blocks by the student record.");
         }
         
+        // Returns the completed list of lesson blocks.
         return studentLessonBlocks;
     }
     
+    /**
+     * Updates a lesson block record in the database using the updates lesson block object provided as a param.
+     * @param lessonBlock The lesson block with updated values to update in the db table.
+     */
+    public void updateLessonBlock(LessonBlock lessonBlock) {
+        try {
+            DatabaseManager.lessonBlockDAO.update(lessonBlock);
+        } catch (SQLException e) {
+            System.out.println("updateLessonBlock: Error updating lesson block record (controller).");
+        }
+    }
+    
+    /**
+     * Deletes a lesson block record from the database that matches the lesson block object provided as a param.
+     * @param lessonBlock The lesson block to delete from the database.
+     */
     public void deleteLessonBlock(LessonBlock lessonBlock) {
         try {
             DatabaseManager.lessonBlockDAO.delete(lessonBlock);
+            
+            // If the lesson blocks lesson payment is not null, delete the associated lesson block lesson payment
+            if (lessonBlock.getLessonPayment() != null) {
+                DatabaseManager.lessonPaymentDAO.delete(lessonBlock.getLessonPayment());
+            }
         } catch (SQLException e) {
             System.out.println("deleteLessonBlock: Error deleting the lessonBlock record (controller).");
         }
@@ -56,41 +89,5 @@ public class LessonBlockController {
         
         // Returns the sorted list.
         return lessonBlockList;
-    }
-    
-    /**
-     * Formats/Concatenates the date of payment params provided into a string suitable for db storage.
-     * @param payDay The day of the payment
-     * @param payMonth The month of the payment
-     * @param payYear The year of the payment
-     * @return formattedDate The formatted date of birth string of the student.
-     */
-    public String formatPaymentDate(String payDay, String payMonth, String payYear) {
-        // If the day of the payment is only 1 character long add 0 to the front of it.
-        if (payDay.length() == 1) {
-            payDay = "0" + payDay;
-        }
-        
-        // If the month of the payment is only 1 character long add 0 to the front of it.
-        if (payMonth.length() == 1) {
-            payMonth = "0" + payMonth;
-        }
-        
-        // Concatenates the strings with slashes.
-        final String formattedDate = payDay + "/" + payMonth + "/" + payYear;
-        
-        return formattedDate;
-    }
-    
-    /** 
-     * Un-format the date of payment string by separating the Day, Month and Year as separate strings.
-     * @param paymentDateString The string containing the day, month and year of the lessonblocks payment date
-     * @return unformattedDate array the date of payment separated into 3 strings (day, month and year)
-     */
-    public String[] unformatPaymentDate(String paymentDateString) {
-        
-        final String[] unformattedDate = paymentDateString.split("/");
-        
-        return unformattedDate;
     }
 }
