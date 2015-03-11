@@ -28,7 +28,7 @@ public class AddSRPanel extends JPanel implements ActionListener {
     /**
      * The Student Record controller for when inserting records into the Student Record table.
      */
-    StudentRecordController studentRecordController;
+    StudentRecordController studentRecordController = new StudentRecordController();
     
     /**
      * The input verifier for the student record form (validates text field inputs).
@@ -198,9 +198,7 @@ public class AddSRPanel extends JPanel implements ActionListener {
      * Constructor defining panel attributes and loads all form components to go on the panel.
      */
     public AddSRPanel() {
-        // Initialises the student record controller needed to add a student record to the db.
-        studentRecordController = new StudentRecordController();
-        
+
         // The input verifier for each text field input in this form.
         inputVerifier = new SRFormInputVerifier();
         
@@ -737,7 +735,7 @@ public class AddSRPanel extends JPanel implements ActionListener {
         submitButton.setFont(labelFont);
         submitButton.addActionListener(this);
         submitButton.setToolTipText("<html> Click this button to <b> submit </b> the new student record. </html>");
-        submitButton.setIcon(new ImageIcon("images/icons/add.png"));
+        submitButton.setIcon(new ImageIcon("images/icons/user_add.png"));
         
         // The coordinates for where to add this component to the layout.
         c.gridx = 4;
@@ -859,7 +857,7 @@ public class AddSRPanel extends JPanel implements ActionListener {
                                 "Student Record has been successfully created and added to the database!",
                                 "Student Record created successfully!",
                                 JOptionPane.INFORMATION_MESSAGE,
-                                new ImageIcon("images/icons/add.png"));
+                                new ImageIcon("images/icons/user_add.png"));
                 } else {
                     // Display error message that the student record could not be added to the db
                     JOptionPane.showMessageDialog(null,

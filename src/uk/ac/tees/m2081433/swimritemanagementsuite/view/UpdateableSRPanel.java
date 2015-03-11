@@ -44,7 +44,7 @@ public class UpdateableSRPanel extends JPanel implements ActionListener {
     /**
      * The Student Record controller for querying from the Student Record database table.
      */
-    StudentRecordController studentRecordController;
+    StudentRecordController studentRecordController = new StudentRecordController();
     
     /**
      * The input verifier for the student record form (validates text field inputs).
@@ -227,9 +227,6 @@ public class UpdateableSRPanel extends JPanel implements ActionListener {
         
         // Initialises the sms Body Panel reference used for changing panels on the body panel
         smsBodyPanelRef = smsBodyPanel;
-        
-        // Initialises the student record controller needed to update the student record in the student record table
-        studentRecordController = new StudentRecordController();
         
         // The input verifier for each text field input in this form.
         inputVerifier = new SRFormInputVerifier();
@@ -779,7 +776,7 @@ public class UpdateableSRPanel extends JPanel implements ActionListener {
         editButton.setPreferredSize(new Dimension(90, 45));
         editButton.addActionListener(this);
         editButton.setToolTipText("<html> Click this button to <b> edit </b> the student record. </html>");
-        editButton.setIcon(new ImageIcon("images/icons/bullet_edit.png"));
+        editButton.setIcon(new ImageIcon("images/icons/user_edit.png"));
         buttonPanel.add(editButton);
         
         // Initialises the delete button with its attributes (inc button tooltip and icon)
@@ -787,7 +784,7 @@ public class UpdateableSRPanel extends JPanel implements ActionListener {
         deleteButton.setPreferredSize(new Dimension(90, 45));
         deleteButton.addActionListener(this);
         deleteButton.setToolTipText("<html> Click this button to <b> delete </b> the student record. </html>");
-        deleteButton.setIcon(new ImageIcon("images/icons/delete.png"));
+        deleteButton.setIcon(new ImageIcon("images/icons/user_delete.png"));
         buttonPanel.add(deleteButton);
         
         // The coordinates for where to add this component to the layout.

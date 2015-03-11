@@ -39,7 +39,7 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
     /**
      * The Lesson Block controller for when querying the Lesson Block database table.
      */
-    LessonBlockController lessonBlockController;
+    LessonBlockController lessonBlockController = new LessonBlockController();;
     
     /**
      * Holds all Lesson blocks related to the student record.
@@ -68,9 +68,6 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
         
         // Initialises the sms Body Panel reference used for changing panels on the body panel
         smsBodyPanelRef = smsBodyPanel;
-        
-        // Initialises the lesson block controller needed to query and update lesson blocks in the lesson block table
-        lessonBlockController = new LessonBlockController();
         
         // Gets the panel width dependant on how many lesson blocks the student record has.
         final int panelWidth = calculatePanelWidth();

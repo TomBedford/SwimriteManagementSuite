@@ -60,12 +60,12 @@ public class LessonBlockPanel extends JPanel implements ActionListener {
     /**
      * The controller to edit/update and delete lesson blocks from the database.
      */
-    LessonBlockController lessonBlockController;
+    LessonBlockController lessonBlockController = new LessonBlockController();
     
     /**
      * The controller to create, edit/update lesson payments from the database.
      */
-    LessonPaymentController lessonPaymentController;
+    LessonPaymentController lessonPaymentController = new LessonPaymentController();
     
     /**
      * The input verifier used for the lesson payment form.
@@ -276,12 +276,6 @@ public class LessonBlockPanel extends JPanel implements ActionListener {
         
         // The student record associated with this lesson block
         studentRecordRef = studentRecord;
-        
-        // The controller to edit/update and delete this lesson block in the database
-        lessonBlockController = new LessonBlockController();
-        
-        // The controller to create, edit/update and delete lesson payments associated with this lesson block
-        lessonPaymentController = new LessonPaymentController();
         
         // The input verifier for the lesson payment form
         lessonBlockPaymentInputVerifier = new LessonBlockPaymentInputVerifier();

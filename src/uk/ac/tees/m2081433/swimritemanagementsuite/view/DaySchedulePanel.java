@@ -44,22 +44,22 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
     /**
      * The Teacher controller for when running db queries on the Teacher table.
      */
-    TeacherController teacherController;
+    TeacherController teacherController = new TeacherController();
     
     /**
      * The Timeslot controller for when running db queries on the Timeslot table.
      */
-    TimeslotController timeslotController;
+    TimeslotController timeslotController = new TimeslotController();
     
     /**
      * The Swimming Classes controller for when running db queries on the Swimming Classes table.
      */
-    SwimmingClassesController swimmingClassesController;
+    SwimmingClassesController swimmingClassesController = new SwimmingClassesController();
     
     /**
      * The Student Record controller for when running db queries on the Student Record table.
      */
-    StudentRecordController studentRecordController;
+    StudentRecordController studentRecordController = new StudentRecordController();
     
     /**
      * Holds all Teachers for the specified day.
@@ -190,12 +190,6 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
         
         // Sets the smsBodyPanel reference to swap out panels
         smsBodyPanelRef = smsBodyPanel;
-        
-        // Initialises all controllers used by this class
-        teacherController = new TeacherController();
-        timeslotController = new TimeslotController();
-        swimmingClassesController = new SwimmingClassesController();
-        studentRecordController = new StudentRecordController();
         
         // Method to get all the timeslots for the specified day (needed info to work out panel size etc.)
         getTimeslotsForDay();
@@ -670,7 +664,7 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
         addTimeslotButton.setPreferredSize(new Dimension(175, 45));
         addTimeslotButton.addActionListener(this);
         addTimeslotButton.setToolTipText("<html> Click this button to <b> add </b> a timeslot to the swimming class schedule. </html>");
-        addTimeslotButton.setIcon(new ImageIcon("images/icons/add.png"));
+        addTimeslotButton.setIcon(new ImageIcon("images/icons/clock_add.png"));
         
         // Adds the add timeslot button to the button panel
         buttonPanel.add(addTimeslotButton);
@@ -735,11 +729,10 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
         for (int i = 0; i < timeslotList.size(); i++) {
             deleteTimeslotButton[i] = new JButton("Delete");
             deleteTimeslotButton[i].setPreferredSize(new Dimension(90, 30));
-            deleteTimeslotButton[i].setSize(new Dimension(100, 30));
             deleteTimeslotButton[i].addActionListener(this);
             deleteTimeslotButton[i].setToolTipText("<html> Click this button to <b> delete </b> this timeslot "
                     + "and associated swimming classes from this days swimming class schedule. </html>");
-            deleteTimeslotButton[i].setIcon(new ImageIcon("images/icons/16x16/delete.png"));
+            deleteTimeslotButton[i].setIcon(new ImageIcon("images/icons/16x16/clock_delete.png"));
             deleteTimeslotButton[i].setAlignmentX(Component.LEFT_ALIGNMENT); 
             timeslotColumn[i].add(deleteTimeslotButton[i], BorderLayout.PAGE_END);
         }
