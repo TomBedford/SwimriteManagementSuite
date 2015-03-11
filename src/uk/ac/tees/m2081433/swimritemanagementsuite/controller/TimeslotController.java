@@ -1,46 +1,81 @@
 package uk.ac.tees.m2081433.swimritemanagementsuite.controller;
 
-import com.j256.ormlite.stmt.PreparedQuery;
-import com.j256.ormlite.stmt.QueryBuilder;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.Day;
+import uk.ac.tees.m2081433.swimritemanagementsuite.model.SwimmingClasses;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.Timeslot;
 
 /**
- *
+ * This controller interacts (create and delete, etc.) with the Timeslot table within the database.
  */
 public class TimeslotController {
     
-    public TimeslotController() {
-        
+    /**
+     * Controller reference to delete all Swimming Classes associated with a timeslot that is being deleted.
+     */
+    SwimmingClassesController swimmingClassesController = new SwimmingClassesController();
+
+    
+    
+    /**
+     * Creates a Timeslot in the database using the provided parameter.
+     * @param timeslot the timeslot to create in the db.
+     */
+    public void createTimeslot(Timeslot timeslot) {
+        try {
+            // Creates the timeslot in the database
+            DatabaseManager.timeslotDAO.create(timeslot);
+        } catch (SQLException e) {
+            System.out.println("createTimeslot: Error creating the timeslot.");
+        }
     }
     
+    /**
+     * Deletes a Timeslot from the database that matches the Timeslot object provided as a parameter
+     * and deletes all swimming classes associated with the Timeslot.
+     * @param timeslot The timeslot to delete from the database.
+     */
+    public void deleteTimeslot(Timeslot timeslot) {
+        try {
+            // Deletes the timeslot from the database.
+            DatabaseManager.timeslotDAO.delete(timeslot);
+            
+            // Creates and initializes a list to hold all swimming classes associated with this timeslot.
+            final List<SwimmingClasses> timeslotSwimmingClasses = swimmingClassesController.getClassesByTimeslot(timeslot);
+            
+            // Loops through each lesson block in the list deleting it
+            for (SwimmingClasses swimmingClass : timeslotSwimmingClasses) {
+                swimmingClassesController.deleteSwimmingClass(swimmingClass);
+            }
+        } catch (SQLException e) {
+            System.out.println("deleteTimeslot: Error deleting the timeslot (controller).");
+        }
+    }
+    
+    /**
+     * Gets all Timeslots for the specified day (parameter).
+     * @param day the day to get all of the timeslots for
+     * @return A list of timeslots associated with that specific day
+     */
     public List<Timeslot> getTimeslotsForDay(Day day) {
         
+        // The list to hold all of the timeslots associated with the specified day.
         List<Timeslot> timeslotList = null;
         
         try {
-        // get our query builder from the DAO
-        QueryBuilder<Timeslot, Integer> queryBuilder = DatabaseManager.timeslotDAO.queryBuilder();
-        
-        // the 'day' field must equal Monday.
-        queryBuilder.where().eq(Timeslot.DAY_COLUMN_NAME, day);
-        
-        // prepare our sql statement
-        PreparedQuery<Timeslot> preparedQuery = queryBuilder.prepare();
-        
-        // query for all accounts that have "qwerty" as a password
-        timeslotList = DatabaseManager.timeslotDAO.query(preparedQuery);
-        
+            // query for all accounts that have "qwerty" as a password
+            timeslotList = DatabaseManager.timeslotDAO.queryForEq(Timeslot.DAY_COLUMN_NAME, day);
+
         } catch (SQLException e) {
             System.out.println("getTimeslotsForDay: Error getting timeslots for a specific day.");
         }
         
         return timeslotList;
-        
     }
+    
+    
     
     /**
      * Sorts a list of timeslots by the time of the timeslot (Ascending order).
@@ -54,7 +89,6 @@ public class TimeslotController {
         // Returns the sorted list.
         return timeslotList;
     }
-    
     
 //    /**
 //     * BUBBLE SORT!

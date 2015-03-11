@@ -4,7 +4,6 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * This class represents the Student Record database table holding student private 
@@ -146,7 +145,6 @@ public class StudentRecord {
      * @param hasIllness Information as to whether the student has any illnesses/disabilities
      * @param parentName The students parents name.
      * @param swimmingLevel The swimming/ability level of the student.
-     * @param lessonBlock The first lesson block of the student record
      */
     public StudentRecord(String studentName, String studentDOB, String telephoneNo, StudentAddress studentAddress, 
                             String hasIllness, String parentName, SwimmingLevel swimmingLevel) {

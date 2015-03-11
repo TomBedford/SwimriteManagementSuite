@@ -29,7 +29,7 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
     /**
      * The swimrite management suite body panel referenced for re-displaying a the student record.
      */
-    smsBodyPanel smsBodyPanelRef;
+    SMSBodyPanel smsBodyPanelRef;
     
     /**
      * The grid bag constraint to manipulate when adding components to this layout. 
@@ -62,7 +62,7 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
      * @param studentRecord The student record to display on the updateble form.
      * @param smsBodyPanel The body panel to ref to change panel.
      */
-    public ViewIndividualSRPanel(StudentRecord studentRecord, smsBodyPanel smsBodyPanel) {
+    public ViewIndividualSRPanel(StudentRecord studentRecord, SMSBodyPanel smsBodyPanel) {
         // Initialises the student record to be displayed using the student record provided as a param.
         studentRecordRef = studentRecord;
         

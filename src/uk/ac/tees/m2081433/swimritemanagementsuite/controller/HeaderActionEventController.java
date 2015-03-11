@@ -1,33 +1,26 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package uk.ac.tees.m2081433.swimritemanagementsuite.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.sql.SQLException;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JToggleButton;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.Day;
-import uk.ac.tees.m2081433.swimritemanagementsuite.view.smsBodyPanel;
-import uk.ac.tees.m2081433.swimritemanagementsuite.view.smsHeaderPanel;
-import uk.ac.tees.m2081433.swimritemanagementsuite.view.smsMenuBar;
-import uk.ac.tees.m2081433.swimritemanagementsuite.view.smsToolbarPanel;
+import uk.ac.tees.m2081433.swimritemanagementsuite.view.SMSBodyPanel;
+import uk.ac.tees.m2081433.swimritemanagementsuite.view.SMSHeaderPanel;
+import uk.ac.tees.m2081433.swimritemanagementsuite.view.SMSMenuBar;
+import uk.ac.tees.m2081433.swimritemanagementsuite.view.SMSToolbarPanel;
 
 /**
  *
- * @author Bedford
  */
-public class MainActionEventController implements ActionListener, MouseListener {
+public class HeaderActionEventController implements ActionListener, MouseListener {
 
-    smsBodyPanel smsBodyPanelRef;
+    SMSBodyPanel smsBodyPanelRef;
     
-    public MainActionEventController(smsBodyPanel smsBodyPanel) {
+    public HeaderActionEventController(SMSBodyPanel smsBodyPanel) {
         // The body panel to be referenced when swapping panels on the body panel.
         smsBodyPanelRef = smsBodyPanel;
     }
@@ -42,51 +35,51 @@ public class MainActionEventController implements ActionListener, MouseListener 
             
             // Checks the text of the button pressed against all the button names in the toolbar.
             switch (toggleButtonPressed.getText()) {
-                case smsToolbarPanel.MONBUTTON_NAME:
+                case SMSToolbarPanel.MONBUTTON_NAME:
                     displayMondaySchedule();
                     break;
 
-                case smsToolbarPanel.TUEBUTTON_NAME:
+                case SMSToolbarPanel.TUEBUTTON_NAME:
                     displayTuesdaySchedule();
                     break;
 
-                case smsToolbarPanel.WEDBUTTON_NAME:
+                case SMSToolbarPanel.WEDBUTTON_NAME:
                     displayWednesdaySchedule();
                     break;
 
-                case smsToolbarPanel.THUBUTTON_NAME:
+                case SMSToolbarPanel.THUBUTTON_NAME:
                     displayThursdaySchedule();
                     break;
 
-                case smsToolbarPanel.FRIBUTTON_NAME:
+                case SMSToolbarPanel.FRIBUTTON_NAME:
                     displayFridaySchedule();
                     break;
 
-                case smsToolbarPanel.SATBUTTON_NAME:
+                case SMSToolbarPanel.SATBUTTON_NAME:
                     displaySaturdaySchedule();
                     break;
 
-                case smsToolbarPanel.SUNBUTTON_NAME:
+                case SMSToolbarPanel.SUNBUTTON_NAME:
                     displaySundaySchedule();
                     break;
 
-                case smsToolbarPanel.REGBUTTON_NAME:
+                case SMSToolbarPanel.REGBUTTON_NAME:
                     displayRegisterClasses();
                     break;
 
-                case smsToolbarPanel.VIEWALLSRBUTTON_NAME:
+                case SMSToolbarPanel.VIEWALLSRBUTTON_NAME:
                     displayViewAllSR();
                     break;
 
-                case smsToolbarPanel.ADDSRBUTTON_NAME:
+                case SMSToolbarPanel.ADDSRBUTTON_NAME:
                     displayAddSR();
                     break;
 
-                case smsToolbarPanel.VIEWALLSTBUTTON_NAME:
+                case SMSToolbarPanel.VIEWALLSTBUTTON_NAME:
                     displayViewAllST();
                     break;
 
-                case smsToolbarPanel.ADDSTBUTTON_NAME:
+                case SMSToolbarPanel.ADDSTBUTTON_NAME:
                     displayAddST();
                     break;
 
@@ -101,63 +94,63 @@ public class MainActionEventController implements ActionListener, MouseListener 
             
             // Checks the text of the button pressed against all the button names in the toolbar.
             switch (menuItemPressed.getText()) {
-                case smsMenuBar.MONMENUITEM_NAME:
+                case SMSMenuBar.MONMENUITEM_NAME:
                     displayMondaySchedule();
                     break;
 
-                case smsMenuBar.TUEMENUITEM_NAME:
+                case SMSMenuBar.TUEMENUITEM_NAME:
                     displayTuesdaySchedule();
                     break;
 
-                case smsMenuBar.WEDMENUITEM_NAME:
+                case SMSMenuBar.WEDMENUITEM_NAME:
                     displayWednesdaySchedule();
                     break;
 
-                case smsMenuBar.THUMENUITEM_NAME:
+                case SMSMenuBar.THUMENUITEM_NAME:
                     displayThursdaySchedule();
                     break;
 
-                case smsMenuBar.FRIMENUITEM_NAME:
+                case SMSMenuBar.FRIMENUITEM_NAME:
                     displayFridaySchedule();
                     break;
 
-                case smsMenuBar.SATMENUITEM_NAME:
+                case SMSMenuBar.SATMENUITEM_NAME:
                     displaySaturdaySchedule();
                     break;
 
-                case smsMenuBar.SUNMENUITEM_NAME:
+                case SMSMenuBar.SUNMENUITEM_NAME:
                     displaySundaySchedule();
                     break;
 
-                case smsMenuBar.REGMENUITEM_NAME:
+                case SMSMenuBar.REGMENUITEM_NAME:
                     displayRegisterClasses();
                     break;
 
-                case smsMenuBar.VIEWALLSRMENUITEM_NAME:
+                case SMSMenuBar.VIEWALLSRMENUITEM_NAME:
                     displayViewAllSR();
                     break;
 
-                case smsMenuBar.ADDSRMENUITEM_NAME:
+                case SMSMenuBar.ADDSRMENUITEM_NAME:
                     displayAddSR();
                     break;
 
-                case smsMenuBar.VIEWALLSTMENUITEM_NAME:
+                case SMSMenuBar.VIEWALLSTMENUITEM_NAME:
                     displayViewAllST();
                     break;
 
-                case smsMenuBar.ADDSTMENUITEM_NAME:
+                case SMSMenuBar.ADDSTMENUITEM_NAME:
                     displayAddST();
                     break;
 
-                case smsMenuBar.CEDTEACHERSMENUITEM_NAME:
+                case SMSMenuBar.CEDTEACHERSMENUITEM_NAME:
                     displayCEDTeachers();
                     break;
 
-                case smsMenuBar.CEDLOGINACCOUNTSMENUITEM_NAME:
+                case SMSMenuBar.CEDLOGINACCOUNTSMENUITEM_NAME:
                     displayCEDLoginAccounts();
                     break;
 
-                case smsMenuBar.INITIALISEDBMENUITEM_NAME:
+                case SMSMenuBar.INITIALISEDBMENUITEM_NAME:
                     displayInitialiseDB();
                     break;
 
@@ -178,7 +171,7 @@ public class MainActionEventController implements ActionListener, MouseListener 
             JLabel labelPressed = (JLabel) e.getSource();
             // Checks the text of the button pressed against all the button names in the toolbar.
             switch (labelPressed.getName()) {
-                case smsHeaderPanel.SMSLOGOLABEL_NAME:
+                case SMSHeaderPanel.SMSLOGOLABEL_NAME:
                     displayWelcomeScreen();
                     break;
             }
@@ -205,31 +198,31 @@ public class MainActionEventController implements ActionListener, MouseListener 
     
     
     public void displayMondaySchedule() {
-        smsBodyPanelRef.addSchedulePanel(Day.MONDAY);
+        smsBodyPanelRef.addSchedulePanel(Day.MONDAY, false);
     }
     
     public void displayTuesdaySchedule() {
-        smsBodyPanelRef.addSchedulePanel(Day.TUESDAY);
+        smsBodyPanelRef.addSchedulePanel(Day.TUESDAY, false);
     }
     
     public void displayWednesdaySchedule() {
-        smsBodyPanelRef.addSchedulePanel(Day.WEDNESDAY);
+        smsBodyPanelRef.addSchedulePanel(Day.WEDNESDAY, false);
     }
     
     public void displayThursdaySchedule() {
-        smsBodyPanelRef.addSchedulePanel(Day.THURSDAY);
+        smsBodyPanelRef.addSchedulePanel(Day.THURSDAY, false);
     }
     
     public void displayFridaySchedule() {
-        smsBodyPanelRef.addSchedulePanel(Day.FRIDAY);
+        smsBodyPanelRef.addSchedulePanel(Day.FRIDAY, false);
     }
     
     public void displaySaturdaySchedule() {
-        smsBodyPanelRef.addSchedulePanel(Day.SATURDAY);
+        smsBodyPanelRef.addSchedulePanel(Day.SATURDAY, false);
     }
     
     public void displaySundaySchedule() {
-        smsBodyPanelRef.addSchedulePanel(Day.SUNDAY);
+        smsBodyPanelRef.addSchedulePanel(Day.SUNDAY, false);
     }
     
     public void displayRegisterClasses() {

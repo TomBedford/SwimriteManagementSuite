@@ -1,7 +1,7 @@
 package uk.ac.tees.m2081433.swimritemanagementsuite;
 
 import uk.ac.tees.m2081433.swimritemanagementsuite.controller.DatabaseManager;
-import uk.ac.tees.m2081433.swimritemanagementsuite.view.smsMainPanel;
+import uk.ac.tees.m2081433.swimritemanagementsuite.view.SMSMainPanel;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import java.awt.Toolkit;
 import java.sql.SQLException;
@@ -76,7 +76,7 @@ public class SwimriteManagementSuite {
         final JFrame smsFrame = new JFrame("Swimrite Management Suite");
         
         // creates the main panel to hold the tool bar and the interchangeable panels.
-        final smsMainPanel smsMainPanel = new smsMainPanel();
+        final SMSMainPanel smsMainPanel = new SMSMainPanel();
         
         // Adds the main panel to the frame.
         smsFrame.add(smsMainPanel);

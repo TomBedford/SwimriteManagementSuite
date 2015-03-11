@@ -21,7 +21,8 @@ import uk.ac.tees.m2081433.swimritemanagementsuite.model.StudentRecord;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.SwimmingLevel;
 
 /**
- *
+ * This panel loads the Student Record specified into the Student Record form on this panel
+ * and allows the user to edit the data on the form and update the Student Record in the database.
  */
 public class UpdateableSRPanel extends JPanel implements ActionListener {
     
@@ -33,7 +34,7 @@ public class UpdateableSRPanel extends JPanel implements ActionListener {
     /**
      * The swimrite management suite body panel referenced for displaying an individual student record.
      */
-    smsBodyPanel smsBodyPanelRef;
+    SMSBodyPanel smsBodyPanelRef;
     
     /**
      * The grid bag constraint to manipulate when adding components to the layout. 
@@ -220,7 +221,7 @@ public class UpdateableSRPanel extends JPanel implements ActionListener {
      * @param sr The student record to load into the form.
      * @param smsBodyPanel The body panel reference for when changing panels.
      */
-    public UpdateableSRPanel(StudentRecord sr, smsBodyPanel smsBodyPanel) {
+    public UpdateableSRPanel(StudentRecord sr, SMSBodyPanel smsBodyPanel) {
         // Initialises the student record to be displayed using the student record provided as a param.
         studentRecord = sr;
         

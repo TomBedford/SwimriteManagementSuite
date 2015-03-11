@@ -6,15 +6,28 @@ import java.util.List;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.LessonBlock;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.StudentAddress;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.StudentRecord;
+import uk.ac.tees.m2081433.swimritemanagementsuite.model.SwimmingClasses;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.SwimmingLevel;
 
 /**
- * This controller interacts (create, update and delete) with the Student Record table within the database.
+ * This controller interacts (create, update and delete, etc.) with the Student Record table within the database.
  */
 public class StudentRecordController {
     
     /**
-     * Creates a Student Record in the database using the provided params.
+     * Reference to the lesson block controller for when deleting lesson blocks associated with student records.
+     */
+    final LessonBlockController lessonBlockController = new LessonBlockController();
+    
+    /**
+     * Reference to the student address controller for when creating, updating and deleting student records.
+     */
+    final StudentAddressController studentAddressController = new StudentAddressController();
+    
+    
+    
+    /**
+     * Creates a Student Record in the database using the provided parameters.
      * @param studentName The name of the student   
      * @param studentDOBDay The day of the date of birth of the student
      * @param studentDOBMonth The month of the date of birth of the student
@@ -34,16 +47,12 @@ public class StudentRecordController {
                                         String studentTelephoneNo, String addressLine1, String addressLine2, String addressCity,
                                             String addressCounty, String addressPostcode, String hasIllness, String parentName,
                                                 SwimmingLevel abilityLevel) {
+        
         // Creates and initializes a new student address using the address params provided
         final StudentAddress studentAddress = new StudentAddress(addressLine1, addressLine2, addressCity, addressCounty, addressPostcode);
         
-        try {
-            // Creates the student address in the database
-            DatabaseManager.studentAddressDAO.create(studentAddress);
-        } catch (SQLException e) {
-            System.out.println("createStudentRecord: Error creating the student address for the student record.");
-            return false;
-        }
+        // Creates the new student address in the database
+        studentAddressController.createStudentAddress(studentAddress);
         
         // Calls the method to format the date of birth correctly for db storage.
         final String formattedDOB = formatDOB(studentDOBDay, studentDOBMonth, studentDOBYear);
@@ -66,6 +75,54 @@ public class StudentRecordController {
     }
     
     /**
+     * Updates a Student Record in the database using the updated Student Record object provided as a parameter.
+     * @param studentRecord The student record with updated values to update in the db table.
+     */
+    public void updateStudentRecord(StudentRecord studentRecord) {
+        
+        // Updates the student address from the student record
+        studentAddressController.updateStudentAddress(studentRecord.getStudentAddress());
+        
+        // Updates the student record
+        try {
+            DatabaseManager.studentRecordDAO.update(studentRecord);
+        } catch (SQLException e) {
+            System.out.println("updateStudentRecord: Error updating student record (controller).");
+        }
+    }
+    
+    /**
+     * Deletes a Student Record from the database that matches the student record object provided as a parameter,
+     * deletes the Student Address associated with the Student Record and deletes all Lesson Blocks associated 
+     * with that Student Record.
+     * @param studentRecord The student record to delete from the database.
+     */
+    public void deleteStudentRecord(StudentRecord studentRecord) {
+        try {
+            // Deletes the student record from the database.
+            DatabaseManager.studentRecordDAO.delete(studentRecord);
+            
+            // Deletes the student records student address from the database.
+            studentAddressController.deleteStudentAddress(studentRecord.getStudentAddress());
+            
+            // Creates and initializes a list to hold all lesson blocks associated with this student record.
+            List<LessonBlock> studentLessonBlocks = null;
+            
+            // Gets all lesson blocks associated with this student record
+            studentLessonBlocks = DatabaseManager.lessonBlockDAO.queryForEq(LessonBlock.STUDENTRECORD_COLUMN_NAME, studentRecord);
+            
+            // Loops through each lesson block in the list deleting it
+            for (LessonBlock studentLessonBlock : studentLessonBlocks) {
+                lessonBlockController.deleteLessonBlock(studentLessonBlock);
+            }
+        } catch (SQLException e) {
+            System.out.println("deleteStudentRecord: Error deleting the student record (controller).");
+        }
+    }
+    
+    
+    
+    /**
      * Gets all student records from the database.
      * @return List of all student records in the student record database table
      */
@@ -75,7 +132,7 @@ public class StudentRecordController {
         List<StudentRecord> studentRecordList = null;
         
         try {
-            // query for all student records in the student record database table.
+            // Query for all student records in the student record database table.
             studentRecordList = DatabaseManager.studentRecordDAO.queryForAll();
         } catch (SQLException e) {
             System.out.println("getAllStudentRecords: Error getting all student records (controller).");
@@ -134,41 +191,27 @@ public class StudentRecordController {
     }
     
     /**
-     * Updates a student record in the database using the updated student record object provided as a param.
-     * @param studentRecord The student record with updated values to update in the db table.
+     * Gets all student records that are in the specified swimming class.
+     * @param swimmingClass The swimming class to get all the students for
+     * @return List of all student records in the swimming class
      */
-    public void updateStudentRecord(StudentRecord studentRecord) {
+    public List<StudentRecord> getSwimmingClassStudentRecords(SwimmingClasses swimmingClass) {
+        
+        // creates a list to hold all the student records associated with the swimming class
+        List<StudentRecord> swimmingClassStudentRecordList = null;
+        
         try {
-            DatabaseManager.studentRecordDAO.update(studentRecord);
+            // Gets all student records associated with the swimming class provided as a param
+            swimmingClassStudentRecordList = DatabaseManager.studentRecordDAO.queryForEq(StudentRecord.STUDENTSWIMMINGCLASS_COLUMN_NAME, swimmingClass);
         } catch (SQLException e) {
-            System.out.println("updateStudentRecord: Error updating student record (controller).");
+            System.out.println("getSwimmingClassStudentRecords: Error getting student records for swimming class (controller).");
         }
+        
+        // Return the list of students in the swimming class
+        return swimmingClassStudentRecordList;
     }
     
-    /**
-     * Deletes a student record from the database that matches the student record object provided as a param
-     * and deletes all lesson blocks associated with that student record.
-     * @param studentRecord The student record to delete from the database.
-     */
-    public void deleteStudentRecord(StudentRecord studentRecord) {
-        try {
-            // Deletes the student record from the database.
-            DatabaseManager.studentRecordDAO.delete(studentRecord);
-            
-            // Creates and initializes a list to hold all lesson blocks associated with this student record.
-            List<LessonBlock> studentLessonBlocks = null;
-            
-            // Gets all lesson blocks associated with this student record
-            studentLessonBlocks = DatabaseManager.lessonBlockDAO.queryForEq(LessonBlock.STUDENTRECORD_COLUMN_NAME, studentRecord);
-            
-            // Loops through each lesson block in the list deleting it
-            for (LessonBlock studentLessonBlock : studentLessonBlocks) {
-                DatabaseManager.lessonBlockDAO.delete(studentLessonBlock);
-            }
-        } catch (SQLException e) {
-            System.out.println("deleteStudentRecord: Error deleting the student record (controller).");
-        }
-    }
+ 
     
     /**
      * Formats/Concatenates the date of birth params provided into a string suitable for db storage.

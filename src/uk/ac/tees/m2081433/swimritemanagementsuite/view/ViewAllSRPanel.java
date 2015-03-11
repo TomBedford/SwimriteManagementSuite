@@ -35,7 +35,7 @@ public class ViewAllSRPanel extends JPanel implements ActionListener, KeyListene
     /**
      * The swimrite management suite body panel referenced for displaying an individual student record.
      */
-    smsBodyPanel smsBodyPanelRef;
+    SMSBodyPanel smsBodyPanelRef;
     
     /**
      * The Student Record controller for querying the Student Record database table.
@@ -107,7 +107,7 @@ public class ViewAllSRPanel extends JPanel implements ActionListener, KeyListene
      * Panel that displays student records in a table with a variety of filtering options.
      * @param smsBodyPanel Reference to the body panel this panel is on.
      */
-    public ViewAllSRPanel(smsBodyPanel smsBodyPanel) {
+    public ViewAllSRPanel(SMSBodyPanel smsBodyPanel) {
         // Initialises the sms Body Panel reference used for changing panels on the body panel
         smsBodyPanelRef = smsBodyPanel;
         

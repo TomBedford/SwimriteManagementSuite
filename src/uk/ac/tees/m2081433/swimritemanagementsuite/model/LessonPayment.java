@@ -2,7 +2,6 @@ package uk.ac.tees.m2081433.swimritemanagementsuite.model;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-import java.util.Date;
 
 /**
  * This class represents the Lesson Payment database table holding information about

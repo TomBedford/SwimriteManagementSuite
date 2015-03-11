@@ -87,7 +87,6 @@ public class InitialiseDefaultDatabase {
      * - Teacher
      * - Swimming Classes
      * and then fills the above tables with the default values.
-     * @throws java.sql.SQLException 
      */
     public void resetToDefaultDB() {
         

@@ -5,19 +5,19 @@ import javax.swing.table.AbstractTableModel;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.AttendanceType;
 
 /**
- * The table model for the lesson block table
+ * The table model for the lesson block table.
  */
 class LessonBlockTableModel extends AbstractTableModel {
     
     /**
      * Two dimensional object array to hold the data for the table.
      */
-    private Object[][] data;
+    final private Object[][] data;
     
     /**
      * Array of string to hold the table headers.
      */
-    private String[] headers;
+    final private String[] headers;
     
     /**
      * Boolean as to whether the date column is editable.
@@ -26,15 +26,15 @@ class LessonBlockTableModel extends AbstractTableModel {
 
     /**
      * Initializes the table model calling the super class and setting the data for the rows and the headers.
-     * @param data the data to be stored in the table.
-     * @param headers The headers for the table.
+     * @param tableData the data to be stored in the table.
+     * @param tableHeaders The headers for the table.
      */
-    public LessonBlockTableModel(Object[][] data, String[] headers) {
+    public LessonBlockTableModel(Object[][] tableData, String[] tableHeaders) {
         super();
         // Sets the data to be stored in the table
-        this.data = data;
+        this.data = tableData;
         // Sets the table headers
-        this.headers = headers;
+        this.headers = tableHeaders;
         // Initializes the date column not to be editable.
         dateEditable = false;
     }

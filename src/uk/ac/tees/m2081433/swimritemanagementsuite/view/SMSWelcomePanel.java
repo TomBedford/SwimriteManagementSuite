@@ -11,12 +11,12 @@ import javax.swing.JPanel;
 /**
  * The default welcome panel / Homepage when the application loads up.
  */
-public class smsWelcomePanel extends JPanel {
+public class SMSWelcomePanel extends JPanel {
     
     /**
-     * The default welcome panel of the app, defines the default welcome panel attributes.
+     * The default welcome panel of the application, defines this default welcome panels attributes.
      */
-    public smsWelcomePanel() {
+    public SMSWelcomePanel() {
         // sets the smsWelcomePanel JPanels default attributes
         this.setPreferredSize(new Dimension(1375, 605));
         this.setVisible(true);

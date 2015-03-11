@@ -6,16 +6,17 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.Day;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.StudentRecord;
+import uk.ac.tees.m2081433.swimritemanagementsuite.model.SwimmingClasses;
 
 /**
  * The body panel that holds all components that will dynamically swap in and out of view.
  */
-public class smsBodyPanel extends JPanel {
+public class SMSBodyPanel extends JPanel {
     
     /**
      * The welcome panel displayed on initial load of the application.
      */
-    smsWelcomePanel smsWelcomePanel; 
+    SMSWelcomePanel smsWelcomePanel; 
     
     /**
      * Holds the currently displayed panel.
@@ -25,7 +26,7 @@ public class smsBodyPanel extends JPanel {
     /**
      * panel to hold dynamically swapping panels.
      */
-    public smsBodyPanel() {
+    public SMSBodyPanel() {
         // sets the smsBodyPanel JPanel attributes.
         this.setPreferredSize(new Dimension(1400, 625));
         this.setVisible(true);
@@ -65,7 +66,7 @@ public class smsBodyPanel extends JPanel {
      */
     public void addWelcomePanel() {
         // initialises the welcome panel.
-        smsWelcomePanel = new smsWelcomePanel();
+        smsWelcomePanel = new SMSWelcomePanel();
         
         addCurrentlyDisplayedPanel(smsWelcomePanel);
     }
@@ -74,29 +75,29 @@ public class smsBodyPanel extends JPanel {
      * Adds the swimming class schedule panel for a specified day to the body panel.
      * @param day The specified day to load the schedule for.
      */
-    public void addSchedulePanel(Day day) {
+    public void addSchedulePanel(Day day, Boolean editMode) {
         // Removes the currently displayed panel from this body panel.
         removeCurrentlyDisplayedPanel();
         
         // sets the correct toggle button to the selected on the toolbar (when selected from the menu bar)
         if (day == Day.MONDAY) {
-            smsToolbarPanel.monButton.setSelected(true);
+            SMSToolbarPanel.monButton.setSelected(true);
         } else if (day == Day.TUESDAY) {
-            smsToolbarPanel.tueButton.setSelected(true);
+            SMSToolbarPanel.tueButton.setSelected(true);
         } else if (day == Day.WEDNESDAY) {
-            smsToolbarPanel.wedButton.setSelected(true);
+            SMSToolbarPanel.wedButton.setSelected(true);
         } else if (day == Day.THURSDAY) {
-            smsToolbarPanel.thuButton.setSelected(true);
+            SMSToolbarPanel.thuButton.setSelected(true);
         } else if (day == Day.FRIDAY) {
-            smsToolbarPanel.friButton.setSelected(true);
+            SMSToolbarPanel.friButton.setSelected(true);
         } else if (day == Day.SATURDAY) {
-            smsToolbarPanel.satButton.setSelected(true);
+            SMSToolbarPanel.satButton.setSelected(true);
         } else if (day == Day.SUNDAY) {
-            smsToolbarPanel.sunButton.setSelected(true);
+            SMSToolbarPanel.sunButton.setSelected(true);
         }
         
         // Creates the schedule panel for the specified day
-        DaySchedulePanel daySchedulePanel = new DaySchedulePanel(day);
+        DaySchedulePanel daySchedulePanel = new DaySchedulePanel(day, this, editMode);
         
         // Adds the day schedule panel as the curretly displayed panel on this body panel.
         addCurrentlyDisplayedPanel(daySchedulePanel);
@@ -105,6 +106,9 @@ public class smsBodyPanel extends JPanel {
     public void addAddSRPanel() {
         // Removes the currently displayed panel from this body panel.
         removeCurrentlyDisplayedPanel();
+        
+        // Sets the appropriate button to be selected on the toolbar.
+        SMSToolbarPanel.addSRButton.setSelected(true);
         
         // Creates the add student record panel
         AddSRPanel addSRPanel = new AddSRPanel();
@@ -117,22 +121,36 @@ public class smsBodyPanel extends JPanel {
         // Removes the currently displayed panel from this body panel.
         removeCurrentlyDisplayedPanel();
         
-        // Creates the view all student record panel
+        // Sets the appropriate button to be selected on the toolbar.
+        SMSToolbarPanel.viewAllSRButton.setSelected(true);
+        
+        // Creates the view all student records panel
         ViewAllSRPanel viewAllSRPanel = new ViewAllSRPanel(this);
         
-        // Adds the add student record panel as the curretly displayed panel on this body panel.
+        // Adds the view all student records panel as the curretly displayed panel on this body panel.
         addCurrentlyDisplayedPanel(viewAllSRPanel);
     }
     
-    public void addViewIndividualSRPanel(StudentRecord sr) {
+    public void addViewIndividualSRPanel(StudentRecord studentRecord) {
         // Removes the currently displayed panel from this body panel.
         removeCurrentlyDisplayedPanel();
         
         // Creates the view individual student record panel sending the student record to be displayed as a param.
-        ViewIndividualSRPanel viewIndividualSRPanel = new ViewIndividualSRPanel(sr, this);
+        ViewIndividualSRPanel viewIndividualSRPanel = new ViewIndividualSRPanel(studentRecord, this);
         
-        // Adds the add student record panel as the curretly displayed panel on this body panel.
+        // Adds the view individual student record panel as the curretly displayed panel on this body panel.
         addCurrentlyDisplayedPanel(viewIndividualSRPanel);
+    }
+    
+    public void addViewIndividualSCPanel(SwimmingClasses swimmingClass) {
+        // Removes the currently displayed panel from this body panel.
+        removeCurrentlyDisplayedPanel();
+        
+        // Creates the view individual swimming class panel sending the swimming class to be displayed as a param.
+        ViewIndividualSCPanel viewIndividualSCPanel = new ViewIndividualSCPanel(swimmingClass, this);
+        
+        // Adds the view individual swimming class panel as the curretly displayed panel on this body panel.
+        addCurrentlyDisplayedPanel(viewIndividualSCPanel);
     }
     
 }

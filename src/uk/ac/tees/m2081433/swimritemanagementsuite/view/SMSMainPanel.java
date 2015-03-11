@@ -3,14 +3,14 @@ import java.awt.*;
 import javax.swing.*;
 
 /**
- * The main panel that holds the header and body panels.
+ * The main panel on the frame that holds the header and body panels.
  */
-public class smsMainPanel extends JPanel  {
+public class SMSMainPanel extends JPanel  {
     
     /**
      * Defines default attributes of the panel and adds the header and body panels to itself.
      */
-    public smsMainPanel() {
+    public SMSMainPanel() {
         // sets the smsMainPanel JPanel attributes
         this.setPreferredSize(new Dimension(1400, 800));
         this.setVisible(true);
@@ -18,15 +18,15 @@ public class smsMainPanel extends JPanel  {
         this.setBackground(Color.white);
         
         // Creates the Body Panel
-        final smsBodyPanel smsBodyPanel = new smsBodyPanel();
+        final SMSBodyPanel smsBodyPanel = new SMSBodyPanel();
         
-        // Adds the Body Panel to this main panel.
+        // Adds the Body Panel to this main panel (South).
         this.add(smsBodyPanel, BorderLayout.PAGE_END);
         
         // Creates the header panel 
-        final smsHeaderPanel smsHeaderPanel = new smsHeaderPanel(smsBodyPanel);
+        final SMSHeaderPanel smsHeaderPanel = new SMSHeaderPanel(smsBodyPanel);
         
-        // Adds the header panel to this main panel.
+        // Adds the header panel to this main panel (North).
         this.add(smsHeaderPanel, BorderLayout.PAGE_START);
     }
 }

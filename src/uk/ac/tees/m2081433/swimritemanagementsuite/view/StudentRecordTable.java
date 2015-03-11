@@ -18,15 +18,15 @@ import javax.swing.table.TableModel;
 public class StudentRecordTable extends JTable {
     
     /**
+     * The font for all headers in the table.
+     */
+    Font tableHeaderFont = new Font("Arial", Font.PLAIN, 18);
+    
+    /**
      * The font for all records/rows in the table.
      */
     Font tableRecordFont = new Font("Arial", Font.PLAIN, 16);
        
-    /**
-     * The font for all headers in the table.
-     */
-    Font tableHeaderFont = new Font("Arial", Font.PLAIN, 18);
-        
     /**
      * The colour used for the headers background.
      */

@@ -50,7 +50,7 @@ public class LessonBlockPanel extends JPanel implements ActionListener {
     /**
      * The swimrite management suite body panel referenced for displaying an individual student record.
      */
-    smsBodyPanel smsBodyPanelRef;
+    SMSBodyPanel smsBodyPanelRef;
     
     /**
      * The student record sent as a param when reloading the view individual student record after deletion of this lb.
@@ -263,7 +263,7 @@ public class LessonBlockPanel extends JPanel implements ActionListener {
      * @param smsBodyPanel The reference to the body panel to change panels.
      * @param studentRecord The student record associated with this lesson block.
      */
-    public LessonBlockPanel(LessonBlock lessonBlock, int lessonBlockNumber, smsBodyPanel smsBodyPanel, StudentRecord studentRecord) {
+    public LessonBlockPanel(LessonBlock lessonBlock, int lessonBlockNumber, SMSBodyPanel smsBodyPanel, StudentRecord studentRecord) {
         
         // The lesson block to load onto this lesson block panel.
         lessonBlockRef = lessonBlock;
@@ -791,13 +791,12 @@ public class LessonBlockPanel extends JPanel implements ActionListener {
         c.gridy = 2;
         this.add(attendanceEditingPanel, c);
     }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-        // If the source of the button press was the edit button...
-        if (e.getSource() == editButton) {
-            // Enables all text fields and the combo box to be interacted with by the user.
+    
+    /**
+     * Method to enter the lesson block panel into an editable mode.
+     */
+    public void enterEditingMode() {
+        // Enables all text fields and the combo box to be interacted with by the user.
             paymentAmountField.setEditable(true);
             paymentTypeList.setEnabled(true);
             paymentDayField.setEditable(true);
@@ -837,6 +836,272 @@ public class LessonBlockPanel extends JPanel implements ActionListener {
             
             // Updates the UI after panel changes
             this.updateUI();
+    }
+    
+    /**
+     * Attempts to update the lesson block and lesson payment for that block with the values supplied.
+     */
+    public void attemptLessonBlockUpdate() {
+        // boolean used as a flag if any form field is left empty
+        boolean invalidField = true;
+
+        // Verifies all text fields on the lesson payment form
+        lessonBlockPaymentInputVerifier.verify(paymentAmountField);
+        lessonBlockPaymentInputVerifier.verify(paymentDayField);
+        lessonBlockPaymentInputVerifier.verify(paymentMonthField);
+        lessonBlockPaymentInputVerifier.verify(paymentYearField);
+        lessonBlockPaymentInputVerifier.verify(paymentTakerField);
+
+        // if any of the textfields backgrounds are not white flag as a field(s) being invalid.
+        if (paymentAmountField.getBackground() == Color.white && paymentDayField.getBackground() == Color.white
+                && paymentMonthField.getBackground() == Color.white && paymentYearField.getBackground() == Color.white
+                && paymentTakerField.getBackground() == Color.white) {
+            invalidField = false;
+        }
+
+        // If any form fields were invalid display an error message
+        if (invalidField == true) {
+            JOptionPane.showMessageDialog(null,
+                    "A field(s) has been left empty or contains an invalid entry\n"
+                    + "Invalid field(s) highlighted in yellow\n"
+                    + "Please complete the lesson block form correctly.\n",
+                    "Error Empty or Invalid Field(s)",
+                    JOptionPane.ERROR_MESSAGE);
+            // Otherwise the fields contain valid values
+        } else {
+
+            // If the lesson payment for the lesson block is not null set the new values and update in db
+            if (lessonBlockRef.getLessonPayment() != null) {
+                lessonBlockRef.getLessonPayment().setPaymentAmount(paymentAmountField.getText());
+                lessonBlockRef.getLessonPayment().setPaymentType((PaymentType) paymentTypeList.getSelectedItem());
+                lessonBlockRef.getLessonPayment().setPaymentDate(
+                        lessonPaymentController.formatpaymentDate(paymentDayField.getText(),
+                                paymentMonthField.getText(), paymentYearField.getText()));
+                lessonBlockRef.getLessonPayment().setPaymentTaker(paymentTakerField.getText());
+
+                lessonPaymentController.updateLessonPayment(lessonBlockRef.getLessonPayment());
+                // Otherwise create a lesson payment for the lesson block with the set values and add to db.
+            } else {
+                // Creates a lesson payment with the field values given by the user.
+                final LessonPayment lessonPayment = new LessonPayment(paymentAmountField.getText(),
+                        (PaymentType) paymentTypeList.getSelectedItem(),
+                        lessonPaymentController.formatpaymentDate(paymentDayField.getText(),
+                                paymentMonthField.getText(), paymentYearField.getText()),
+                        paymentTakerField.getText());
+
+                // Creates a record of that lesson payment in the database
+                lessonPaymentController.createLessonPayment(lessonPayment);
+
+                // Sets the lesson payment of the lesson block to the newly created instance
+                lessonBlockRef.setLessonPayment(lessonPayment);
+            }
+
+            // Loops through the tables rows
+            for (int i = 0; i < lessonBlockTable.getRowCount(); i++) {
+                // Checks if the date value is not equal to null
+                if (lessonBlockTableModel.getValueAt(i, 0) != null) {
+                    // Checks which row the value came from and updates/sets the appropriate numbered lesson date
+                    if (i == 0) {
+                        lessonBlockRef.setLesson1Date(lessonBlockTableModel.getValueAt(0, 0).toString());
+                    } else if (i == 1) {
+                        lessonBlockRef.setLesson2Date(lessonBlockTableModel.getValueAt(1, 0).toString());
+                    } else if (i == 2) {
+                        lessonBlockRef.setLesson3Date(lessonBlockTableModel.getValueAt(2, 0).toString());
+                    } else if (i == 3) {
+                        lessonBlockRef.setLesson4Date(lessonBlockTableModel.getValueAt(3, 0).toString());
+                    } else if (i == 4) {
+                        lessonBlockRef.setLesson5Date(lessonBlockTableModel.getValueAt(4, 0).toString());
+                    } else if (i == 5) {
+                        lessonBlockRef.setLesson6Date(lessonBlockTableModel.getValueAt(5, 0).toString());
+                    } else if (i == 6) {
+                        lessonBlockRef.setLesson7Date(lessonBlockTableModel.getValueAt(6, 0).toString());
+                    } else if (i == 7) {
+                        lessonBlockRef.setLesson8Date(lessonBlockTableModel.getValueAt(7, 0).toString());
+                    } else if (i == 8) {
+                        lessonBlockRef.setLesson9Date(lessonBlockTableModel.getValueAt(8, 0).toString());
+                    } else if (i == 9) {
+                        lessonBlockRef.setLesson10Date(lessonBlockTableModel.getValueAt(9, 0).toString());
+                    }
+                    // Otherwise the value is equal to null
+                } else {
+                    // Checks which row the value came from and updates/sets the appropriate numbered lesson date
+                    if (i == 0) {
+                        lessonBlockRef.setLesson1Date(null);
+                    } else if (i == 1) {
+                        lessonBlockRef.setLesson2Date(null);
+                    } else if (i == 2) {
+                        lessonBlockRef.setLesson3Date(null);
+                    } else if (i == 3) {
+                        lessonBlockRef.setLesson4Date(null);
+                    } else if (i == 4) {
+                        lessonBlockRef.setLesson5Date(null);
+                    } else if (i == 5) {
+                        lessonBlockRef.setLesson6Date(null);
+                    } else if (i == 6) {
+                        lessonBlockRef.setLesson7Date(null);
+                    } else if (i == 7) {
+                        lessonBlockRef.setLesson8Date(null);
+                    } else if (i == 8) {
+                        lessonBlockRef.setLesson9Date(null);
+                    } else if (i == 9) {
+                        lessonBlockRef.setLesson10Date(null);
+                    }
+                }
+
+                // Checks if the attendance type value is not equal to null
+                if (lessonBlockTableModel.getValueAt(i, 1) != null) {
+                    // Sets attendance type to null
+                    AttendanceType attendanceType = null;
+
+                    // Sets the attendance type to the appropriate value dependant on what the cell currently contains
+                    if (lessonBlockTableModel.getValueAt(i, 1).toString().equals("images/icons/16x16/accept.png")) {
+                        attendanceType = AttendanceType.PRESENT;
+                    } else if (lessonBlockTableModel.getValueAt(i, 1).toString().equals("images/icons/16x16/cancel.png")) {
+                        attendanceType = AttendanceType.ABSENT;
+                    } else if (lessonBlockTableModel.getValueAt(i, 1).toString().equals("images/icons/16x16/fun_swim.png")) {
+                        attendanceType = AttendanceType.FUN_SWIM;
+                    } else if (lessonBlockTableModel.getValueAt(i, 1).toString().equals("images/icons/16x16/fun_swim_taken.png")) {
+                        attendanceType = AttendanceType.FUN_SWIM_TAKEN;
+                    }
+
+                    // Checks which row the value came from and updates/sets the appropriate Numbered lesson attendance
+                    if (i == 0) {
+                        lessonBlockRef.setLesson1Attendance(attendanceType);
+                    } else if (i == 1) {
+                        lessonBlockRef.setLesson2Attendance(attendanceType);
+                    } else if (i == 2) {
+                        lessonBlockRef.setLesson3Attendance(attendanceType);
+                    } else if (i == 3) {
+                        lessonBlockRef.setLesson4Attendance(attendanceType);
+                    } else if (i == 4) {
+                        lessonBlockRef.setLesson5Attendance(attendanceType);
+                    } else if (i == 5) {
+                        lessonBlockRef.setLesson6Attendance(attendanceType);
+                    } else if (i == 6) {
+                        lessonBlockRef.setLesson7Attendance(attendanceType);
+                    } else if (i == 7) {
+                        lessonBlockRef.setLesson8Attendance(attendanceType);
+                    } else if (i == 8) {
+                        lessonBlockRef.setLesson9Attendance(attendanceType);
+                    } else if (i == 9) {
+                        lessonBlockRef.setLesson10Attendance(attendanceType);
+                    }
+                    // Otherwise the value is equal to null
+                } else {
+                    // Checks which row the value came from and updates/sets the appropriate Numbered lesson attendance.
+                    if (i == 0) {
+                        lessonBlockRef.setLesson1Attendance(null);
+                    } else if (i == 1) {
+                        lessonBlockRef.setLesson2Attendance(null);
+                    } else if (i == 2) {
+                        lessonBlockRef.setLesson3Attendance(null);
+                    } else if (i == 3) {
+                        lessonBlockRef.setLesson4Attendance(null);
+                    } else if (i == 4) {
+                        lessonBlockRef.setLesson5Attendance(null);
+                    } else if (i == 5) {
+                        lessonBlockRef.setLesson6Attendance(null);
+                    } else if (i == 6) {
+                        lessonBlockRef.setLesson7Attendance(null);
+                    } else if (i == 7) {
+                        lessonBlockRef.setLesson8Attendance(null);
+                    } else if (i == 8) {
+                        lessonBlockRef.setLesson9Attendance(null);
+                    } else if (i == 9) {
+                        lessonBlockRef.setLesson10Attendance(null);
+                    }
+                }
+            }
+
+            // Updates the lesson block with the updated values
+            lessonBlockController.updateLessonBlock(lessonBlockRef);
+
+            // Disables all text fields and the combo box from interaction by the user.
+            paymentAmountField.setEditable(false);
+            paymentTypeList.setEnabled(false);
+            paymentDayField.setEditable(false);
+            paymentMonthField.setEditable(false);
+            paymentYearField.setEditable(false);
+            paymentTakerField.setEditable(false);
+
+            // Disables the date column in the lesson block table from being editable
+            lessonBlockTableModel.setDateEditable(false);
+
+            // Removes the attendance editing panel to exit editing mode
+            this.remove(attendanceEditingPanel);
+
+            // Removes the button panel containing the update & cancel buttons
+            this.remove(buttonPanel);
+
+            // Adds the button panel back with the edit & delete buttons
+            addButtonPanel();
+
+            // Updates the lesson block panel after panel changes
+            this.updateUI();
+        }
+    }
+    
+    /**
+     * Method to exit the lesson block panel from the editable mode.
+     */
+    public void exitEditingMode() {
+        // Sets all of the payment detail field values back to their original values if the lesson payment record exists
+        if (lessonBlockRef.getLessonPayment() != null) {
+            paymentAmountField.setText(lessonBlockRef.getLessonPayment().getPaymentAmount());
+            paymentTypeList.setSelectedItem(lessonBlockRef.getLessonPayment().getPaymentType());
+            final String[] paymentDate = lessonPaymentController.unformatPaymentDate(lessonBlockRef.getLessonPayment().getPaymentDate());
+            paymentDayField.setText(paymentDate[0]);
+            paymentMonthField.setText(paymentDate[1]);
+            paymentYearField.setText(paymentDate[2]);
+            paymentTakerField.setText(lessonBlockRef.getLessonPayment().getPaymentTaker());
+        }
+
+        // Sets the background colour of all the text fields back to white
+        paymentAmountField.setBackground(Color.white);
+        paymentTypeList.setBackground(Color.white);
+        paymentDayField.setBackground(Color.white);
+        paymentMonthField.setBackground(Color.white);
+        paymentYearField.setBackground(Color.white);
+        paymentTakerField.setBackground(Color.white);
+
+        // Disables all text fields and the combo box from interaction by the user.
+        paymentAmountField.setEditable(false);
+        paymentTypeList.setEnabled(false);
+        paymentDayField.setEditable(false);
+        paymentMonthField.setEditable(false);
+        paymentYearField.setEditable(false);
+        paymentTakerField.setEditable(false);
+
+        // Disables the date column in the lesson block table from being editable
+        lessonBlockTableModel.setDateEditable(false);
+
+        // Resets the data held within the lesson block table
+        lessonBlockTableModel = new LessonBlockTableModel(convertLessonBlockForTable(), columnNames);
+
+        // Resets the table model for the table with the origional values
+        lessonBlockTable.setModel(lessonBlockTableModel);
+
+        // Removes the attendance editing panel to exit editing mode
+        this.remove(attendanceEditingPanel);
+
+        // Removes the button panel containing the update & cancel buttons
+        this.remove(buttonPanel);
+
+        // Adds the button panel back with the edit & delete buttons
+        addButtonPanel();
+
+        // Updates the lesson block panel after panel changes
+        this.updateUI();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+        // If the source of the button press was the edit button...
+        if (e.getSource() == editButton) {
+            
+            // Calls method to enter the lesson block panel into editing mode
+            enterEditingMode();
             
         // If the source of the button press was the update button
         } else if (e.getSource() == deleteButton) {
@@ -860,254 +1125,15 @@ public class LessonBlockPanel extends JPanel implements ActionListener {
         // If the source of the button press was the update button
         } else if (e.getSource() == updateButton) {
             
-            // boolean used as a flag if any form field is left empty
-            boolean invalidField = true;
+            // Calls the method to attempt to update the lesson block and lesson payment with new values
+            attemptLessonBlockUpdate();
             
-            // Verifies all text fields on the lesson payment form
-            lessonBlockPaymentInputVerifier.verify(paymentAmountField);
-            lessonBlockPaymentInputVerifier.verify(paymentDayField);
-            lessonBlockPaymentInputVerifier.verify(paymentMonthField);
-            lessonBlockPaymentInputVerifier.verify(paymentYearField);
-            lessonBlockPaymentInputVerifier.verify(paymentTakerField);
-            
-            // if any of the textfields backgrounds are not white flag as a field(s) being invalid.
-            if (paymentAmountField.getBackground() == Color.white && paymentDayField.getBackground() == Color.white 
-                    && paymentMonthField.getBackground() == Color.white && paymentYearField.getBackground() == Color.white
-                        && paymentTakerField.getBackground() == Color.white) {
-                invalidField = false;
-            }
-            
-            // If any form fields were invalid display an error message
-            if (invalidField == true) {
-                JOptionPane.showMessageDialog(null,
-                                "A field(s) has been left empty or contains an invalid entry\n"
-                                        + "Invalid field(s) highlighted in yellow\n"
-                                        + "Please complete the lesson block form correctly.\n",
-                                "Error Empty or Invalid Field(s)",
-                                JOptionPane.ERROR_MESSAGE);
-            // Otherwise the fields contain valid values
-            } else {
-                
-                // If the lesson payment for the lesson block is not null set the new values and update in db
-                if (lessonBlockRef.getLessonPayment() != null) {
-                    lessonBlockRef.getLessonPayment().setPaymentAmount(paymentAmountField.getText());
-                    lessonBlockRef.getLessonPayment().setPaymentType((PaymentType) paymentTypeList.getSelectedItem());
-                    lessonBlockRef.getLessonPayment().setPaymentDate(
-                                                        lessonPaymentController.formatpaymentDate(paymentDayField.getText(),
-                                                            paymentMonthField.getText(), paymentYearField.getText()));
-                    lessonBlockRef.getLessonPayment().setPaymentTaker(paymentTakerField.getText());
-                    
-                    lessonPaymentController.updateLessonPayment(lessonBlockRef.getLessonPayment());
-                // Otherwise create a lesson payment for the lesson block with the set values and add to db.
-                } else {
-                    // Creates a lesson payment with the field values given by the user.
-                    final LessonPayment lessonPayment = new LessonPayment(paymentAmountField.getText(), 
-                                    (PaymentType) paymentTypeList.getSelectedItem(), 
-                                        lessonPaymentController.formatpaymentDate(paymentDayField.getText(),
-                                            paymentMonthField.getText(), paymentYearField.getText()), 
-                                                paymentTakerField.getText());
-                    
-                    // Creates a record of that lesson payment in the database
-                    lessonPaymentController.createLessonPayment(lessonPayment);
-                    
-                    // Sets the lesson payment of the lesson block to the newly created instance
-                    lessonBlockRef.setLessonPayment(lessonPayment);
-                }
-                
-                    
-                // Loops through the tables rows
-                for (int i = 0; i < lessonBlockTable.getRowCount(); i++) {
-                    // Checks if the date value is not equal to null
-                    if (lessonBlockTableModel.getValueAt(i, 0) != null) {
-                        // Checks which row the value came from and updates/sets the appropriate numbered lesson date
-                        if (i == 0) {
-                            lessonBlockRef.setLesson1Date(lessonBlockTableModel.getValueAt(0, 0).toString());
-                        } else if (i == 1) {
-                            lessonBlockRef.setLesson2Date(lessonBlockTableModel.getValueAt(1, 0).toString());
-                        } else if (i == 2) {
-                            lessonBlockRef.setLesson3Date(lessonBlockTableModel.getValueAt(2, 0).toString());
-                        } else if (i == 3) {
-                            lessonBlockRef.setLesson4Date(lessonBlockTableModel.getValueAt(3, 0).toString());
-                        } else if (i == 4) {
-                            lessonBlockRef.setLesson5Date(lessonBlockTableModel.getValueAt(4, 0).toString());
-                        } else if (i == 5) {
-                            lessonBlockRef.setLesson6Date(lessonBlockTableModel.getValueAt(5, 0).toString());
-                        } else if (i == 6) {
-                            lessonBlockRef.setLesson7Date(lessonBlockTableModel.getValueAt(6, 0).toString());
-                        } else if (i == 7) {
-                            lessonBlockRef.setLesson8Date(lessonBlockTableModel.getValueAt(7, 0).toString());
-                        } else if (i == 8) {
-                            lessonBlockRef.setLesson9Date(lessonBlockTableModel.getValueAt(8, 0).toString());
-                        } else if (i == 9) {
-                            lessonBlockRef.setLesson10Date(lessonBlockTableModel.getValueAt(9, 0).toString());
-                        }
-                    // Otherwise the value is equal to null
-                    } else {
-                        // Checks which row the value came from and updates/sets the appropriate numbered lesson date
-                        if (i == 0) {
-                            lessonBlockRef.setLesson1Date(null);
-                        } else if (i == 1) {
-                            lessonBlockRef.setLesson2Date(null);
-                        } else if (i == 2) {
-                            lessonBlockRef.setLesson3Date(null);
-                        } else if (i == 3) {
-                            lessonBlockRef.setLesson4Date(null);
-                        } else if (i == 4) {
-                            lessonBlockRef.setLesson5Date(null);
-                        } else if (i == 5) {
-                            lessonBlockRef.setLesson6Date(null);
-                        } else if (i == 6) {
-                            lessonBlockRef.setLesson7Date(null);
-                        } else if (i == 7) {
-                            lessonBlockRef.setLesson8Date(null);
-                        } else if (i == 8) {
-                            lessonBlockRef.setLesson9Date(null);
-                        } else if (i == 9) {
-                            lessonBlockRef.setLesson10Date(null);
-                        }
-                    }
-                    
-                    // Checks if the attendance type value is not equal to null
-                    if (lessonBlockTableModel.getValueAt(i, 1) != null) {
-                        // Sets attendance type to null
-                        AttendanceType attendanceType = null;
-                        
-                        // Sets the attendance type to the appropriate value dependant on what the cell currently contains
-                        if (lessonBlockTableModel.getValueAt(i, 1).toString().equals("images/icons/16x16/accept.png")) {
-                            attendanceType = AttendanceType.PRESENT;
-                        } else if (lessonBlockTableModel.getValueAt(i, 1).toString().equals("images/icons/16x16/cancel.png")) {
-                            attendanceType = AttendanceType.ABSENT;
-                        } else if (lessonBlockTableModel.getValueAt(i, 1).toString().equals("images/icons/16x16/fun_swim.png")) {
-                            attendanceType = AttendanceType.FUN_SWIM;
-                        } else if (lessonBlockTableModel.getValueAt(i, 1).toString().equals("images/icons/16x16/fun_swim_taken.png")) {
-                            attendanceType = AttendanceType.FUN_SWIM_TAKEN;
-                        }
-                        
-                        // Checks which row the value came from and updates/sets the appropriate Numbered lesson attendance
-                        if (i == 0) {
-                            lessonBlockRef.setLesson1Attendance(attendanceType);
-                        } else if (i == 1) {
-                            lessonBlockRef.setLesson2Attendance(attendanceType);
-                        } else if (i == 2) {
-                            lessonBlockRef.setLesson3Attendance(attendanceType);
-                        } else if (i == 3) {
-                            lessonBlockRef.setLesson4Attendance(attendanceType);
-                        } else if (i == 4) {
-                            lessonBlockRef.setLesson5Attendance(attendanceType);
-                        } else if (i == 5) {
-                            lessonBlockRef.setLesson6Attendance(attendanceType);
-                        } else if (i == 6) {
-                            lessonBlockRef.setLesson7Attendance(attendanceType);
-                        } else if (i == 7) {
-                            lessonBlockRef.setLesson8Attendance(attendanceType);
-                        } else if (i == 8) {
-                            lessonBlockRef.setLesson9Attendance(attendanceType);
-                        } else if (i == 9) {
-                            lessonBlockRef.setLesson10Attendance(attendanceType);
-                        }
-                    // Otherwise the value is equal to null
-                    } else {
-                        // Checks which row the value came from and updates/sets the appropriate Numbered lesson attendance.
-                        if (i == 0) {
-                            lessonBlockRef.setLesson1Attendance(null);
-                        } else if (i == 1) {
-                            lessonBlockRef.setLesson2Attendance(null);
-                        } else if (i == 2) {
-                            lessonBlockRef.setLesson3Attendance(null);
-                        } else if (i == 3) {
-                            lessonBlockRef.setLesson4Attendance(null);
-                        } else if (i == 4) {
-                            lessonBlockRef.setLesson5Attendance(null);
-                        } else if (i == 5) {
-                            lessonBlockRef.setLesson6Attendance(null);
-                        } else if (i == 6) {
-                            lessonBlockRef.setLesson7Attendance(null);
-                        } else if (i == 7) {
-                            lessonBlockRef.setLesson8Attendance(null);
-                        } else if (i == 8) {
-                            lessonBlockRef.setLesson9Attendance(null);
-                        } else if (i == 9) {
-                            lessonBlockRef.setLesson10Attendance(null);
-                        }
-                    }
-                }
-                
-                // Updates the lesson block with the updated values
-                lessonBlockController.updateLessonBlock(lessonBlockRef);
-                
-                // Disables all text fields and the combo box from interaction by the user.
-                paymentAmountField.setEditable(false);
-                paymentTypeList.setEnabled(false);
-                paymentDayField.setEditable(false);
-                paymentMonthField.setEditable(false);
-                paymentYearField.setEditable(false);
-                paymentTakerField.setEditable(false);
-
-                // Disables the date column in the lesson block table from being editable
-                lessonBlockTableModel.setDateEditable(false);
-                
-                // Removes the attendance editing panel to exit editing mode
-                this.remove(attendanceEditingPanel);
-            
-                // Removes the button panel containing the update & cancel buttons
-                this.remove(buttonPanel);
-
-                // Adds the button panel back with the edit & delete buttons
-                addButtonPanel();
-                
-                // Updates the lesson block panel after panel changes
-                this.updateUI();
-            }
         // If the source of the button press was the cancel button  
         } else if (e.getSource() == cancelButton) {
+         
+            // Calls the method to exit editing mode for the lesson block panel
+            exitEditingMode();
             
-            // Sets all of the payment detail field values back to their original values if the lesson payment record exists
-            if (lessonBlockRef.getLessonPayment() != null) {
-                paymentAmountField.setText(lessonBlockRef.getLessonPayment().getPaymentAmount());
-                paymentTypeList.setSelectedItem(lessonBlockRef.getLessonPayment().getPaymentType());
-                final String[] paymentDate = lessonPaymentController.unformatPaymentDate(lessonBlockRef.getLessonPayment().getPaymentDate());
-                paymentDayField.setText(paymentDate[0]);
-                paymentMonthField.setText(paymentDate[1]);
-                paymentYearField.setText(paymentDate[2]);
-                paymentTakerField.setText(lessonBlockRef.getLessonPayment().getPaymentTaker());
-            }
-            
-            // Sets the background colour of all the text fields back to white
-            paymentAmountField.setBackground(Color.white);
-            paymentTypeList.setBackground(Color.white);
-            paymentDayField.setBackground(Color.white);
-            paymentMonthField.setBackground(Color.white);
-            paymentYearField.setBackground(Color.white);
-            paymentTakerField.setBackground(Color.white);
-            
-            // Disables all text fields and the combo box from interaction by the user.
-            paymentAmountField.setEditable(false);
-            paymentTypeList.setEnabled(false);
-            paymentDayField.setEditable(false);
-            paymentMonthField.setEditable(false);
-            paymentYearField.setEditable(false);
-            paymentTakerField.setEditable(false);
-            
-            // Disables the date column in the lesson block table from being editable
-            lessonBlockTableModel.setDateEditable(false);
-            
-            // Resets the data held within the lesson block table
-            lessonBlockTableModel = new LessonBlockTableModel(convertLessonBlockForTable(), columnNames);
-            
-            // Resets the table model for the table with the origional values
-            lessonBlockTable.setModel(lessonBlockTableModel);
-            
-            // Removes the attendance editing panel to exit editing mode
-            this.remove(attendanceEditingPanel);
-            
-            // Removes the button panel containing the update & cancel buttons
-            this.remove(buttonPanel);
-            
-            // Adds the button panel back with the edit & delete buttons
-            addButtonPanel();
-            
-            // Updates the lesson block panel after panel changes
-            this.updateUI();
         // Otherwise the action event came from one of the attendance editing buttons
         } else {
             // Loops through the amount of the present type of button (10) (all buttons will have the same amount)
