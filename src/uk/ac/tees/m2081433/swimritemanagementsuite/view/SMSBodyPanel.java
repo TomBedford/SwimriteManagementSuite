@@ -68,6 +68,10 @@ public class SMSBodyPanel extends JPanel {
         // initialises the welcome panel.
         smsWelcomePanel = new SMSWelcomePanel();
         
+        // Sets the invisible button to be selected as no other button is appropriate to set as selected.
+        SMSToolbarPanel.invisButton.setSelected(true);
+        
+        // Adds the welcome panel as the curretly displayed panel on this body panel.
         addCurrentlyDisplayedPanel(smsWelcomePanel);
     }
     
@@ -153,4 +157,31 @@ public class SMSBodyPanel extends JPanel {
         addCurrentlyDisplayedPanel(viewIndividualSCPanel);
     }
     
+    public void addViewCEDTeachersPanel() {
+        // Removes the currently displayed panel from this body panel.
+        removeCurrentlyDisplayedPanel();
+        
+        // Creates the Create, Edit and Delete Teachers Panel to be displayed on the body panel
+        CEDTeachersPanel cedTeachersPanel = new CEDTeachersPanel(this);
+        
+        // Sets the invisible button to be selected as no other button is appropriate to set as selected.
+        SMSToolbarPanel.invisButton.setSelected(true);
+        
+        // Adds the view create, edit and delete teachers panel as the curretly displayed panel on this body panel.
+        addCurrentlyDisplayedPanel(cedTeachersPanel);
+    }
+    
+    public void addViewCEDLoginAccountsPanel() {
+        // Removes the currently displayed panel from this body panel.
+        removeCurrentlyDisplayedPanel();
+        
+        // Creates the Create, Edit and Delete Login Accounts Panel to be displayed on the body panel
+        CEDLoginAccountsPanel cedLoginAccountsPanel = new CEDLoginAccountsPanel(this);
+        
+        // Sets the invisible button to be selected as no other button is appropriate to set as selected.
+        SMSToolbarPanel.invisButton.setSelected(true);
+        
+        // Adds the view create, edit and delete login accounts panel as the curretly displayed panel on this body panel.
+        addCurrentlyDisplayedPanel(cedLoginAccountsPanel);
+    }
 }

@@ -15,12 +15,12 @@ import uk.ac.tees.m2081433.swimritemanagementsuite.model.SwimmingLevel;
 public class StudentRecordController {
     
     /**
-     * Reference to the lesson block controller for when deleting lesson blocks associated with student records.
+     * Reference to the Lesson Block controller for when deleting lesson blocks associated with student records.
      */
     final LessonBlockController lessonBlockController = new LessonBlockController();
     
     /**
-     * Reference to the student address controller for when creating, updating and deleting student records.
+     * Reference to the Student Address controller for when creating, updating and deleting student records.
      */
     final StudentAddressController studentAddressController = new StudentAddressController();
     
@@ -114,6 +114,16 @@ public class StudentRecordController {
             // Loops through each lesson block in the list deleting it
             for (LessonBlock studentLessonBlock : studentLessonBlocks) {
                 lessonBlockController.deleteLessonBlock(studentLessonBlock);
+            }
+            
+            // If the student is currently enrolled in a swimming class de-increment the current capacity of the class
+            if (studentRecord.getSwimmingClass() != null) {
+                
+                // De-increments the current class capacity by 1
+                studentRecord.getSwimmingClass().setCurrentCapacity(studentRecord.getSwimmingClass().getCurrentCapacity() - 1);
+                
+                // Updates the swimming class in the database
+                DatabaseManager.swimmingClassesDAO.update(studentRecord.getSwimmingClass());
             }
         } catch (SQLException e) {
             System.out.println("deleteStudentRecord: Error deleting the student record (controller).");

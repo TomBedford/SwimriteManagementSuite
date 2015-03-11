@@ -246,11 +246,11 @@ public class HeaderActionEventController implements ActionListener, MouseListene
     }
     
     public void displayCEDTeachers() {
-        
+        smsBodyPanelRef.addViewCEDTeachersPanel();
     }
     
     public void displayCEDLoginAccounts() {
-        
+        smsBodyPanelRef.addViewCEDLoginAccountsPanel();
     }
     
     public void displayInitialiseDB() {

@@ -57,6 +57,24 @@ public class TeacherController {
     
     
     /**
+     * Gets all teachers from the teachers table in the SMS database.
+     * @return list of all teachers
+     */
+    public List<Teacher> getAllTeachers() {
+        // List to hold all the teachers 
+        List<Teacher> teacherList = null;
+        
+        try {
+            // Gets all teachers from the teachers table in the database
+            teacherList = DatabaseManager.teacherDAO.queryForAll();
+        } catch (SQLException e) {
+            System.out.println("getTeachersForDay: Error getting teachers for a specific day.");
+        }
+        
+        return teacherList;
+    }
+    
+    /**
      * Gets teachers that work on the specified day (parameter).
      * @param day The day to get all the teachers for
      * @return list of all teachers that work on the specified day

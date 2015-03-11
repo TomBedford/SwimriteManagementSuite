@@ -146,6 +146,12 @@ public class SMSToolbarPanel extends JPanel {
     public static JToggleButton addSTButton;
     
     /**
+     * The toggle button that will be invisible so that it can be selected when menu bar options are chosen
+     * that do not require any of the other toggle buttons to be selected.
+     */
+    public static JToggleButton invisButton = new JToggleButton();
+    
+    /**
      * Declares the button dimension for standard buttons on the jPanel.
      */
     Dimension standardButtonDimension = new Dimension(200, 50);
@@ -167,6 +173,7 @@ public class SMSToolbarPanel extends JPanel {
         
         // Initializes the button group for all toggle buttons on this panel
         toolbarButtonGroup = new ButtonGroup();
+        toolbarButtonGroup.add(invisButton);
         
         // Initializes the header action event controller
         headerActionEventController = hAEC;

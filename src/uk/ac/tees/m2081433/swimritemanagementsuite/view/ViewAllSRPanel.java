@@ -326,16 +326,16 @@ public class ViewAllSRPanel extends JPanel implements ActionListener, KeyListene
          * size of the student record list is used for the first array size.
          * size of the column names (the amount of different data columns to put into the object for the table)
          */
-        final Object[][] tableStudentRecord = new Object[studentRecordList.size()][columnNames.length];
+        final Object[][] tableStudentRecordData = new Object[studentRecordList.size()][columnNames.length];
         
         // Loops through the entire student record list to add the correct data from the list to the object array
         for (int i = 0; i < studentRecordList.size(); i++) {
             // Adds the students name to that index of the object array
-            tableStudentRecord[i][0] = studentRecordList.get(i).getStudentName();
+            tableStudentRecordData[i][0] = studentRecordList.get(i).getStudentName();
             // Adds the students date of birth to that index of the object array
-            tableStudentRecord[i][1] = studentRecordList.get(i).getStudentDOB();
+            tableStudentRecordData[i][1] = studentRecordList.get(i).getStudentDOB();
             // Adds the students swimming level to that index of the object array
-            tableStudentRecord[i][2] = studentRecordList.get(i).getSwimmingLevel();
+            tableStudentRecordData[i][2] = studentRecordList.get(i).getSwimmingLevel();
             
             // The string to hold the swimming class text for the student record.
             String swimmingClassText;
@@ -354,10 +354,10 @@ public class ViewAllSRPanel extends JPanel implements ActionListener, KeyListene
                 swimmingClassText = formattedTime + " " + studentRecordList.get(i).getSwimmingClass().getTimeslot().getDay();
             }
             // Adds the students swimming class to that index of the object array
-            tableStudentRecord[i][3] = swimmingClassText;
+            tableStudentRecordData[i][3] = swimmingClassText;
         }
         // Returns the converted 2 dimensional objecty array
-        return tableStudentRecord;
+        return tableStudentRecordData;
     }
     
     /**
