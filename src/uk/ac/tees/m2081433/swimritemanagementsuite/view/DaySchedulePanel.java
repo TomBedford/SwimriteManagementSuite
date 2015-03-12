@@ -82,24 +82,14 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
     List<SwimmingClasses> swimmingClassesList;
     
     /**
-     * The array of labels that holds the swimming classes for the first teacher column.
+     * The two dimensional array of labels that holds the swimming classes for each teachers column.
      */
-    JLabel[] teacher1ClassesColumn;
-    
-    /**
-     * The array of labels that holds the swimming classes for the second teacher column.
-     */
-    JLabel[] teacher2ClassesColumn;
-    
-    /**
-     * The array of labels that holds the swimming classes for the third teacher column.
-     */
-    JLabel[] teacher3ClassesColumn;
+    JLabel[][] teacherClassesColumnLabels;
     
     /**
      * The array of array list to hold the different swimming classes by teacher.
      */
-    ArrayList<SwimmingClasses>[] teacherClassesList;
+    ArrayList<SwimmingClasses>[] teachersClassesLists;
     
     /**
      * The grid bag constraint to manipulate when adding components to the layout. 
@@ -146,6 +136,11 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
     JButton cancelEditButton;
     
     /**
+     * The button to add a Teacher to the day schedule panel.
+     */
+    JButton addTeacherButton;
+    
+    /**
      * The button to add a Timeslot to the day schedule panel.
      */
     JButton addTimeslotButton;
@@ -175,6 +170,11 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
      */
     JComboBox[] teacherNameList;
     
+    /**
+     * The array of buttons to delete the Teacher from that day.
+     */
+    JButton[] deleteTeacherButton;
+    
     
     
     /**
@@ -191,14 +191,20 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
         // Sets the smsBodyPanel reference to swap out panels
         smsBodyPanelRef = smsBodyPanel;
         
-        // Method to get all the timeslots for the specified day (needed info to work out panel size etc.)
+        // Method to get all the timeslots for the specified day (needed info to work out panel height etc.)
         getTimeslotsForDay();
+        
+        // Method to get all teachers for the specifiec day (needed info to work out the panel width etc.)
+        getWorkingTeachersForDay();
         
         // Calculates what the height of the day schedule panel should be.
         final int panelHeight = calculateDaySchedulePanelHeight();
         
-        // sets the smsMainPanel JPanel attributes.
-        this.setPreferredSize(new Dimension(1360, panelHeight));
+        // Calculates what the width of the day schedule panel should be.
+        final int panelWidth = calculateDaySchedulePanelWidth();
+        
+        // sets the smsMainPanel JPanel attributes. 
+        this.setPreferredSize(new Dimension(panelWidth, panelHeight));
         this.setVisible(true);
         this.setBackground(Color.white);
         this.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -232,8 +238,7 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
     
     /**
      * Gets all the timeslots associated with the specified day.
-     * This is needed so the height of the panel can be calculated and whether an error message
-     * is needed to be displayed if the default class schedules have not been initialized.
+     * Info needed early to calculate panel height.
      */
     public void getTimeslotsForDay() {
         // Gets all the timeslots for the specified day.
@@ -241,7 +246,16 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
     }
     
     /**
-     * Calculates the height that the day Schedule Panel should be.
+     * Gets all the teachers that work on the specified day.
+     * Info needed early to calculate panel width.
+     */
+    public void getWorkingTeachersForDay() {
+        // Gets all the teachers for the specified day
+        workingTeacherList = teacherController.getTeachersForDay(day);
+    }
+    
+    /**
+     * Calculates the height that the Day Schedule Panel should be.
      * @return panelHeight The height that the day schedule panel should be.
      */
     public int calculateDaySchedulePanelHeight() {
@@ -252,6 +266,33 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
         final int panelHeight = (amountOfTimeslots * 150) +  100;
         
         return panelHeight;
+    }
+    
+    /**
+     * Calculates the width that the Day Schedule Panel should be.
+     * @return panelWidth The width that the day schedule panel should be.
+     */
+    public int calculateDaySchedulePanelWidth() {
+        // Gets the amound of teachers from the size of the working teacher list.
+        int amountOfTeachers = workingTeacherList.size();
+        
+        // Creates an int to hold the panel width
+        int panelWidth;
+        
+        // If the amount of teachers is larger than 3 calculate the panel width
+        if (amountOfTeachers > 3) {
+            // Removes 3 of the teachers to calculate how much larger the panel needs to be
+            amountOfTeachers = amountOfTeachers - 3;
+            
+            // Calculates the width of the panel as each teacher column is 300 width (adds 100 padding).
+            panelWidth = 1360 + (amountOfTeachers * 300);
+            
+        } else {
+            // Otherwise sets it to default panel size
+            panelWidth = 1360;
+        }
+        
+        return panelWidth;
     }
     
     /**
@@ -278,14 +319,25 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
      */
     public void addTimeslotColumnHeader() {
         
-        // if the timeslot list is empty display db initialisation error msg.
-        if (timeslotList.isEmpty()) {
-            
-            JOptionPane.showMessageDialog(null, "Please initialise the database to start! \n"
-                    + "The database initialisation settings are located within the \n"
-                    + "'Advanced Settings' Menu tab.", "Default Database not Initialised", JOptionPane.ERROR_MESSAGE);
+        // If the timeslot list is empty and the working teacher list is empty add begin label
+        if (timeslotList.isEmpty() && workingTeacherList.isEmpty()) {
+            final JLabel beginLabel = new JLabel("<HTML> Enter <b>Editing Mode</b> To Begin the Swimming Class Scheduling</HTML>", SwingConstants.CENTER);
+            beginLabel.setPreferredSize(new Dimension(525, 50));
+            beginLabel.setOpaque(true);
+            beginLabel.setBorder(BorderFactory.createRaisedBevelBorder());
+            beginLabel.setVisible(true);
+            beginLabel.setBackground(smsBlue);
+            beginLabel.setFont(tableHeaderFont);
 
-        } else {
+            // The coordinates for where to add this component to the layout.
+            c.gridx = 0;
+            c.gridy = 0;
+
+            this.add(beginLabel, c);
+            
+        // If the timeslot list is not empty add the timeslot time column header
+        } else if (!timeslotList.isEmpty()) {
+            
             // Creates the first label to hold the column heading for Timeslots and sets its attributes.
             final JLabel row1column1 = new JLabel("Time", SwingConstants.CENTER);
             row1column1.setPreferredSize(new Dimension(100, 50));
@@ -308,8 +360,6 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
      * Adds all teachers to the swimming class schedule for the specified day.
      */
     public void addTeachersColumnHeaders() {
-        // Gets all the teachers for the specified day
-        workingTeacherList = teacherController.getTeachersForDay(day);
         
         // Sorts all of the teachers by the teacher Id of the teacher (Ascending order)
         workingTeacherList = teacherController.sortTeachersByTeacherId(workingTeacherList);
@@ -379,7 +429,7 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
             
             // Converts the timeslot time to a string.
             final String timeLabelText = Integer.toString(timeslotList.get(i).getTime());
-                    
+            
             // Formats the time string with a colon so that it looks like a time (eg, 1300 -> 13:00)
             final String formattedLabelText = new StringBuilder(timeLabelText).insert(timeLabelText.length() - 2, ":").toString();
             
@@ -420,141 +470,67 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
         // Sorts all of the swimming classes by the teacher Id (Ascending order).
         swimmingClassesList = swimmingClassesController.sortClassesByTeacherId(swimmingClassesList);
         
-        // an array of array list, as each array list will hold one teachers classes for that day.
-        teacherClassesList = new ArrayList[workingTeacherList.size()];
+        // an array of array list, as each array list will hold one column of teachers classes for that day.
+        teachersClassesLists = new ArrayList[workingTeacherList.size()];
         
         // Loops through the amount of teachers working on that day and initializes the array.
         for (int i = 0; i < workingTeacherList.size(); i++) {
-            teacherClassesList[i] = new ArrayList();
+            teachersClassesLists[i] = new ArrayList();
         }
         
-        // Loops through the entire list of swimming classes putting them in the correct list for each teacher.
-        for (SwimmingClasses sc : swimmingClassesList) {
-            if (sc.getTeacher().getTeacherId() == workingTeacherList.get(0).getTeacherId()) {
-                teacherClassesList[0].add(sc);
-            } else if (sc.getTeacher().getTeacherId() == workingTeacherList.get(1).getTeacherId()) {
-                teacherClassesList[1].add(sc);
-            } else if (sc.getTeacher().getTeacherId() == workingTeacherList.get(2).getTeacherId()) {
-                teacherClassesList[2].add(sc);
-            } 
-        }
-        
-        // Creates an array of labels to hold the details for the swimming classes for the first teacher
-        teacher1ClassesColumn = new JLabel[teacherClassesList[0].size()];
-        
-        // Iterate through the swimming classes list for teacher 1 to add all classes to the schedule.
-        for (int i = 0; i < teacherClassesList[0].size(); i++) {
-            // If the swimming classes timeslot time is equal to the time of the same index in the timeslot list
-            if (teacherClassesList[0].get(i).getTimeslot().getTime() == timeslotList.get(i).getTime()) {
-                // Create and assign label attributes
-                teacher1ClassesColumn[i] = new JLabel();
-                teacher1ClassesColumn[i].setPreferredSize(new Dimension(300, 150));
-                teacher1ClassesColumn[i].setOpaque(true);
-                teacher1ClassesColumn[i].setBorder(BorderFactory.createRaisedBevelBorder());
-                teacher1ClassesColumn[i].setLayout(new BorderLayout());
-                teacher1ClassesColumn[i].setVisible(true);
-                
-                // Gets the text to go on this label (text: student names in class and class type)
-                final String labelText = getTextForClassLabel(teacherClassesList[0].get(i));
-                
-                // Sets the text for the label, its font and its position
-                teacher1ClassesColumn[i].setText(labelText);
-                teacher1ClassesColumn[i].setFont(tableRecordFont);
-                teacher1ClassesColumn[i].setHorizontalAlignment(SwingConstants.CENTER);
-                
-                // Adds a mouse listener to the label for when clicked
-                teacher1ClassesColumn[i].addMouseListener(this);
-                
-                // The Gridbag Layout constraints logic to add the label to the correct x & y grid space.
-                c.gridx = 1;
-                c.gridy = i + 1;
-                
-                // Adds the label to the correct space in the gridbag layout.
-                this.add(teacher1ClassesColumn[i], c);
-                
-            } else {
-                System.out.println("ERROR MATCHING TEACHER CLASS 1 LIST TIME TO TIMESLOT TIME.");
+        // Loops through all of the indexs in the teachers classes list.
+        for (int i = 0; i < teachersClassesLists.length; i++) {
+            // Loops through the entire list of swimming classes putting them in the correct list for each teacher.
+            for (SwimmingClasses sc : swimmingClassesList) {
+                if (sc.getTeacher().getTeacherId() == workingTeacherList.get(i).getTeacherId()) {
+                    teachersClassesLists[i].add(sc);
+                }
             }
         }
         
-        
-        
-        // Creates an array of labels to hold the details for the swimming classes for the second teacher
-        teacher2ClassesColumn = new JLabel[teacherClassesList[1].size()];
-        
-        // Iterate through the swimming classes list for teacher 2 to add all classes to the schedule.
-        for (int i = 0; i < teacherClassesList[1].size(); i++) {
-            // If the swimming classes timeslot time is equal to the time of the same index in the timeslot list
-            if (teacherClassesList[1].get(i).getTimeslot().getTime() == timeslotList.get(i).getTime()) {
-                // Create and assign label attributes
-                teacher2ClassesColumn[i] = new JLabel();
-                teacher2ClassesColumn[i].setPreferredSize(new Dimension(300, 150));
-                teacher2ClassesColumn[i].setOpaque(true);
-                teacher2ClassesColumn[i].setBorder(BorderFactory.createRaisedBevelBorder());
-                teacher2ClassesColumn[i].setLayout(new BorderLayout());
-                teacher2ClassesColumn[i].setVisible(true);
-                
-                // Gets the text to go on this label (text: student names in class and class type)
-                final String labelText = getTextForClassLabel(teacherClassesList[1].get(i));
-                
-                // Sets the text for the label, its font and its position
-                teacher2ClassesColumn[i].setText(labelText);
-                teacher2ClassesColumn[i].setFont(tableRecordFont);
-                teacher2ClassesColumn[i].setHorizontalAlignment(SwingConstants.CENTER);
-                
-                // Adds a mouse listener to the label for when clicked
-                teacher2ClassesColumn[i].addMouseListener(this);
-                
-                // The Gridbag Layout constraints logic to add the label to the correct x & y grid space.
-                c.gridx = 2;
-                c.gridy = i + 1;
-                
-                // Adds the label to the correct space in the gridbag layout.
-                this.add(teacher2ClassesColumn[i], c);
-                
-            } else {
-                System.out.println("ERROR MATCHING TEACHER CLASS 2 LIST TIME TO TIMESLOT TIME.");
+        // Try Catch as when initializing the two dimensional array the second dimenion can be null.
+        try {
+            // Creates a two dimensional array to hold each teachers column of labels
+            teacherClassesColumnLabels = new JLabel[teachersClassesLists.length][teachersClassesLists[0].size()];
+
+            // Loops through the first dimension of the array
+            for (int i = 0; i < teacherClassesColumnLabels.length; i++) {
+
+                // Loops through the second dimenion of the array creating labels in each to hold swimming class info
+                for (int x = 0; x < teachersClassesLists[i].size(); x++) {
+
+                    // If the swimming classes timeslot time is equal to the time of the same index in the timeslot list
+                    if (teachersClassesLists[i].get(x).getTimeslot().getTime() == timeslotList.get(x).getTime()) {
+                        // Create and assign label attributes
+                        teacherClassesColumnLabels[i][x] = new JLabel();
+                        teacherClassesColumnLabels[i][x].setPreferredSize(new Dimension(300, 150));
+                        teacherClassesColumnLabels[i][x].setOpaque(true);
+                        teacherClassesColumnLabels[i][x].setBorder(BorderFactory.createRaisedBevelBorder());
+                        teacherClassesColumnLabels[i][x].setLayout(new BorderLayout());
+                        teacherClassesColumnLabels[i][x].setVisible(true);
+
+                        // Gets the text to go on this label (text: student names in class and class type)
+                        final String labelText = getTextForClassLabel(teachersClassesLists[i].get(x));
+
+                        // Sets the text for the label, its font and its position
+                        teacherClassesColumnLabels[i][x].setText(labelText);
+                        teacherClassesColumnLabels[i][x].setFont(tableRecordFont);
+                        teacherClassesColumnLabels[i][x].setHorizontalAlignment(SwingConstants.CENTER);
+
+                        // Adds a mouse listener to the label for when clicked
+                        teacherClassesColumnLabels[i][x].addMouseListener(this);
+
+                        // The Gridbag Layout constraints logic to add the label to the correct x & y grid space.
+                        c.gridx = i + 1;
+                        c.gridy = x + 1;
+
+                        // Adds the label to the correct space in the gridbag layout.
+                        this.add(teacherClassesColumnLabels[i][x], c);
+                    }
+                }
             }
-        }
-        
-        
-        
-        // Creates an array of labels to hold the details for the swimming classes for the third teacher
-        teacher3ClassesColumn = new JLabel[teacherClassesList[2].size()];
-        
-        // Iterate through the swimming classes list for teacher 3 to add all classes to the schedule.
-        for (int i = 0; i < teacherClassesList[2].size(); i++) {
-            // If the swimming classes timeslot time is equal to the time of the same index in the timeslot list
-            if (teacherClassesList[2].get(i).getTimeslot().getTime() == timeslotList.get(i).getTime()) {
-                // Create and assign label attributes
-                teacher3ClassesColumn[i] = new JLabel();
-                teacher3ClassesColumn[i].setPreferredSize(new Dimension(300, 150));
-                teacher3ClassesColumn[i].setOpaque(true);
-                teacher3ClassesColumn[i].setBorder(BorderFactory.createRaisedBevelBorder());
-                teacher3ClassesColumn[i].setLayout(new BorderLayout());
-                teacher3ClassesColumn[i].setVisible(true);
-                
-                // Gets the text to go on this label (text: student names in class and class type)
-                final String labelText = getTextForClassLabel(teacherClassesList[2].get(i));
-                
-                // Sets the text for the label, its font and its position
-                teacher3ClassesColumn[i].setText(labelText);
-                teacher3ClassesColumn[i].setFont(tableRecordFont);
-                teacher3ClassesColumn[i].setHorizontalAlignment(SwingConstants.CENTER);
-                
-                // Adds a mouse listener to the label for when clicked
-                teacher3ClassesColumn[i].addMouseListener(this);
-                
-                // The Gridbag Layout constraints logic to add the label to the correct x & y grid space.
-                c.gridx = 3;
-                c.gridy = i + 1;
-                
-                // Adds the label to the correct space in the gridbag layout.
-                this.add(teacher3ClassesColumn[i], c);
-                
-            } else {
-                System.out.println("ERROR MATCHING CLASS 3 LIST TIME TO TIMESLOT TIME.");
-            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Second Dimension of the teacherClassesColumnLabels was null");
         }
     }
     
@@ -595,7 +571,7 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
     public void addEditingButtonPanel() {
         // Creates/initialises the button panel to hold the editing buttons
         buttonPanel = new JPanel();
-        buttonPanel.setPreferredSize(new Dimension(250, 200));
+        buttonPanel.setPreferredSize(new Dimension(250, 350));
         buttonPanel.setVisible(true);
         buttonPanel.setBackground(Color.white);
         
@@ -612,7 +588,7 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
         // The Gridbag Layout constraints logic to add the label to the correct x & y grid space.
         c.gridx = workingTeacherList.size() + 1;
         c.gridy = 0;
-        c.gridheight = 2;
+        c.gridheight = 3;
                 
         // Adds the button panel to the correct space in the gridbag layout.
         this.add(buttonPanel, c);
@@ -631,7 +607,7 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
         // Removes the edit button from the button panel
         buttonPanel.remove(editButton);
         
-        // Creates/Initializes the update button to go on the button panel (to update changes to the schedule)
+        // Initializes the update button to go on the button panel (to update changes to the schedule)
         updateButton = new JButton("Update Schedule!");
         updateButton.setPreferredSize(new Dimension(175, 45));
         updateButton.addActionListener(this);
@@ -641,7 +617,7 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
         // Adds the stop edit button to the button panel
         buttonPanel.add(updateButton);
         
-        // Creates/Initializes the cancel button to go on the button panel (to cancel changes to the schedule)
+        // Initializes the cancel button to go on the button panel (to cancel changes to the schedule)
         cancelEditButton = new JButton("Cancel Editing Done");
         cancelEditButton.setPreferredSize(new Dimension(175, 45));
         cancelEditButton.addActionListener(this);
@@ -652,14 +628,32 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
         buttonPanel.add(cancelEditButton);
         
         // Creates/initialises a label used to space out the update and cancel buttons from the add timeslot button
-        final JLabel spacingLabel = new JLabel();
-        spacingLabel.setPreferredSize(new Dimension(175, 30));
-        spacingLabel.setOpaque(false);
+        final JLabel spacingLabel1 = new JLabel();
+        spacingLabel1.setPreferredSize(new Dimension(175, 30));
+        spacingLabel1.setOpaque(false);
         
         // Adds the spacing label to the button panel
-        buttonPanel.add(spacingLabel);
+        buttonPanel.add(spacingLabel1);
         
-        // Creates/Initializes the add timeslot button to go on the button panel
+        // Initializes the add Teacher button to add a teacher to the class schedule and adds it to the button panel
+        addTeacherButton = new JButton("Add a Teacher");
+        addTeacherButton.setPreferredSize(new Dimension(175, 45));
+        addTeacherButton.addActionListener(this);
+        addTeacherButton.setToolTipText("<html> Click this button to <b> add </b> a teacher to the swimming class schedule. </html>");
+        addTeacherButton.setIcon(new ImageIcon("images/icons/user_add.png"));
+        
+        // Adds the add timeslot button to the button panel
+        buttonPanel.add(addTeacherButton);
+        
+        // Creates/initialises a label used to space out the add teacher button from the add timeslot button
+        final JLabel spacingLabel2 = new JLabel();
+        spacingLabel2.setPreferredSize(new Dimension(175, 30));
+        spacingLabel2.setOpaque(false);
+        
+        // Adds the spacing label to the button panel
+        buttonPanel.add(spacingLabel2);
+        
+        // Initializes the add timeslot button to go on the button panel
         addTimeslotButton = new JButton("Add a Timeslot");
         addTimeslotButton.setPreferredSize(new Dimension(175, 45));
         addTimeslotButton.addActionListener(this);
@@ -670,7 +664,7 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
         buttonPanel.add(addTimeslotButton);
         
         // Calls method to change the teachers column headers into combo boxes allowing editing of class teachers
-        addTeacherEditComboBox();
+        addTeacherEditOptions();
          
         // Calls method to add delete buttons to each timeslot panel so that timeslots can be deleted
         addTimeslotDeleteButtons();
@@ -680,9 +674,9 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
     
     /**
      * Adds the combo boxes to the teacher name headers so that the teacher for the swimming classes in that column
-     * can be edited.
+     * can be edited and a delete button to delete the teacher from the class schedule.
      */
-    public void addTeacherEditComboBox() {
+    public void addTeacherEditOptions() {
         // Loops through the teacher list removing the teacher name text label
         for (int i = 0; i < workingTeacherList.size(); i++) {
             teacherHeader[i].remove(teacherHeaderText[i]);
@@ -690,6 +684,9 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
         
         // Initializes the size of the combo box array equivelant to the amount fo teachers
         teacherNameList = new JComboBox[workingTeacherList.size()];
+        
+        // Initializes the size of the delete teacher button array equivelant to the amount of teachers
+        deleteTeacherButton = new JButton[workingTeacherList.size()];
         
         // Gets all the teachers not working on the specified day.
         notWorkingTeacherList = teacherController.getTeachersNotForDay(day);
@@ -714,7 +711,18 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
             // Text will appear in the centre of the combo box
             ((JLabel) teacherNameList[i].getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
             
+            // Adds the combo box to that header
             teacherHeader[i].add(teacherNameList[i]);
+            
+            // Initializes the delete button for that teacher header to allow the deletion of a teacher for the schedule
+            deleteTeacherButton[i] = new JButton();
+            deleteTeacherButton[i].setPreferredSize(new Dimension(30, 30));
+            deleteTeacherButton[i].addActionListener(this);
+            deleteTeacherButton[i].setToolTipText("<html> Click this button to <b> delete </b> the teacher from the swimming class schedule. </html>");
+            deleteTeacherButton[i].setIcon(new ImageIcon("images/icons/16x16/delete.png"));
+            
+            // Adds the delete button to that header
+            teacherHeader[i].add(deleteTeacherButton[i]);
         }
     }
     
@@ -804,10 +812,10 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
                         teacherController.updateTeacher(teacher);
 
                         // Loops through the entire list of classes for that teacher and changes to the new teacher.
-                        for (int x = 0; x < teacherClassesList[i].size(); x++) {
-                            teacherClassesList[i].get(x).setTeacher(teacher);
+                        for (int x = 0; x < teachersClassesLists[i].size(); x++) {
+                            teachersClassesLists[i].get(x).setTeacher(teacher);
                             // Updates the swimming class record with new teacher
-                            swimmingClassesController.updateSwimmingClass(teacherClassesList[i].get(x));
+                            swimmingClassesController.updateSwimmingClass(teachersClassesLists[i].get(x));
                         }
 
                         // Re-loads this panel to finish and load changes.
@@ -885,48 +893,67 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
                 // Checks the input for the user is valid (contains numbers and ':') and must be format 00:00
                 if (timeslotTimeString.matches("[0-9:]*") && timeslotTimeString.matches("\\d{2}:\\d{2}")) {
                     
-                    // Removes the colon from the string
-                    timeslotTimeString = timeslotTimeString.replace(":", "");
+                    // Splits the timeslot time string into two strings
+                    final String[] timeslotTimes = timeslotTimeString.split(":");
                     
-                    // Converts the timeslot time string into an int
-                    final int timeslotTimeInt = Integer.parseInt(timeslotTimeString);
+                    // Converts the first two digits of the timeslot time string into an int
+                    final int timeslotTimeInt1 = Integer.parseInt(timeslotTimes[0]);
                     
-                    // Creates/Initialises a duplicate flag to false (no dupes)
-                    boolean duplicateFlag = false;
+                    // Converts the last two digits of the timeslot time string into an int
+                    final int timeslotTimeInt2 = Integer.parseInt(timeslotTimes[1]);
                     
-                    // Loops through the list of timeslots for this day checking if any of them have the same time
-                    for (Timeslot timeslot: timeslotList) {
-                        if (timeslot.getTime() == timeslotTimeInt) {
-                            // If one does have the same time, change the duplicate flag to true
-                            duplicateFlag = true;
-                        }
-                    }
-                    
-                    // Checks if the duplicate flag is false
-                    if (!duplicateFlag) {
-                    
-                        // Creates/Initializes a new timeslot for this day with the time specified by the suer
-                        final Timeslot newTimeslot = new Timeslot(day, timeslotTimeInt);
+                    // If the time entered was an invalid time (time cannot be 0 as db doesnt store it correctly if '00:..')
+                    if (timeslotTimeInt1 > 23 || timeslotTimeInt1 < 1 || timeslotTimeInt2 > 59 || timeslotTimeInt2 < 0) {
 
-                        // Creates the timeslot in the database
-                        timeslotController.createTimeslot(newTimeslot);
-
-                        // Loops through the amount of teachers working on this day and creates a swimming class for that timeslot for them
-                        for (int i = 0; i < workingTeacherList.size(); i++) {
-                            final SwimmingClasses swimmingClass = new SwimmingClasses(SwimmingLevel.MOMS_AND_DUCKS, 
-                                                                        newTimeslot, workingTeacherList.get(i), 5);
-                            swimmingClassesController.createSwimmingClass(swimmingClass);
-                        }
-
-                        // Re-loads this panel with the values newly stored in the database
-                        smsBodyPanelRef.addSchedulePanel(day, true);
-                    } else {
-                        // If there is a duplicate timeslot time entered, display error message
-                        JOptionPane.showMessageDialog(null, "<HTML> The Timeslot you entered was a <b> <font color='red'> duplicate time </font> </b> of an existing timeslot. \n"
-                                + "Please enter a unique timeslot time!\n"
+                        // display appropriate error message
+                        JOptionPane.showMessageDialog(null, "<HTML> The Timeslot you entered was an <b> <font color='red'> invalid time </font> </b>. \n"
+                                + "Please enter a valid 24 hour clock timeslot time! (eg. 19:30 )\n"
                                             , "Incorrect Timeslot time", JOptionPane.OK_OPTION);
+                        
+                    } else {
+
+                        // Removes the colon from the string
+                        timeslotTimeString = timeslotTimeString.replace(":", "");
+
+                        // Converts the timeslot time string into an int
+                        final int timeslotTimeInt = Integer.parseInt(timeslotTimeString);
+                        
+                        // Creates/Initialises a duplicate flag to false (no dupes)
+                        boolean duplicateFlag = false;
+
+                        // Loops through the list of timeslots for this day checking if any of them have the same time
+                        for (Timeslot timeslot: timeslotList) {
+                            if (timeslot.getTime() == timeslotTimeInt) {
+                                // If one does have the same time, change the duplicate flag to true
+                                duplicateFlag = true;
+                            }
+                        }
+
+                        // Checks if the duplicate flag is false
+                        if (!duplicateFlag) {
+
+                            // Creates/Initializes a new timeslot for this day with the time specified by the suer
+                            final Timeslot newTimeslot = new Timeslot(day, timeslotTimeInt);
+
+                            // Creates the timeslot in the database
+                            timeslotController.createTimeslot(newTimeslot);
+
+                            // Loops through the amount of teachers working on this day and creates a swimming class for that timeslot for them
+                            for (int i = 0; i < workingTeacherList.size(); i++) {
+                                final SwimmingClasses swimmingClass = new SwimmingClasses(SwimmingLevel.MOMS_AND_DUCKS, 
+                                                                            newTimeslot, workingTeacherList.get(i), 5);
+                                swimmingClassesController.createSwimmingClass(swimmingClass);
+                            }
+
+                            // Re-loads this panel with the values newly stored in the database
+                            smsBodyPanelRef.addSchedulePanel(day, true);
+                        } else {
+                            // If there is a duplicate timeslot time entered, display error message
+                            JOptionPane.showMessageDialog(null, "<HTML> The Timeslot you entered was a <b> <font color='red'> duplicate time </font> </b> of an existing timeslot. \n"
+                                    + "Please enter a unique timeslot time!\n"
+                                                , "Incorrect Timeslot time", JOptionPane.OK_OPTION);
+                        }
                     }
-                    
                 } else {
                     // if the timeslot time was an invalid input, display error message
                     JOptionPane.showMessageDialog(null, "<HTML> The Timeslot you entered was an <b> <font color='red'> invalid </font> </b> timeslot time. </HTML> \n"
@@ -935,6 +962,69 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
             }
     }
     
+    /**
+     * Shows an option pane asking the user to select the teacher to add to this days swimming classh schedule.
+     */
+    public void attemptAddTeacher() {
+        // Creates an array of strings to hold all the not working teachers names.
+        final String[] notWorkingTeachers = new String[notWorkingTeacherList.size()];
+        
+        // Loops through all the not working teachers in the list adding them to the string array
+        for (int i = 0; i < notWorkingTeacherList.size(); i++) {
+            notWorkingTeachers[i] = notWorkingTeacherList.get(i).getTeacherName();
+        }
+        
+        // Opens an option pane with a combo box containing the teachers name to select
+        final String newTeacher = (String) JOptionPane.showInputDialog(null,
+                                                            "Choose the teacher to add to todays class schedule\n",
+                                                            "Add Teacher to Class Schedule",
+                                                            JOptionPane.PLAIN_MESSAGE,
+                                                            new ImageIcon("images/icons/user_add.png"),
+                                                            notWorkingTeachers,
+                                                            0);
+
+        // If the new teacher isn't null (if the user pressed 'ok' without selecting a teacher)
+        if (newTeacher != null) {
+            // Loops through all the not working teachers finding which one was chosen
+            for (int i = 0; i < notWorkingTeacherList.size(); i++) {
+                if (newTeacher.equals(notWorkingTeacherList.get(i).getTeacherName())) {
+
+                    // Sets working on this day to true
+                    if (day == Day.MONDAY) {
+                        notWorkingTeacherList.get(i).setWorkMonday(true);
+                    } else if (day == Day.TUESDAY) {
+                        notWorkingTeacherList.get(i).setWorkTuesday(true);
+                    } else if (day == Day.WEDNESDAY) {
+                        notWorkingTeacherList.get(i).setWorkWednesday(true);
+                    } else if (day == Day.THURSDAY) {
+                        notWorkingTeacherList.get(i).setWorkThursday(true);
+                    } else if (day == Day.FRIDAY) {
+                        notWorkingTeacherList.get(i).setWorkFriday(true);
+                    } else if (day == Day.SATURDAY) {
+                        notWorkingTeacherList.get(i).setWorkSaturday(true);
+                    } else if (day == Day.SUNDAY) {
+                        notWorkingTeacherList.get(i).setWorkSunday(true);
+                    }
+
+                    // Updates the teacher in the database
+                    teacherController.updateTeacher(notWorkingTeacherList.get(i));
+
+                    // Loops through all the timeslots on this day
+                    for (Timeslot t: timeslotList) {
+                        // Creates and initializes the swimming classes with the timeslot and new teacher
+                        final SwimmingClasses swimmingClass = new SwimmingClasses(SwimmingLevel.DUCKS, t, notWorkingTeacherList.get(i), 5);
+
+                        // Adds the swimming classes to the database
+                        swimmingClassesController.createSwimmingClass(swimmingClass);
+                    }
+
+                    // Re-loads this panel in editing mode with the new values
+                    smsBodyPanelRef.addSchedulePanel(day, true);
+                }
+            }
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -956,6 +1046,12 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
             // Reloads the origional panel without saving any changes
             smsBodyPanelRef.addSchedulePanel(day, false);
          
+        // If the source of the button press was the add teacher button button...
+        } else if (e.getSource() == addTeacherButton) {
+            
+            // Opens up a dialog for the user to add a new teacher to this days class schedule
+            attemptAddTeacher();
+            
         // If the source of the button press was the add timeslot button button...
         } else if (e.getSource() == addTimeslotButton) {
             
@@ -964,14 +1060,14 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
         
         // If the source was none of those then it should be a delete timeslot button
         } else {
-            // Loop through all delete buttons checking if the source came from that button
+            // Loop through all delete timeslot buttons checking if the source came from that button
             for (int i = 0; i < deleteTimeslotButton.length; i++) {
                 if (e.getSource() == deleteTimeslotButton[i]) {
                     
                     // Shows an Option Pane confirming if wanting to delete the chosen timeslot
                     final int answer = JOptionPane.showConfirmDialog(null, 
                             "<HTML> Do you want to <b> <font color='red'> delete </font> </b>this timeslot and all swimming classes associated with it?!</HTML> \n"
-                                    , "Delete Timeslot and associated Swimming Classes?", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                                    , "Delete Timeslot and Associated Swimming Classes?", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
                     // Switch to determine users choice.
                     switch (answer) {
@@ -980,11 +1076,59 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
                                 // Reloads the schedule for the day with the new database values
                                 smsBodyPanelRef.addSchedulePanel(day, true);
                                 break;
-                        // The user does not want to format the db so don't do anything.
+                        // The user does not want to delete the timeslot so don't do anything.
                         case 1: break;
                         default:break;
                     }
                 }
+            }
+            
+            //Loops through all delete teacher buttons checking if the source came from that button
+            for (int i = 0; i < deleteTeacherButton.length; i++) {
+                if (e.getSource() == deleteTeacherButton[i]) {
+                    // Shows an Option Pane confirming if wanting to delete the chosen teacher
+                    final int answer = JOptionPane.showConfirmDialog(null, 
+                            "<HTML> Do you want to <b> <font color='red'> delete </font> </b>this teacher from todays schedule and all of they're taught swimming classes on todays schedule?!</HTML> \n"
+                                    , "Delete Teacher and Associated Swimming Classes?", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+                    // Switch to determine users choice.
+                    switch (answer) {
+                        // The user wants to delete that teacher from todays schedule
+                        case 0: // Set the teacher to not working on this day
+                                if (day == Day.MONDAY) {
+                                    workingTeacherList.get(i).setWorkMonday(false);
+                                } else if (day == Day.TUESDAY) {
+                                    workingTeacherList.get(i).setWorkTuesday(false);
+                                } else if (day == Day.WEDNESDAY) {
+                                    workingTeacherList.get(i).setWorkWednesday(false);
+                                } else if (day == Day.THURSDAY) {
+                                    workingTeacherList.get(i).setWorkThursday(false);
+                                } else if (day == Day.FRIDAY) {
+                                    workingTeacherList.get(i).setWorkFriday(false);
+                                } else if (day == Day.SATURDAY) {
+                                    workingTeacherList.get(i).setWorkSaturday(false);
+                                } else if (day == Day.SUNDAY) {
+                                    workingTeacherList.get(i).setWorkSunday(false);
+                                } 
+                                
+                                // Updates the teacher in the database
+                                teacherController.updateTeacher(workingTeacherList.get(i));
+                                
+                                // Loops through all the swimming classes that that teacher teaches and deletes them
+                                for (SwimmingClasses swimmingClass: teachersClassesLists[i]) {
+                                    swimmingClassesController.deleteSwimmingClass(swimmingClass);
+                                }
+                                
+                                // Reloads the schedule for the day with the new database values
+                                smsBodyPanelRef.addSchedulePanel(day, true);
+                                break;
+                        // The user does not want to delete the teacher so don't do anything.
+                        case 1: break;
+                        default:break;
+                    }
+                }
+                
+                
             }
         }
     
@@ -995,29 +1139,18 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
     public void mouseClicked(MouseEvent e) {
         // Checks the mouse was double clicked
         if (e.getClickCount() == 2) {
-            // loops through the first column label array checking if it was the source of the mouse click
-            for (int i = 0; i < teacher1ClassesColumn.length; i++) {
-                if (e.getSource() == teacher1ClassesColumn[i]) {
-                    // Loads the appropriate swimming class that was clicking into the view inidividual swimming class panel
-                    smsBodyPanelRef.addViewIndividualSCPanel(teacherClassesList[0].get(i));
-                }
-            }
-            // loops through the second column label array checking if it was the source of the mouse click
-            for (int i = 0; i < teacher2ClassesColumn.length; i++) {
-                if (e.getSource() == teacher2ClassesColumn[i]) {
-                    // Loads the appropriate swimming class that was clicking into the view inidividual swimming class panel
-                    smsBodyPanelRef.addViewIndividualSCPanel(teacherClassesList[1].get(i));
-                }
-            }
-            // loops through the third column label array checking if it was the source of the mouse click
-            for (int i = 0; i < teacher3ClassesColumn.length; i++) {
-                if (e.getSource() == teacher3ClassesColumn[i]) {
-                    // Loads the appropriate swimming class that was clicking into the view inidividual swimming class panel
-                    smsBodyPanelRef.addViewIndividualSCPanel(teacherClassesList[2].get(i));
+            // Loops through the first dimenion in the array of labels
+            for (int i = 0; i < teacherClassesColumnLabels.length; i++) {
+                // Loops through the second dimension of the array of labels
+                for (int x = 0; x < teacherClassesColumnLabels[0].length; x++) {
+                    // Checks if that index in the array of labels was the source of the double mouse click
+                    if (e.getSource() == teacherClassesColumnLabels[i][x]) {
+                        // Loads the appropriate swimming class that was clicking into the view inidividual swimming class panel
+                        smsBodyPanelRef.addViewIndividualSCPanel(teachersClassesLists[i].get(x));
+                    }
                 }
             }
         }
-        
     }
 
     @Override
