@@ -1,5 +1,6 @@
 package uk.ac.tees.m2081433.swimritemanagementsuite.view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.JPanel;
@@ -24,13 +25,20 @@ public class SMSBodyPanel extends JPanel {
     JScrollPane currentlyDisplayedPanel;
     
     /**
+     * The reference to the panel this body panel is on (for when logging out)
+     */
+    SMSMainPanel smsMainPanelRef;
+    
+    /**
      * panel to hold dynamically swapping panels.
      */
-    public SMSBodyPanel() {
+    public SMSBodyPanel(SMSMainPanel smsMainPanel) {
         // sets the smsBodyPanel JPanel attributes.
         this.setPreferredSize(new Dimension(1400, 625));
         this.setVisible(true);
         this.setBackground(Color.white);
+        
+        smsMainPanelRef = smsMainPanel;
         
         // Adds the welcome panel to this body panel.
         addWelcomePanel();
@@ -183,5 +191,17 @@ public class SMSBodyPanel extends JPanel {
         
         // Adds the view create, edit and delete login accounts panel as the curretly displayed panel on this body panel.
         addCurrentlyDisplayedPanel(cedLoginAccountsPanel);
+    }
+    
+    public void logOut() {
+        // Removes all panels on the main panel
+        smsMainPanelRef.removeAll();
+        
+        // Creates the login screen for the SMS and adds it to the main panel.
+        final SMSLoginPanel smsLoginPanel = new SMSLoginPanel(smsMainPanelRef);
+        smsMainPanelRef.add(smsLoginPanel, BorderLayout.CENTER);
+        
+        // Updates the UI of the main panel with the login screen on it.
+        smsMainPanelRef.updateUI();
     }
 }

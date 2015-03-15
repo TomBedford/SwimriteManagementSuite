@@ -65,6 +65,9 @@ public class SwimriteManagementSuite {
 
             // Initialises the database access object for each table inorder to add, edit and delete records.
             smsDatabaseManager.initializeDaos(smsConnectionSource);
+            
+            // Creates the default SMS Admin account if no other admins exist in the database
+            smsDatabaseManager.checkLoginAccountsForAdmin();
         }
     }
     
@@ -105,6 +108,9 @@ public class SwimriteManagementSuite {
         smsFrame.setResizable(false);
     }
     
+    /**
+     * Adds 20 student records test data.
+     */
     public static void addStudentRecords() {
         
         for (int i = 0; i < 10; i++) {
@@ -128,7 +134,7 @@ public class SwimriteManagementSuite {
                 DatabaseManager.studentAddressDAO.create(sa);
 
                 final StudentRecord sr = new StudentRecord("Andrew Smith " + i, "30/01/199" + i, "0123456789" + i, sa,
-                        "n/a", "John Smith", SwimmingLevel.HONOURS);
+                        "n/a", "John Smith", SwimmingLevel.HONORS);
                 DatabaseManager.studentRecordDAO.create(sr);
             } catch (SQLException e) {
                 System.out.println("adding Test SR's: Error creating the test student addresses & records.");

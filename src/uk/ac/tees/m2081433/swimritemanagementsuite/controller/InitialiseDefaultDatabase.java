@@ -8,6 +8,8 @@ import uk.ac.tees.m2081433.swimritemanagementsuite.model.SwimmingClasses;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.SwimmingLevel;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.Teacher;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.Timeslot;
+import uk.ac.tees.m2081433.swimritemanagementsuite.view.LoginDialog;
+import uk.ac.tees.m2081433.swimritemanagementsuite.view.SMSBodyPanel;
 
 
 /**
@@ -22,9 +24,20 @@ import uk.ac.tees.m2081433.swimritemanagementsuite.model.Timeslot;
 public class InitialiseDefaultDatabase {
     
     /**
-     * Confirmation proceedure that leads to formatting of db and insertion of default classes.
+     * The SMS Body Panel reference for when swapping panels on the body panel.
      */
-    public InitialiseDefaultDatabase() {
+    SMSBodyPanel smsBodyPanel;
+    
+    
+    
+    /**
+     * Confirmation proceedure that leads to formatting of db and insertion of default classes.
+     * @param smsBP The reference to the SMS Body panel to close any components that exist on it after the format.
+     */
+    public InitialiseDefaultDatabase(SMSBodyPanel smsBP) {
+        
+        // Initializes this panels body panel reference
+        smsBodyPanel = smsBP;
         
         // Shows an Option Pane asking if wanting to format db.
         int answer = JOptionPane.showConfirmDialog(null, 
@@ -38,46 +51,30 @@ public class InitialiseDefaultDatabase {
         // Switch to determine users choice.
         switch (answer) {
             // The user wants to format the db.
-            case 0: String passwordEntered = null;
-                    
-                    // Loads the database administrator password.
-                    final String dbAdminPassword = getDBAdminPassword();
-                    
-                    // Shows input dialog asking for password confirmation.
-                    passwordEntered = JOptionPane.showInputDialog(null, 
-                        "<HTML> Please enter the <u>database administrators password</u> to </HTML> \n"
-                        + "continue with the formatting of the 3 tables."
-                        , "Enter Password Here...");
+            case 0: // Calls static method to load admin authentication dialog
+                    final boolean adminAuthentication = LoginDialog.adminLoginDialog("Administrator permission required to format the database tables. Please Log In...");
 
-                    // If the password entered is not equal to null (if they didnt click 'cancel' button) do...
-                    if (passwordEntered != null) {
-                            
-                        // If the password is correct.
-                        if (passwordEntered.equals(dbAdminPassword)) {
+                    // If admin authentication accepted, show final confirmation dialog.
+                    if (adminAuthentication == true) {
 
-                            // Show final format db confirmation dialog.
-                            answer = JOptionPane.showConfirmDialog(null, 
-                                            "<HTML> Are you sure you want to completely <b> <font color='red'> delete </font> </b> <u>all</u> </HTML> \n"
-                                            + "- Timeslot Records\n"
-                                            + "- Teacher Records\n"
-                                            + "- Swimming Class Records\n"
-                                            + "<HTML>and reset them to the <u>default</u> values? </HTML>"
-                                            , "FORMAT FINAL CONFIRMATION", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                        // Show final format db confirmation dialog.
+                        answer = JOptionPane.showConfirmDialog(null,
+                                "<HTML> Are you sure you want to completely <b> <font color='red'> delete </font> </b> <u>all</u> </HTML> \n"
+                                + "- Timeslot Records\n"
+                                + "- Teacher Records\n"
+                                + "- Swimming Class Records\n"
+                                + "<HTML>and reset them to the <u>default</u> values? </HTML>", "FORMAT FINAL CONFIRMATION", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
-                            // If the answer to the dialog is yes, run the method to format the db to factory settings.
-                            if (answer == 0) {
-                                resetToDefaultDB();
-                            }
-                        // If the password is not correct.
-                        } else {
-                            JOptionPane.showMessageDialog(null, "<HTML> The password you entered was <b> <font color='red'> incorrect </font> </b>. </HTML> \n"
-                                            , "Incorrect Password", JOptionPane.OK_OPTION);
+                        // If the answer to the dialog is yes, run the method to format the db to factory settings.
+                        if (answer == 0) {
+                            resetToDefaultDB();
                         }
                     }
-                     break;
+
+                    break;
             // The user does not want to format the db so don't do anything.
-            case 1:  break;
-            default: break;
+            case 1: break;
+            default:break;
         }
     }
     
@@ -507,7 +504,7 @@ public class InitialiseDefaultDatabase {
                 // Creates Swimming Classes for Sunday 09:00 - 17:00 (on the hour)
                 SwimmingClasses class1 = new SwimmingClasses(SwimmingLevel.GRADE_8, timeslotArray[i], teachers[0], 5);
                 SwimmingClasses class2 = new SwimmingClasses(SwimmingLevel.GRADE_9, timeslotArray[i], teachers[1], 5);
-                SwimmingClasses class3 = new SwimmingClasses(SwimmingLevel.HONOURS, timeslotArray[i], teachers[2], 5);
+                SwimmingClasses class3 = new SwimmingClasses(SwimmingLevel.HONORS, timeslotArray[i], teachers[2], 5);
 
                 DatabaseManager.swimmingClassesDAO.create(class1);
                 DatabaseManager.swimmingClassesDAO.create(class2);
@@ -525,29 +522,21 @@ public class InitialiseDefaultDatabase {
                 // Creates more Swimming Classes for Sunday 09:30 - 17:30 (on the half of the hour)
                 class1 = new SwimmingClasses(SwimmingLevel.GRADE_8, timeslotArray[i], teachers[0], 5);
                 class2 = new SwimmingClasses(SwimmingLevel.GRADE_9, timeslotArray[i], teachers[1], 5);
-                class3 = new SwimmingClasses(SwimmingLevel.HONOURS, timeslotArray[i], teachers[2], 5);
+                class3 = new SwimmingClasses(SwimmingLevel.HONORS, timeslotArray[i], teachers[2], 5);
 
                 DatabaseManager.swimmingClassesDAO.create(class1);
                 DatabaseManager.swimmingClassesDAO.create(class2);
                 DatabaseManager.swimmingClassesDAO.create(class3);
             }
+            
+            // Loads the welcome panel onto the body panel
+            smsBodyPanel.removeCurrentlyDisplayedPanel();
+            
         } catch (SQLException e) {
             // Print stack trace to help diagnose error + appropriate message to console.
             e.printStackTrace();
             System.out.println("InitialiseDefaultDatabase: Error initialising the default database tables");
         }
         
-    }
-    
-    /**
-     * Returns the database administrators password as a string from the db.
-     * @return dbAdminPassword the database administrators password.
-     */
-    public String getDBAdminPassword() {
-        String dbAdminPassword;
-        
-        dbAdminPassword = "DELETEDB";
-        
-        return dbAdminPassword;
     }
 }

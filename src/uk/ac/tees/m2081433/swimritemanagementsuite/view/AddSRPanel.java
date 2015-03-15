@@ -33,7 +33,7 @@ public class AddSRPanel extends JPanel implements ActionListener {
     /**
      * The input verifier for the student record form (validates text field inputs).
      */
-    SRFormInputVerifier inputVerifier;
+    SRFormInputVerifier inputVerifier = new SRFormInputVerifier();
     
     /**
      * The grid bag constraint to manipulate when adding components to the layout. 
@@ -198,10 +198,6 @@ public class AddSRPanel extends JPanel implements ActionListener {
      * Constructor defining panel attributes and loads all form components to go on the panel.
      */
     public AddSRPanel() {
-
-        // The input verifier for each text field input in this form.
-        inputVerifier = new SRFormInputVerifier();
-        
         // sets the AddSRPanel JPanels default attributes
         this.setPreferredSize(new Dimension(1375, 565));
         this.setVisible(true);
@@ -827,7 +823,7 @@ public class AddSRPanel extends JPanel implements ActionListener {
                                         + "Invalid field(s) highlighted in yellow\n"
                                         + "Please complete the form correctly.\n"
                                         + "(Tip: Hover over the information icon next to the invalid field to view what types of entrys are invaid)",
-                                "Error Empty Field(s)",
+                                "Error Invalid Field(s)",
                                 JOptionPane.ERROR_MESSAGE);
             } else {
                 /**

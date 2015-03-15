@@ -35,7 +35,7 @@ public class CEDTeachersPanel extends JPanel implements ActionListener {
     GridBagConstraints c;
     
     /**
-     * The Student Record Controller to interact with the Student Record database.
+     * The Teacher Controller to interact with the Teacher database table.
      */
     TeacherController teacherController = new TeacherController();
     
@@ -166,7 +166,7 @@ public class CEDTeachersPanel extends JPanel implements ActionListener {
     
     /**
      * Converts a list of teachers into a two dimensional array of objects suitable for the teacher tables parameters.
-     * @return 2 Dimensional array of object containing the formatted student records list.
+     * @return 2 Dimensional array of object containing the formatted teachers list.
      */
     public Object[][] convertListForTable() {
 
@@ -214,7 +214,7 @@ public class CEDTeachersPanel extends JPanel implements ActionListener {
         c.gridy = 2;
         this.add(spacingLabel2, c);
         
-        // Creates and initializes the panel to all of the buttons for this panel
+        // Creates and initializes the panel to hold all of the buttons for this panel
         final JPanel buttonPanel = new JPanel();
         buttonPanel.setPreferredSize(new Dimension(1200, 60));
         buttonPanel.setVisible(true);
@@ -381,7 +381,7 @@ public class CEDTeachersPanel extends JPanel implements ActionListener {
                     switch (answer) {
                         // The user wants delete the teacher
                         case 0: teacherController.deleteTeacher(teacherList.get(index));
-                                // Re-loads this panel with the edited teacher updated in the table
+                                // Re-loads this panel with the updated table
                                 smsBodyPanel.addViewCEDTeachersPanel();
                                 break;
 

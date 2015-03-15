@@ -12,6 +12,8 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import java.sql.SQLException;
+import java.util.List;
+import uk.ac.tees.m2081433.swimritemanagementsuite.model.LoginAccount;
 
 /**
  * This class manages the access to the database and database creation and maintenance.
@@ -50,6 +52,11 @@ public class DatabaseManager {
      * The Data Access Object used to access the Lesson Payment table in the mySQL database.
      */
     public static Dao<LessonPayment, Integer> lessonPaymentDAO;
+    
+    /**
+     * The Data Access Object used to access the Login Account table in the mySQL database.
+     */
+    public static Dao<LoginAccount, Integer> loginAccountDAO;
     
     /**
      * The Data Access Object used to access the Student Address table in the mySQL database.
@@ -106,11 +113,12 @@ public class DatabaseManager {
 
         try {
             // Creates all tables within the database if they do not already exist.
-            TableUtils.createTableIfNotExists(connectionSource, SwimmingClasses.class);
             TableUtils.createTableIfNotExists(connectionSource, LessonBlock.class);
             TableUtils.createTableIfNotExists(connectionSource, LessonPayment.class);
+            TableUtils.createTableIfNotExists(connectionSource, LoginAccount.class);
             TableUtils.createTableIfNotExists(connectionSource, StudentAddress.class);
             TableUtils.createTableIfNotExists(connectionSource, StudentRecord.class);
+            TableUtils.createTableIfNotExists(connectionSource, SwimmingClasses.class);
             TableUtils.createTableIfNotExists(connectionSource, Teacher.class);
             TableUtils.createTableIfNotExists(connectionSource, Timeslot.class);
         } catch (SQLException e) {
@@ -131,6 +139,7 @@ public class DatabaseManager {
             // Initialises all database acces objects for each table within the db.
             lessonBlockDAO = DaoManager.createDao(connectionSource, LessonBlock.class);
             lessonPaymentDAO = DaoManager.createDao(connectionSource, LessonPayment.class);
+            loginAccountDAO = DaoManager.createDao(connectionSource, LoginAccount.class);
             studentAddressDAO = DaoManager.createDao(connectionSource, StudentAddress.class);
             studentRecordDAO = DaoManager.createDao(connectionSource, StudentRecord.class);
             swimmingClassesDAO = DaoManager.createDao(connectionSource, SwimmingClasses.class);
@@ -140,6 +149,28 @@ public class DatabaseManager {
             // Print stack trace to help diagnose error + appropriate message to console.
             e.printStackTrace();
             System.out.println("initializeDaos: Error initializing the database access objects");
+        }
+    }
+    
+    /**
+     * Checks the login account database for an admin account, if one doesn't exist then the default admin account is
+     * created.
+     */
+    public void checkLoginAccountsForAdmin() {
+        try {
+            // Gets a login account if the username equals the one specified
+            final List<LoginAccount> adminLoginAccounts = DatabaseManager.loginAccountDAO.queryForEq(LoginAccount.ADMIN_COLUMN_NAME, true);
+
+            // If the list is empty then create the default admin account
+            if (adminLoginAccounts.isEmpty()) {
+                final LoginAccount defaultAdmin = new LoginAccount("Tom_Bedford", 
+                        "ce29cc33bd2a6e1acbc82b97d4618ddc83f44b9d7d0efe5ee2b4147cc237b7c1f90c129d9e786456d29f896bdc361549bdad08fca7b7308c9fa43c51eb857312", 
+                        "2fcc62eb46eae117ea2cbb96", true, "What was your first dog?", 
+                        "ce94d02e85dbfb6d22d799300a3e5ae92262cd2187681b52c21011d64c5753dbffb78b53e4deae51efbf0d66a6d3d647569d9a4f64735cf7e893213307e532c7");
+                DatabaseManager.loginAccountDAO.create(defaultAdmin);
+            } 
+        } catch (SQLException e) {
+            System.out.println("checkLoginAccountsForAdmin: Error checking login accounts for an admin account.");
         }
     }
 }

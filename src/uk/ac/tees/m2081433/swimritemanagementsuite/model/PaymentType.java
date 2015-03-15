@@ -7,15 +7,28 @@ public enum PaymentType {
     /**
      * Payment by credit or debit card.
      */
-    CARD, 
-    
+    CARD {
+                @Override
+                public String toString() {
+                    return "Credit/Debit Card";
+                }
+            },
     /**
      * Payment by cheque.
      */
-    CHEQUE, 
-    
+    CHEQUE {
+                @Override
+                public String toString() {
+                    return "Cheque";
+                }
+            },
     /**
      * Payment by cash.
      */
-    CASH
+    CASH {
+                @Override
+                public String toString() {
+                    return "Cash";
+                }
+            }
 }

@@ -16,7 +16,6 @@ public class TeacherController {
      * @param teacher The teacher to add to the db.
      */
     public void createTeacher(Teacher teacher) {
-        
         try {
             // Creates the teacher in the database
             DatabaseManager.teacherDAO.create(teacher);
@@ -44,7 +43,6 @@ public class TeacherController {
      * @param teacher The teacher to delete from the database
      */
     public void deleteTeacher(Teacher teacher) {
-        
         try {
             // Deletes the teacher in the database
             DatabaseManager.teacherDAO.delete(teacher);
@@ -68,7 +66,7 @@ public class TeacherController {
             // Gets all teachers from the teachers table in the database
             teacherList = DatabaseManager.teacherDAO.queryForAll();
         } catch (SQLException e) {
-            System.out.println("getTeachersForDay: Error getting teachers for a specific day.");
+            System.out.println("getAllTeachers: Error getting all teachers.");
         }
         
         return teacherList;

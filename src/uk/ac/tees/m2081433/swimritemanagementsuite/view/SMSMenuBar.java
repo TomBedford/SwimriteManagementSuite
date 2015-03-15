@@ -89,6 +89,16 @@ public class SMSMenuBar extends JMenuBar {
      */
     public static final String INITIALISEDBMENUITEM_NAME = "Initialise/Format to default database settings";
     
+    /**
+     * The name of the menu item to view the about page for the application.
+     */
+    public static final String ABOUTMENUITEM_NAME = "About";
+    
+    /**
+     * The name of the menu item to start to log out of the swimrite management suite.
+     */
+    public static final String LOGOUTMENUITEM_NAME = "Log Out";
+    
     
     
     
@@ -223,31 +233,47 @@ public class SMSMenuBar extends JMenuBar {
         this.add(Box.createHorizontalGlue());
         
         // Creates the fourth menu item
-        final JMenu advancedOptionsMenu = new JMenu("Advanced Options");
-        advancedOptionsMenu.setBackground(Color.blue);
+        final JMenu optionsMenu = new JMenu("Options");
+        optionsMenu.setBackground(Color.blue);
         
-        // Creates the create, edit and delete teachers menu item and adds it to the advanced options menu bar
+        // Creates the about menu item and adds it to the options menu bar
+        final JMenuItem aboutMenuItem = new JMenuItem(ABOUTMENUITEM_NAME);
+        aboutMenuItem.addActionListener(headerActionEventController);
+        optionsMenu.add(aboutMenuItem);
+        
+        // Adds a seperator to the options menu
+        optionsMenu.addSeparator();
+        
+        // Creates the create, edit and delete teachers menu item and adds it to the options menu bar
         final JMenuItem cedTeachersMenuItem = new JMenuItem(CEDTEACHERSMENUITEM_NAME);
         cedTeachersMenuItem.addActionListener(headerActionEventController);
-        advancedOptionsMenu.add(cedTeachersMenuItem);
+        optionsMenu.add(cedTeachersMenuItem);
         
-        // Adds a seperator to the advanced options menu
-        advancedOptionsMenu.addSeparator();
+        // Adds a seperator to the options menu
+        optionsMenu.addSeparator();
         
-        // Creates the create, edit and delete login accounts menu item and adds it to the advanced options menu bar
+        // Creates the create, edit and delete login accounts menu item and adds it to the options menu bar
         final JMenuItem cedLoginAccountsMenuItem = new JMenuItem(CEDLOGINACCOUNTSMENUITEM_NAME);
         cedLoginAccountsMenuItem.addActionListener(headerActionEventController);
-        advancedOptionsMenu.add(cedLoginAccountsMenuItem);
+        optionsMenu.add(cedLoginAccountsMenuItem);
         
-        // Adds a seperator to the advanced options menu
-        advancedOptionsMenu.addSeparator();
+        // Adds a seperator to the options menu
+        optionsMenu.addSeparator();
         
-        // Creates the initialise/format db menu item and adds it to the advanced options menu bar
+        // Creates the initialise/format db menu item and adds it to the options menu bar
         final JMenuItem initialiseDbMenuItem = new JMenuItem(INITIALISEDBMENUITEM_NAME);
         initialiseDbMenuItem.addActionListener(headerActionEventController);
-        advancedOptionsMenu.add(initialiseDbMenuItem);
+        optionsMenu.add(initialiseDbMenuItem);
+        
+        // Adds a seperator to the options menu
+        optionsMenu.addSeparator();
+        
+        // Creates the log out menu item and adds it to the options menu bar
+        final JMenuItem logOutMenuItem = new JMenuItem(LOGOUTMENUITEM_NAME);
+        logOutMenuItem.addActionListener(headerActionEventController);
+        optionsMenu.add(logOutMenuItem);
         
         // Adds the advanced option menu bar to this menu bar
-        this.add(advancedOptionsMenu);
+        this.add(optionsMenu);
     }
 }

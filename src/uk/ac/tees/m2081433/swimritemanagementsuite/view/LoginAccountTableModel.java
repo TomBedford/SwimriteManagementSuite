@@ -4,9 +4,9 @@ import javax.swing.ImageIcon;
 import javax.swing.table.AbstractTableModel;
 
 /**
- * The table model for the Teacher table allows work days to have image icon if true in teacher table.
+ * The table model for the Login Account table allows Admin column to have image icon if value = true.
  */
-class TeacherTableModel extends AbstractTableModel {
+class LoginAccountTableModel extends AbstractTableModel {
     
     /**
      * Two dimensional object array to hold the data for the table.
@@ -23,7 +23,7 @@ class TeacherTableModel extends AbstractTableModel {
      * @param tableData the data to be stored in the table.
      * @param tableHeaders The headers for the table.
      */
-    public TeacherTableModel(Object[][] tableData, String[] tableHeaders) {
+    public LoginAccountTableModel(Object[][] tableData, String[] tableHeaders) {
         super();
         // Sets the data to be stored in the table
         this.data = tableData;
@@ -47,7 +47,7 @@ class TeacherTableModel extends AbstractTableModel {
     }
 
     /**
-     * Overridden method to render image icons in the work day columns.
+     * Overridden method to render image icons in the Admin column.
      * @param row the row of the cell to render
      * @param col the column of the cell to render
      * @return the object to store in that cell
@@ -55,17 +55,17 @@ class TeacherTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int row, int col) {
         
-        // If the column is not equal to the attendance type column
-        if (col == 0) {
+        // If the column is not equal to the admin column
+        if (col != 1) {
             // Return the normal object data
             return data[row][col];
-        // Otherwise it is the attendance type column
+        // Otherwise it is the admin column
         } else {
             
             // If the data in that cell is not equal to null
             if (data[row][col] != null) {
             
-                // return the appropriate image icon for the work boolean
+                // return the appropriate image icon for the admin boolean
                 if (data[row][col].equals(true)) {
                     return new ImageIcon("images/icons/16x16/accept.png");
                 } else {
@@ -78,13 +78,13 @@ class TeacherTableModel extends AbstractTableModel {
     }
 
     /**
-     * Returns the proper class types for each column as the work days columns should now be image icon.
+     * Returns the proper class types for each column as the admin column should now be image icon.
      * @param col the column to check the class type of
      * @return the class type of that column
      */
     @Override
     public Class<?> getColumnClass(int col) {
-        if (col == 0) {
+        if (col != 1) {
             return String.class;
         } else {
             return ImageIcon.class;

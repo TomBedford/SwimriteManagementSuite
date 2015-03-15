@@ -7,35 +7,70 @@ public enum Day {
     /**
      * Monday the first day of the week.
      */
-    MONDAY,
+    MONDAY{
+                @Override
+                public String toString() {
+                    return "Monday";
+                }
+            },
     
     /**
      * Tuesday the second day of the week.
      */
-    TUESDAY, 
+    TUESDAY {
+                @Override
+                public String toString() {
+                    return "Tuesday";
+                }
+            }, 
     
     /**
      * Wednesday the third day of the week.
      */
-    WEDNESDAY, 
+    WEDNESDAY {
+                @Override
+                public String toString() {
+                    return "Wednesday";
+                }
+            }, 
     
     /**
      * Thursday the fourth day of the week.
      */
-    THURSDAY, 
+    THURSDAY {
+                @Override
+                public String toString() {
+                    return "Thursday";
+                }
+            }, 
     
     /**
      * Friday the fifth day of the week.
      */
-    FRIDAY, 
+    FRIDAY {
+                @Override
+                public String toString() {
+                    return "Friday";
+                }
+            }, 
     
     /**
      * Saturday the sixth day of the week.
      */
-    SATURDAY,
+    SATURDAY {
+                @Override
+                public String toString() {
+                    return "Saturday";
+                }
+            },
     
     /**
      * Sunday the seventh day of the week.
      */
-    SUNDAY
+    SUNDAY {
+                @Override
+                public String toString() {
+                    return "Sunday";
+                }
+            },
 }

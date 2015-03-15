@@ -321,12 +321,11 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
         
         // If the timeslot list is empty and the working teacher list is empty add begin label
         if (timeslotList.isEmpty() && workingTeacherList.isEmpty()) {
-            final JLabel beginLabel = new JLabel("<HTML> Enter <b>Editing Mode</b> To Begin the Swimming Class Scheduling</HTML>", SwingConstants.CENTER);
+            final JLabel beginLabel = new JLabel("<HTML> Enter <b>Editing Mode</b> To Begin the Swimming Class Scheduling...</HTML>", SwingConstants.CENTER);
             beginLabel.setPreferredSize(new Dimension(525, 50));
             beginLabel.setOpaque(true);
-            beginLabel.setBorder(BorderFactory.createRaisedBevelBorder());
             beginLabel.setVisible(true);
-            beginLabel.setBackground(smsBlue);
+            beginLabel.setBackground(Color.white);
             beginLabel.setFont(tableHeaderFont);
 
             // The coordinates for where to add this component to the layout.

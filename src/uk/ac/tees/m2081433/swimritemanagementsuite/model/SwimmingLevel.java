@@ -4,178 +4,284 @@ package uk.ac.tees.m2081433.swimritemanagementsuite.model;
  * Enum for the different available swimming levels/ability levels at Swimrite Leisure.
  */
 public enum SwimmingLevel {
+
     /**
      * Lesson for kids ages 3 months - 3 years with parents in the pool assisting.
      */
-    MOMS_AND_DUCKS, 
-    
+    MOMS_AND_DUCKS {
+                @Override
+                public String toString() {
+                    return "Moms and Ducks";
+                }
+            },
     /**
      * Lesson for new swimmers, kids 3 - 6 years.
      */
-    DUCKS, 
-    
+    DUCKS {
+                @Override
+                public String toString() {
+                    return "Ducks";
+                }
+            },
     /**
      * Lesson for new swimmers, kids 6+ years.
      */
-    BEGINNERS, 
-    
-    
-    
+    BEGINNERS {
+                @Override
+                public String toString() {
+                    return "Beginners";
+                }
+            },
     /**
-     * Lesson for swimming at grade -1.
+     * Lesson for swimming at grade 1-.
      */
-    GRADE_1_MINUS, 
-    
+    GRADE_1_MINUS {
+                @Override
+                public String toString() {
+                    return "Grade 1-";
+                }
+            },
     /**
      * Lesson for swimming at grade 1.
      */
-    GRADE_1, 
-    
+    GRADE_1 {
+                @Override
+                public String toString() {
+                    return "Grade 1";
+                }
+            },
     /**
-     * Lesson for swimming at grade +1.
+     * Lesson for swimming at grade 1+.
      */
-    GRADE_1_PLUS, 
-    
-    
-    
+    GRADE_1_PLUS {
+                @Override
+                public String toString() {
+                    return "Grade 1+";
+                }
+            },
     /**
-     * Lesson for swimming at grade -2.
+     * Lesson for swimming at grade 2-.
      */
-    GRADE_2_MINUS, 
-    
+    GRADE_2_MINUS {
+                @Override
+                public String toString() {
+                    return "Grade 2-";
+                }
+            },
     /**
      * Lesson for swimming at grade 2.
      */
-    GRADE_2, 
-    
+    GRADE_2 {
+                @Override
+                public String toString() {
+                    return "Grade 2";
+                }
+            },
     /**
-     * Lesson for swimming at grade +2.
+     * Lesson for swimming at grade 2+.
      */
-    GRADE_2_PLUS,
-    
-    
-    
+    GRADE_2_PLUS {
+                @Override
+                public String toString() {
+                    return "Grade 2+";
+                }
+            },
     /**
-     * Lesson for swimming at grade -3.
+     * Lesson for swimming at grade 3-.
      */
-    GRADE_3_MINUS,
-    
+    GRADE_3_MINUS {
+                @Override
+                public String toString() {
+                    return "Grade 3-";
+                }
+            },
     /**
      * Lesson for swimming at grade 3.
      */
-    GRADE_3, 
-    
+    GRADE_3 {
+                @Override
+                public String toString() {
+                    return "Grade 3";
+                }
+            },
     /**
-     * Lesson for swimming at grade +3.
+     * Lesson for swimming at grade 3+.
      */
-    GRADE_3_PLUS,
-    
-    
-    
+    GRADE_3_PLUS {
+                @Override
+                public String toString() {
+                    return "Grade 3+";
+                }
+            },
     /**
-     * Lesson for swimming at grade -4.
+     * Lesson for swimming at grade 4-.
      */
-    GRADE_4_MINUS, 
-    
+    GRADE_4_MINUS {
+                @Override
+                public String toString() {
+                    return "Grade 4-";
+                }
+            },
     /**
      * Lesson for swimming at grade 4.
      */
-    GRADE_4, 
-    
+    GRADE_4 {
+                @Override
+                public String toString() {
+                    return "Grade 4";
+                }
+            },
     /**
-     * Lesson for swimming at grade +4. 
+     * Lesson for swimming at grade 4+.
      */
-    GRADE_4_PLUS, 
-    
-    
-    
+    GRADE_4_PLUS {
+                @Override
+                public String toString() {
+                    return "Grade 4+";
+                }
+            },
     /**
-     * Lesson for swimming at grade -5.
+     * Lesson for swimming at grade 5-.
      */
-    GRADE_5_MINUS, 
-    
+    GRADE_5_MINUS {
+                @Override
+                public String toString() {
+                    return "Grade 5-";
+                }
+            },
     /**
      * Lesson for swimming at grade 5.
      */
-    GRADE_5, 
-    
+    GRADE_5 {
+                @Override
+                public String toString() {
+                    return "Grade 5";
+                }
+            },
     /**
-     * Lesson for swimming at grade +5.
+     * Lesson for swimming at grade 5+.
      */
-    GRADE_5_PLUS,
-    
-    
-    
+    GRADE_5_PLUS {
+                @Override
+                public String toString() {
+                    return "Grade 5+";
+                }
+            },
     /**
-     * Lesson for swimming at grade -6.
+     * Lesson for swimming at grade 6-.
      */
-    GRADE_6_MINUS, 
-    
+    GRADE_6_MINUS {
+                @Override
+                public String toString() {
+                    return "Grade 6-";
+                }
+            },
     /**
      * Lesson for swimming at grade 6.
      */
-    GRADE_6, 
-    
+    GRADE_6 {
+                @Override
+                public String toString() {
+                    return "Grade 6";
+                }
+            },
     /**
      * Lesson for swimming at grade 6+.
      */
-    GRADE_6_PLUS, 
-    
-    
-    
+    GRADE_6_PLUS {
+                @Override
+                public String toString() {
+                    return "Grade 6+";
+                }
+            },
     /**
      * Lesson for swimming at grade 7-.
      */
-    GRADE_7_MINUS, 
-    
+    GRADE_7_MINUS {
+                @Override
+                public String toString() {
+                    return "Grade 7-";
+                }
+            },
     /**
      * Lesson for swimming at grade 7.
      */
-    GRADE_7, 
-    
+    GRADE_7 {
+                @Override
+                public String toString() {
+                    return "Grade 7";
+                }
+            },
     /**
      * Lesson for swimming at grade 7+.
      */
-    GRADE_7_PLUS, 
-    
-    
-    
+    GRADE_7_PLUS {
+                @Override
+                public String toString() {
+                    return "Grade 7+";
+                }
+            },
     /**
-     * Lesson for swimming at grade -8.
+     * Lesson for swimming at grade 8-.
      */
-    GRADE_8_MINUS, 
-    
+    GRADE_8_MINUS {
+                @Override
+                public String toString() {
+                    return "Grade 8-";
+                }
+            },
     /**
      * Lesson for swimming at grade 8.
      */
-    GRADE_8, 
-    
+    GRADE_8 {
+                @Override
+                public String toString() {
+                    return "Grade 8";
+                }
+            },
     /**
-     * Lesson for swimming at grade +8.
+     * Lesson for swimming at grade 8+.
      */
-    GRADE_8_PLUS,
-    
-    
-    
+    GRADE_8_PLUS {
+                @Override
+                public String toString() {
+                    return "Grade 8+";
+                }
+            },
     /**
-     * Lesson for swimming at grade -9.
+     * Lesson for swimming at grade 9-.
      */
-    GRADE_9_MINUS, 
-    
+    GRADE_9_MINUS {
+                @Override
+                public String toString() {
+                    return "Grade 9-";
+                }
+            },
     /**
      * Lesson for swimming at grade 9.
      */
-    GRADE_9, 
-    
+    GRADE_9 {
+                @Override
+                public String toString() {
+                    return "Grade 9";
+                }
+            },
     /**
-     * Lesson for swimming at grade +9.
+     * Lesson for swimming at grade 9+.
      */
-    GRADE_9_PLUS,
-    
-    
-    
+    GRADE_9_PLUS {
+                @Override
+                public String toString() {
+                    return "Grade 9+";
+                }
+            },
     /**
-     * Lesson for swimming at the Honours level (highest swimming level available).
+     * Lesson for swimming at the Honors level (highest swimming level available).
      */
-    HONOURS
+    HONORS {
+                @Override
+                public String toString() {
+                    return "Honors!";
+                }
+            }
 }

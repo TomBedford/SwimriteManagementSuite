@@ -142,6 +142,10 @@ public class HeaderActionEventController implements ActionListener, MouseListene
                     displayAddST();
                     break;
 
+                case SMSMenuBar.ABOUTMENUITEM_NAME:
+                    about();
+                    break;
+
                 case SMSMenuBar.CEDTEACHERSMENUITEM_NAME:
                     displayCEDTeachers();
                     break;
@@ -152,6 +156,10 @@ public class HeaderActionEventController implements ActionListener, MouseListene
 
                 case SMSMenuBar.INITIALISEDBMENUITEM_NAME:
                     displayInitialiseDB();
+                    break;
+                 
+                case SMSMenuBar.LOGOUTMENUITEM_NAME:
+                    logOut();
                     break;
 
                 default:
@@ -245,6 +253,10 @@ public class HeaderActionEventController implements ActionListener, MouseListene
         
     }
     
+    public void about() {
+        
+    }
+    
     public void displayCEDTeachers() {
         smsBodyPanelRef.addViewCEDTeachersPanel();
     }
@@ -255,8 +267,12 @@ public class HeaderActionEventController implements ActionListener, MouseListene
     
     public void displayInitialiseDB() {
         
-        InitialiseDefaultDatabase initialiseDefaultDatabase = new InitialiseDefaultDatabase();
+        InitialiseDefaultDatabase initialiseDefaultDatabase = new InitialiseDefaultDatabase(smsBodyPanelRef);
         
+    }
+    
+    public void logOut() {
+        smsBodyPanelRef.logOut();
     }
     
     public void displayWelcomeScreen() {

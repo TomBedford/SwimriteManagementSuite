@@ -399,7 +399,7 @@ public class AddSRToSCFrame extends JFrame implements ActionListener, KeyListene
                 
             } else {
                 // Displays an error message that no student record is currently selected
-                JOptionPane.showMessageDialog(null, "<HTML> No Student Record is selected!"
+                JOptionPane.showMessageDialog(null, "<HTML> No Student Record is selected!\n"
                         + "To add a student record please 'double click' the student or select the record and click 'Add Selected Student'"
                                             , "No Student Record Selected", JOptionPane.OK_OPTION);
             }
