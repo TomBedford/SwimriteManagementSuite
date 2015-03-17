@@ -12,7 +12,7 @@ public class SMSHeaderPanel extends JPanel {
     /**
      * The Extended Action Event Controller to handle all action Events for components contained within the header panel.
      */
-    HeaderActionEventController headerActionEventController;
+    private final HeaderActionEventController headerActionEventController;
     
     /**
      * Declares the name of the smsLogoLabel (to be used as static references in the MouseListener class).
@@ -54,7 +54,7 @@ public class SMSHeaderPanel extends JPanel {
     /**
      * Adds the Swimrite Management Suites Logo to the SMSHeaderPanel.
      */
-    public void addSMSLogoLabel() {
+    private void addSMSLogoLabel() {
         
         // Declares the label and label attributes to hold the logo and adds it the the header panel.
         final JLabel smsLogoLabel = new JLabel();

@@ -35,37 +35,37 @@ public class SMSLoginPanel extends JPanel implements ActionListener, MouseListen
      * The reference to the panel this panel is on so it can display the sms once the authentication
      * process is successful.
      */
-    SMSMainPanel smsMainPanelRef;
+    private SMSMainPanel smsMainPanelRef;
     
     /**
      * The Login Account Controller to interact with the Login Account database table.
      */
-    LoginAccountController loginAccountController = new LoginAccountController();
+    private final LoginAccountController loginAccountController = new LoginAccountController();
     
     /**
      * The GridBagConstraints to specify where to place a component on a gridbag layout.
      */
-    final GridBagConstraints c = new GridBagConstraints();
+    private final GridBagConstraints c = new GridBagConstraints();
     
     /**
      * The add login account username text field input.
      */
-    JTextField usernameField;
+    private final JTextField usernameField;
     
     /**
      * The login account password password field.
      */
-    JPasswordField passwordField;
+    private final JPasswordField passwordField;
     
     /**
      * The button to Log in to the SMS using the account username and password provided in the fields.
      */
-    JButton logInButton;
+    private final JButton logInButton;
     
     /**
      * The forgotten password label. (clicked if the user has forgotten their password)
      */
-    JLabel forgottenPasswordLabel;
+    private final JLabel forgottenPasswordLabel;
     
     
     
@@ -254,7 +254,7 @@ public class SMSLoginPanel extends JPanel implements ActionListener, MouseListen
     /**
      * Authenticates the login details from the text field and password fields inputs.
      */
-    public void authenticateLogin() {
+    private void authenticateLogin() {
         // Authenticates the login using the input provided in the fields
         final boolean auth = loginAccountController.authenticateLogin(usernameField.getText(),
                 String.valueOf(passwordField.getPassword()));
@@ -516,7 +516,7 @@ public class SMSLoginPanel extends JPanel implements ActionListener, MouseListen
      * @return Byte Array
      * source: http://stackoverflow.com/questions/140131/convert-a-string-representation-of-a-hex-dump-to-a-byte-array-using-java
      */
-    public static byte[] hexStringToByteArray(String s) {
+    private static byte[] hexStringToByteArray(String s) {
         final int len = s.length();
         final byte[] data = new byte[len / 2];
         

@@ -22,12 +22,12 @@ public class SwimriteManagementSuite {
     /**
      * The connection source for the Swimrite Management Suite MySQL database. 
      */
-    static JdbcConnectionSource smsConnectionSource;
+    private static JdbcConnectionSource smsConnectionSource;
     
     /**
      * The Swimrite Management Suits database manager referenced/used for any and all database requests.
      */
-    static DatabaseManager smsDatabaseManager;
+    private static DatabaseManager smsDatabaseManager;
     
     /**
      * Database tables and GUI are initialized/created.
@@ -47,7 +47,7 @@ public class SwimriteManagementSuite {
     /**
      * Creates the all database references (connection source and data access objects) and sets up the database tables.
      */
-    public static void createDbReferences() {
+    private static void createDbReferences() {
         // Creates the Swimrite Management Suites Database Manager inorder to start interactions with the db.
         smsDatabaseManager = new DatabaseManager();
         
@@ -74,7 +74,7 @@ public class SwimriteManagementSuite {
     /**
      * Creates and displays the Swimrite Management System GUI.
      */
-    public static void createSMSWindow() {
+    private static void createSMSWindow() {
         // creates the frame to hold the home controller panel
         final JFrame smsFrame = new JFrame("Swimrite Management Suite");
         
@@ -106,12 +106,14 @@ public class SwimriteManagementSuite {
         smsFrame.setSize(xSize, ySize);
         smsFrame.setVisible(true);
         smsFrame.setResizable(false);
+        
+        //smsFrame.setIconImage(new ImageIcon(getClass().getResource("images/icons/SMS_Frame_Icon.png")).getImage());
     }
     
     /**
      * Adds 20 student records test data.
      */
-    public static void addStudentRecords() {
+    private static void addStudentRecords() {
         
         for (int i = 0; i < 10; i++) {
             

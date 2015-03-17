@@ -24,37 +24,37 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
     /**
      * The student record to display.
      */
-    StudentRecord studentRecordRef;
+    private final StudentRecord studentRecordRef;
     
     /**
      * The swimrite management suite body panel referenced for re-displaying a the student record.
      */
-    SMSBodyPanel smsBodyPanelRef;
+    private final SMSBodyPanel smsBodyPanelRef;
     
     /**
      * The grid bag constraint to manipulate when adding components to this layout. 
      */
-    GridBagConstraints c;
+    private final GridBagConstraints c;
     
     /**
      * The Lesson Block controller for when querying the Lesson Block database table.
      */
-    LessonBlockController lessonBlockController = new LessonBlockController();;
+    private final LessonBlockController lessonBlockController = new LessonBlockController();;
     
     /**
      * Holds all Lesson blocks related to the student record.
      */
-    List<LessonBlock> lessonBlockList;
+    private List<LessonBlock> lessonBlockList;
     
     /**
      * The add button to add a new lesson block to the student record.
      */
-    JButton addLBButton;
+    private JButton addLBButton;
     
     /**
      * Panel used to hold the add lb button and to space out components.
      */
-    JPanel addLBButtonPanel;
+    private JPanel addLBButtonPanel;
     
 
     /**
@@ -96,7 +96,7 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
      * Calculates the width of this panel dependant on how may lesson blocks to load up.
      * @return The width of this panel.
      */
-    public int calculatePanelWidth() {
+    private int calculatePanelWidth() {
         
         // Gets the lesson blocks associated with this student record.
         lessonBlockList = lessonBlockController.getLessonBlocksByStudent(studentRecordRef);
@@ -115,7 +115,7 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
     /**
      * Adds the updateable student record panel onto this panel.
      */
-    public void loadSRForm() {
+    private void loadSRForm() {
         // Creates and initialises the updateable student record panel
         final UpdateableSRPanel updatableSRPanel = new UpdateableSRPanel(studentRecordRef, smsBodyPanelRef);
         
@@ -128,7 +128,7 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
     /**
      * Adds the add a lesson block button panel to this layout.
      */
-    public void addAddLessonBlockButtonPanel() {
+    private void addAddLessonBlockButtonPanel() {
         // initialises and set the attributes to hold the add lesson block button
         addLBButtonPanel = new JPanel();
         addLBButtonPanel.setBackground(Color.white);
@@ -156,7 +156,7 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
     /**
      * Adds the students lesson blocks to this panel.
      */
-    public void loadLessonBlocks() {
+    private void loadLessonBlocks() {
         
         // Sorts the lesson blocks by their id (descending order/most recently created lesson blocks first).
         lessonBlockList = lessonBlockController.sortLessonBlockssByLessonBlockId(lessonBlockList);

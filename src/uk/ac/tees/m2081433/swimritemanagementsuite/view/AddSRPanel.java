@@ -31,22 +31,22 @@ public class AddSRPanel extends JPanel implements ActionListener {
     /**
      * The Student Record controller for when inserting records into the Student Record table.
      */
-    StudentRecordController studentRecordController = new StudentRecordController();
+    private final StudentRecordController studentRecordController = new StudentRecordController();
     
     /**
      * The Student Address controller for when inserting records into the Student Address table.
      */
-    StudentAddressController studentAddressController = new StudentAddressController();
+    private final StudentAddressController studentAddressController = new StudentAddressController();
     
     /**
      * The input verifier for the student record form (validates text field inputs).
      */
-    SRFormInputVerifier inputVerifier = new SRFormInputVerifier();
+    private final SRFormInputVerifier inputVerifier = new SRFormInputVerifier();
     
     /**
      * The grid bag constraint to manipulate when adding components to the layout. 
      */
-    GridBagConstraints c;
+    private GridBagConstraints c;
     
     
     
@@ -115,90 +115,90 @@ public class AddSRPanel extends JPanel implements ActionListener {
     /**
      * The text field input for the students name.
      */
-    JTextField studentNameField;
+    private JTextField studentNameField;
     
     /**
      * The text field input for the students day of their date of birth.
      */
-    JTextField studentDOBDayField;
+    private JTextField studentDOBDayField;
     
     /**
      * The text field input for the students month of their date of birth.
      */
-    JTextField studentDOBMonthField;
+    private JTextField studentDOBMonthField;
     
     /**
      * The text field input for the students year of their date of birth.
      */
-    JTextField studentDOBYearField;
+    private JTextField studentDOBYearField;
     
     /**
      * The text field input for the students telephone number.
      */
-    JTextField studentTelephoneNoField;
+    private JTextField studentTelephoneNoField;
     
     /**
      * The text field input for the students 1st line of their address.
      */
-    JTextField addressLine1Field;
+    private JTextField addressLine1Field;
     
     /**
      * The text field input for the students 2nd line of their address.
      */
-    JTextField addressLine2Field;
+    private JTextField addressLine2Field;
     
     /**
      * The text field input for the students city in their address.
      */
-    JTextField addressCityField;
+    private JTextField addressCityField;
     
     /**
      * The text field input for the students county in their address.
      */
-    JTextField addressCountyField;
+    private JTextField addressCountyField;
      
     /**
      * The text field input for the students postcode in their address.
      */
-    JTextField addressPostcodeField;
+    private JTextField addressPostcodeField;
     
     /**
      * The text field input for the student whether they have any illnesses or disabilities.
      */
-    JTextField hasIllnessField;
+    private JTextField hasIllnessField;
     
     /**
      * The text field input for the students parents name.
      */
-    JTextField parentNameField;
+    private JTextField parentNameField;
     
     /**
      * The combo box used to display the different possible swimming levels at Swimrite Leisure.
      */
-    JComboBox swimmingLevelList;
+    private JComboBox swimmingLevelList;
     
     
     
     /**
      * The font (defining font style, font type and font size) for all form text labels.
      */
-    Font labelFont = new Font("Arial", Font.PLAIN, 18);
+    private final Font labelFont = new Font("Arial", Font.PLAIN, 18);
     
     /**
      * The font (defining font style, font type and font size) for all form text field inputs.
      */
-    Font textFont = new Font("Arial", Font.PLAIN, 17);
+    private final Font textFont = new Font("Arial", Font.PLAIN, 17);
     
     
     /**
      * The button used to submit a student record to the database.
      */
-    JButton submitButton;
+    private JButton submitButton;
      
     /**
      * The button used to clear all form fields.
      */
-    JButton clearButton;
+    private JButton clearButton;
     
     
     
@@ -226,7 +226,7 @@ public class AddSRPanel extends JPanel implements ActionListener {
     /**
      * Adds invisible labels for spacing out other components aesthetically in the gridbag layout.
      */
-    public void addLayoutSpacing() {
+    private void addLayoutSpacing() {
         // First invisible label (top left) pushing the form to the right
         final JLabel spacingLabel1 = new JLabel();
         spacingLabel1.setPreferredSize(new Dimension(450, 50));
@@ -253,7 +253,7 @@ public class AddSRPanel extends JPanel implements ActionListener {
     /**
      * Loads each individual form component onto the label by calling each of the load form component methods.
      */
-    public void loadSRForm() {
+    private void loadSRForm() {
         // Adds the student name label and text field to the layout
         loadStudentNameRow();
         
@@ -282,7 +282,7 @@ public class AddSRPanel extends JPanel implements ActionListener {
     /**
      * Adds Student Name field label and text field input to the layout of this panel.
      */
-    public void loadStudentNameRow() {
+    private void loadStudentNameRow() {
         // Label to hold the student name form field text.
         final JLabel studentNameLabel = new JLabel("Student Name:");
         setLabelAttributes(studentNameLabel);
@@ -322,7 +322,7 @@ public class AddSRPanel extends JPanel implements ActionListener {
     /**
      * Adds Students DOB field labels and text field inputs to the layout of this panel.
      */
-    public void loadStudentDOBRow() {
+    private void loadStudentDOBRow() {
         // Label to hold the student date of birth form field text
         final JLabel studentDOBLabel = new JLabel("Date of Birth (DOB):");
         setLabelAttributes(studentDOBLabel);
@@ -400,7 +400,7 @@ public class AddSRPanel extends JPanel implements ActionListener {
     /**
      * Adds Students telephone number field label and text field input to the layout of this panel.
      */
-    public void loadStudentTelephoneNoRow() {
+    private void loadStudentTelephoneNoRow() {
         // Label to hold the student telephone number form field text.
         final JLabel studentTelephoneNoLabel = new JLabel("Telephone Number:");
         setLabelAttributes(studentTelephoneNoLabel);
@@ -440,7 +440,7 @@ public class AddSRPanel extends JPanel implements ActionListener {
     /**
      * Adds all of the Students address field labels and text field inputs to the layout of this panel.
      */
-    public void loadStudentAddressRow() {
+    private void loadStudentAddressRow() {
         // Label to hold the student address line 1 form field text.
         final JLabel addressLine1Label = new JLabel("Address Line 1:");
         setLabelAttributes(addressLine1Label);
@@ -628,7 +628,7 @@ public class AddSRPanel extends JPanel implements ActionListener {
     /**
      * Adds Student has illnesses or disabilities field label and text field input to the layout of this panel.
      */
-    public void loadHasIllnessRow() {
+    private void loadHasIllnessRow() {
         // Label to hold the has illness form field text
         final JLabel hasIllnessLabel = new JLabel("Any Illnesses or Disabilities:");
         setLabelAttributes(hasIllnessLabel);
@@ -668,7 +668,7 @@ public class AddSRPanel extends JPanel implements ActionListener {
     /**
      * Adds Students parent name field label and text field input to the layout of this panel.
      */
-    public void loadParentNameRow() {
+    private void loadParentNameRow() {
         // Label to hold the parents name form field text
         final JLabel parentNameLabel = new JLabel("Parents Name:");
         setLabelAttributes(parentNameLabel);
@@ -708,7 +708,7 @@ public class AddSRPanel extends JPanel implements ActionListener {
     /**
      * Adds Students current swimming level/ability field label and combo box to the layout of this panel.
      */
-    public void loadSwimmingLevelRow() {
+    private void loadSwimmingLevelRow() {
         // Label to hold the ability level form field text
         final JLabel swimmingLevelLabel = new JLabel("Current Swimming Level:");
         setLabelAttributes(swimmingLevelLabel);
@@ -731,7 +731,7 @@ public class AddSRPanel extends JPanel implements ActionListener {
     /**
      * Adds the submit and clear buttons to the layout of this panel.
      */
-    public void loadButtons() {
+    private void loadButtons() {
         
         // Initialises the submit button with its attributes (inc button tooltip and icon)
         submitButton = new JButton("SUBMIT");
@@ -764,7 +764,7 @@ public class AddSRPanel extends JPanel implements ActionListener {
      * Sets the standard attributes of the text labels for this form (avoiding repetition).
      * @param label The JLabel to set the standard attributes of
      */
-    public void setLabelAttributes(JLabel label) {
+    private void setLabelAttributes(JLabel label) {
         // Text is on the left, with label background being white and the label font defined also
         label.setHorizontalAlignment(SwingConstants.LEFT);
         label.setFont(labelFont);
@@ -778,7 +778,7 @@ public class AddSRPanel extends JPanel implements ActionListener {
      * Sets the standard attributes of the info labels for this form (avoiding repetition).
      * @param label The info JLabel to set the standard attributes of
      */
-    public void setInfoLabelAttributes(JLabel label) {
+    private void setInfoLabelAttributes(JLabel label) {
         label.setBackground(Color.white);
         label.setPreferredSize(new Dimension(50, 50));
         label.setOpaque(true);
@@ -869,7 +869,7 @@ public class AddSRPanel extends JPanel implements ActionListener {
     /**
      * Resets the text fields to be empty and the background to white.
      */
-    public void resetTextFields() { 
+    private void resetTextFields() { 
         // Resets all form text fields to empty
         studentNameField.setText("");
         studentDOBDayField.setText("");

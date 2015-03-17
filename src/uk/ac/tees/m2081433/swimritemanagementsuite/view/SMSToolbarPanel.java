@@ -19,7 +19,7 @@ public class SMSToolbarPanel extends JPanel {
     /**
      * Creates a button group to contain all the toggle buttons in the toolbar.
      */
-    ButtonGroup toolbarButtonGroup;
+    private final ButtonGroup toolbarButtonGroup;
     
     // Declares all button names for each button (to be used as static references in the ActionListener class)
     /**
@@ -154,14 +154,14 @@ public class SMSToolbarPanel extends JPanel {
     /**
      * Declares the button dimension for standard buttons on the jPanel.
      */
-    Dimension standardButtonDimension = new Dimension(200, 50);
+    private final Dimension standardButtonDimension = new Dimension(200, 50);
     
     
     
     /**
      * The extended action event controller for all components in the header panel.
      */
-    HeaderActionEventController headerActionEventController;
+    private final HeaderActionEventController headerActionEventController;
     
     
     
@@ -198,7 +198,7 @@ public class SMSToolbarPanel extends JPanel {
     /**
      * Adds the buttons to view all class schedule days and to register todays classes.
      */
-    public void addSwimmingClassesTool() {
+    private void addSwimmingClassesTool() {
         
         // Declares the button dimension for the days of the week buttons (Mon-Sun).
         final Dimension daysButtonDimension = new Dimension(50, 50);
@@ -293,7 +293,7 @@ public class SMSToolbarPanel extends JPanel {
     /**
      * Adds the buttons to view all student records and to add a new student record.
      */
-    public void addStudentRecordsTool() {
+    private void addStudentRecordsTool() {
         // Creates and Sets the student records JPanel attributes.
         final JPanel studentRecordsPanel = new JPanel();
         studentRecordsPanel.setPreferredSize(new Dimension(250, 140));
@@ -339,7 +339,7 @@ public class SMSToolbarPanel extends JPanel {
     /**
      * Adds the buttons to view all support tickets and to add a new support ticket.
      */
-    public void addSupportTicketTool() {
+    private void addSupportTicketTool() {
         // Creates and Sets the support ticket JPanel attributes.
         final JPanel supportTicketPanel = new JPanel();
         supportTicketPanel.setPreferredSize(new Dimension(250, 140));
@@ -370,6 +370,10 @@ public class SMSToolbarPanel extends JPanel {
         
         // Sets the icon for the add a support ticket toggle button.
         addSTButton.setIcon(new ImageIcon("images/icons/pencil_add.png"));
+        
+        // DISABLES BOTH BUTTONS TO FALSE UNTIL COMPLETE
+        viewAllSTButton.setEnabled(false);
+        addSTButton.setEnabled(false);
         
         // Adds the created buttons to the toolbar button group.
         toolbarButtonGroup.add(viewAllSTButton);

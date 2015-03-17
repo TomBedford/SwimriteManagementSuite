@@ -19,7 +19,7 @@ public class SwimmingClassesController implements DatabaseTableController<Swimmi
     /**
      * Reference to the student record controller to update student records when deleting swimming classes.
      */
-    StudentRecordController studentRecordController = new StudentRecordController();
+    private final StudentRecordController studentRecordController = new StudentRecordController();
     
     
     
@@ -62,7 +62,7 @@ public class SwimmingClassesController implements DatabaseTableController<Swimmi
             DatabaseManager.swimmingClassesDAO.delete(swimmingClass);
             
             // Creates and initializes a list to hold all student records associated with the swimming class.
-            List<StudentRecord> swimmingClassesStudentRecords = null;
+            List<StudentRecord> swimmingClassesStudentRecords;
             
             // Gets all student records associated with this swimming class
             swimmingClassesStudentRecords = studentRecordController.getSwimmingClassStudentRecords(swimmingClass);

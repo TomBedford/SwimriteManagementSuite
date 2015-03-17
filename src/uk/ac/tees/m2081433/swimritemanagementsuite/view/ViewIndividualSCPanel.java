@@ -36,79 +36,79 @@ public class ViewIndividualSCPanel extends JPanel implements ActionListener {
     /**
      * The Swimming Class to load the details of and manipulate.
      */
-    SwimmingClasses swimmingClass;
+    private final SwimmingClasses swimmingClass;
     
     /**
      * The SMS Body Panel reference for when swapping panels on the body panel.
      */
-    SMSBodyPanel smsBodyPanel;
+    private final SMSBodyPanel smsBodyPanel;
     
     /**
      * The grid bag constraint to manipulate when adding components to the layout. 
      */
-    GridBagConstraints c;
+    private final GridBagConstraints c;
     
     /**
      * The Student Record Controller to interact with the Student Record database.
      */
-    StudentRecordController studentRecordController = new StudentRecordController();
+    private final StudentRecordController studentRecordController = new StudentRecordController();
     
     /**
      * The Swimming Classes Controller to interact with the Swimming Classes database.
      */
-    SwimmingClassesController swimmingClassesController = new SwimmingClassesController();
+    private final SwimmingClassesController swimmingClassesController = new SwimmingClassesController();
     
     /**
      * The list to hold all student records associated with this swimming class.
      */
-    List<StudentRecord> swimmingClassSRList;
+    private final List<StudentRecord> swimmingClassSRList;
     
     /**
      * The array of strings to hold the column headers/names for the swimming class student records table.
      */
-    String[] columnNames;
+    private String[] columnNames;
     
     /**
      * The extended JTable swimming class student records table displaying all student records in the swimming class.
      */
-    SwimmingClassSRTable swimmingClassSRTable;
+    private SwimmingClassSRTable swimmingClassSRTable;
     
     /**
      * The label that holds the title of this panel.
      */
-    JLabel titleLabel;
+    private JLabel titleLabel;
     
     
     
     /**
      * The combo box to contain all the different swimming class types.
      */
-    JComboBox classTypeComboBox;
+    private JComboBox classTypeComboBox;
     
     /**
      * The panel to hold the change class type button so that buttons can be swapped at runtime.
      */
-    JPanel changeClassTypeButtonPanel;
+    private JPanel changeClassTypeButtonPanel;
     
     /**
      * The button to change the class type of the swimming class.
      */
-    JButton changeClassTypeButton;
+    private JButton changeClassTypeButton;
     
     /**
      * The button to enroll a student record in this swimming class.
      */
-    JButton addSRButton;
+    private JButton addSRButton;
     
     /**
      * The button to un-enroll a student record from this swimming class.
      */
-    JButton removeSRButton;
+    private JButton removeSRButton;
     
     /**
      * The button to update the swimming class type of the class.
      */
-    JButton updateClassTypeButton;
+    private JButton updateClassTypeButton;
     
     
     /**
@@ -167,7 +167,7 @@ public class ViewIndividualSCPanel extends JPanel implements ActionListener {
     /**
      * Adds a title panel containing two title labels with text about the swimming class to the top of this panel.
      */
-    public void addSwimmingClassTitle() {
+    private void addSwimmingClassTitle() {
         
         // Creates and initializes the panel to hold the title text labels
         final JPanel titlePanel = new JPanel();
@@ -218,7 +218,7 @@ public class ViewIndividualSCPanel extends JPanel implements ActionListener {
     /**
      * Sets the title label text for this swimming class panel.
      */
-    public void setTitleLabelText() {
+    private void setTitleLabelText() {
         // Adds the class day to the title text string
         String titleText = swimmingClass.getTimeslot().getDay() + " ";
         
@@ -243,7 +243,7 @@ public class ViewIndividualSCPanel extends JPanel implements ActionListener {
     /**
      * Creates the swimming class table to display all the students currently enrolled on this swimming class.
      */
-    public void addSwimmingClassStudentsTable() {
+    private void addSwimmingClassStudentsTable() {
         // The an array of column names for the table
         columnNames = new String[]{" Student Name",
                                 " Date of Birth",
@@ -271,7 +271,7 @@ public class ViewIndividualSCPanel extends JPanel implements ActionListener {
      * @param studentRecordList The list of student records to convert
      * @return 2 Dimensional array of object containing the formatted student records list.
      */
-    public Object[][] convertListForTable(List<StudentRecord> studentRecordList) {
+    private Object[][] convertListForTable(List<StudentRecord> studentRecordList) {
 
         /**
          * The two dimensional array to hold the student records.
@@ -299,7 +299,7 @@ public class ViewIndividualSCPanel extends JPanel implements ActionListener {
      * - Add Students to the class
      * - Remove students from the class.
      */
-    public void addEditingButtonPanel() {
+    private void addEditingButtonPanel() {
         // Creates and initializes a label used to put space between table and edit panel buttons
         final JLabel spacingLabel1 = new JLabel();
         spacingLabel1.setPreferredSize(new Dimension(1200, 50));
@@ -392,7 +392,7 @@ public class ViewIndividualSCPanel extends JPanel implements ActionListener {
     /**
      * Disables the editing of the swimming classes type by making the combo box disabled and removing the update button.
      */
-    public void disableClassTypeEditing() {
+    private void disableClassTypeEditing() {
         // Disables the combo box from use
         classTypeComboBox.setEnabled(false);
 
@@ -415,7 +415,7 @@ public class ViewIndividualSCPanel extends JPanel implements ActionListener {
     /**
      * Attempts to add/enroll a student record in this swimming class.
      */
-    public void attemptAddSR() {
+    private void attemptAddSR() {
         // If the current capacity of the class is not equal to the max capacity then add a student.
         if (swimmingClass.getCurrentCapacity() != swimmingClass.getMaxCapacity()) {
             

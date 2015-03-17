@@ -29,37 +29,37 @@ public class EditLoginAccountForm extends JPanel implements ActionListener {
     /**
      * The form panel reference from when canceling the adding of a student.
      */
-    JPanel formPanel;
+    private final JPanel formPanel;
     
     /**
      * The SMS Body Panel reference for when swapping panels on the body panel.
      */
-    SMSBodyPanel smsBodyPanel;
+    private final SMSBodyPanel smsBodyPanel;
     
     /**
      * The Login Account to perform editing upon.
      */
-    LoginAccount loginAccount;
+    private final LoginAccount loginAccount;
     
     /**
      * The grid bag constraint to manipulate when adding components to the layout. 
      */
-    GridBagConstraints c;
+    private final GridBagConstraints c;
     
     /**
      * The input verifier for the edit login account form (validates text field inputs).
      */
-    LoginAccountFormInputVerifier inputVerifier = new LoginAccountFormInputVerifier();
+    private final LoginAccountFormInputVerifier inputVerifier = new LoginAccountFormInputVerifier();
     
     /**
      * The Login Account Controller to interact with the Login Account database table.
      */
-    LoginAccountController loginAccountController = new LoginAccountController();
+    private final LoginAccountController loginAccountController = new LoginAccountController();
     
     /**
      * The panel that changes depending on what the user wants to edit about the login account.
      */
-    JPanel dynamicEditPanel;
+    private final JPanel dynamicEditPanel;
     
     
     
@@ -89,79 +89,79 @@ public class EditLoginAccountForm extends JPanel implements ActionListener {
     /**
      * The font (defining font style, font type and font size) for all form text labels.
      */
-    Font labelFont = new Font("Arial", Font.PLAIN, 18);
+    private final Font labelFont = new Font("Arial", Font.PLAIN, 18);
     
     /**
      * The font (defining font style, font type and font size) for all form text field inputs.
      */
-    Font textFont = new Font("Arial", Font.PLAIN, 17);
+    private final Font textFont = new Font("Arial", Font.PLAIN, 17);
     
     /**
      * The login account password form text field.
      */
-    JTextField passwordField;
+    private JTextField passwordField;
     
     /**
      * The login account password confirmation form text field.
      */
-    JTextField passwordConfirmationField;
+    private JTextField passwordConfirmationField;
     
     /**
      * The login account security question form text field.
      */
-    JTextField securityQuestionField;
+    private JTextField securityQuestionField;
     
     /**
      * The login account security question answer form text field.
      */
-    JTextField securityQuestionAnswerField;
+    private JTextField securityQuestionAnswerField;
     
     /**
      * The combo box specifiying as to whether the login account is an admin.
      */
-    JComboBox adminComboBox;
+    private JComboBox adminComboBox;
     
     
     
     /**
      * The panel to hold all buttons needed for this panel.
      */
-    JPanel buttonPanel;
+    private final JPanel buttonPanel;
     
     /**
      * The button to change the login accounts password.
      */
-    JButton changePasswordButton;
+    private JButton changePasswordButton;
     
     /**
      * The button to change the login accounts Security Question & Answer.
      */
-    JButton changeSecurityQ;
+    private JButton changeSecurityQ;
     
     /**
      * The button to cancel the editing of the login account.
      */
-    JButton cancelButton;
+    private JButton cancelButton;
     
     /**
      * The button to update the login accounts password using the input specified in the form.
      */
-    JButton updateChangePasswordButton;
+    private JButton updateChangePasswordButton;
     
     /**
      * The button to cancel the editing of the login accounts password.
      */
-    JButton cancelChangePasswordButton;
+    private JButton cancelChangePasswordButton;
     
     /**
      * The button to update the login accounts security question & answer using the input specified in the form.
      */
-    JButton updateChangeSecurityQButton;
+    private JButton updateChangeSecurityQButton;
     
     /**
      * The button to cancel the editing of the login accounts security question & answer.
      */
-    JButton cancelChangeSecurityQButton;
+    private JButton cancelChangeSecurityQButton;
     
     
     
@@ -247,7 +247,7 @@ public class EditLoginAccountForm extends JPanel implements ActionListener {
     /**
      * Adds the buttons to change the password, change the security question & answer and to cancel editing.
      */
-    public void addButtonsToButtonPanel() {
+    private void addButtonsToButtonPanel() {
         // The button to change the login accounts password
         changePasswordButton = new JButton("Change Password");
         changePasswordButton.setPreferredSize(new Dimension(150, 45));
@@ -288,7 +288,7 @@ public class EditLoginAccountForm extends JPanel implements ActionListener {
      * Sets the standard attributes of the text labels for forms (avoiding repetition).
      * @param label The JLabel to set the standard attributes of
      */
-    public void setLabelAttributes(JLabel label) {
+    private void setLabelAttributes(JLabel label) {
         // Text is on the left, with label background being white and the label font defined also
         label.setHorizontalAlignment(SwingConstants.LEFT);
         label.setFont(labelFont);
@@ -301,7 +301,7 @@ public class EditLoginAccountForm extends JPanel implements ActionListener {
      * Sets the standard attributes of the info labels for forms (avoiding repetition).
      * @param label The info JLabel to set the standard attributes of
      */
-    public void setInfoLabelAttributes(JLabel label) {
+    private void setInfoLabelAttributes(JLabel label) {
         label.setBackground(Color.white);
         label.setPreferredSize(new Dimension(50, 50));
         label.setOpaque(true);
@@ -311,7 +311,7 @@ public class EditLoginAccountForm extends JPanel implements ActionListener {
     /**
      * Adds the change password form to the dynamic form panel.
      */
-    public void addChangePasswordForm() {
+    private void addChangePasswordForm() {
         // The panel to hold all form components to change the login accounts password
         final JPanel changePasswordForm = new JPanel();
         changePasswordForm.setPreferredSize(new Dimension(650, 345));
@@ -407,7 +407,7 @@ public class EditLoginAccountForm extends JPanel implements ActionListener {
      * Removes all buttons from the button panel and adds all the buttons needed to change the login accounts
      * password.
      */
-    public void addChangePasswordFormButtons() {
+    private void addChangePasswordFormButtons() {
         // Removes all buttons currently on the button panel and updates the UI
         buttonPanel.removeAll();
         buttonPanel.updateUI();
@@ -440,7 +440,7 @@ public class EditLoginAccountForm extends JPanel implements ActionListener {
     /**
      * Adds the change security question form to the dynamic form panel.
      */
-    public void addChangeSecurityQuestionForm() {
+    private void addChangeSecurityQuestionForm() {
         // The panel to hold all form components to change the login accounts security question
         final JPanel changeSecurityQuestionForm = new JPanel();
         changeSecurityQuestionForm.setPreferredSize(new Dimension(650, 345));
@@ -536,7 +536,7 @@ public class EditLoginAccountForm extends JPanel implements ActionListener {
      * Removes all buttons from the button panel and adds all the buttons needed to change the login accounts
      * security question.
      */
-    public void addChangeSecurityQuestionFormButtons() {
+    private void addChangeSecurityQuestionFormButtons() {
         // Removes all buttons currently on the button panel and updates the UI
         buttonPanel.removeAll();
         buttonPanel.updateUI();
@@ -797,7 +797,7 @@ public class EditLoginAccountForm extends JPanel implements ActionListener {
      * @return Byte Array
      * source: http://stackoverflow.com/questions/140131/convert-a-string-representation-of-a-hex-dump-to-a-byte-array-using-java
      */
-    public static byte[] hexStringToByteArray(String s) {
+    private static byte[] hexStringToByteArray(String s) {
         final int len = s.length();
         final byte[] data = new byte[len / 2];
         

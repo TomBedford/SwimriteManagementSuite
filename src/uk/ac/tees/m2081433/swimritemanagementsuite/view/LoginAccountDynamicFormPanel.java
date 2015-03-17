@@ -27,59 +27,59 @@ public class LoginAccountDynamicFormPanel extends JPanel implements ActionListen
     /**
      * The SMS Body Panel reference for when swapping panels on the body panel.
      */
-    SMSBodyPanel smsBodyPanel;
+    private final SMSBodyPanel smsBodyPanel;
     
     /**
      * The login account table to check the selected index for editing and deletion of login accounts.
      */
-    LoginAccountTable loginAccountTable;
+    private final LoginAccountTable loginAccountTable;
     
     /**
      * The list that contains all login accounts.
      */
-    List<LoginAccount> loginAccountList;
+    private final List<LoginAccount> loginAccountList;
     
     /**
      * The grid bag constraint to manipulate when adding components to the layout. 
      */
-    GridBagConstraints c;
+    private final GridBagConstraints c;
     
     /**
      * The Login Account Controller to interact with the Login Account database table.
      */
-    LoginAccountController loginAccountController = new LoginAccountController();
+    private final LoginAccountController loginAccountController = new LoginAccountController();
     
     /**
      * The button to add a Login Account.
      */
-    JButton addLoginAccountButton;
+    private JButton addLoginAccountButton;
     
     /**
      * The button to edit a Login Account.
      */
-    JButton editLoginAccountButton;
+    private JButton editLoginAccountButton;
     
     /**
      * The button to delete a Login Account.
      */
-    JButton deleteLoginAccountButton;
+    private JButton deleteLoginAccountButton;
     
     
     
     /**
      * The panel that holds all swappable forms for adding and editing login accounts.
      */
-    JPanel formPanel;
+    private JPanel formPanel;
     
     /**
      * The panel that contains the form to add a new login account.
      */
-    AddLoginAccountForm addLoginAccountForm;
+    private AddLoginAccountForm addLoginAccountForm;
     
     /**
      * The panel that contains buttons and forms to edit an existing login account.
      */
-    EditLoginAccountForm editLoginAccountForm;
+    private EditLoginAccountForm editLoginAccountForm;
     
     /**
      * This constructor adds the button panel containing the add, edit and delete login accounts buttons
@@ -117,7 +117,7 @@ public class LoginAccountDynamicFormPanel extends JPanel implements ActionListen
     /**
      * Adds the button panel containing the add, edit and delete login account buttons onto this panel.
      */
-    public void addButtonPanel() {
+    private void addButtonPanel() {
         // Creates and initializes the panel to hold all of the buttons for this panel
         final JPanel buttonPanel = new JPanel();
         buttonPanel.setPreferredSize(new Dimension(650, 50));
@@ -168,7 +168,7 @@ public class LoginAccountDynamicFormPanel extends JPanel implements ActionListen
      * Adds the form panel that will be used to hold panels added and removed at runtime containing
      * different forms (during adding and editing of login accounts).
      */
-    public void addFormPanel() {
+    private void addFormPanel() {
         // Creates and initializes the panel to hold all of the forms for this panel
         formPanel = new JPanel();
         formPanel.setPreferredSize(new Dimension(650, 450));
@@ -187,7 +187,7 @@ public class LoginAccountDynamicFormPanel extends JPanel implements ActionListen
      * @param s The hexadecimal string
      * @return The byte array from the hex string
      */
-    public static byte[] hexStringToByteArray(String s) {
+    private static byte[] hexStringToByteArray(String s) {
         final int length = s.length();
         final byte[] data = new byte[length / 2];
         for (int i = 0; i < length; i += 2) {

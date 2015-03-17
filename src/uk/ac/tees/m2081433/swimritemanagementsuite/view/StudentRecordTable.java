@@ -20,27 +20,27 @@ public class StudentRecordTable extends JTable {
     /**
      * The font for all headers in the table.
      */
-    Font tableHeaderFont = new Font("Arial", Font.PLAIN, 18);
+    private final Font tableHeaderFont = new Font("Arial", Font.PLAIN, 18);
     
     /**
      * The font for all records/rows in the table.
      */
-    Font tableRecordFont = new Font("Arial", Font.PLAIN, 16);
+    private final Font tableRecordFont = new Font("Arial", Font.PLAIN, 16);
        
     /**
      * The colour used for the headers background.
      */
-    Color smsBlue = new Color(172, 172, 255);
+    private final Color smsBlue = new Color(172, 172, 255);
         
     /**
      * The light gray colour for each alternative row in the table.
      */
-    Color alternateRowColor = new Color(211, 211, 211);
+    private final Color alternateRowColor = new Color(211, 211, 211);
         
     /**
      * Array to hold each of the column tool tips for the table headers.
      */
-    final String[] columnToolTips = {"The name of the student",
+    private final String[] columnToolTips = {"The name of the student",
                                         "The date of birth of the student",
                                         "The current swimming/abililty level of the student",
                                         "The current swimming class that the student is registered to"};
@@ -74,7 +74,7 @@ public class StudentRecordTable extends JTable {
         this.getTableHeader().setPreferredSize(new Dimension(300, 50));
         
         // sets the width of each column in the table
-        TableColumn column = null;
+        TableColumn column;
         //for (int i = 0; i < columnNames.length; i++) {
         for (int i = 0; i < model.getColumnCount(); i++) {
             column = this.getColumnModel().getColumn(i);

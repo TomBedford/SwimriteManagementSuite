@@ -40,79 +40,79 @@ public class LessonBlockPanel extends JPanel implements ActionListener {
     /**
      * The lesson block to load onto the panel.
      */
-    LessonBlock lessonBlockRef;
+    private LessonBlock lessonBlockRef;
     
     /**
      * The number of the lesson block.
      */
-    int lessonBlockNumberRef;
+    private int lessonBlockNumberRef;
     
     /**
      * The swimrite management suite body panel referenced for displaying an individual student record.
      */
-    SMSBodyPanel smsBodyPanelRef;
+    private SMSBodyPanel smsBodyPanelRef;
     
     /**
      * The student record sent as a param when reloading the view individual student record after deletion of this lb.
      */
-    StudentRecord studentRecordRef;
+    private StudentRecord studentRecordRef;
     
     /**
      * The controller to interact with the lesson block table in the database.
      */
-    LessonBlockController lessonBlockController = new LessonBlockController();
+    private final LessonBlockController lessonBlockController = new LessonBlockController();
     
     /**
      * The controller to create, edit/update lesson payments from the database.
      */
-    LessonPaymentController lessonPaymentController = new LessonPaymentController();
+    private final LessonPaymentController lessonPaymentController = new LessonPaymentController();
     
     /**
      * The input verifier used for the lesson payment form.
      */
-    LessonBlockPaymentInputVerifier lessonBlockPaymentInputVerifier;
+    private final LessonBlockPaymentInputVerifier lessonBlockPaymentInputVerifier;
     
     /**
      * The input verifier used for the dates in the lesson block table.
      */
-    LessonBlockDateInputVerifier lessonBlockDateInputVerifier;
+    private final LessonBlockDateInputVerifier lessonBlockDateInputVerifier;
     
     /**
      * The grid bag constraint to manipulate when adding components to the layout. 
      */
-    GridBagConstraints c;
+    private GridBagConstraints c;
     
     
     
     /**
      * The font for the title label of the lesson block.
      */
-    private Font titleLabelFont = new Font("Arial", Font.BOLD, 20);
+    private final Font titleLabelFont = new Font("Arial", Font.BOLD, 20);
     
     /**
      * The font (defining font style, font type and font size) for all form text labels.
      */
-    private Font textFont = new Font("Arial", Font.PLAIN, 13);
+    private final Font textFont = new Font("Arial", Font.PLAIN, 13);
     
     /**
      * The font for all records/rows in the table.
      */
-    private Font tableRecordFont = new Font("Arial", Font.PLAIN, 14);
+    private final Font tableRecordFont = new Font("Arial", Font.PLAIN, 14);
        
     /**
      * The font for all headers in the table.
      */
-    private Font tableHeaderFont = new Font("Arial", Font.PLAIN, 16);
+    private final Font tableHeaderFont = new Font("Arial", Font.PLAIN, 16);
     
     /**
      * The colour used for the headers background.
      */
-    private Color smsBlue = new Color(172, 172, 255);
+    private final Color smsBlue = new Color(172, 172, 255);
     
     /**
     * The light gray colour for each alternative row in the table.
     */
-    Color alternateRowColor = new Color(211, 211, 211);
+    private final Color alternateRowColor = new Color(211, 211, 211);
     
     
     
@@ -146,113 +146,113 @@ public class LessonBlockPanel extends JPanel implements ActionListener {
     /**
      * The text field for the payment amount for the lesson payment.
      */
-    JTextField paymentAmountField;
+    private JTextField paymentAmountField;
     
     /**
      * The combo boc for the different possible payment types for the lesson payment.
      */
-    JComboBox paymentTypeList;
+    private JComboBox paymentTypeList;
     
     /**
      * The text field for the payment date (day) for the lesson payment.
      */
-    JTextField paymentDayField;
+    private JTextField paymentDayField;
     
     /**
      * The text field for the payment date (month) for the lesson payment.
      */
-    JTextField paymentMonthField;
+    private JTextField paymentMonthField;
     
     /**
      * The text field for the payment date (year) for the lesson payment.
      */
-    JTextField paymentYearField;
+    private JTextField paymentYearField;
     
     /**
      * The text field for the payment taker for the lesson payment.
      */
-    JTextField paymentTakerField;
+    private JTextField paymentTakerField;
     
     
     
     /**
      * An array of String to hold the column names for the lesson block table.
      */
-    String[] columnNames;
+    private String[] columnNames;
     
     /**
      * The default cell editor for the lesson block attendance table.
      */
-    DefaultCellEditor lessonBlockTableEditor;
+    private DefaultCellEditor lessonBlockTableEditor;
     
     /**
      * The JTable to hold the lesson block attendance and date columns.
      */
-    JTable lessonBlockTable;
+    private JTable lessonBlockTable;
     
     /**
      * The table model for the lesson block table.
      */
-    LessonBlockTableModel lessonBlockTableModel;
+    private LessonBlockTableModel lessonBlockTableModel;
             
     
     
     /**
      * The button panel to hold the edit, delete, update and cancel buttons.
      */
-    JPanel buttonPanel;
+    private JPanel buttonPanel;
     
     /**
      * The edit button to start editing a lesson block and lesson payment for that block.
      */
-    JButton editButton;
+    private JButton editButton;
     
     /**
      * The delete button to delete the lesson block record from the database.
      */
-    JButton deleteButton;
+    private JButton deleteButton;
     
     /**
      * The update button to update the lesson block and lesson payment for that block.
      */
-    JButton updateButton;
+    private JButton updateButton;
     
     /**
      * The cancel button to cancel editing for the lesson block and lesson payment for that block.
      */
-    JButton cancelButton;
+    private JButton cancelButton;
     
     
     
     /**
      * The attendance editing button panel to hold the buttons used for editing the attendance of the lesson block.
      */
-    JPanel attendanceEditingPanel;
+    private JPanel attendanceEditingPanel;
     
     /**
      * The array for all the buttons to change attendance of the appropriate attendance row to present.
      */
-    JButton[] presentButton;
+    private JButton[] presentButton;
     
     /**
      * The array for all the buttons to change attendance of the appropriate attendance row to absent.
      */
-    JButton[] absentButton;
+    private JButton[] absentButton;
     
     /**
      * The array for all the buttons to change attendance of the appropriate attendance row to fun swim.
      */
-    JButton[] funSwimButton;
+    private JButton[] funSwimButton;
     
     /**
      * The array for all the buttons to change attendance of the appropriate attendance row to fun swim taken.
      */
-    JButton[] funSwimTakenButton;
+    private JButton[] funSwimTakenButton;
     
     /**
      * The array for all the buttons to change attendance of the appropriate attendance row to null/clear it.
      */
-    JButton[] clearAttendanceButton;
+    private JButton[] clearAttendanceButton;
     
     
     
@@ -308,7 +308,7 @@ public class LessonBlockPanel extends JPanel implements ActionListener {
     /**
      * Adds a label containing the title of this lesson block panel to this panel.
      */
-    public void addTitleLabel() {
+    private void addTitleLabel() {
         // creates, initialises and sets the attributes for the title label
         final JLabel titleLabel = new JLabel();
         titleLabel.setPreferredSize(new Dimension(450, 30));
@@ -334,7 +334,7 @@ public class LessonBlockPanel extends JPanel implements ActionListener {
     /**
      * Adds the lesson payment form components to the lesson payment form panel to this panel.
      */
-    public void addLessonPaymentForm() {
+    private void addLessonPaymentForm() {
         /**
          * The JPanel to hold all payment detail labels and text fields and spacing components.
          */
@@ -485,7 +485,7 @@ public class LessonBlockPanel extends JPanel implements ActionListener {
      * Sets the default attributes for lesson payment labels on the lesson payment form panel.
      * @param label the label to set the attributes for
      */
-    public void setLabelAttributes(JLabel label) {
+    private void setLabelAttributes(JLabel label) {
         label.setHorizontalAlignment(SwingConstants.LEFT);
         label.setFont(textFont);
         label.setBackground(Color.white);
@@ -497,7 +497,7 @@ public class LessonBlockPanel extends JPanel implements ActionListener {
      * Sets the default attributes for the text fields on the lesson payment form panel.
      * @param textField the text field to set the attributes for
      */
-    public void setTextFieldAttributes(JTextField textField) {
+    private void setTextFieldAttributes(JTextField textField) {
         textField.setInputVerifier(lessonBlockPaymentInputVerifier);
         textField.setEditable(false);
         textField.setFont(textFont);
@@ -506,7 +506,7 @@ public class LessonBlockPanel extends JPanel implements ActionListener {
     /**
      * Adds the lesson block table to this layout.
      */
-    public void addLessonBlockTable() {
+    private void addLessonBlockTable() {
         
         // The an array of column names for the lesson block attendance table
         columnNames = new String[]{" Lesson Date",
@@ -592,7 +592,7 @@ public class LessonBlockPanel extends JPanel implements ActionListener {
      * tables parameters.
      * @return 2 Dimensional array of object containing the formatted lesson block attendance details..
      */
-    public Object[][] convertLessonBlockForTable() {
+    private Object[][] convertLessonBlockForTable() {
 
         /**
          * The two dimensional array to hold the lesson block attendance details.
@@ -667,7 +667,7 @@ public class LessonBlockPanel extends JPanel implements ActionListener {
     /**
      * Adds the button panel to this layout that will hold the edit, delete, update and cancel buttons.
      */
-    public void addButtonPanel() {
+    private void addButtonPanel() {
         // The button panel to hold the edit, delete, update and cancel buttons
         buttonPanel = new JPanel();
         buttonPanel.setPreferredSize(new Dimension(210, 35));
@@ -703,7 +703,7 @@ public class LessonBlockPanel extends JPanel implements ActionListener {
     /**
      * Adds the attendance editing panel to this layout so that attendance types for the lesson block can be edited.
      */
-    public void addAttendanceEditingPanel() {
+    private void addAttendanceEditingPanel() {
         // The panel to hold the attendance editing buttons
         attendanceEditingPanel = new JPanel();
         attendanceEditingPanel.setPreferredSize(new Dimension(210, 395));
@@ -789,7 +789,7 @@ public class LessonBlockPanel extends JPanel implements ActionListener {
     /**
      * Method to enter the lesson block panel into an editable mode.
      */
-    public void enterEditingMode() {
+    private void enterEditingMode() {
         // Enables all text fields and the combo box to be interacted with by the user.
             paymentAmountField.setEditable(true);
             paymentTypeList.setEnabled(true);
@@ -835,7 +835,7 @@ public class LessonBlockPanel extends JPanel implements ActionListener {
     /**
      * Attempts to update the lesson block and lesson payment for that block with the values supplied.
      */
-    public void attemptLessonBlockUpdate() {
+    private void attemptLessonBlockUpdate() {
         // boolean used as a flag if any form field is left empty
         boolean invalidField = true;
 
@@ -1038,7 +1038,7 @@ public class LessonBlockPanel extends JPanel implements ActionListener {
     /**
      * Method to exit the lesson block panel from the editable mode.
      */
-    public void exitEditingMode() {
+    private void exitEditingMode() {
         // Sets all of the payment detail field values back to their original values if the lesson payment record exists
         if (lessonBlockRef.getLessonPayment() != null) {
             paymentAmountField.setText(lessonBlockRef.getLessonPayment().getPaymentAmount());

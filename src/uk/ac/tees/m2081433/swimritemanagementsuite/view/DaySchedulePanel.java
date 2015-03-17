@@ -34,146 +34,146 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
     /**
      * The day to load the swimming schedule for.
      */
-    Day day;
+    private final Day day;
     
     /**
      * Reference to the body panel to re-load this panel and to direct to view individual swimming class.
      */
-    SMSBodyPanel smsBodyPanelRef;
+    private final SMSBodyPanel smsBodyPanelRef;
     
     /**
      * The Teacher controller for when running db queries on the Teacher table.
      */
-    TeacherController teacherController = new TeacherController();
+    private final TeacherController teacherController = new TeacherController();
     
     /**
      * The Timeslot controller for when running db queries on the Timeslot table.
      */
-    TimeslotController timeslotController = new TimeslotController();
+    private final TimeslotController timeslotController = new TimeslotController();
     
     /**
      * The Swimming Classes controller for when running db queries on the Swimming Classes table.
      */
-    SwimmingClassesController swimmingClassesController = new SwimmingClassesController();
+    private final SwimmingClassesController swimmingClassesController = new SwimmingClassesController();
     
     /**
      * The Student Record controller for when running db queries on the Student Record table.
      */
-    StudentRecordController studentRecordController = new StudentRecordController();
+    private final StudentRecordController studentRecordController = new StudentRecordController();
     
     /**
      * Holds all Teachers for the specified day.
      */
-    List<Teacher> workingTeacherList;
+    private List<Teacher> workingTeacherList;
     
     /**
      * Holds all Teachers that dont work on the specified day.
      */
-    List<Teacher> notWorkingTeacherList;
+    private List<Teacher> notWorkingTeacherList;
     
     /**
      * Holds all Timeslots for the specified day.
      */
-    List<Timeslot> timeslotList;
+    private List<Timeslot> timeslotList;
     
     /**
      * Holds all Swimming Classes for the specified day.
      */
-    List<SwimmingClasses> swimmingClassesList;
+    private List<SwimmingClasses> swimmingClassesList;
     
     /**
      * The two dimensional array of labels that holds the swimming classes for each teachers column.
      */
-    JLabel[][] teacherClassesColumnLabels;
+    private JLabel[][] teacherClassesColumnLabels;
     
     /**
      * The array of array list to hold the different swimming classes by teacher.
      */
-    ArrayList<SwimmingClasses>[] teachersClassesLists;
+    private ArrayList<SwimmingClasses>[] teachersClassesLists;
     
     /**
      * The grid bag constraint to manipulate when adding components to the layout. 
      */
-    GridBagConstraints c;
+    private final GridBagConstraints c;
     
     
     
     /**
      * The colour used for the headers background.
      */
-    private Color smsBlue = new Color(172, 172, 255);
+    private final Color smsBlue = new Color(172, 172, 255);
     
     /**
      * The font for all headers in the table.
      */
-    Font tableHeaderFont = new Font("Arial", Font.PLAIN, 18);
+    private final Font tableHeaderFont = new Font("Arial", Font.PLAIN, 18);
     
     /**
      * The font for all records/rows in the table.
      */
-    Font tableRecordFont = new Font("Arial", Font.PLAIN, 15);
+    private final Font tableRecordFont = new Font("Arial", Font.PLAIN, 15);
     
     
     
     /**
      * The panel to hold all editing buttons on for the day schedule.
      */
-    JPanel buttonPanel;
+    private JPanel buttonPanel;
         
     /**
      * The button to start editing the day schedule panel.
      */
-    JButton editButton;
+    private JButton editButton;
     
     /**
      * The button to update the day schedule panel with any changes done during editing.
      */
-    JButton updateButton;
+    private JButton updateButton;
     
     /**
      * The button to exit editing the day schedule panel.
      */
-    JButton cancelEditButton;
+    private JButton cancelEditButton;
     
     /**
      * The button to add a Teacher to the day schedule panel.
      */
-    JButton addTeacherButton;
+    private JButton addTeacherButton;
     
     /**
      * The button to add a Timeslot to the day schedule panel.
      */
-    JButton addTimeslotButton;
+    private JButton addTimeslotButton;
     
     /**
      * The panels to hold each timeslot time and deletion button on.
      */
-    JPanel[] timeslotColumn;
+    private JPanel[] timeslotColumn;
         
     /**
      * The delete buttons for the timeslot panels.
      */
-    JButton[] deleteTimeslotButton;
+    private JButton[] deleteTimeslotButton;
     
     /**
      * The panel to hold the teacher name column headers.
      */
-    JPanel[] teacherHeader;
+    private JPanel[] teacherHeader;
     
     /**
      * The labels to hold the text for each teachers name on the column header panels.
      */
-    JLabel[] teacherHeaderText;
+    private JLabel[] teacherHeaderText;
     
     /**
      * The array of combo boxes for when editing the teachers of swimming classes.
      */
-    JComboBox[] teacherNameList;
+    private JComboBox[] teacherNameList;
     
     /**
      * The array of buttons to delete the Teacher from that day.
      */
-    JButton[] deleteTeacherButton;
+    private JButton[] deleteTeacherButton;
     
     
     
@@ -240,7 +240,7 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
      * Gets all the timeslots associated with the specified day.
      * Info needed early to calculate panel height.
      */
-    public void getTimeslotsForDay() {
+    private void getTimeslotsForDay() {
         // Gets all the timeslots for the specified day.
         timeslotList = timeslotController.getTimeslotsForDay(day);
     }
@@ -249,7 +249,7 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
      * Gets all the teachers that work on the specified day.
      * Info needed early to calculate panel width.
      */
-    public void getWorkingTeachersForDay() {
+    private void getWorkingTeachersForDay() {
         // Gets all the teachers for the specified day
         workingTeacherList = teacherController.getTeachersForDay(day);
     }
@@ -258,7 +258,7 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
      * Calculates the height that the Day Schedule Panel should be.
      * @return panelHeight The height that the day schedule panel should be.
      */
-    public int calculateDaySchedulePanelHeight() {
+    private int calculateDaySchedulePanelHeight() {
         // Gets the amount of timeslots from the size of the timeslot list.
         final int amountOfTimeslots = timeslotList.size();
         
@@ -272,7 +272,7 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
      * Calculates the width that the Day Schedule Panel should be.
      * @return panelWidth The width that the day schedule panel should be.
      */
-    public int calculateDaySchedulePanelWidth() {
+    private int calculateDaySchedulePanelWidth() {
         // Gets the amound of teachers from the size of the working teacher list.
         int amountOfTeachers = workingTeacherList.size();
         
@@ -298,7 +298,7 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
     /**
      * This method calls each individual method to load different parts of the schedule.
      */
-    public void loadSchedule() {
+    private void loadSchedule() {
         
         // adds the timeslot column title to the schedule.
         addTimeslotColumnHeader();
@@ -317,7 +317,7 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
      * Adds the timeslot column title of the class schedule table, or displays an error message
      * depending on whether there is data to load.
      */
-    public void addTimeslotColumnHeader() {
+    private void addTimeslotColumnHeader() {
         
         // If the timeslot list is empty and the working teacher list is empty add begin label
         if (timeslotList.isEmpty() && workingTeacherList.isEmpty()) {
@@ -358,7 +358,7 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
     /**
      * Adds all teachers to the swimming class schedule for the specified day.
      */
-    public void addTeachersColumnHeaders() {
+    private void addTeachersColumnHeaders() {
         
         // Sorts all of the teachers by the teacher Id of the teacher (Ascending order)
         workingTeacherList = teacherController.sortTeachersByTeacherId(workingTeacherList);
@@ -404,7 +404,7 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
     /**
      * Adds all timeslots to the swimming class schedule for the specified day.
      */
-    public void addTimeslotColumn() {
+    private void addTimeslotColumn() {
         // Sorts all of the timeslots by the time of the timeslot (Ascending order).
         timeslotList = timeslotController.sortTimeslotsByTime(timeslotList);
         
@@ -458,7 +458,7 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
     /**
      * Adds all swimming classes to the swimming class schedule for the specified day.
      */
-    public void addSwimmingClasses() {
+    private void addSwimmingClasses() {
         
         // Gets all swimming classes for the specified day.
         swimmingClassesList = swimmingClassesController.getClassesByDay(day);
@@ -538,7 +538,7 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
      * @param swimmingClass The swimming class to generate the text for
      * @return labelText The text to go on the label
      */
-    public String getTextForClassLabel(SwimmingClasses swimmingClass) {
+    private String getTextForClassLabel(SwimmingClasses swimmingClass) {
         // Creates a string to hold the label text
         String labelText = "";
         
@@ -567,7 +567,7 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
     /**
      * Adds the button panel to allow the user to enter editing mode.
      */
-    public void addEditingButtonPanel() {
+    private void addEditingButtonPanel() {
         // Creates/initialises the button panel to hold the editing buttons
         buttonPanel = new JPanel();
         buttonPanel.setPreferredSize(new Dimension(250, 350));
@@ -602,7 +602,7 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
      * -Timeslots
      * can be edited.
      */
-    public void enterEditingMode() {
+    private void enterEditingMode() {
         // Removes the edit button from the button panel
         buttonPanel.remove(editButton);
         
@@ -675,7 +675,7 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
      * Adds the combo boxes to the teacher name headers so that the teacher for the swimming classes in that column
      * can be edited and a delete button to delete the teacher from the class schedule.
      */
-    public void addTeacherEditOptions() {
+    private void addTeacherEditOptions() {
         // Loops through the teacher list removing the teacher name text label
         for (int i = 0; i < workingTeacherList.size(); i++) {
             teacherHeader[i].remove(teacherHeaderText[i]);
@@ -728,7 +728,7 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
     /**
      * Adds delete buttons to the timeslot column panels allowing each timeslot to be deleted.
      */
-    public void addTimeslotDeleteButtons() {
+    private void addTimeslotDeleteButtons() {
         // Creates an array of buttons to hold the delete buttons for the timeslots
         deleteTimeslotButton = new JButton[timeslotList.size()];
         
@@ -749,17 +749,14 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
      * Method that runs when the update button is pressed, attempts to update the schedule in the database
      * with the new edited values (of the teacher column header).
      */
-    public void checkForUpdates() {
+    private void checkForUpdates() {
         // Creates a flag used to detect if the teachers of any swimming class column have changed
         final boolean[] changeFlag = new boolean[teacherNameList.length];
 
-        // Loops through the array of combo boxes checking if the values have changed since editing
+        // Loops through the array of combo boxes checking if the values has changed since editing
         for (int i = 0; i < teacherNameList.length; i++) {
-            if (workingTeacherList.get(i).getTeacherName().equals((String) teacherNameList[i].getSelectedItem())) {
-                changeFlag[i] = false;
-            } else {
-                changeFlag[i] = true;
-            }
+            // If the teachers name is equal to the equivelant index in the teachers name list return true
+            changeFlag[i] = !workingTeacherList.get(i).getTeacherName().equals((String) teacherNameList[i].getSelectedItem());
         }
 
         // If there has been a change with any of the swimming class teachers columns
@@ -836,7 +833,7 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
      * Checks if any of the combo boxes contain duplicate values.
      * @return whether they contain duplicates.
      */
-    public boolean checkComboBoxesForDuplicates() {
+    private boolean checkComboBoxesForDuplicates() {
         // creates an array to hold boolean duplicate flags for each teacher working on this day
         final boolean[] duplicate = new boolean[teacherNameList.length];
         
@@ -859,7 +856,7 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
      * @param booleanFlag The array of booleans to check
      * @return Whether n index in the array contains true or not
      */
-    public boolean booleanArrayContains(boolean[] booleanFlag) {
+    private boolean booleanArrayContains(boolean[] booleanFlag) {
         // Loops through the entire boolean array.
         for (boolean flag: booleanFlag) {
             // If any of them are true, return true.
@@ -876,8 +873,8 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
      * the schedule including the creation of enough empty swimming classes for each teacher that teaches on
      * this day in the database.
      */
-    public void addTimeslot() {
-        String timeslotTimeString = null;
+    private void addTimeslot() {
+        String timeslotTimeString;
             
             // Shows input dialog asking for the new timeslot time to create
             timeslotTimeString = JOptionPane.showInputDialog(null,
@@ -964,7 +961,7 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
     /**
      * Shows an option pane asking the user to select the teacher to add to this days swimming classh schedule.
      */
-    public void attemptAddTeacher() {
+    private void attemptAddTeacher() {
         // Creates an array of strings to hold all the not working teachers names.
         final String[] notWorkingTeachers = new String[notWorkingTeacherList.size()];
         

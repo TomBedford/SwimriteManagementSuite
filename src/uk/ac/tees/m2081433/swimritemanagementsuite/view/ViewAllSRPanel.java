@@ -35,71 +35,71 @@ public class ViewAllSRPanel extends JPanel implements ActionListener, KeyListene
     /**
      * The swimrite management suite body panel referenced for displaying an individual student record.
      */
-    SMSBodyPanel smsBodyPanelRef;
+    private final SMSBodyPanel smsBodyPanelRef;
     
     /**
      * The Student Record controller for querying the Student Record database table.
      */
-    StudentRecordController studentRecordController = new StudentRecordController();
+    private final StudentRecordController studentRecordController = new StudentRecordController();
     
     /**
      * List to contain all the student records to be displayed on the panel.
      */
-    List<StudentRecord> studentRecordList;
+    private List<StudentRecord> studentRecordList;
     
     /**
      * The grid bag constraint to manipulate when adding components to the layout. 
      */
-    GridBagConstraints c;
+    private final GridBagConstraints c;
     
     
     
     /**
      * Radio button to filter student records by all students.
      */
-    JRadioButton allFilterButton;
+    private JRadioButton allFilterButton;
        
     /**
      * Radio button to filter student records by enrolled students.
      */
-    JRadioButton enrolledFilterButton;
+    private JRadioButton enrolledFilterButton;
         
     /**
      * Radio button to filter student records by unenrolled (waiting list) students.
      */
-    JRadioButton waitingListFilterButton;
+    private JRadioButton waitingListFilterButton;
     
     /**
      * Button to filter student records by all students.
      */
-    JButton searchButton;
+    private JButton searchButton;
     
     /**
      * The search student records (by student name) text input field.
      */
-    JTextField searchSRField;
+    private JTextField searchSRField;
     
     
     
     /**
      * Scroll Pane to hold the student record table within.
      */
-    JScrollPane tableScrollPane;
+    private JScrollPane tableScrollPane;
     
     /**
      * The extended JTable specifically for holding student records.
      */
-    StudentRecordTable srTable;
+    private StudentRecordTable srTable;
     
     /**
      * Sorting object for filtering students by student name and filtering by column heading.
      */
-    TableRowSorter<TableModel> sorter;
+    private TableRowSorter<TableModel> sorter;
     
     /**
      * An array of String to hold the column names for the student record table.
      */
-    String[] columnNames;
+    private String[] columnNames;
     
     
     
@@ -157,7 +157,7 @@ public class ViewAllSRPanel extends JPanel implements ActionListener, KeyListene
      * Adds a 'filter by' title label and the radio button filter options (all, enrolled and waiting list)
      * to a panel to be placed on this layout. 
      */
-    public void loadFilterOptions() {
+    private void loadFilterOptions() {
         
         // Button group for the radio button filter options
         final ButtonGroup filterButtonGroup = new ButtonGroup();
@@ -225,7 +225,7 @@ public class ViewAllSRPanel extends JPanel implements ActionListener, KeyListene
      * Adds a text field (used for searching student records by student name) and a search button 
      * to this panel.
      */
-    public void loadSearchBar() {
+    private void loadSearchBar() {
         // The text field used for inputing search/filter text
         searchSRField = new JTextField(24);
         // Adds a key listener so the user can press 'enter' to search/filter
@@ -251,7 +251,7 @@ public class ViewAllSRPanel extends JPanel implements ActionListener, KeyListene
     /**
      * Adds spacing components to this panel for aesthetic purposes.
      */
-    public void addLayoutSpacing() {
+    private void addLayoutSpacing() {
         // First invisible label putting spacing between the top of the panel and the search bar
         final JLabel spacingLabel1 = new JLabel();
         spacingLabel1.setPreferredSize(new Dimension(300, 15));
@@ -279,7 +279,7 @@ public class ViewAllSRPanel extends JPanel implements ActionListener, KeyListene
      * Loads a list of student records into the table that is then displayed on this panel.
      * @param srListToDisplay The list of student records to load into the table.
      */
-    public void loadSRTable(List<StudentRecord> srListToDisplay) {
+    private void loadSRTable(List<StudentRecord> srListToDisplay) {
         
         // The an array of column names for the table
         columnNames = new String[]{" Student Name",
@@ -319,7 +319,7 @@ public class ViewAllSRPanel extends JPanel implements ActionListener, KeyListene
      * @param studentRecordList The list of student records to convert
      * @return 2 Dimensional array of object containing the formatted student records list.
      */
-    public Object[][] convertListForTable(List<StudentRecord> studentRecordList) {
+    private Object[][] convertListForTable(List<StudentRecord> studentRecordList) {
 
         /**
          * The two dimensional array to hold the student records.
@@ -452,7 +452,7 @@ public class ViewAllSRPanel extends JPanel implements ActionListener, KeyListene
     /**
      * Method to filter records in the student records table by the input from the search text field.
      */
-    public void searchStudentRecordTable() {
+    private void searchStudentRecordTable() {
         // Gets the text from the search text field
         final String searchText = searchSRField.getText();
                 

@@ -22,32 +22,32 @@ public class CEDLoginAccountsPanel extends JPanel {
     /**
      * The SMS Body Panel reference for when swapping panels on the body panel.
      */
-    SMSBodyPanel smsBodyPanel;
+    private final SMSBodyPanel smsBodyPanel;
     
     /**
      * The grid bag constraint to manipulate when adding components to the layout. 
      */
-    GridBagConstraints c;
+    private final GridBagConstraints c;
     
     /**
      * The Login Account Controller to interact with the Login Account database table.
      */
-    LoginAccountController loginAccountController = new LoginAccountController();
+    private final LoginAccountController loginAccountController = new LoginAccountController();
     
     /**
      * The list to hold all login accounts for the Swimrite Management Suite.
      */
-    List<LoginAccount> loginAccountList;
+    private final List<LoginAccount> loginAccountList;
     
     /**
      * The array of strings to hold the column headers/names for the login accounts table.
      */
-    String[] columnNames;
+    private String[] columnNames;
     
     /**
      * The extended JTable Login Accounts table displaying all login accounts for the Swimrite Management Suite.
      */
-    LoginAccountTable loginAccountTable;
+    private LoginAccountTable loginAccountTable;
     
     
     
@@ -123,7 +123,7 @@ public class CEDLoginAccountsPanel extends JPanel {
     /**
      * Creates the Login Account table to display all the Login Accounts for the Swimrite Management Suite.
      */
-    public void addLoginAccountTable() {
+    private void addLoginAccountTable() {
         // The an array of column names for the table
         columnNames = new String[]{" Username",
                                 " Administrator"};
@@ -150,7 +150,7 @@ public class CEDLoginAccountsPanel extends JPanel {
      * tables parameters.
      * @return 2 Dimensional array of object containing the formatted login accounts list.
      */
-    public Object[][] convertListForTable() {
+    private Object[][] convertListForTable() {
 
         /**
          * The two dimensional array to hold the Login Accounts.
@@ -175,7 +175,7 @@ public class CEDLoginAccountsPanel extends JPanel {
     /**
      * Adds a the login account dynamic form panel so users can easily add, edit and delete login accounts.
      */
-    public void addDynamicFormPanel() {
+    private void addDynamicFormPanel() {
         
         // Creates the login account dynamic form panel
         final LoginAccountDynamicFormPanel loginAccountDynamicFormPanel = new LoginAccountDynamicFormPanel(smsBodyPanel, loginAccountTable, loginAccountList);

@@ -16,6 +16,7 @@ public class TeacherController implements DatabaseTableController<Teacher> {
      * Creates a Teacher in the database using the provided parameter.
      * @param teacher The teacher to add to the db.
      */
+    @Override
     public void create(Teacher teacher) {
         try {
             // Creates the teacher in the database
@@ -30,6 +31,7 @@ public class TeacherController implements DatabaseTableController<Teacher> {
      * Updates a Teacher in the database using the updated Teacher object provided as a parameter.
      * @param teacher The teacher with updated values to update in the db table.
      */
+    @Override
     public void update(Teacher teacher) {
         try {
             // Updates the teacher in the database
@@ -43,6 +45,7 @@ public class TeacherController implements DatabaseTableController<Teacher> {
      * Deletes the provided Teacher (parameter) from the database.
      * @param teacher The teacher to delete from the database
      */
+    @Override
     public void delete(Teacher teacher) {
         try {
             // Deletes the teacher in the database

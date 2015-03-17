@@ -11,12 +11,12 @@ class TeacherTableModel extends AbstractTableModel {
     /**
      * Two dimensional object array to hold the data for the table.
      */
-    final private Object[][] data;
+    private final Object[][] data;
     
     /**
      * Array of string to hold the table headers.
      */
-    final private String[] headers;
+    private final String[] headers;
 
     /**
      * Initializes the table model calling the super class and setting the data for the rows and the headers.

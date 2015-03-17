@@ -175,7 +175,7 @@ public class LoginDialog {
      * @return Byte Array source:
      * http://stackoverflow.com/questions/140131/convert-a-string-representation-of-a-hex-dump-to-a-byte-array-using-java
      */
-    public static byte[] hexStringToByteArray(String s) {
+    private static byte[] hexStringToByteArray(String s) {
         final int len = s.length();
         final byte[] data = new byte[len / 2];
 

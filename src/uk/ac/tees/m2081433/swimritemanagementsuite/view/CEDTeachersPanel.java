@@ -27,49 +27,49 @@ public class CEDTeachersPanel extends JPanel implements ActionListener {
     /**
      * The SMS Body Panel reference for when swapping panels on the body panel.
      */
-    SMSBodyPanel smsBodyPanel;
+    private final SMSBodyPanel smsBodyPanel;
     
     /**
      * The grid bag constraint to manipulate when adding components to the layout. 
      */
-    GridBagConstraints c;
+    private final GridBagConstraints c;
     
     /**
      * The Teacher Controller to interact with the Teacher database table.
      */
-    TeacherController teacherController = new TeacherController();
+    private final TeacherController teacherController = new TeacherController();
     
     /**
      * The list to hold all Teachers that teach at Swimrite Leisure.
      */
-    List<Teacher> teacherList;
+    private final List<Teacher> teacherList;
     
     /**
      * The array of strings to hold the column headers/names for the teacher table.
      */
-    String[] columnNames;
+    private String[] columnNames;
     
     /**
      * The extended JTable Teachers table displaying all teachers that teach at Swimrite Leisure.
      */
-    TeacherTable teacherTable;
+    private TeacherTable teacherTable;
     
     
     
     /**
      * The button to add a teacher.
      */
-    JButton addTeacherButton;
+    private JButton addTeacherButton;
     
     /**
      * The button to edit a teacher.
      */
-    JButton editTeacherButton;
+    private JButton editTeacherButton;
     
     /**
      * The button to delete a teacher.
      */
-    JButton deleteTeacherButton;
+    private JButton deleteTeacherButton;
     
     
     
@@ -136,7 +136,7 @@ public class CEDTeachersPanel extends JPanel implements ActionListener {
     /**
      * Creates the Teacher table to display all the Teachers that teach at Swimrite Leisure.
      */
-    public void addTeacherTable() {
+    private void addTeacherTable() {
         // The an array of column names for the table
         columnNames = new String[]{" Teacher Name",
                                 " Monday",
@@ -168,7 +168,7 @@ public class CEDTeachersPanel extends JPanel implements ActionListener {
      * Converts a list of teachers into a two dimensional array of objects suitable for the teacher tables parameters.
      * @return 2 Dimensional array of object containing the formatted teachers list.
      */
-    public Object[][] convertListForTable() {
+    private Object[][] convertListForTable() {
 
         /**
          * The two dimensional array to hold the Teachers Records.
@@ -203,7 +203,7 @@ public class CEDTeachersPanel extends JPanel implements ActionListener {
     /**
      * Adds a button panel containing all buttons (Create, Edit and Delete) needed for this panel.
      */
-    public void addButtonPanel() {
+    private void addButtonPanel() {
         // Creates and initializes a label used to put space between table and button panel
         final JLabel spacingLabel2 = new JLabel();
         spacingLabel2.setPreferredSize(new Dimension(1200, 30));

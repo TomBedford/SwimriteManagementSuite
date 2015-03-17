@@ -16,7 +16,7 @@ public class TimeslotController implements DatabaseTableController<Timeslot> {
     /**
      * Controller reference to delete all Swimming Classes associated with a timeslot that is being deleted.
      */
-    SwimmingClassesController swimmingClassesController = new SwimmingClassesController();
+    private final SwimmingClassesController swimmingClassesController = new SwimmingClassesController();
 
     
     

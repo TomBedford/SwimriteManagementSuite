@@ -36,72 +36,72 @@ public class AddSRToSCFrame extends JFrame implements ActionListener, KeyListene
     /**
      * The swimming class to add the selected student record to.
      */
-    SwimmingClasses swimmingClass;
+    private final SwimmingClasses swimmingClass;
     
     /**
      * The body panel reference to refresh the swimming classes panel once a new student has been added.
      */
-    SMSBodyPanel smsBodyPanel;
+    private final SMSBodyPanel smsBodyPanel;
     
     /**
      * The panel that holds all components on this frame.
      */
-    JPanel addSRToSCPanel;
+    private final JPanel addSRToSCPanel;
     
     /**
      * The grid bag constraint to manipulate when adding components to the layout. 
      */
-    GridBagConstraints c;
+    private final GridBagConstraints c;
     
     /**
      * Button to filter student records by all students.
      */
-    JButton searchButton;
+    private JButton searchButton;
     
     /**
      * The search student records (by student name) text input field.
      */
-    JTextField searchSRField;
+    private JTextField searchSRField;
     
     /**
      * List to contain all the student records to be displayed on the panel.
      */
-    List<StudentRecord> studentRecordList;
+    private List<StudentRecord> studentRecordList;
     
     /**
      * The Student Record controller for querying the Student Record database table.
      */
-    StudentRecordController studentRecordController = new StudentRecordController();
+    private final StudentRecordController studentRecordController = new StudentRecordController();
     
     /**
      * The Swimming Classes controller for updating the swimming class in the database.
      */
-    SwimmingClassesController swimmingClassesController = new SwimmingClassesController();
+    private final SwimmingClassesController swimmingClassesController = new SwimmingClassesController();
     
     /**
      * The array of strings to hold the column headers/names for the swimming class student records table.
      */
-    String[] columnNames;
+    private String[] columnNames;
     
     /**
      * The extended JTable specifically for holding student records.
      */
-    StudentRecordTable srTable;
+    private StudentRecordTable srTable;
     
     /**
      * Sorting object for filtering students by student name and filtering by column heading.
      */
-    TableRowSorter<TableModel> sorter;
+    private TableRowSorter<TableModel> sorter;
     
     /**
      * The button to add the selected student record to the swimming class.
      */
-    JButton addSRToSCButton;
+    private JButton addSRToSCButton;
     
     /**
      * The button to cancel adding a student to the swimming class.
      */
-    JButton cancelAddSRToSCButton;
+    private JButton cancelAddSRToSCButton;
     
     
     
@@ -154,7 +154,7 @@ public class AddSRToSCFrame extends JFrame implements ActionListener, KeyListene
      * Adds a text field (used for searching student records by student name) and a search button 
      * to this panel.
      */
-    public void addSearchBar() {
+    private void addSearchBar() {
         // Panel to hold the search table components
         final JPanel searchPanel = new JPanel();
         searchPanel.setPreferredSize(new Dimension(1205, 50));
@@ -189,7 +189,7 @@ public class AddSRToSCFrame extends JFrame implements ActionListener, KeyListene
     /**
      * Loads a list of student records into the table that is then displayed on this panel.
      */
-    public void addStudentRecordTable() {
+    private void addStudentRecordTable() {
         // Gets all the student records from the database and puts into list
         studentRecordList = studentRecordController.getAllStudentRecords();
         
@@ -230,7 +230,7 @@ public class AddSRToSCFrame extends JFrame implements ActionListener, KeyListene
      * @param studentRecordList The list of student records to convert
      * @return 2 Dimensional array of object containing the formatted student records list.
      */
-    public Object[][] convertListForTable(List<StudentRecord> studentRecordList) {
+    private Object[][] convertListForTable(List<StudentRecord> studentRecordList) {
 
         /**
          * The two dimensional array to hold the student records.
@@ -274,7 +274,7 @@ public class AddSRToSCFrame extends JFrame implements ActionListener, KeyListene
     /**
      * Method to filter records in the student records table by the input from the search text field.
      */
-    public void searchStudentRecordTable() {
+    private void searchStudentRecordTable() {
         // Gets the text from the search text field
         final String searchText = searchSRField.getText();
                 
@@ -290,7 +290,7 @@ public class AddSRToSCFrame extends JFrame implements ActionListener, KeyListene
     /**
      * Creates a panel at the bottom of this panel to hold the add selected student to swimming class button.
      */
-    public void addFooterButtonPanel() {
+    private void addFooterButtonPanel() {
         // Panel to hold the add selected student button
         final JPanel footerPanel = new JPanel();
         footerPanel.setPreferredSize(new Dimension(1205, 60));
@@ -326,7 +326,7 @@ public class AddSRToSCFrame extends JFrame implements ActionListener, KeyListene
     /**
      * Method to add the selected student record to the swimming class and updates both in the database.
      */
-    public void addStudentRecordToSwimmingClass() {
+    private void addStudentRecordToSwimmingClass() {
         // Gets the index from the row that is selected/was clicked
         final int index = srTable.getSelectedRow();
 

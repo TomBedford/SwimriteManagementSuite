@@ -103,11 +103,7 @@ public class LoginAccountController implements DatabaseTableController<LoginAcco
             final List<LoginAccount> loginAccount = DatabaseManager.loginAccountDAO.queryForEq(LoginAccount.USERNAME_COLUMN_NAME, username);
 
             // If the list is empty then return false
-            if (loginAccount.isEmpty()) {
-                return false;
-            } else {
-                return true;
-            }
+            return !loginAccount.isEmpty();
             
         } catch (SQLException e) {
             System.out.println("deleteTimeslot: Error deleting the timeslot (controller).");
@@ -204,7 +200,7 @@ public class LoginAccountController implements DatabaseTableController<LoginAcco
      * @return Byte Array
      * source: http://stackoverflow.com/questions/140131/convert-a-string-representation-of-a-hex-dump-to-a-byte-array-using-java
      */
-    public static byte[] hexStringToByteArray(String s) {
+    private static byte[] hexStringToByteArray(String s) {
         final int len = s.length();
         final byte[] data = new byte[len / 2];
         

@@ -33,72 +33,72 @@ public class RegisterPanel extends JPanel implements ActionListener {
     /**
      * The day to load the register swimming schedule for (todays day!).
      */
-    Day day;
+    private Day day;
     
     /**
      * The date of todays lesson to register.
      */
-    String todaysDate;
+    private String todaysDate;
     
     /**
      * Reference to the body panel to re-load this panel and to direct to view individual swimming class.
      */
-    SMSBodyPanel smsBodyPanelRef;
+    private SMSBodyPanel smsBodyPanelRef;
     
     /**
      * The Teacher controller for when running db queries on the Teacher table.
      */
-    TeacherController teacherController = new TeacherController();
+    private final TeacherController teacherController = new TeacherController();
     
     /**
      * The Timeslot controller for when running db queries on the Timeslot table.
      */
-    TimeslotController timeslotController = new TimeslotController();
+    private final TimeslotController timeslotController = new TimeslotController();
     
     /**
      * The Swimming Classes controller for when running db queries on the Swimming Classes table.
      */
-    SwimmingClassesController swimmingClassesController = new SwimmingClassesController();
+    private final SwimmingClassesController swimmingClassesController = new SwimmingClassesController();
     
     /**
      * The Student Record controller for when running db queries on the Student Record table.
      */
-    StudentRecordController studentRecordController = new StudentRecordController();
+    private final StudentRecordController studentRecordController = new StudentRecordController();
     
     /**
      * The controller to interact with the lesson block table in the database.
      */
-    LessonBlockController lessonBlockController = new LessonBlockController();
+    private final LessonBlockController lessonBlockController = new LessonBlockController();
     
     /**
      * Holds all Teachers for the specified day.
      */
-    List<Teacher> workingTeacherList;
+    private List<Teacher> workingTeacherList;
     
     /**
      * Holds all Teachers that dont work on the specified day.
      */
-    List<Teacher> notWorkingTeacherList;
+    private List<Teacher> notWorkingTeacherList;
     
     /**
      * Holds all Timeslots for the specified day.
      */
-    List<Timeslot> timeslotList;
+    private List<Timeslot> timeslotList;
     
     /**
      * Holds all Swimming Classes for the specified day.
      */
-    List<SwimmingClasses> swimmingClassesList;
+    private List<SwimmingClasses> swimmingClassesList;
     
     /**
      * The two dimensional array of panels that holds the swimming classes for each teachers column.
      */
-    JPanel[][] teacherClassesColumnPanels;
+    private JPanel[][] teacherClassesColumnPanels;
     
     /**
      * The array of array list to hold the different swimming classes by teacher.
      */
-    ArrayList<SwimmingClasses>[] teachersClassesLists;
+    private ArrayList<SwimmingClasses>[] teachersClassesLists;
     
     /**
      * The three dimensional array of student records that holds each student record for each swimming class
@@ -107,87 +107,87 @@ public class RegisterPanel extends JPanel implements ActionListener {
      * 2nd dimension = The swimming class row in that teacher column the student record is in
      * 3rd dimension = The student record for that swimming class
      */
-    StudentRecord[][][] studentRecordList;
+    private StudentRecord[][][] studentRecordList;
     
     /**
      * The three dimensional array of panels that holds each student records name and attendance buttons for
      * every swimming class.
      */
-    JPanel[][][] swimmingClassStudentRecordPanels;
+    private JPanel[][][] swimmingClassStudentRecordPanels;
     
     /**
      * The three dimensional array of labels that holds each student records name on the student records panel.
      */
-    JLabel[][][] studentRecordNameLabels;
+    private JLabel[][][] studentRecordNameLabels;
     
     /**
      * The three dimensional array for all the buttons to change attendance of the appropriate student record to present.
      */
-    JButton[][][] presentButton;
+    private JButton[][][] presentButton;
     
     /**
      * The three dimensional array for all the buttons to change attendance of the appropriate student record to absent.
      */
-    JButton[][][] absentButton;
+    private JButton[][][] absentButton;
     
     /**
      * The three dimensional array for all the buttons to change attendance of the appropriate student record to fun swim.
      */
-    JButton[][][] funSwimButton;
+    private JButton[][][] funSwimButton;
     
     /**
      * The three dimensional array for all the buttons to begin the editing of the attendance of the appropriate student record.
      */
-    JButton[][][] editAttendanceButton;
+    private JButton[][][] editAttendanceButton;
     
     /**
      * The grid bag constraint to manipulate when adding components to the layout. 
      */
-    GridBagConstraints c;
+    private GridBagConstraints c;
     
     
     
     /**
      * The colour used for the headers background.
      */
-    private Color smsBlue = new Color(172, 172, 255);
+    private final Color smsBlue = new Color(172, 172, 255);
     
     /**
      * The color of attendance marked students name labels.
      */
-    private Color smsGreenMarked = new Color(50, 150, 0);
+    private final Color smsGreenMarked = new Color(50, 150, 0);
     
     /**
      * The font for all headers in the table.
      */
-    Font tableHeaderFont = new Font("Arial", Font.PLAIN, 18);
+    private final Font tableHeaderFont = new Font("Arial", Font.PLAIN, 18);
     
     /**
      * The font for all records/rows in the table.
      */
-    Font tableRecordFont = new Font("Arial", Font.PLAIN, 15);
+    private final Font tableRecordFont = new Font("Arial", Font.PLAIN, 15);
     
     /**
      * The font all edit attendance buttons.
      */
-    Font editAttendanceFont = new Font("Arial", Font.PLAIN, 12);
+    private final Font editAttendanceFont = new Font("Arial", Font.PLAIN, 12);
     
     
     
     /**
      * The panels to hold each timeslot time on.
      */
-    JPanel[] timeslotColumn;
+    private JPanel[] timeslotColumn;
         
     /**
      * The panel to hold the teacher name column headers.
      */
-    JPanel[] teacherHeader;
+    private JPanel[] teacherHeader;
     
     /**
      * The labels to hold the text for each teachers name on the column header panels.
      */
-    JLabel[] teacherHeaderText;
+    private JLabel[] teacherHeaderText;
     
 
     
@@ -243,7 +243,7 @@ public class RegisterPanel extends JPanel implements ActionListener {
      * Calculates todays day and sets the day variable to it, also calculates todays date and formats it correctly
      * and sets it to the todaysDate variable.
      */
-    public void calcTodaysDayAndDate() {
+    private void calcTodaysDayAndDate() {
         // Gets an instance of a calendar to work out todays date
         final Calendar calendar = Calendar.getInstance();
         
@@ -308,7 +308,7 @@ public class RegisterPanel extends JPanel implements ActionListener {
      * Gets all the timeslots associated with the specified day.
      * Info needed early to calculate panel height.
      */
-    public void getTimeslotsForDay() {
+    private void getTimeslotsForDay() {
         // Gets all the timeslots for the specified day.
         timeslotList = timeslotController.getTimeslotsForDay(day);
     }
@@ -317,7 +317,7 @@ public class RegisterPanel extends JPanel implements ActionListener {
      * Gets all the teachers that work on the specified day.
      * Info needed early to calculate panel width.
      */
-    public void getWorkingTeachersForDay() {
+    private void getWorkingTeachersForDay() {
         // Gets all the teachers for the specified day
         workingTeacherList = teacherController.getTeachersForDay(day);
     }
@@ -326,7 +326,7 @@ public class RegisterPanel extends JPanel implements ActionListener {
      * Calculates the height that the Day Schedule Panel should be.
      * @return panelHeight The height that the day schedule panel should be.
      */
-    public int calculateDaySchedulePanelHeight() {
+    private int calculateDaySchedulePanelHeight() {
         // Gets the amount of timeslots from the size of the timeslot list.
         final int amountOfTimeslots = timeslotList.size();
         
@@ -340,7 +340,7 @@ public class RegisterPanel extends JPanel implements ActionListener {
      * Calculates the width that the Day Schedule Panel should be.
      * @return panelWidth The width that the day schedule panel should be.
      */
-    public int calculateDaySchedulePanelWidth() {
+    private int calculateDaySchedulePanelWidth() {
         // Gets the amound of teachers from the size of the working teacher list.
         int amountOfTeachers = workingTeacherList.size();
         
@@ -366,7 +366,7 @@ public class RegisterPanel extends JPanel implements ActionListener {
     /**
      * This method calls each individual method to load different parts of the schedule.
      */
-    public void loadSchedule() {
+    private void loadSchedule() {
         
         // adds the timeslot column title to the schedule.
         addTimeslotColumnHeader();
@@ -385,7 +385,7 @@ public class RegisterPanel extends JPanel implements ActionListener {
      * Adds the timeslot column title of the class schedule table, or displays an error message
      * depending on whether there is data to load.
      */
-    public void addTimeslotColumnHeader() {
+    private void addTimeslotColumnHeader() {
         
         // If the timeslot list is empty and the working teacher list is empty add begin label
         if (timeslotList.isEmpty() || workingTeacherList.isEmpty()) {
@@ -426,7 +426,7 @@ public class RegisterPanel extends JPanel implements ActionListener {
     /**
      * Adds all teachers to the swimming class schedule for the specified day.
      */
-    public void addTeachersColumnHeaders() {
+    private void addTeachersColumnHeaders() {
         
         // Sorts all of the teachers by the teacher Id of the teacher (Ascending order)
         workingTeacherList = teacherController.sortTeachersByTeacherId(workingTeacherList);
@@ -472,7 +472,7 @@ public class RegisterPanel extends JPanel implements ActionListener {
     /**
      * Adds all timeslots to the swimming class schedule for the specified day.
      */
-    public void addTimeslotColumn() {
+    private void addTimeslotColumn() {
         // Sorts all of the timeslots by the time of the timeslot (Ascending order).
         timeslotList = timeslotController.sortTimeslotsByTime(timeslotList);
         
@@ -527,7 +527,7 @@ public class RegisterPanel extends JPanel implements ActionListener {
      * Adds all swimming classes to the swimming class schedule and adds all student records
      * that are in each swimming class to the appropriate swimming class panel for todays day.
      */
-    public void addSwimmingClassesAndStudents() {
+    private void addSwimmingClassesAndStudents() {
         
         // Gets all swimming classes for the specified day.
         swimmingClassesList = swimmingClassesController.getClassesByDay(day);
@@ -622,13 +622,6 @@ public class RegisterPanel extends JPanel implements ActionListener {
                             
                             // Adds the student name labels to the student record panels
                             swimmingClassStudentRecordPanels[i][x][y].add(studentRecordNameLabels[i][x][y]);
-                            
-                            // Checks student records latest lesson block for todays date
-                            // If the date is already present in the lesson block
-                            // Display edit button and change forground to green
-                            // otherwise display other buttons and forground to red
-                            
-                            // get the latest date that isnt null from the latest students lesson block to check
                             
                             // Gets all lesson blocks associated with the student record
                             List<LessonBlock> lessonBlockList = lessonBlockController.getLessonBlocksByStudent(studentRecordList[i][x][y]);
@@ -776,6 +769,201 @@ public class RegisterPanel extends JPanel implements ActionListener {
         }
     }
     
+    /**
+     * Sets the attendance for a student record to the attendance type passed in as a param and the attendance date 
+     * to todays date if todays date is not already present within their lesson block.
+     * @param i The first dimension of the arrays
+     * @param x The second dimension of the arrays
+     * @param y The third dimension of the arrays
+     * @param attendanceType 
+     */
+    private void setStudentAttendance(int i, int x, int y, AttendanceType attendanceType) {
+
+        // Gets all lesson blocks associated with the student record
+        List<LessonBlock> lessonBlockList = lessonBlockController.getLessonBlocksByStudent(studentRecordList[i][x][y]);
+
+        // Sorts the lesson blocks by their id (descending order/most recently created lesson blocks first).
+        lessonBlockList = lessonBlockController.sortLessonBlockssByLessonBlockId(lessonBlockList);
+
+        // flag if a matching date has been found so it doesnt check and change other columns attendances
+        boolean foundMatchingDate = false;
+
+        // Checks if the lesson date is not equal to null and the found matching date is equal to false
+        if (lessonBlockList.get(0).getLesson1Date() != null && foundMatchingDate == false) {
+            // Sets the date if the lesson 1 date is equal to todays date
+            if (lessonBlockList.get(0).getLesson1Date().equals(todaysDate)) {
+                // Sets the appropriate attendance column to the attendance type passed in
+                lessonBlockList.get(0).setLesson1Attendance(attendanceType);
+                // Sets the flag to true as a matching date has been found
+                foundMatchingDate = true;
+            }
+        }
+
+        // Checks if the lesson date is not equal to null and the found matching date is equal to false
+        if (lessonBlockList.get(0).getLesson2Date() != null && foundMatchingDate == false) {
+            // Sets the date if the lesson 2 date is equal to todays date
+            if (lessonBlockList.get(0).getLesson2Date().equals(todaysDate)) {
+                // Sets the appropriate attendance column to the attendance type passed in
+                lessonBlockList.get(0).setLesson2Attendance(attendanceType);
+                // Sets the flag to true as a matching date has been found
+                foundMatchingDate = true;
+            }
+        }
+
+        // Checks if the lesson date is not equal to null and the found matching date is equal to false
+        if (lessonBlockList.get(0).getLesson3Date() != null && foundMatchingDate == false) {
+            // Sets the date if the lesson 3 date is equal to todays date
+            if (lessonBlockList.get(0).getLesson3Date().equals(todaysDate)) {
+                // Sets the appropriate attendance column to to the attendance type passed in
+                lessonBlockList.get(0).setLesson3Attendance(attendanceType);
+                // Sets the flag to true as a matching date has been found
+                foundMatchingDate = true;
+            }
+        }
+
+        // Checks if the lesson date is not equal to null and the found matching date is equal to false
+        if (lessonBlockList.get(0).getLesson4Date() != null && foundMatchingDate == false) {
+            // Sets the date if the lesson 4 date is equal to todays date
+            if (lessonBlockList.get(0).getLesson4Date().equals(todaysDate)) {
+                // Sets the appropriate attendance column to the attendance type passed in
+                lessonBlockList.get(0).setLesson4Attendance(attendanceType);
+                // Sets the flag to true as a matching date has been found
+                foundMatchingDate = true;
+            }
+        }
+
+        // Checks if the lesson date is not equal to null and the found matching date is equal to false
+        if (lessonBlockList.get(0).getLesson5Date() != null && foundMatchingDate == false) {
+            // Sets the date if the lesson 5 date is equal to todays date
+            if (lessonBlockList.get(0).getLesson5Date().equals(todaysDate)) {
+                // Sets the appropriate attendance column to the attendance type passed in
+                lessonBlockList.get(0).setLesson5Attendance(attendanceType);
+                // Sets the flag to true as a matching date has been found
+                foundMatchingDate = true;
+            }
+        }
+
+        // Checks if the lesson date is not equal to null and the found matching date is equal to false
+        if (lessonBlockList.get(0).getLesson6Date() != null && foundMatchingDate == false) {
+            // Sets the date if the lesson 6 date is equal to todays date
+            if (lessonBlockList.get(0).getLesson6Date().equals(todaysDate)) {
+                // Sets the appropriate attendance column to the attendance type passed in
+                lessonBlockList.get(0).setLesson6Attendance(attendanceType);
+                // Sets the flag to true as a matching date has been found
+                foundMatchingDate = true;
+            }
+        }
+
+        // Checks if the lesson date is not equal to null and the found matching date is equal to false
+        if (lessonBlockList.get(0).getLesson7Date() != null && foundMatchingDate == false) {
+            // Sets the date if the lesson 7 date is equal to todays date
+            if (lessonBlockList.get(0).getLesson7Date().equals(todaysDate)) {
+                // Sets the appropriate attendance column to the attendance type passed in
+                lessonBlockList.get(0).setLesson7Attendance(attendanceType);
+                // Sets the flag to true as a matching date has been found
+                foundMatchingDate = true;
+            }
+        }
+
+        // Checks if the lesson date is not equal to null and the found matching date is equal to false
+        if (lessonBlockList.get(0).getLesson8Date() != null && foundMatchingDate == false) {
+            // Sets the date if the lesson 8 date is equal to todays date
+            if (lessonBlockList.get(0).getLesson8Date().equals(todaysDate)) {
+                // Sets the appropriate attendance column to the attendance type passed in
+                lessonBlockList.get(0).setLesson8Attendance(attendanceType);
+                // Sets the flag to true as a matching date has been found
+                foundMatchingDate = true;
+            }
+        }
+
+        // Checks if the lesson date is not equal to null and the found matching date is equal to false
+        if (lessonBlockList.get(0).getLesson9Date() != null && foundMatchingDate == false) {
+            // Sets the date if the lesson 9 date is equal to todays date
+            if (lessonBlockList.get(0).getLesson9Date().equals(todaysDate)) {
+                // Sets the appropriate attendance column to the attendance type passed in
+                lessonBlockList.get(0).setLesson9Attendance(attendanceType);
+                // Sets the flag to true as a matching date has been found
+                foundMatchingDate = true;
+            }
+        }
+
+        // Checks if the lesson date is not equal to null and the found matching date is equal to false
+        if (lessonBlockList.get(0).getLesson10Date() != null && foundMatchingDate == false) {
+            // Sets the date if the lesson 10 date is equal to todays date
+            if (lessonBlockList.get(0).getLesson10Date().equals(todaysDate)) {
+                // Sets the appropriate attendance column to the attendance type passed in
+                lessonBlockList.get(0).setLesson10Attendance(attendanceType);
+                // Sets the flag to true as a matching date has been found
+                foundMatchingDate = true;
+            }
+        }
+
+        // If a matching date hasnt been found then create the date and mark attendance
+        if (foundMatchingDate == false) {
+            /**
+             * Loop through their most recent lesson block finding the first lesson date that is null and set the date
+             * to todays date and update the appropriate attendance column with the attendance type passed in.
+             */
+            if (lessonBlockList.get(0).getLesson1Date() == null) {
+                lessonBlockList.get(0).setLesson1Date(todaysDate);
+                lessonBlockList.get(0).setLesson1Attendance(attendanceType);
+            } else if (lessonBlockList.get(0).getLesson2Date() == null) {
+                lessonBlockList.get(0).setLesson2Date(todaysDate);
+                lessonBlockList.get(0).setLesson2Attendance(attendanceType);
+            } else if (lessonBlockList.get(0).getLesson3Date() == null) {
+                lessonBlockList.get(0).setLesson3Date(todaysDate);
+                lessonBlockList.get(0).setLesson3Attendance(attendanceType);
+            } else if (lessonBlockList.get(0).getLesson4Date() == null) {
+                lessonBlockList.get(0).setLesson4Date(todaysDate);
+                lessonBlockList.get(0).setLesson4Attendance(attendanceType);
+            } else if (lessonBlockList.get(0).getLesson5Date() == null) {
+                lessonBlockList.get(0).setLesson5Date(todaysDate);
+                lessonBlockList.get(0).setLesson5Attendance(attendanceType);
+            } else if (lessonBlockList.get(0).getLesson6Date() == null) {
+                lessonBlockList.get(0).setLesson6Date(todaysDate);
+                lessonBlockList.get(0).setLesson6Attendance(attendanceType);
+            } else if (lessonBlockList.get(0).getLesson7Date() == null) {
+                lessonBlockList.get(0).setLesson7Date(todaysDate);
+                lessonBlockList.get(0).setLesson7Attendance(attendanceType);
+            } else if (lessonBlockList.get(0).getLesson8Date() == null) {
+                lessonBlockList.get(0).setLesson8Date(todaysDate);
+                lessonBlockList.get(0).setLesson8Attendance(attendanceType);
+            } else if (lessonBlockList.get(0).getLesson9Date() == null) {
+                lessonBlockList.get(0).setLesson9Date(todaysDate);
+                lessonBlockList.get(0).setLesson9Attendance(attendanceType);
+            } else if (lessonBlockList.get(0).getLesson10Date() == null) {
+                lessonBlockList.get(0).setLesson10Date(todaysDate);
+                lessonBlockList.get(0).setLesson10Attendance(attendanceType);
+            }
+        }
+        // Updates the lesson block in the database
+        lessonBlockController.update(lessonBlockList.get(0));
+
+        // Removes all of the attendance buttons from their student panel
+        swimmingClassStudentRecordPanels[i][x][y].remove(presentButton[i][x][y]);
+        swimmingClassStudentRecordPanels[i][x][y].remove(absentButton[i][x][y]);
+        swimmingClassStudentRecordPanels[i][x][y].remove(funSwimButton[i][x][y]);
+
+        // Creates and adds the edit attendance button to their student panel
+        editAttendanceButton[i][x][y] = new JButton("Edit");
+        editAttendanceButton[i][x][y].setPreferredSize(new Dimension(100, 30));
+        editAttendanceButton[i][x][y].addActionListener(this);
+        editAttendanceButton[i][x][y].setToolTipText("<html> Click this button to <b> edit the attendance of </b> this student record for todays lesson. </html>");
+        editAttendanceButton[i][x][y].setFont(editAttendanceFont);
+        editAttendanceButton[i][x][y].setIcon(new ImageIcon("images/icons/16x16/bullet_edit.png"));
+
+        // Adds the edit attendance button to the appropriate student record panel
+        swimmingClassStudentRecordPanels[i][x][y].add(editAttendanceButton[i][x][y]);
+
+        // Sets the foreground to green to signal the attendance has been marked
+        studentRecordNameLabels[i][x][y].setForeground(smsGreenMarked);
+
+        // Updates the UI with the new edit attendance button present
+        swimmingClassStudentRecordPanels[i][x][y].updateUI();
+    }
+    
+    
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         /**
@@ -789,198 +977,8 @@ public class RegisterPanel extends JPanel implements ActionListener {
                 for (int y = 0; y < presentButton[i][x].length; y++) {
                     // Checks if that index in the array of buttons was the source of the button press
                     if (e.getSource() == presentButton[i][x][y]) {
-                        
-                        // Gets all lesson blocks associated with the student record
-                        List<LessonBlock> lessonBlockList = lessonBlockController.getLessonBlocksByStudent(studentRecordList[i][x][y]);
-                        
-                        // Sorts the lesson blocks by their id (descending order/most recently created lesson blocks first).
-                        lessonBlockList = lessonBlockController.sortLessonBlockssByLessonBlockId(lessonBlockList);
-
-                        // flag if a matching date has been found so it doesnt check and change other columns attendances
-                        boolean foundMatchingDate = false;
-                        
-                        // Checks if the lesson date is not equal to null and the found matching date is equal to false
-                        if (lessonBlockList.get(0).getLesson1Date() != null && foundMatchingDate == false) {
-                            // Sets the date if the lesson 1 date is equal to todays date
-                            if (lessonBlockList.get(0).getLesson1Date().equals(todaysDate)) {
-                                // Sets the appropriate attendance column to present
-                                lessonBlockList.get(0).setLesson1Attendance(AttendanceType.PRESENT);
-                                // Sets the flag to true as a matching date has been found
-                                foundMatchingDate = true;
-                            }
-                        }
-                        
-                        
-                        // Checks if the lesson date is not equal to null and the found matching date is equal to false
-                        if (lessonBlockList.get(0).getLesson2Date() != null && foundMatchingDate == false) {
-                            // Sets the date if the lesson 2 date is equal to todays date
-                            if (lessonBlockList.get(0).getLesson2Date().equals(todaysDate)) {
-                                // Sets the appropriate attendance column to present
-                                lessonBlockList.get(0).setLesson2Attendance(AttendanceType.PRESENT);
-                                // Sets the flag to true as a matching date has been found
-                                foundMatchingDate = true;
-                            } 
-                        }
-                        
-                        
-                        // Checks if the lesson date is not equal to null and the found matching date is equal to false
-                        if (lessonBlockList.get(0).getLesson3Date() != null && foundMatchingDate == false) {
-                            // Sets the date if the lesson 3 date is equal to todays date
-                            if (lessonBlockList.get(0).getLesson3Date().equals(todaysDate)) {
-                                // Sets the appropriate attendance column to present
-                                lessonBlockList.get(0).setLesson3Attendance(AttendanceType.PRESENT);
-                                // Sets the flag to true as a matching date has been found
-                                foundMatchingDate = true;
-                            }
-                        }
-                        
-                        
-                        // Checks if the lesson date is not equal to null and the found matching date is equal to false
-                        if (lessonBlockList.get(0).getLesson4Date() != null && foundMatchingDate == false) {
-                            // Sets the date if the lesson 4 date is equal to todays date
-                            if (lessonBlockList.get(0).getLesson4Date().equals(todaysDate)) {
-                                // Sets the appropriate attendance column to present
-                                lessonBlockList.get(0).setLesson4Attendance(AttendanceType.PRESENT);                            
-                                // Sets the flag to true as a matching date has been found
-                                foundMatchingDate = true;
-                            }
-                        }
-                        
-                        
-                        // Checks if the lesson date is not equal to null and the found matching date is equal to false
-                        if (lessonBlockList.get(0).getLesson5Date() != null && foundMatchingDate == false) {
-                            // Sets the date if the lesson 5 date is equal to todays date
-                            if (lessonBlockList.get(0).getLesson5Date().equals(todaysDate)) {
-                                // Sets the appropriate attendance column to present
-                                lessonBlockList.get(0).setLesson5Attendance(AttendanceType.PRESENT);
-                                // Sets the flag to true as a matching date has been found
-                                foundMatchingDate = true;
-                            }
-                        }
-                        
-                        
-                        // Checks if the lesson date is not equal to null and the found matching date is equal to false
-                        if (lessonBlockList.get(0).getLesson6Date() != null && foundMatchingDate == false) {
-                            // Sets the date if the lesson 6 date is equal to todays date
-                            if (lessonBlockList.get(0).getLesson6Date().equals(todaysDate)) {
-                                // Sets the appropriate attendance column to present
-                                lessonBlockList.get(0).setLesson6Attendance(AttendanceType.PRESENT);
-                                // Sets the flag to true as a matching date has been found
-                                foundMatchingDate = true;
-                            }
-                        }
-                        
-                        
-                        // Checks if the lesson date is not equal to null and the found matching date is equal to false
-                        if (lessonBlockList.get(0).getLesson7Date() != null && foundMatchingDate == false) {
-                            // Sets the date if the lesson 7 date is equal to todays date
-                            if (lessonBlockList.get(0).getLesson7Date().equals(todaysDate)) {
-                                // Sets the appropriate attendance column to present
-                                lessonBlockList.get(0).setLesson7Attendance(AttendanceType.PRESENT);
-                                // Sets the flag to true as a matching date has been found
-                                foundMatchingDate = true;
-                            }
-                        }
-                        
-                        
-                        // Checks if the lesson date is not equal to null and the found matching date is equal to false
-                        if (lessonBlockList.get(0).getLesson8Date() != null && foundMatchingDate == false) {
-                            // Sets the date if the lesson 8 date is equal to todays date
-                            if (lessonBlockList.get(0).getLesson8Date().equals(todaysDate)) {
-                                // Sets the appropriate attendance column to present
-                                lessonBlockList.get(0).setLesson8Attendance(AttendanceType.PRESENT);
-                                // Sets the flag to true as a matching date has been found
-                                foundMatchingDate = true;
-                            }
-                        }
-                        
-                        
-                        // Checks if the lesson date is not equal to null and the found matching date is equal to false
-                        if (lessonBlockList.get(0).getLesson9Date() != null && foundMatchingDate == false) {
-                            // Sets the date if the lesson 9 date is equal to todays date
-                            if (lessonBlockList.get(0).getLesson9Date().equals(todaysDate)) {
-                                // Sets the appropriate attendance column to present
-                                lessonBlockList.get(0).setLesson9Attendance(AttendanceType.PRESENT);
-                                // Sets the flag to true as a matching date has been found
-                                foundMatchingDate = true;
-                            }
-                        }
-                            
-                        
-                        // Checks if the lesson date is not equal to null and the found matching date is equal to false
-                        if (lessonBlockList.get(0).getLesson10Date() != null && foundMatchingDate == false) {
-                            // Sets the date if the lesson 10 date is equal to todays date
-                            if (lessonBlockList.get(0).getLesson10Date().equals(todaysDate)) {
-                                // Sets the appropriate attendance column to present
-                                lessonBlockList.get(0).setLesson10Attendance(AttendanceType.PRESENT);
-                                // Sets the flag to true as a matching date has been found
-                                foundMatchingDate = true;
-                            }
-                        }
-                         
-                        // If a matching date hasnt been found then create the date and mark attendance
-                        if (foundMatchingDate == false) {
-                            /**
-                             * Loop through their most recent lesson block finding the first lesson date that 
-                             * is null and set the date to todays date and update the appropriate attendance column with 
-                             * present.
-                             */
-                            if (lessonBlockList.get(0).getLesson1Date() == null) {
-                                lessonBlockList.get(0).setLesson1Date(todaysDate);
-                                lessonBlockList.get(0).setLesson1Attendance(AttendanceType.PRESENT);
-                            } else if (lessonBlockList.get(0).getLesson2Date() == null) {
-                                lessonBlockList.get(0).setLesson2Date(todaysDate);
-                                lessonBlockList.get(0).setLesson2Attendance(AttendanceType.PRESENT);
-                            } else if (lessonBlockList.get(0).getLesson3Date() == null) {
-                                lessonBlockList.get(0).setLesson3Date(todaysDate);
-                                lessonBlockList.get(0).setLesson3Attendance(AttendanceType.PRESENT);
-                            } else if (lessonBlockList.get(0).getLesson4Date() == null) {
-                                lessonBlockList.get(0).setLesson4Date(todaysDate);
-                                lessonBlockList.get(0).setLesson4Attendance(AttendanceType.PRESENT);
-                            } else if (lessonBlockList.get(0).getLesson5Date() == null) {
-                                lessonBlockList.get(0).setLesson5Date(todaysDate);
-                                lessonBlockList.get(0).setLesson5Attendance(AttendanceType.PRESENT);
-                            } else if (lessonBlockList.get(0).getLesson6Date() == null) {
-                                lessonBlockList.get(0).setLesson6Date(todaysDate);
-                                lessonBlockList.get(0).setLesson6Attendance(AttendanceType.PRESENT);
-                            } else if (lessonBlockList.get(0).getLesson7Date() == null) {
-                                lessonBlockList.get(0).setLesson7Date(todaysDate);
-                                lessonBlockList.get(0).setLesson7Attendance(AttendanceType.PRESENT);
-                            } else if (lessonBlockList.get(0).getLesson8Date() == null) {
-                                lessonBlockList.get(0).setLesson8Date(todaysDate);
-                                lessonBlockList.get(0).setLesson8Attendance(AttendanceType.PRESENT);
-                            } else if (lessonBlockList.get(0).getLesson9Date() == null) {
-                                lessonBlockList.get(0).setLesson9Date(todaysDate);
-                                lessonBlockList.get(0).setLesson9Attendance(AttendanceType.PRESENT);
-                            } else if (lessonBlockList.get(0).getLesson10Date() == null) {
-                                lessonBlockList.get(0).setLesson10Date(todaysDate);
-                                lessonBlockList.get(0).setLesson10Attendance(AttendanceType.PRESENT);
-                            }
-                        }
-                        // Updates the lesson block in the database
-                        lessonBlockController.update(lessonBlockList.get(0));
-                        
-                        // Removes all of the attendance buttons from their student panel
-                        swimmingClassStudentRecordPanels[i][x][y].remove(presentButton[i][x][y]);
-                        swimmingClassStudentRecordPanels[i][x][y].remove(absentButton[i][x][y]);
-                        swimmingClassStudentRecordPanels[i][x][y].remove(funSwimButton[i][x][y]);
-                        
-                        // Creates and adds the edit attendance button to their student panel
-                        editAttendanceButton[i][x][y] = new JButton("Edit");
-                        editAttendanceButton[i][x][y].setPreferredSize(new Dimension(100, 30));
-                        editAttendanceButton[i][x][y].addActionListener(this);
-                        editAttendanceButton[i][x][y].setToolTipText("<html> Click this button to <b> edit the attendance of </b> this student record for todays lesson. </html>");
-                        editAttendanceButton[i][x][y].setFont(editAttendanceFont);
-                        editAttendanceButton[i][x][y].setIcon(new ImageIcon("images/icons/16x16/bullet_edit.png"));
-
-                        // Adds the edit attendance button to the appropriate student record panel
-                        swimmingClassStudentRecordPanels[i][x][y].add(editAttendanceButton[i][x][y]);
-
-                        // Sets the foreground to green to signal the attendance has been marked
-                        studentRecordNameLabels[i][x][y].setForeground(smsGreenMarked);
-                        
-                        // Updates the UI with the new edit attendance button present
-                        swimmingClassStudentRecordPanels[i][x][y].updateUI();
+                        // Sets the attendance for the student to present for todays date/lesson
+                        setStudentAttendance(i, x, y, AttendanceType.PRESENT);
                     }
                 }
             }
@@ -997,198 +995,8 @@ public class RegisterPanel extends JPanel implements ActionListener {
                 for (int y = 0; y < absentButton[i][x].length; y++) {
                     // Checks if that index in the array of buttons was the source of button press
                     if (e.getSource() == absentButton[i][x][y]) {
-                        
-                        // Gets all lesson blocks associated with the student record
-                        List<LessonBlock> lessonBlockList = lessonBlockController.getLessonBlocksByStudent(studentRecordList[i][x][y]);
-                        
-                        // Sorts the lesson blocks by their id (descending order/most recently created lesson blocks first).
-                        lessonBlockList = lessonBlockController.sortLessonBlockssByLessonBlockId(lessonBlockList);
-
-                        // flag if a matching date has been found so it doesnt check and change other columns attendances
-                        boolean foundMatchingDate = false;
-                        
-                        // Checks if the lesson date is not equal to null and the found matching date is equal to false
-                        if (lessonBlockList.get(0).getLesson1Date() != null && foundMatchingDate == false) {
-                            // Sets the date if the lesson 1 date is equal to todays date
-                            if (lessonBlockList.get(0).getLesson1Date().equals(todaysDate)) {
-                                // Sets the appropriate attendance column to absent
-                                lessonBlockList.get(0).setLesson1Attendance(AttendanceType.ABSENT);
-                                // Sets the flag to true as a matching date has been found
-                                foundMatchingDate = true;
-                            }
-                        }
-                        
-                        
-                        // Checks if the lesson date is not equal to null and the found matching date is equal to false
-                        if (lessonBlockList.get(0).getLesson2Date() != null && foundMatchingDate == false) {
-                            // Sets the date if the lesson 2 date is equal to todays date
-                            if (lessonBlockList.get(0).getLesson2Date().equals(todaysDate)) {
-                                // Sets the appropriate attendance column to absent
-                                lessonBlockList.get(0).setLesson2Attendance(AttendanceType.ABSENT);
-                                // Sets the flag to true as a matching date has been found
-                                foundMatchingDate = true;
-                            } 
-                        }
-                        
-                        
-                        // Checks if the lesson date is not equal to null and the found matching date is equal to false
-                        if (lessonBlockList.get(0).getLesson3Date() != null && foundMatchingDate == false) {
-                            // Sets the date if the lesson 3 date is equal to todays date
-                            if (lessonBlockList.get(0).getLesson3Date().equals(todaysDate)) {
-                                // Sets the appropriate attendance column to absent
-                                lessonBlockList.get(0).setLesson3Attendance(AttendanceType.ABSENT);
-                                // Sets the flag to true as a matching date has been found
-                                foundMatchingDate = true;
-                            }
-                        }
-                        
-                        
-                        // Checks if the lesson date is not equal to null and the found matching date is equal to false
-                        if (lessonBlockList.get(0).getLesson4Date() != null && foundMatchingDate == false) {
-                            // Sets the date if the lesson 4 date is equal to todays date
-                            if (lessonBlockList.get(0).getLesson4Date().equals(todaysDate)) {
-                                // Sets the appropriate attendance column to absent
-                                lessonBlockList.get(0).setLesson4Attendance(AttendanceType.ABSENT);                            
-                                // Sets the flag to true as a matching date has been found
-                                foundMatchingDate = true;
-                            }
-                        }
-                        
-                        
-                        // Checks if the lesson date is not equal to null and the found matching date is equal to false
-                        if (lessonBlockList.get(0).getLesson5Date() != null && foundMatchingDate == false) {
-                            // Sets the date if the lesson 5 date is equal to todays date
-                            if (lessonBlockList.get(0).getLesson5Date().equals(todaysDate)) {
-                                // Sets the appropriate attendance column to absent
-                                lessonBlockList.get(0).setLesson5Attendance(AttendanceType.ABSENT);
-                                // Sets the flag to true as a matching date has been found
-                                foundMatchingDate = true;
-                            }
-                        }
-                        
-                        
-                        // Checks if the lesson date is not equal to null and the found matching date is equal to false
-                        if (lessonBlockList.get(0).getLesson6Date() != null && foundMatchingDate == false) {
-                            // Sets the date if the lesson 6 date is equal to todays date
-                            if (lessonBlockList.get(0).getLesson6Date().equals(todaysDate)) {
-                                // Sets the appropriate attendance column to absent
-                                lessonBlockList.get(0).setLesson6Attendance(AttendanceType.ABSENT);
-                                // Sets the flag to true as a matching date has been found
-                                foundMatchingDate = true;
-                            }
-                        }
-                        
-                        
-                        // Checks if the lesson date is not equal to null and the found matching date is equal to false
-                        if (lessonBlockList.get(0).getLesson7Date() != null && foundMatchingDate == false) {
-                            // Sets the date if the lesson 7 date is equal to todays date
-                            if (lessonBlockList.get(0).getLesson7Date().equals(todaysDate)) {
-                                // Sets the appropriate attendance column to absent
-                                lessonBlockList.get(0).setLesson7Attendance(AttendanceType.ABSENT);
-                                // Sets the flag to true as a matching date has been found
-                                foundMatchingDate = true;
-                            }
-                        }
-                        
-                        
-                        // Checks if the lesson date is not equal to null and the found matching date is equal to false
-                        if (lessonBlockList.get(0).getLesson8Date() != null && foundMatchingDate == false) {
-                            // Sets the date if the lesson 8 date is equal to todays date
-                            if (lessonBlockList.get(0).getLesson8Date().equals(todaysDate)) {
-                                // Sets the appropriate attendance column to absent
-                                lessonBlockList.get(0).setLesson8Attendance(AttendanceType.ABSENT);
-                                // Sets the flag to true as a matching date has been found
-                                foundMatchingDate = true;
-                            }
-                        }
-                        
-                        
-                        // Checks if the lesson date is not equal to null and the found matching date is equal to false
-                        if (lessonBlockList.get(0).getLesson9Date() != null && foundMatchingDate == false) {
-                            // Sets the date if the lesson 9 date is equal to todays date
-                            if (lessonBlockList.get(0).getLesson9Date().equals(todaysDate)) {
-                                // Sets the appropriate attendance column to absent
-                                lessonBlockList.get(0).setLesson9Attendance(AttendanceType.ABSENT);
-                                // Sets the flag to true as a matching date has been found
-                                foundMatchingDate = true;
-                            }
-                        }
-                            
-                        
-                        // Checks if the lesson date is not equal to null and the found matching date is equal to false
-                        if (lessonBlockList.get(0).getLesson10Date() != null && foundMatchingDate == false) {
-                            // Sets the date if the lesson 10 date is equal to todays date
-                            if (lessonBlockList.get(0).getLesson10Date().equals(todaysDate)) {
-                                // Sets the appropriate attendance column to absent
-                                lessonBlockList.get(0).setLesson10Attendance(AttendanceType.ABSENT);
-                                // Sets the flag to true as a matching date has been found
-                                foundMatchingDate = true;
-                            }
-                        }
-                            
-                        // If a matching date hasnt been found then create the date and mark attendance
-                        if (foundMatchingDate == false) {
-                            /**
-                             * Loop through their most recent lesson block finding the first lesson date that 
-                             * is null and set the date to todays date and update the appropriate attendance column with 
-                             * absent.
-                             */
-                            if (lessonBlockList.get(0).getLesson1Date() == null) {
-                                lessonBlockList.get(0).setLesson1Date(todaysDate);
-                                lessonBlockList.get(0).setLesson1Attendance(AttendanceType.ABSENT);
-                            } else if (lessonBlockList.get(0).getLesson2Date() == null) {
-                                lessonBlockList.get(0).setLesson2Date(todaysDate);
-                                lessonBlockList.get(0).setLesson2Attendance(AttendanceType.ABSENT);
-                            } else if (lessonBlockList.get(0).getLesson3Date() == null) {
-                                lessonBlockList.get(0).setLesson3Date(todaysDate);
-                                lessonBlockList.get(0).setLesson3Attendance(AttendanceType.ABSENT);
-                            } else if (lessonBlockList.get(0).getLesson4Date() == null) {
-                                lessonBlockList.get(0).setLesson4Date(todaysDate);
-                                lessonBlockList.get(0).setLesson4Attendance(AttendanceType.ABSENT);
-                            } else if (lessonBlockList.get(0).getLesson5Date() == null) {
-                                lessonBlockList.get(0).setLesson5Date(todaysDate);
-                                lessonBlockList.get(0).setLesson5Attendance(AttendanceType.ABSENT);
-                            } else if (lessonBlockList.get(0).getLesson6Date() == null) {
-                                lessonBlockList.get(0).setLesson6Date(todaysDate);
-                                lessonBlockList.get(0).setLesson6Attendance(AttendanceType.ABSENT);
-                            } else if (lessonBlockList.get(0).getLesson7Date() == null) {
-                                lessonBlockList.get(0).setLesson7Date(todaysDate);
-                                lessonBlockList.get(0).setLesson7Attendance(AttendanceType.ABSENT);
-                            } else if (lessonBlockList.get(0).getLesson8Date() == null) {
-                                lessonBlockList.get(0).setLesson8Date(todaysDate);
-                                lessonBlockList.get(0).setLesson8Attendance(AttendanceType.ABSENT);
-                            } else if (lessonBlockList.get(0).getLesson9Date() == null) {
-                                lessonBlockList.get(0).setLesson9Date(todaysDate);
-                                lessonBlockList.get(0).setLesson9Attendance(AttendanceType.ABSENT);
-                            } else if (lessonBlockList.get(0).getLesson10Date() == null) {
-                                lessonBlockList.get(0).setLesson10Date(todaysDate);
-                                lessonBlockList.get(0).setLesson10Attendance(AttendanceType.ABSENT);
-                            }
-                        }
-                        // Updates the lesson block in the database
-                        lessonBlockController.update(lessonBlockList.get(0));
-                        
-                        // Removes all of the attendance buttons from their student panel
-                        swimmingClassStudentRecordPanels[i][x][y].remove(presentButton[i][x][y]);
-                        swimmingClassStudentRecordPanels[i][x][y].remove(absentButton[i][x][y]);
-                        swimmingClassStudentRecordPanels[i][x][y].remove(funSwimButton[i][x][y]);
-                        
-                        // Creates and adds the edit attendance button to their student panel
-                        editAttendanceButton[i][x][y] = new JButton("Edit");
-                        editAttendanceButton[i][x][y].setPreferredSize(new Dimension(100, 30));
-                        editAttendanceButton[i][x][y].addActionListener(this);
-                        editAttendanceButton[i][x][y].setToolTipText("<html> Click this button to <b> edit the attendance of </b> this student record for todays lesson. </html>");
-                        editAttendanceButton[i][x][y].setFont(editAttendanceFont);
-                        editAttendanceButton[i][x][y].setIcon(new ImageIcon("images/icons/16x16/bullet_edit.png"));
-
-                        // Adds the edit attendance button to the appropriate student record panel
-                        swimmingClassStudentRecordPanels[i][x][y].add(editAttendanceButton[i][x][y]);
-
-                        // Sets the foreground to green to signal the attendance has been marked
-                        studentRecordNameLabels[i][x][y].setForeground(smsGreenMarked);
-                        
-                        // Updates the UI with the new edit attendance button present
-                        swimmingClassStudentRecordPanels[i][x][y].updateUI();
+                        // Sets the attendance for the student to present for todays date/lesson
+                        setStudentAttendance(i, x, y, AttendanceType.ABSENT);
                     }
                 }
             }
@@ -1206,198 +1014,8 @@ public class RegisterPanel extends JPanel implements ActionListener {
                 for (int y = 0; y < funSwimButton[i][x].length; y++) {
                     // Checks if that index in the array of buttons was the source of button press
                     if (e.getSource() == funSwimButton[i][x][y]) {
-                        
-                        // Gets all lesson blocks associated with the student record
-                        List<LessonBlock> lessonBlockList = lessonBlockController.getLessonBlocksByStudent(studentRecordList[i][x][y]);
-                        
-                        // Sorts the lesson blocks by their id (descending order/most recently created lesson blocks first).
-                        lessonBlockList = lessonBlockController.sortLessonBlockssByLessonBlockId(lessonBlockList);
-
-                        // flag if a matching date has been found so it doesnt check and change other columns attendances
-                        boolean foundMatchingDate = false;
-                        
-                        // Checks if the lesson date is not equal to null and the found matching date is equal to false
-                        if (lessonBlockList.get(0).getLesson1Date() != null && foundMatchingDate == false) {
-                            // Sets the date if the lesson 1 date is equal to todays date
-                            if (lessonBlockList.get(0).getLesson1Date().equals(todaysDate)) {
-                                // Sets the appropriate attendance column to fun swim
-                                lessonBlockList.get(0).setLesson1Attendance(AttendanceType.FUN_SWIM);
-                                // Sets the flag to true as a matching date has been found
-                                foundMatchingDate = true;
-                            }
-                        }
-                        
-                        
-                        // Checks if the lesson date is not equal to null and the found matching date is equal to false
-                        if (lessonBlockList.get(0).getLesson2Date() != null && foundMatchingDate == false) {
-                            // Sets the date if the lesson 2 date is equal to todays date
-                            if (lessonBlockList.get(0).getLesson2Date().equals(todaysDate)) {
-                                // Sets the appropriate attendance column to fun swim
-                                lessonBlockList.get(0).setLesson2Attendance(AttendanceType.FUN_SWIM);
-                                // Sets the flag to true as a matching date has been found
-                                foundMatchingDate = true;
-                            } 
-                        }
-                        
-                        
-                        // Checks if the lesson date is not equal to null and the found matching date is equal to false
-                        if (lessonBlockList.get(0).getLesson3Date() != null && foundMatchingDate == false) {
-                            // Sets the date if the lesson 3 date is equal to todays date
-                            if (lessonBlockList.get(0).getLesson3Date().equals(todaysDate)) {
-                                // Sets the appropriate attendance column to fun swim
-                                lessonBlockList.get(0).setLesson3Attendance(AttendanceType.FUN_SWIM);
-                                // Sets the flag to true as a matching date has been found
-                                foundMatchingDate = true;
-                            }
-                        }
-                        
-                        
-                        // Checks if the lesson date is not equal to null and the found matching date is equal to false
-                        if (lessonBlockList.get(0).getLesson4Date() != null && foundMatchingDate == false) {
-                            // Sets the date if the lesson 4 date is equal to todays date
-                            if (lessonBlockList.get(0).getLesson4Date().equals(todaysDate)) {
-                                // Sets the appropriate attendance column to fun swim
-                                lessonBlockList.get(0).setLesson4Attendance(AttendanceType.FUN_SWIM);                            
-                                // Sets the flag to true as a matching date has been found
-                                foundMatchingDate = true;
-                            }
-                        }
-                        
-                        
-                        // Checks if the lesson date is not equal to null and the found matching date is equal to false
-                        if (lessonBlockList.get(0).getLesson5Date() != null && foundMatchingDate == false) {
-                            // Sets the date if the lesson 5 date is equal to todays date
-                            if (lessonBlockList.get(0).getLesson5Date().equals(todaysDate)) {
-                                // Sets the appropriate attendance column to fun swim
-                                lessonBlockList.get(0).setLesson5Attendance(AttendanceType.FUN_SWIM);
-                                // Sets the flag to true as a matching date has been found
-                                foundMatchingDate = true;
-                            }
-                        }
-                        
-                        
-                        // Checks if the lesson date is not equal to null and the found matching date is equal to false
-                        if (lessonBlockList.get(0).getLesson6Date() != null && foundMatchingDate == false) {
-                            // Sets the date if the lesson 6 date is equal to todays date
-                            if (lessonBlockList.get(0).getLesson6Date().equals(todaysDate)) {
-                                // Sets the appropriate attendance column to fun swim
-                                lessonBlockList.get(0).setLesson6Attendance(AttendanceType.FUN_SWIM);
-                                // Sets the flag to true as a matching date has been found
-                                foundMatchingDate = true;
-                            }
-                        }
-                        
-                        
-                        // Checks if the lesson date is not equal to null and the found matching date is equal to false
-                        if (lessonBlockList.get(0).getLesson7Date() != null && foundMatchingDate == false) {
-                            // Sets the date if the lesson 7 date is equal to todays date
-                            if (lessonBlockList.get(0).getLesson7Date().equals(todaysDate)) {
-                                // Sets the appropriate attendance column to fun swim
-                                lessonBlockList.get(0).setLesson7Attendance(AttendanceType.FUN_SWIM);
-                                // Sets the flag to true as a matching date has been found
-                                foundMatchingDate = true;
-                            }
-                        }
-                        
-                        
-                        // Checks if the lesson date is not equal to null and the found matching date is equal to false
-                        if (lessonBlockList.get(0).getLesson8Date() != null && foundMatchingDate == false) {
-                            // Sets the date if the lesson 8 date is equal to todays date
-                            if (lessonBlockList.get(0).getLesson8Date().equals(todaysDate)) {
-                                // Sets the appropriate attendance column to fun swim
-                                lessonBlockList.get(0).setLesson8Attendance(AttendanceType.FUN_SWIM);
-                                // Sets the flag to true as a matching date has been found
-                                foundMatchingDate = true;
-                            }
-                        }
-                        
-                        
-                        // Checks if the lesson date is not equal to null and the found matching date is equal to false
-                        if (lessonBlockList.get(0).getLesson9Date() != null && foundMatchingDate == false) {
-                            // Sets the date if the lesson 9 date is equal to todays date
-                            if (lessonBlockList.get(0).getLesson9Date().equals(todaysDate)) {
-                                // Sets the appropriate attendance column to fun swim
-                                lessonBlockList.get(0).setLesson9Attendance(AttendanceType.FUN_SWIM);
-                                // Sets the flag to true as a matching date has been found
-                                foundMatchingDate = true;
-                            }
-                        }
-                            
-                        
-                        // Checks if the lesson date is not equal to null and the found matching date is equal to false
-                        if (lessonBlockList.get(0).getLesson10Date() != null && foundMatchingDate == false) {
-                            // Sets the date if the lesson 10 date is equal to todays date
-                            if (lessonBlockList.get(0).getLesson10Date().equals(todaysDate)) {
-                                // Sets the appropriate attendance column to fun swim
-                                lessonBlockList.get(0).setLesson10Attendance(AttendanceType.FUN_SWIM);
-                                // Sets the flag to true as a matching date has been found
-                                foundMatchingDate = true;
-                            }
-                        }
-                        
-                        // If a matching date hasnt been found then create the date and mark attendance
-                        if (foundMatchingDate == false) {
-                            /**
-                             * Otherwise loop through their most recent lesson block finding the first lesson date that 
-                             * is null and set the date to todays date and update the appropriate attendance column with 
-                             * fun swim.
-                             */
-                            if (lessonBlockList.get(0).getLesson1Date() == null) {
-                                lessonBlockList.get(0).setLesson1Date(todaysDate);
-                                lessonBlockList.get(0).setLesson1Attendance(AttendanceType.FUN_SWIM);
-                            } else if (lessonBlockList.get(0).getLesson2Date() == null) {
-                                lessonBlockList.get(0).setLesson2Date(todaysDate);
-                                lessonBlockList.get(0).setLesson2Attendance(AttendanceType.FUN_SWIM);
-                            } else if (lessonBlockList.get(0).getLesson3Date() == null) {
-                                lessonBlockList.get(0).setLesson3Date(todaysDate);
-                                lessonBlockList.get(0).setLesson3Attendance(AttendanceType.FUN_SWIM);
-                            } else if (lessonBlockList.get(0).getLesson4Date() == null) {
-                                lessonBlockList.get(0).setLesson4Date(todaysDate);
-                                lessonBlockList.get(0).setLesson4Attendance(AttendanceType.FUN_SWIM);
-                            } else if (lessonBlockList.get(0).getLesson5Date() == null) {
-                                lessonBlockList.get(0).setLesson5Date(todaysDate);
-                                lessonBlockList.get(0).setLesson5Attendance(AttendanceType.FUN_SWIM);
-                            } else if (lessonBlockList.get(0).getLesson6Date() == null) {
-                                lessonBlockList.get(0).setLesson6Date(todaysDate);
-                                lessonBlockList.get(0).setLesson6Attendance(AttendanceType.FUN_SWIM);
-                            } else if (lessonBlockList.get(0).getLesson7Date() == null) {
-                                lessonBlockList.get(0).setLesson7Date(todaysDate);
-                                lessonBlockList.get(0).setLesson7Attendance(AttendanceType.FUN_SWIM);
-                            } else if (lessonBlockList.get(0).getLesson8Date() == null) {
-                                lessonBlockList.get(0).setLesson8Date(todaysDate);
-                                lessonBlockList.get(0).setLesson8Attendance(AttendanceType.FUN_SWIM);
-                            } else if (lessonBlockList.get(0).getLesson9Date() == null) {
-                                lessonBlockList.get(0).setLesson9Date(todaysDate);
-                                lessonBlockList.get(0).setLesson9Attendance(AttendanceType.FUN_SWIM);
-                            } else if (lessonBlockList.get(0).getLesson10Date() == null) {
-                                lessonBlockList.get(0).setLesson10Date(todaysDate);
-                                lessonBlockList.get(0).setLesson10Attendance(AttendanceType.FUN_SWIM);
-                            }
-                        }
-                        // Updates the lesson block in the database
-                        lessonBlockController.update(lessonBlockList.get(0));
-                        
-                        // Removes all of the attendance buttons from their student panel
-                        swimmingClassStudentRecordPanels[i][x][y].remove(presentButton[i][x][y]);
-                        swimmingClassStudentRecordPanels[i][x][y].remove(absentButton[i][x][y]);
-                        swimmingClassStudentRecordPanels[i][x][y].remove(funSwimButton[i][x][y]);
-                        
-                        // Creates and adds the edit attendance button to their student panel
-                        editAttendanceButton[i][x][y] = new JButton("Edit");
-                        editAttendanceButton[i][x][y].setPreferredSize(new Dimension(100, 30));
-                        editAttendanceButton[i][x][y].addActionListener(this);
-                        editAttendanceButton[i][x][y].setToolTipText("<html> Click this button to <b> edit the attendance of </b> this student record for todays lesson. </html>");
-                        editAttendanceButton[i][x][y].setFont(editAttendanceFont);
-                        editAttendanceButton[i][x][y].setIcon(new ImageIcon("images/icons/16x16/bullet_edit.png"));
-
-                        // Adds the edit attendance button to the appropriate student record panel
-                        swimmingClassStudentRecordPanels[i][x][y].add(editAttendanceButton[i][x][y]);
-
-                        // Sets the foreground to green to signal the attendance has been marked
-                        studentRecordNameLabels[i][x][y].setForeground(smsGreenMarked);
-                        
-                        // Updates the UI with the new edit attendance button present
-                        swimmingClassStudentRecordPanels[i][x][y].updateUI();
+                        // Sets the attendance for the student to present for todays date/lesson
+                        setStudentAttendance(i, x, y, AttendanceType.FUN_SWIM);
                     }
                 }
             }

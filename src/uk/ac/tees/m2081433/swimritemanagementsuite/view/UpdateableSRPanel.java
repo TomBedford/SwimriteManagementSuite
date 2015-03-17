@@ -29,32 +29,32 @@ public class UpdateableSRPanel extends JPanel implements ActionListener {
     /**
      * The student record to display.
      */
-    StudentRecord studentRecord;
+    private final StudentRecord studentRecord;
     
     /**
      * The swimrite management suite body panel referenced for displaying an individual student record.
      */
-    SMSBodyPanel smsBodyPanelRef;
+    private final SMSBodyPanel smsBodyPanelRef;
     
     /**
      * The grid bag constraint to manipulate when adding components to the layout. 
      */
-    GridBagConstraints c;
+    private final GridBagConstraints c;
     
     /**
      * The Student Record controller for querying from the Student Record database table.
      */
-    StudentRecordController studentRecordController = new StudentRecordController();
+    private final StudentRecordController studentRecordController = new StudentRecordController();
     
     /**
      * The input verifier for the student record form (validates text field inputs).
      */
-    SRFormInputVerifier inputVerifier;
+    private final SRFormInputVerifier inputVerifier;
     
     /**
      * The font (defining font style, font type and font size) for all form text labels.
      */
-    Font textFont = new Font("Arial", Font.PLAIN, 17);
+    private final Font textFont = new Font("Arial", Font.PLAIN, 17);
     
     
     
@@ -123,96 +123,96 @@ public class UpdateableSRPanel extends JPanel implements ActionListener {
     /**
      * The text field input for the students name.
      */
-    JTextField studentNameField;
+    private JTextField studentNameField;
     
     /**
      * The text field input for the students day of their date of birth.
      */
-    JTextField studentDOBDayField;
+    private JTextField studentDOBDayField;
     
     /**
      * The text field input for the students month of their date of birth.
      */
-    JTextField studentDOBMonthField;
+    private JTextField studentDOBMonthField;
     
     /**
      * The text field input for the students year of their date of birth.
      */
-    JTextField studentDOBYearField;
+    private JTextField studentDOBYearField;
     
     /**
      * The text field input for the students telephone number.
      */
-    JTextField studentTelephoneNoField;
+    private JTextField studentTelephoneNoField;
     
     /**
      * The text field input for the students 1st line of their address.
      */
-    JTextField addressLine1Field;
+    private JTextField addressLine1Field;
     
     /**
      * The text field input for the students 2nd line of their address.
      */
-    JTextField addressLine2Field;
+    private JTextField addressLine2Field;
     
     /**
      * The text field input for the students city in their address.
      */
-    JTextField addressCityField;
+    private JTextField addressCityField;
     
     /**
      * The text field input for the students county in their address.
      */
-    JTextField addressCountyField;
+    private JTextField addressCountyField;
      
     /**
      * The text field input for the students postcode in their address.
      */
-    JTextField addressPostcodeField;
+    private JTextField addressPostcodeField;
     
     /**
      * The text field input for the student whether they have any illnesses or disabilities.
      */
-    JTextField hasIllnessField;
+    private JTextField hasIllnessField;
     
     /**
      * The text field input for the students parents name.
      */
-    JTextField parentNameField;
+    private JTextField parentNameField;
     
     /**
      * The combo box used to display the different possible swimming levels at Swimrite Leisure.
      */
-    JComboBox swimmingLevelList;
+    private JComboBox swimmingLevelList;
     
     
     
     /**
      * The panel that holds all buttons for this layout.
      */
-    JPanel buttonPanel;
+    private JPanel buttonPanel;
     
     /**
      * The edit button to edit the fields of the student record.
      */
-    JButton editButton;
+    private JButton editButton;
     
     /**
      * The delete button to delete the student record from the database.
      */
-    JButton deleteButton;
+    private JButton deleteButton;
     
     /**
      * The update button to update the student record with the new field entries.
      * 
      */
-    JButton updateButton;
+    private JButton updateButton;
     
     /**
      * The cancel button to cancel the editing of the student record.
      * 
      */
-    JButton cancelButton;
+    private JButton cancelButton;
     
 
     
@@ -250,7 +250,7 @@ public class UpdateableSRPanel extends JPanel implements ActionListener {
     /**
      * Loads each individual form component onto the label by calling each of the load form component methods.
      */
-    public void loadSRForm() {
+    private void loadSRForm() {
         // Adds the student name label and text field to the layout
         loadStudentNameRow();
         
@@ -276,7 +276,7 @@ public class UpdateableSRPanel extends JPanel implements ActionListener {
     /**
      * Adds Student Name field label and text field input to the layout of this panel.
      */
-    public void loadStudentNameRow() {
+    private void loadStudentNameRow() {
         // Label to hold the student name form field text.
         final JLabel studentNameLabel = new JLabel("  Student Name:");
         setLabelAttributes(studentNameLabel);
@@ -316,7 +316,7 @@ public class UpdateableSRPanel extends JPanel implements ActionListener {
     /**
      * Adds Students DOB field labels and text field inputs to the layout of this panel.
      */
-    public void loadStudentDOBRow() {
+    private void loadStudentDOBRow() {
         // Label to hold the student date of birth form field text
         final JLabel studentDOBLabel = new JLabel("  Date of Birth (DOB):");
         setLabelAttributes(studentDOBLabel);
@@ -396,7 +396,7 @@ public class UpdateableSRPanel extends JPanel implements ActionListener {
     /**
      * Adds Students telephone number field label and text field input to the layout of this panel.
      */
-    public void loadStudentTelephoneNoRow() {
+    private void loadStudentTelephoneNoRow() {
         // Label to hold the student telephone number form field text.
         final JLabel studentTelephoneNoLabel = new JLabel("  Telephone Number:");
         setLabelAttributes(studentTelephoneNoLabel);
@@ -436,7 +436,7 @@ public class UpdateableSRPanel extends JPanel implements ActionListener {
     /**
      * Adds all of the Students address field labels and text field inputs to the layout of this panel.
      */
-    public void loadStudentAddressRow() {
+    private void loadStudentAddressRow() {
         // Label to hold the student address line 1 form field text.
         final JLabel addressLine1Label = new JLabel("  Address Line 1:");
         setLabelAttributes(addressLine1Label);
@@ -624,7 +624,7 @@ public class UpdateableSRPanel extends JPanel implements ActionListener {
     /**
      * Adds Student has illnesses or disabilities field label and text field input to the layout of this panel.
      */
-    public void loadHasIllnessRow() {
+    private void loadHasIllnessRow() {
         // Label to hold the has illness form field text
         final JLabel hasIllnessLabel = new JLabel("  Any Illnesses or Disabilities:");
         setLabelAttributes(hasIllnessLabel);
@@ -664,7 +664,7 @@ public class UpdateableSRPanel extends JPanel implements ActionListener {
     /**
      * Adds Students parent name field label and text field input to the layout of this panel.
      */
-    public void loadParentNameRow() {
+    private void loadParentNameRow() {
         // Label to hold the parents name form field text
         final JLabel parentNameLabel = new JLabel("  Parents Name:");
         setLabelAttributes(parentNameLabel);
@@ -704,7 +704,7 @@ public class UpdateableSRPanel extends JPanel implements ActionListener {
     /**
      * Adds Students current swimming level/ability field label and combo box to the layout of this panel.
      */
-    public void loadSwimmingLevelRow() {
+    private void loadSwimmingLevelRow() {
         // Label to hold the ability level form field text
         final JLabel swimmingLevelLabel = new JLabel("  Current Swimming Level:");
         setLabelAttributes(swimmingLevelLabel);
@@ -730,7 +730,7 @@ public class UpdateableSRPanel extends JPanel implements ActionListener {
      * Sets the standard attributes for the text labels for this form (avoiding repetition).
      * @param label The JLabel to set the standard attributes of
      */
-    public void setLabelAttributes(JLabel label) {
+    private void setLabelAttributes(JLabel label) {
         // Text is on the left, with label background being white and the label font defined also
         label.setHorizontalAlignment(SwingConstants.LEFT);
         label.setFont(textFont);
@@ -744,7 +744,7 @@ public class UpdateableSRPanel extends JPanel implements ActionListener {
      * Sets the standard attributes for the text fields for this from (avoiding repetition).
      * @param textField 
      */
-    public void setTextFieldAttributes(JTextField textField) {
+    private void setTextFieldAttributes(JTextField textField) {
         textField.setInputVerifier(inputVerifier);
         textField.setEditable(false);
         textField.setFont(textFont);
@@ -754,7 +754,7 @@ public class UpdateableSRPanel extends JPanel implements ActionListener {
      * Sets the standard attributes of the info labels for this form (avoiding repetition).
      * @param label The info JLabel to set the standard attributes of
      */
-    public void setInfoLabelAttributes(JLabel label) {
+    private void setInfoLabelAttributes(JLabel label) {
         label.setBackground(Color.white);
         label.setPreferredSize(new Dimension(50, 50));
         label.setOpaque(true);
@@ -764,7 +764,7 @@ public class UpdateableSRPanel extends JPanel implements ActionListener {
     /**
      * Loads the edit and delete buttons onto a button panel that is added to this layout.
      */
-    public void loadButtons() {
+    private void loadButtons() {
         // Creates the panel to hold the buttons and sets the JPanels attributes
         buttonPanel = new JPanel();
         buttonPanel.setPreferredSize(new Dimension(200, 50));
@@ -800,7 +800,7 @@ public class UpdateableSRPanel extends JPanel implements ActionListener {
     /**
      * Enters edit mode so the student record form can be edited and adds and removes the appropriate buttons.
      */
-    public void enterEditMode() {
+    private void enterEditMode() {
         // Enables all text fields and the combo box to be interacted with by the user.
         studentNameField.setEditable(true);
         studentDOBDayField.setEditable(true);
@@ -846,7 +846,7 @@ public class UpdateableSRPanel extends JPanel implements ActionListener {
     /**
      * Exits edit mode making form inputs unaccessible via interaction.
      */
-    public void exitEditMode() {
+    private void exitEditMode() {
         // Disables all text fields and the combo box disabling interaction from the user.
         studentNameField.setEditable(false);
         studentDOBDayField.setEditable(false);
@@ -888,7 +888,7 @@ public class UpdateableSRPanel extends JPanel implements ActionListener {
     /**
      * Validates the student record form and updates the student record if valid.
      */
-    public void attemptUpdateStudentRecord() {
+    private void attemptUpdateStudentRecord() {
         // boolean used as a flag if any form field is left empty
         boolean invalidField = true;
             

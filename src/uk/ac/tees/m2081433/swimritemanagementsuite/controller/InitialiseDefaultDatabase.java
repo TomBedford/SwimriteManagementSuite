@@ -26,7 +26,7 @@ public class InitialiseDefaultDatabase {
     /**
      * The SMS Body Panel reference for when swapping panels on the body panel.
      */
-    SMSBodyPanel smsBodyPanel;
+    private SMSBodyPanel smsBodyPanel;
     
     
     
@@ -34,7 +34,7 @@ public class InitialiseDefaultDatabase {
      * Confirmation proceedure that leads to formatting of db and insertion of default classes.
      * @param smsBP The reference to the SMS Body panel to close any components that exist on it after the format.
      */
-    public InitialiseDefaultDatabase(SMSBodyPanel smsBP) {
+    protected InitialiseDefaultDatabase(SMSBodyPanel smsBP) {
         
         // Initializes this panels body panel reference
         smsBodyPanel = smsBP;
@@ -85,7 +85,7 @@ public class InitialiseDefaultDatabase {
      * - Swimming Classes
      * and then fills the above tables with the default values.
      */
-    public void resetToDefaultDB() {
+    private void resetToDefaultDB() {
         
         try {
             /**

@@ -12,12 +12,12 @@ class LessonBlockTableModel extends AbstractTableModel {
     /**
      * Two dimensional object array to hold the data for the table.
      */
-    final private Object[][] data;
+    private final Object[][] data;
     
     /**
      * Array of string to hold the table headers.
      */
-    final private String[] headers;
+    private final String[] headers;
     
     /**
      * Boolean as to whether the date column is editable.
@@ -126,7 +126,7 @@ class LessonBlockTableModel extends AbstractTableModel {
      * Sets whether the date column in the lesson block table is editable or not.
      * @param isEditable The new boolean value as to whether the date column in the lesson block table is editable
      */
-    public void setDateEditable(Boolean isEditable) {
+    protected void setDateEditable(Boolean isEditable) {
         dateEditable = isEditable;
     }
     

@@ -13,17 +13,17 @@ import uk.ac.tees.m2081433.swimritemanagementsuite.model.SwimmingLevel;
 /**
  * This controller interacts (create, update and delete, etc.) with the Student Record table within the database.
  */
-public class StudentRecordController implements DatabaseTableController<StudentRecord>{
+public class StudentRecordController implements DatabaseTableController<StudentRecord> {
     
     /**
      * Reference to the Lesson Block controller for when deleting lesson blocks associated with student records.
      */
-    final LessonBlockController lessonBlockController = new LessonBlockController();
+    private final LessonBlockController lessonBlockController = new LessonBlockController();
     
     /**
      * Reference to the Student Address controller for when creating, updating and deleting student records.
      */
-    final StudentAddressController studentAddressController = new StudentAddressController();
+    private final StudentAddressController studentAddressController = new StudentAddressController();
     
     
     

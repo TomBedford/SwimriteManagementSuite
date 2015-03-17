@@ -7,7 +7,7 @@ public enum Day {
     /**
      * Monday the first day of the week.
      */
-    MONDAY{
+    MONDAY {
                 @Override
                 public String toString() {
                     return "Monday";

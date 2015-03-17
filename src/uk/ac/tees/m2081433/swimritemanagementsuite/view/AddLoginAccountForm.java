@@ -30,27 +30,27 @@ public class AddLoginAccountForm extends JPanel implements ActionListener {
     /**
      * The form panel reference from when canceling the adding of a student.
      */
-    JPanel formPanel;
+    private final JPanel formPanel;
     
     /**
      * The SMS Body Panel reference for when swapping panels on the body panel.
      */
-    SMSBodyPanel smsBodyPanel;
+    private final SMSBodyPanel smsBodyPanel;
     
     /**
      * The grid bag constraint to manipulate when adding components to the layout. 
      */
-    GridBagConstraints c;
+    private final GridBagConstraints c;
     
     /**
      * The input verifier for the add login account form (validates text field inputs).
      */
-    LoginAccountFormInputVerifier inputVerifier = new LoginAccountFormInputVerifier();
+    private final LoginAccountFormInputVerifier inputVerifier = new LoginAccountFormInputVerifier();
     
     /**
      * The Login Account Controller to interact with the Login Account database table.
      */
-    LoginAccountController loginAccountController = new LoginAccountController();
+    private final LoginAccountController loginAccountController = new LoginAccountController();
     
     
     
@@ -85,59 +85,59 @@ public class AddLoginAccountForm extends JPanel implements ActionListener {
     /**
      * The font (defining font style, font type and font size) for all form text labels.
      */
-    Font labelFont = new Font("Arial", Font.PLAIN, 18);
+    private final Font labelFont = new Font("Arial", Font.PLAIN, 18);
     
     /**
      * The font (defining font style, font type and font size) for all form text field inputs.
      */
-    Font textFont = new Font("Arial", Font.PLAIN, 17);
+    private final Font textFont = new Font("Arial", Font.PLAIN, 17);
     
     /**
      * The add login account username form text field.
      */
-    JTextField usernameField;
+    private JTextField usernameField;
     
     /**
      * The login account password form text field.
      */
-    JTextField passwordField;
+    private JTextField passwordField;
     
     /**
      * The login account password confirmation form text field.
      */
-    JTextField passwordConfirmationField;
+    private JTextField passwordConfirmationField;
     
     /**
      * The login account security question form text field.
      */
-    JTextField securityQuestionField;
+    private JTextField securityQuestionField;
     
     /**
      * The login account security question answer form text field.
      */
-    JTextField securityQuestionAnswerField;
+    private JTextField securityQuestionAnswerField;
     
     /**
      * The combo box specifiying as to whether the login account is an admin.
      */
-    JComboBox adminComboBox;
+    private JComboBox adminComboBox;
     
     
     
     /**
      * The button to create a new login account using the input specified in the form.
      */
-    JButton createButton;
+    private JButton createButton;
     
     /**
      * The button to clear all of the form fields.
      */
-    JButton clearFormButton;
+    private JButton clearFormButton;
     
     /**
      * The button to cancel the adding of a new login account.
      */
-    JButton cancelFormButton;
+    private JButton cancelFormButton;
     
     
     /**
@@ -188,7 +188,7 @@ public class AddLoginAccountForm extends JPanel implements ActionListener {
      * Adds all form text labels, form text input fields and info icons for each field needed for the add login
      * account form.
      */
-    public void addFormComponents() {
+    private void addFormComponents() {
         /**
          * Username label and text field and info label.
          */
@@ -439,7 +439,7 @@ public class AddLoginAccountForm extends JPanel implements ActionListener {
      * Sets the standard attributes of the info labels for forms (avoiding repetition).
      * @param label The info JLabel to set the standard attributes of
      */
-    public void setInfoLabelAttributes(JLabel label) {
+    private void setInfoLabelAttributes(JLabel label) {
         label.setBackground(Color.white);
         label.setPreferredSize(new Dimension(50, 50));
         label.setOpaque(true);
@@ -450,7 +450,7 @@ public class AddLoginAccountForm extends JPanel implements ActionListener {
      * Adds the button panel to contain the add login account, clear text fields 
      * and cancel adding of a login account buttons to this panel.
      */
-    public void addButtonPanel() {
+    private void addButtonPanel() {
        
         // Creates and initializes the panel to hold all of the buttons for this panel
         final JPanel buttonPanel = new JPanel();
@@ -578,12 +578,8 @@ public class AddLoginAccountForm extends JPanel implements ActionListener {
             // Boolean to hold the admin status
             boolean adminStatus;
             
-            // Checks the users choise as to whether they are an admin
-            if (adminComboBox.getSelectedItem().equals("Yes")) {
-                adminStatus = true;
-            } else {
-                adminStatus = false;
-            }
+            // If the selected choice equals yes, then return true that they are admin, otherwise false
+            adminStatus = adminComboBox.getSelectedItem().equals("Yes");
                    
             // Creates a login account using the form values provided and stores it in the database
             final LoginAccount newLoginAccount = new LoginAccount(usernameField.getText(), sbPassword.toString(), 
