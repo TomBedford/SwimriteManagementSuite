@@ -58,7 +58,7 @@ public class LessonBlockPanel extends JPanel implements ActionListener {
     StudentRecord studentRecordRef;
     
     /**
-     * The controller to edit/update and delete lesson blocks from the database.
+     * The controller to interact with the lesson block table in the database.
      */
     LessonBlockController lessonBlockController = new LessonBlockController();
     
@@ -365,7 +365,7 @@ public class LessonBlockPanel extends JPanel implements ActionListener {
          * Adds the Payment Type label and payment type combo box to the payment details panel.
          */
         final JLabel paymentTypeLabel = new JLabel("Payment Type:");
-        paymentTypeLabel.setPreferredSize(new Dimension(100, 20));
+        paymentTypeLabel.setPreferredSize(new Dimension(90, 20));
         setLabelAttributes(paymentTypeLabel);
         lessonPaymentFormPanel.add(paymentTypeLabel);
         
@@ -427,7 +427,7 @@ public class LessonBlockPanel extends JPanel implements ActionListener {
         
         // Adds a component to space out components on the payment details panel
         final JLabel spacingLabel1 = new JLabel();
-        spacingLabel1.setPreferredSize(new Dimension(140, 20));
+        spacingLabel1.setPreferredSize(new Dimension(170, 20));
         spacingLabel1.setOpaque(false);
         lessonPaymentFormPanel.add(spacingLabel1);
         
@@ -452,7 +452,7 @@ public class LessonBlockPanel extends JPanel implements ActionListener {
         
          // Adds a component to space out components on the payment details panel
         final JLabel spacingLabel2 = new JLabel();
-        spacingLabel2.setPreferredSize(new Dimension(120, 20));
+        spacingLabel2.setPreferredSize(new Dimension(150, 20));
         spacingLabel2.setOpaque(false);
         lessonPaymentFormPanel.add(spacingLabel2);
         

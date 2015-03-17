@@ -25,12 +25,13 @@ public class SMSBodyPanel extends JPanel {
     JScrollPane currentlyDisplayedPanel;
     
     /**
-     * The reference to the panel this body panel is on (for when logging out)
+     * The reference to the panel this body panel is on (for when logging out).
      */
     SMSMainPanel smsMainPanelRef;
     
     /**
      * panel to hold dynamically swapping panels.
+     * @param smsMainPanel The reference to the panel component this panel is on
      */
     public SMSBodyPanel(SMSMainPanel smsMainPanel) {
         // sets the smsBodyPanel JPanel attributes.
@@ -203,5 +204,19 @@ public class SMSBodyPanel extends JPanel {
         
         // Updates the UI of the main panel with the login screen on it.
         smsMainPanelRef.updateUI();
+    }
+    
+    public void addRegisterPanel() {
+        // Removes the currently displayed panel from this body panel.
+        removeCurrentlyDisplayedPanel();
+        
+        // Creates the register todays classes panel to be displayed on the body panel
+        final RegisterPanel registerPanel = new RegisterPanel(this);
+        
+        // Sets the register button to be selected
+        SMSToolbarPanel.regButton.setSelected(true);
+        
+        // Adds the register panel as the curretly displayed panel on this body panel.
+        addCurrentlyDisplayedPanel(registerPanel);
     }
 }

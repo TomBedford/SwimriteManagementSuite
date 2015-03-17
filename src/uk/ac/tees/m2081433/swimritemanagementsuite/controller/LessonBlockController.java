@@ -29,27 +29,6 @@ public class LessonBlockController {
     }
     
     /**
-     * Gets all lesson blocks associated with a specified student record provided as a param.
-     * @param studentRecord The student record to gather all the lesson blocks from
-     * @return The list of lesson blocks associated with the student record
-     */
-    public List<LessonBlock> getLessonBlocksByStudent(StudentRecord studentRecord) {
-        
-        // Initialises the list to hold the lesson blocks
-        List<LessonBlock> studentLessonBlocks = null;
-        
-        try {
-            // Queries the db for where the student record column in the lesson block matches the student record provided
-            studentLessonBlocks = DatabaseManager.lessonBlockDAO.queryForEq(LessonBlock.STUDENTRECORD_COLUMN_NAME, studentRecord);
-        } catch (SQLException e) {
-            System.out.println("getLessonBlocksByStudent: Error getting lesson blocks by the student record.");
-        }
-        
-        // Returns the completed list of lesson blocks.
-        return studentLessonBlocks;
-    }
-    
-    /**
      * Updates a lesson block record in the database using the updates lesson block object provided as a param.
      * @param lessonBlock The lesson block with updated values to update in the db table.
      */
@@ -76,6 +55,27 @@ public class LessonBlockController {
         } catch (SQLException e) {
             System.out.println("deleteLessonBlock: Error deleting the lessonBlock record (controller).");
         }
+    }
+    
+    /**
+     * Gets all lesson blocks associated with a specified student record provided as a param.
+     * @param studentRecord The student record to gather all the lesson blocks from
+     * @return The list of lesson blocks associated with the student record
+     */
+    public List<LessonBlock> getLessonBlocksByStudent(StudentRecord studentRecord) {
+        
+        // Initialises the list to hold the lesson blocks
+        List<LessonBlock> studentLessonBlocks = null;
+        
+        try {
+            // Queries the db for where the student record column in the lesson block matches the student record provided
+            studentLessonBlocks = DatabaseManager.lessonBlockDAO.queryForEq(LessonBlock.STUDENTRECORD_COLUMN_NAME, studentRecord);
+        } catch (SQLException e) {
+            System.out.println("getLessonBlocksByStudent: Error getting lesson blocks by the student record.");
+        }
+        
+        // Returns the completed list of lesson blocks.
+        return studentLessonBlocks;
     }
     
     /**

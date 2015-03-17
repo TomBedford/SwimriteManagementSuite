@@ -234,7 +234,7 @@ public class HeaderActionEventController implements ActionListener, MouseListene
     }
     
     public void displayRegisterClasses() {
-        
+        smsBodyPanelRef.addRegisterPanel();
     }
     
     public void displayViewAllSR() {
