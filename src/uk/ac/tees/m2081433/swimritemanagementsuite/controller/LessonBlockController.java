@@ -3,23 +3,21 @@ package uk.ac.tees.m2081433.swimritemanagementsuite.controller;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
+import uk.ac.tees.m2081433.swimritemanagementsuite.model.DatabaseTableController;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.LessonBlock;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.StudentRecord;
 
 /**
  * This controller interacts (create, update and delete) with the lesson block table within the database.
  */
-public class LessonBlockController {
+public class LessonBlockController implements DatabaseTableController<LessonBlock> {
     
     /**
      * Creates a lesson block record in the database associated with the student record provided as param.
-     * @param studentRecord The student record to associate the lesson block with
+     * @param lessonBlock The lesson block to create in the database.
      */
-    public void createLessonBlock(StudentRecord studentRecord) {
-        
-        // Creates and initializes a new lesson block associated with the student record
-        final LessonBlock lessonBlock = new LessonBlock(studentRecord);
-        
+    @Override
+    public void create(LessonBlock lessonBlock) {
         try {
             // Creates the lesson block in the database.
             DatabaseManager.lessonBlockDAO.create(lessonBlock);
@@ -32,7 +30,8 @@ public class LessonBlockController {
      * Updates a lesson block record in the database using the updates lesson block object provided as a param.
      * @param lessonBlock The lesson block with updated values to update in the db table.
      */
-    public void updateLessonBlock(LessonBlock lessonBlock) {
+    @Override
+    public void update(LessonBlock lessonBlock) {
         try {
             DatabaseManager.lessonBlockDAO.update(lessonBlock);
         } catch (SQLException e) {
@@ -44,7 +43,8 @@ public class LessonBlockController {
      * Deletes a lesson block record from the database that matches the lesson block object provided as a param.
      * @param lessonBlock The lesson block to delete from the database.
      */
-    public void deleteLessonBlock(LessonBlock lessonBlock) {
+    @Override
+    public void delete(LessonBlock lessonBlock) {
         try {
             DatabaseManager.lessonBlockDAO.delete(lessonBlock);
             

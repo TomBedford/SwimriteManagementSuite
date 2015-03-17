@@ -590,7 +590,7 @@ public class AddLoginAccountForm extends JPanel implements ActionListener {
                     sbSalt.toString(), adminStatus, securityQuestionField.getText(), sbSecurityQuestionAnswer.toString());
         
             // Creates the new login account in the database
-            loginAccountController.createLoginAccount(newLoginAccount);
+            loginAccountController.create(newLoginAccount);
             
             // Re-loads the create, edit and delete login accounts panel
             smsBodyPanel.addViewCEDLoginAccountsPanel();

@@ -664,7 +664,7 @@ public class EditLoginAccountForm extends JPanel implements ActionListener {
                             loginAccount.setPassword(sbPassword.toString());
                             
                             // Updates the login account in the database
-                            loginAccountController.updateLoginAccount(loginAccount);
+                            loginAccountController.update(loginAccount);
 
                             // Removes the change password form from the dynamic edit panel and updates the UI.
                             dynamicEditPanel.removeAll();
@@ -760,7 +760,7 @@ public class EditLoginAccountForm extends JPanel implements ActionListener {
                     loginAccount.setSecurityQuestionAnswer(sbSecurityQuestionAnswer.toString());
 
                     // Updates the login account in the database
-                    loginAccountController.updateLoginAccount(loginAccount);
+                    loginAccountController.update(loginAccount);
 
                     // Removes the change security question & answer form from the dynamic edit panel and updates the UI.
                     dynamicEditPanel.removeAll();

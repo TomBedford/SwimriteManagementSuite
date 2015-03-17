@@ -290,7 +290,7 @@ public class CEDTeachersPanel extends JPanel implements ActionListener {
                     final Teacher newTeacher = new Teacher(teacherName);
 
                     // Creates the teacher in the database
-                    teacherController.createTeacher(newTeacher);
+                    teacherController.create(newTeacher);
                     
                     // Re-loads this panel with the new teacher in the table
                     smsBodyPanel.addViewCEDTeachersPanel();
@@ -335,7 +335,7 @@ public class CEDTeachersPanel extends JPanel implements ActionListener {
                         teacherList.get(index).setTeacherName(teacherName);
                         
                         // Updates the teacher record in the database
-                        teacherController.updateTeacher(teacherList.get(index));
+                        teacherController.update(teacherList.get(index));
                         
                         // Re-loads this panel with the edited teacher updated in the table
                         smsBodyPanel.addViewCEDTeachersPanel();
@@ -380,7 +380,7 @@ public class CEDTeachersPanel extends JPanel implements ActionListener {
                     // Switch to determine users choice.
                     switch (answer) {
                         // The user wants delete the teacher
-                        case 0: teacherController.deleteTeacher(teacherList.get(index));
+                        case 0: teacherController.delete(teacherList.get(index));
                                 // Re-loads this panel with the updated table
                                 smsBodyPanel.addViewCEDTeachersPanel();
                                 break;

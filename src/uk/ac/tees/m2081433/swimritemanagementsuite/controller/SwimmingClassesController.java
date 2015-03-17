@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import uk.ac.tees.m2081433.swimritemanagementsuite.model.DatabaseTableController;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.Day;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.StudentRecord;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.SwimmingClasses;
@@ -13,7 +14,7 @@ import uk.ac.tees.m2081433.swimritemanagementsuite.model.Timeslot;
 /**
  * This controller interacts (create, update and delete, etc.) with the Swimming Classes table within the database.
  */
-public class SwimmingClassesController {
+public class SwimmingClassesController implements DatabaseTableController<SwimmingClasses> {
     
     /**
      * Reference to the student record controller to update student records when deleting swimming classes.
@@ -26,7 +27,8 @@ public class SwimmingClassesController {
      * Creates a Swimming Class in the database using the provided parameter.
      * @param swimmingClass the swimming class to create in the db.
      */
-    public void createSwimmingClass(SwimmingClasses swimmingClass) {
+    @Override
+    public void create(SwimmingClasses swimmingClass) {
         try {
             // Creates the swimming class in the database
             DatabaseManager.swimmingClassesDAO.create(swimmingClass);
@@ -39,7 +41,8 @@ public class SwimmingClassesController {
      * Updates a Swimming Class in the database using the updated Swimming Class object provided as a parameter.
      * @param swimmingClass The swimming class with updated values to update in the db table.
      */
-    public void updateSwimmingClass(SwimmingClasses swimmingClass) {
+    @Override
+    public void update(SwimmingClasses swimmingClass) {
         try {
             DatabaseManager.swimmingClassesDAO.update(swimmingClass);
         } catch (SQLException e) {
@@ -52,7 +55,8 @@ public class SwimmingClassesController {
      * and un-enrolls all student records associated with the swimming class from the swimming class.
      * @param swimmingClass The swimming class to delete from the database.
      */
-    public void deleteSwimmingClass(SwimmingClasses swimmingClass) {
+    @Override
+    public void delete(SwimmingClasses swimmingClass) {
         try {
             // Deletes the swimming class from the database.
             DatabaseManager.swimmingClassesDAO.delete(swimmingClass);
@@ -66,7 +70,7 @@ public class SwimmingClassesController {
             // Loops through each student record in the list un-enrolling them from the swimming class
             for (StudentRecord studentRecord : swimmingClassesStudentRecords) {
                 studentRecord.setSwimmingClass(null);
-                studentRecordController.updateStudentRecord(studentRecord);
+                studentRecordController.update(studentRecord);
             }
         } catch (SQLException e) {
             System.out.println("deleteSwimmingClass: Error deleting the swimming class (controller).");

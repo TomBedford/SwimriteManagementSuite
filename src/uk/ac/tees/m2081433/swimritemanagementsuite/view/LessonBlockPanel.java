@@ -873,7 +873,7 @@ public class LessonBlockPanel extends JPanel implements ActionListener {
                                 paymentMonthField.getText(), paymentYearField.getText()));
                 lessonBlockRef.getLessonPayment().setPaymentTaker(paymentTakerField.getText());
 
-                lessonPaymentController.updateLessonPayment(lessonBlockRef.getLessonPayment());
+                lessonPaymentController.update(lessonBlockRef.getLessonPayment());
                 // Otherwise create a lesson payment for the lesson block with the set values and add to db.
             } else {
                 // Creates a lesson payment with the field values given by the user.
@@ -884,7 +884,7 @@ public class LessonBlockPanel extends JPanel implements ActionListener {
                         paymentTakerField.getText());
 
                 // Creates a record of that lesson payment in the database
-                lessonPaymentController.createLessonPayment(lessonPayment);
+                lessonPaymentController.create(lessonPayment);
 
                 // Sets the lesson payment of the lesson block to the newly created instance
                 lessonBlockRef.setLessonPayment(lessonPayment);
@@ -1008,7 +1008,7 @@ public class LessonBlockPanel extends JPanel implements ActionListener {
             }
 
             // Updates the lesson block with the updated values
-            lessonBlockController.updateLessonBlock(lessonBlockRef);
+            lessonBlockController.update(lessonBlockRef);
 
             // Disables all text fields and the combo box from interaction by the user.
             paymentAmountField.setEditable(false);
@@ -1107,7 +1107,7 @@ public class LessonBlockPanel extends JPanel implements ActionListener {
             // Switch to determine users choice.
             switch (answer) {
                 // The user wants to delete the lesson block from the db.
-                case 0: lessonBlockController.deleteLessonBlock(lessonBlockRef);
+                case 0: lessonBlockController.delete(lessonBlockRef);
                             
                         // re-loads the panel to display the individual student again
                         smsBodyPanelRef.addViewIndividualSRPanel(studentRecordRef);

@@ -807,14 +807,14 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
                         }
 
                         // Updates both teacher records
-                        teacherController.updateTeacher(workingTeacherList.get(i));
-                        teacherController.updateTeacher(teacher);
+                        teacherController.update(workingTeacherList.get(i));
+                        teacherController.update(teacher);
 
                         // Loops through the entire list of classes for that teacher and changes to the new teacher.
                         for (int x = 0; x < teachersClassesLists[i].size(); x++) {
                             teachersClassesLists[i].get(x).setTeacher(teacher);
                             // Updates the swimming class record with new teacher
-                            swimmingClassesController.updateSwimmingClass(teachersClassesLists[i].get(x));
+                            swimmingClassesController.update(teachersClassesLists[i].get(x));
                         }
 
                         // Re-loads this panel to finish and load changes.
@@ -935,13 +935,13 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
                             final Timeslot newTimeslot = new Timeslot(day, timeslotTimeInt);
 
                             // Creates the timeslot in the database
-                            timeslotController.createTimeslot(newTimeslot);
+                            timeslotController.create(newTimeslot);
 
                             // Loops through the amount of teachers working on this day and creates a swimming class for that timeslot for them
                             for (int i = 0; i < workingTeacherList.size(); i++) {
                                 final SwimmingClasses swimmingClass = new SwimmingClasses(SwimmingLevel.MOMS_AND_DUCKS, 
                                                                             newTimeslot, workingTeacherList.get(i), 5);
-                                swimmingClassesController.createSwimmingClass(swimmingClass);
+                                swimmingClassesController.create(swimmingClass);
                             }
 
                             // Re-loads this panel with the values newly stored in the database
@@ -1006,7 +1006,7 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
                     }
 
                     // Updates the teacher in the database
-                    teacherController.updateTeacher(notWorkingTeacherList.get(i));
+                    teacherController.update(notWorkingTeacherList.get(i));
 
                     // Loops through all the timeslots on this day
                     for (Timeslot t: timeslotList) {
@@ -1014,7 +1014,7 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
                         final SwimmingClasses swimmingClass = new SwimmingClasses(SwimmingLevel.DUCKS, t, notWorkingTeacherList.get(i), 5);
 
                         // Adds the swimming classes to the database
-                        swimmingClassesController.createSwimmingClass(swimmingClass);
+                        swimmingClassesController.create(swimmingClass);
                     }
 
                     // Re-loads this panel in editing mode with the new values
@@ -1071,7 +1071,7 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
                     // Switch to determine users choice.
                     switch (answer) {
                         // The user wants to delete that timeslot from the db.
-                        case 0: timeslotController.deleteTimeslot(timeslotList.get(i));
+                        case 0: timeslotController.delete(timeslotList.get(i));
                                 // Reloads the schedule for the day with the new database values
                                 smsBodyPanelRef.addSchedulePanel(day, true);
                                 break;
@@ -1111,11 +1111,11 @@ public class DaySchedulePanel extends JPanel implements ActionListener, MouseLis
                                 } 
                                 
                                 // Updates the teacher in the database
-                                teacherController.updateTeacher(workingTeacherList.get(i));
+                                teacherController.update(workingTeacherList.get(i));
                                 
                                 // Loops through all the swimming classes that that teacher teaches and deletes them
                                 for (SwimmingClasses swimmingClass: teachersClassesLists[i]) {
-                                    swimmingClassesController.deleteSwimmingClass(swimmingClass);
+                                    swimmingClassesController.delete(swimmingClass);
                                 }
                                 
                                 // Reloads the schedule for the day with the new database values

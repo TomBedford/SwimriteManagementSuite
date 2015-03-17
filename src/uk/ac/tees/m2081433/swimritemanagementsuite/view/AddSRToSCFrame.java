@@ -352,7 +352,7 @@ public class AddSRToSCFrame extends JFrame implements ActionListener, KeyListene
                         studentRecordList.get(realIndex).getSwimmingClass().getCurrentCapacity() - 1);
 
                 // Update the swimming class in the database
-                swimmingClassesController.updateSwimmingClass(studentRecordList.get(realIndex).getSwimmingClass());
+                swimmingClassesController.update(studentRecordList.get(realIndex).getSwimmingClass());
             }
         }
 
@@ -362,13 +362,13 @@ public class AddSRToSCFrame extends JFrame implements ActionListener, KeyListene
             studentRecordList.get(realIndex).setSwimmingClass(swimmingClass);
 
             // Updates the student record in the database.
-            studentRecordController.updateStudentRecord(studentRecordList.get(realIndex));
+            studentRecordController.update(studentRecordList.get(realIndex));
 
             // Increments the current capacity of the swimming class
             swimmingClass.setCurrentCapacity(swimmingClass.getCurrentCapacity() + 1);
 
             // Updates the swimming class in the database
-            swimmingClassesController.updateSwimmingClass(swimmingClass);
+            swimmingClassesController.update(swimmingClass);
 
             // Re-loads the panel for the specified swimming class with the new student enrolled
             smsBodyPanel.addViewIndividualSCPanel(swimmingClass);

@@ -3,19 +3,20 @@ package uk.ac.tees.m2081433.swimritemanagementsuite.controller;
 import java.util.List;
 import java.sql.SQLException;
 import java.util.Collections;
+import uk.ac.tees.m2081433.swimritemanagementsuite.model.DatabaseTableController;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.Day;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.Teacher;
 
 /**
  * This controller interacts (create, update and delete, etc.) with the Teacher table within the database.
  */
-public class TeacherController {
+public class TeacherController implements DatabaseTableController<Teacher> {
     
     /**
      * Creates a Teacher in the database using the provided parameter.
      * @param teacher The teacher to add to the db.
      */
-    public void createTeacher(Teacher teacher) {
+    public void create(Teacher teacher) {
         try {
             // Creates the teacher in the database
             DatabaseManager.teacherDAO.create(teacher);
@@ -29,7 +30,7 @@ public class TeacherController {
      * Updates a Teacher in the database using the updated Teacher object provided as a parameter.
      * @param teacher The teacher with updated values to update in the db table.
      */
-    public void updateTeacher(Teacher teacher) {
+    public void update(Teacher teacher) {
         try {
             // Updates the teacher in the database
             DatabaseManager.teacherDAO.update(teacher);
@@ -42,7 +43,7 @@ public class TeacherController {
      * Deletes the provided Teacher (parameter) from the database.
      * @param teacher The teacher to delete from the database
      */
-    public void deleteTeacher(Teacher teacher) {
+    public void delete(Teacher teacher) {
         try {
             // Deletes the teacher in the database
             DatabaseManager.teacherDAO.delete(teacher);

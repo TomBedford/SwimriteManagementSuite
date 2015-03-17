@@ -5,17 +5,19 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JOptionPane;
+import uk.ac.tees.m2081433.swimritemanagementsuite.model.DatabaseTableController;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.LoginAccount;
 
 /**
  * This controller interacts (create, update and delete, etc.) with the Login Account table within the database.
  */
-public class LoginAccountController {
+public class LoginAccountController implements DatabaseTableController<LoginAccount> {
     /**
      * Creates a Login Account in the database using the provided parameter.
      * @param loginAccount The login account to add to the db.
      */
-    public void createLoginAccount(LoginAccount loginAccount) {
+    @Override
+    public void create(LoginAccount loginAccount) {
         try {
             // Creates the login account in the database
             DatabaseManager.loginAccountDAO.create(loginAccount);
@@ -29,7 +31,8 @@ public class LoginAccountController {
      * Updates a Login Account in the database using the updated Login Account object provided as a parameter.
      * @param loginAccount The loginAccount with updated values to update in the db table.
      */
-    public void updateLoginAccount(LoginAccount loginAccount) {
+    @Override
+    public void update(LoginAccount loginAccount) {
         try {
             // Updates the login account in the database
             DatabaseManager.loginAccountDAO.update(loginAccount);
@@ -42,7 +45,8 @@ public class LoginAccountController {
      * Deletes the provided Login Account (parameter) from the database.
      * @param loginAccount The login account to delete from the database
      */
-    public void deleteLoginAccount(LoginAccount loginAccount) {
+    @Override
+    public void delete(LoginAccount loginAccount) {
         try {
             // Deletes the login account in the database
             DatabaseManager.loginAccountDAO.delete(loginAccount);

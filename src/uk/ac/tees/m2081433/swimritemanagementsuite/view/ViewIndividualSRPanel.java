@@ -179,8 +179,12 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
         
         // If the add lesson block button is pressed
         if (e.getSource() == addLBButton) {
-            // Create a blank lesson block associated with this student record.
-            lessonBlockController.createLessonBlock(studentRecordRef);
+            // Creates a new lesson block associated with this student record
+            final LessonBlock lessonBlock = new LessonBlock(studentRecordRef);
+            
+            // Create the lesson block in the lesson block database table.
+            lessonBlockController.create(lessonBlock);
+            
             // Reload this individual students student record.
             smsBodyPanelRef.addViewIndividualSRPanel(studentRecordRef);
         }

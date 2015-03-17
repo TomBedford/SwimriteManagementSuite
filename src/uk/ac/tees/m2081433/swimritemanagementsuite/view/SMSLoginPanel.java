@@ -448,7 +448,7 @@ public class SMSLoginPanel extends JPanel implements ActionListener, MouseListen
                                     loginAccount.setPassword(sbPassword.toString());
                                     
                                     // Updates the login account in the database with the new password
-                                    loginAccountController.updateLoginAccount(loginAccount);
+                                    loginAccountController.update(loginAccount);
                                     
                                     // Shows dialog confirming password change was successfull
                                     JOptionPane.showMessageDialog(null,

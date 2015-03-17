@@ -941,7 +941,7 @@ public class UpdateableSRPanel extends JPanel implements ActionListener {
             studentRecord.setParentName(parentNameField.getText());
 
             // Updates the student record in the database
-            studentRecordController.updateStudentRecord(studentRecord);
+            studentRecordController.update(studentRecord);
             
             // Calls the method to exit the forms edit mode.
             exitEditMode();
@@ -969,7 +969,7 @@ public class UpdateableSRPanel extends JPanel implements ActionListener {
             // Switch to determine users choice.
             switch (answer) {
                 // The user wants to delete the student record from the db so it is delted.
-                case 0: studentRecordController.deleteStudentRecord(studentRecord);
+                case 0: studentRecordController.delete(studentRecord);
                         // Takes the user back to the viewl all student records panel.
                         smsBodyPanelRef.addViewAllSRPanel();
                         break;

@@ -3,6 +3,7 @@ package uk.ac.tees.m2081433.swimritemanagementsuite.controller;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import uk.ac.tees.m2081433.swimritemanagementsuite.model.DatabaseTableController;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.LessonBlock;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.StudentAddress;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.StudentRecord;
@@ -12,7 +13,7 @@ import uk.ac.tees.m2081433.swimritemanagementsuite.model.SwimmingLevel;
 /**
  * This controller interacts (create, update and delete, etc.) with the Student Record table within the database.
  */
-public class StudentRecordController {
+public class StudentRecordController implements DatabaseTableController<StudentRecord>{
     
     /**
      * Reference to the Lesson Block controller for when deleting lesson blocks associated with student records.
@@ -28,60 +29,27 @@ public class StudentRecordController {
     
     /**
      * Creates a Student Record in the database using the provided parameters.
-     * @param studentName The name of the student   
-     * @param studentDOBDay The day of the date of birth of the student
-     * @param studentDOBMonth The month of the date of birth of the student
-     * @param studentDOBYear The year of the date of birth of the student
-     * @param studentTelephoneNo The telephone no of the student
-     * @param addressLine1 The first line of the students address
-     * @param addressLine2 The second line of the students address
-     * @param addressCity The city of the students address
-     * @param addressCounty The county of the students address
-     * @param addressPostcode The postcode of the students address
-     * @param hasIllness The students mental or physical special requirements
-     * @param parentName The students parents name
-     * @param abilityLevel The ability level of the student
-     * @return Boolean as to whether the student record was successfully created in the database.
+     * @param studentRecord The student record to add to the Student Record database table.
      */
-    public boolean createStudentRecord(String studentName, String studentDOBDay, String studentDOBMonth, String studentDOBYear,
-                                        String studentTelephoneNo, String addressLine1, String addressLine2, String addressCity,
-                                            String addressCounty, String addressPostcode, String hasIllness, String parentName,
-                                                SwimmingLevel abilityLevel) {
-        
-        // Creates and initializes a new student address using the address params provided
-        final StudentAddress studentAddress = new StudentAddress(addressLine1, addressLine2, addressCity, addressCounty, addressPostcode);
-        
-        // Creates the new student address in the database
-        studentAddressController.createStudentAddress(studentAddress);
-        
-        // Calls the method to format the date of birth correctly for db storage.
-        final String formattedDOB = formatDOB(studentDOBDay, studentDOBMonth, studentDOBYear);
-        
-        // Creates and initializes a new student record using the params provided, the student address created and the formatted dob
-        final StudentRecord studentRecord = new StudentRecord(studentName, formattedDOB, studentTelephoneNo, studentAddress, 
-                                                            hasIllness, parentName, abilityLevel);
-        
+    @Override
+    public void create(StudentRecord studentRecord) {
         try {
             // Creates the student record in the student record database table
             DatabaseManager.studentRecordDAO.create(studentRecord);
-            return true;
-            
         } catch (SQLException e) {
             System.out.println("createStudentRecord: Error creating the student record.");
         }
-        
-        // If this statement is reached then the student record wasn't added to the db correctly
-        return false;
     }
     
     /**
      * Updates a Student Record in the database using the updated Student Record object provided as a parameter.
      * @param studentRecord The student record with updated values to update in the db table.
      */
-    public void updateStudentRecord(StudentRecord studentRecord) {
+    @Override
+    public void update(StudentRecord studentRecord) {
         
         // Updates the student address from the student record
-        studentAddressController.updateStudentAddress(studentRecord.getStudentAddress());
+        studentAddressController.update(studentRecord.getStudentAddress());
         
         // Updates the student record
         try {
@@ -97,13 +65,14 @@ public class StudentRecordController {
      * with that Student Record.
      * @param studentRecord The student record to delete from the database.
      */
-    public void deleteStudentRecord(StudentRecord studentRecord) {
+    @Override
+    public void delete(StudentRecord studentRecord) {
         try {
             // Deletes the student record from the database.
             DatabaseManager.studentRecordDAO.delete(studentRecord);
             
             // Deletes the student records student address from the database.
-            studentAddressController.deleteStudentAddress(studentRecord.getStudentAddress());
+            studentAddressController.delete(studentRecord.getStudentAddress());
             
             // Creates and initializes a list to hold all lesson blocks associated with this student record.
             List<LessonBlock> studentLessonBlocks = null;
@@ -113,7 +82,7 @@ public class StudentRecordController {
             
             // Loops through each lesson block in the list deleting it
             for (LessonBlock studentLessonBlock : studentLessonBlocks) {
-                lessonBlockController.deleteLessonBlock(studentLessonBlock);
+                lessonBlockController.delete(studentLessonBlock);
             }
             
             // If the student is currently enrolled in a swimming class de-increment the current capacity of the class

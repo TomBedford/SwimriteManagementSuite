@@ -635,7 +635,10 @@ public class RegisterPanel extends JPanel implements ActionListener {
                             
                             // If they don't have a lesson block, one is created and added to their student record in the db.
                             if (lessonBlockList.isEmpty()) {
-                                lessonBlockController.createLessonBlock(studentRecordList[i][x][y]);
+                                // Creates a new lesson block using the student record
+                                final LessonBlock lessonBlock = new LessonBlock(studentRecordList[i][x][y]);
+                                // Creates the lesson block in the database
+                                lessonBlockController.create(lessonBlock);
                                 // Gets the newly created lesson block from the db
                                 lessonBlockList = lessonBlockController.getLessonBlocksByStudent(studentRecordList[i][x][y]);
                                 
@@ -955,7 +958,7 @@ public class RegisterPanel extends JPanel implements ActionListener {
                             }
                         }
                         // Updates the lesson block in the database
-                        lessonBlockController.updateLessonBlock(lessonBlockList.get(0));
+                        lessonBlockController.update(lessonBlockList.get(0));
                         
                         // Removes all of the attendance buttons from their student panel
                         swimmingClassStudentRecordPanels[i][x][y].remove(presentButton[i][x][y]);
@@ -1163,7 +1166,7 @@ public class RegisterPanel extends JPanel implements ActionListener {
                             }
                         }
                         // Updates the lesson block in the database
-                        lessonBlockController.updateLessonBlock(lessonBlockList.get(0));
+                        lessonBlockController.update(lessonBlockList.get(0));
                         
                         // Removes all of the attendance buttons from their student panel
                         swimmingClassStudentRecordPanels[i][x][y].remove(presentButton[i][x][y]);
@@ -1372,7 +1375,7 @@ public class RegisterPanel extends JPanel implements ActionListener {
                             }
                         }
                         // Updates the lesson block in the database
-                        lessonBlockController.updateLessonBlock(lessonBlockList.get(0));
+                        lessonBlockController.update(lessonBlockList.get(0));
                         
                         // Removes all of the attendance buttons from their student panel
                         swimmingClassStudentRecordPanels[i][x][y].remove(presentButton[i][x][y]);

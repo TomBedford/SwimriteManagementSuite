@@ -482,13 +482,13 @@ public class ViewIndividualSCPanel extends JPanel implements ActionListener {
                             swimmingClassSRList.get(index).setSwimmingClass(null);
 
                             // Updates the student record in the database.
-                            studentRecordController.updateStudentRecord(swimmingClassSRList.get(index));
+                            studentRecordController.update(swimmingClassSRList.get(index));
 
                             // Deincrements the current capacity of the swimming class
                             swimmingClass.setCurrentCapacity(swimmingClass.getCurrentCapacity() - 1);
 
                             // Updates the swimming class in the database
-                            swimmingClassesController.updateSwimmingClass(swimmingClass);
+                            swimmingClassesController.update(swimmingClass);
 
                             // Re-loads the panel for the specified swimming class with the new student enrolled
                             smsBodyPanel.addViewIndividualSCPanel(swimmingClass);
@@ -516,7 +516,7 @@ public class ViewIndividualSCPanel extends JPanel implements ActionListener {
                 swimmingClass.setClassType((SwimmingLevel) classTypeComboBox.getSelectedItem());
                 
                 // Updates the swimming class in the database
-                swimmingClassesController.updateSwimmingClass(swimmingClass);
+                swimmingClassesController.update(swimmingClass);
                 
                 disableClassTypeEditing();
                 

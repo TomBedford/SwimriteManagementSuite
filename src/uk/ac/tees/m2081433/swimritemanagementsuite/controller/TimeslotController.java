@@ -3,6 +3,7 @@ package uk.ac.tees.m2081433.swimritemanagementsuite.controller;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
+import uk.ac.tees.m2081433.swimritemanagementsuite.model.DatabaseTableController;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.Day;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.SwimmingClasses;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.Timeslot;
@@ -10,7 +11,7 @@ import uk.ac.tees.m2081433.swimritemanagementsuite.model.Timeslot;
 /**
  * This controller interacts (create and delete, etc.) with the Timeslot table within the database.
  */
-public class TimeslotController {
+public class TimeslotController implements DatabaseTableController<Timeslot> {
     
     /**
      * Controller reference to delete all Swimming Classes associated with a timeslot that is being deleted.
@@ -23,7 +24,8 @@ public class TimeslotController {
      * Creates a Timeslot in the database using the provided parameter.
      * @param timeslot the timeslot to create in the db.
      */
-    public void createTimeslot(Timeslot timeslot) {
+    @Override
+    public void create(Timeslot timeslot) {
         try {
             // Creates the timeslot in the database
             DatabaseManager.timeslotDAO.create(timeslot);
@@ -33,11 +35,26 @@ public class TimeslotController {
     }
     
     /**
+     * Updates a Timeslot in the database using the updated Timeslot object provided as a parameter.
+     * @param timeslot The timeslot with updated values to update in the db table.
+     */
+    @Override
+    public void update(Timeslot timeslot) {
+        try {
+            // Updates the teacher in the database
+            DatabaseManager.timeslotDAO.update(timeslot);
+        } catch (SQLException e) {
+            System.out.println("updateTimeslot: Error updating timeslot.");
+        }
+    }
+    
+    /**
      * Deletes a Timeslot from the database that matches the Timeslot object provided as a parameter
      * and deletes all swimming classes associated with the Timeslot.
      * @param timeslot The timeslot to delete from the database.
      */
-    public void deleteTimeslot(Timeslot timeslot) {
+    @Override
+    public void delete(Timeslot timeslot) {
         try {
             // Deletes the timeslot from the database.
             DatabaseManager.timeslotDAO.delete(timeslot);
@@ -47,7 +64,7 @@ public class TimeslotController {
             
             // Loops through each lesson block in the list deleting it
             for (SwimmingClasses swimmingClass : timeslotSwimmingClasses) {
-                swimmingClassesController.deleteSwimmingClass(swimmingClass);
+                swimmingClassesController.delete(swimmingClass);
             }
         } catch (SQLException e) {
             System.out.println("deleteTimeslot: Error deleting the timeslot (controller).");

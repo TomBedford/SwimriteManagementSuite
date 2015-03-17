@@ -17,7 +17,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import uk.ac.tees.m2081433.swimritemanagementsuite.controller.SRFormInputVerifier;
+import uk.ac.tees.m2081433.swimritemanagementsuite.controller.StudentAddressController;
 import uk.ac.tees.m2081433.swimritemanagementsuite.controller.StudentRecordController;
+import uk.ac.tees.m2081433.swimritemanagementsuite.model.StudentAddress;
+import uk.ac.tees.m2081433.swimritemanagementsuite.model.StudentRecord;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.SwimmingLevel;
 
 /**
@@ -29,6 +32,11 @@ public class AddSRPanel extends JPanel implements ActionListener {
      * The Student Record controller for when inserting records into the Student Record table.
      */
     StudentRecordController studentRecordController = new StudentRecordController();
+    
+    /**
+     * The Student Address controller for when inserting records into the Student Address table.
+     */
+    StudentAddressController studentAddressController = new StudentAddressController();
     
     /**
      * The input verifier for the student record form (validates text field inputs).
@@ -826,41 +834,30 @@ public class AddSRPanel extends JPanel implements ActionListener {
                                 "Error Invalid Field(s)",
                                 JOptionPane.ERROR_MESSAGE);
             } else {
-                /**
-                 * Otherwise form is ok to submit information as a new student record.
-                 * boolean returned as to whether the student record was added to the db successfully.
-                 */
-                final boolean successfullyAdded = studentRecordController.createStudentRecord(studentNameField.getText(),
-                                                                    studentDOBDayField.getText(),
-                                                                    studentDOBMonthField.getText(),
-                                                                    studentDOBYearField.getText(),
-                                                                    studentTelephoneNoField.getText(),
-                                                                    addressLine1Field.getText(),
-                                                                    addressLine2Field.getText(),
-                                                                    addressCityField.getText(),
-                                                                    addressCountyField.getText(),
-                                                                    addressPostcodeField.getText(),
-                                                                    hasIllnessField.getText(),
-                                                                    parentNameField.getText(),
-                                                                    (SwimmingLevel) swimmingLevelList.getSelectedItem());
+                // Otherwise form is ok to submit information as a new student record.
+                // Creates and initializes a new student address using the address params provided
+                final StudentAddress studentAddress = new StudentAddress(addressLine1Field.getText(), addressLine2Field.getText(), addressCityField.getText(), addressCountyField.getText(), addressPostcodeField.getText());
+        
+                // Creates the new student address in the database
+                studentAddressController.create(studentAddress);
+        
+                // Calls the method to format the date of birth correctly for db storage.
+                final String formattedDOB = studentRecordController.formatDOB(studentDOBDayField.getText(), studentDOBMonthField.getText(), studentDOBYearField.getText());
+        
+                // Creates and initializes a new student record using the params provided, the student address created and the formatted dob
+                final StudentRecord studentRecord = new StudentRecord(studentNameField.getText(), formattedDOB, studentTelephoneNoField.getText(), studentAddress, 
+                                                            hasIllnessField.getText(), parentNameField.getText(), (SwimmingLevel) swimmingLevelList.getSelectedItem());
+        
+                studentRecordController.create(studentRecord);
                 
-                // If the Student Record was successfully added reset all form fields back to empty
-                if (successfullyAdded) {
-                    // Resets the text fields
-                    resetTextFields();
-                    
-                    JOptionPane.showMessageDialog(null,
-                                "Student Record has been successfully created and added to the database!",
-                                "Student Record created successfully!",
-                                JOptionPane.INFORMATION_MESSAGE,
-                                new ImageIcon("images/icons/user_add.png"));
-                } else {
-                    // Display error message that the student record could not be added to the db
-                    JOptionPane.showMessageDialog(null,
-                                "The student record was unsuccessfully added to the database!",
-                                "Error inserting student record into the database",
-                                JOptionPane.ERROR_MESSAGE);
-                }
+                // Resets the text fields
+                resetTextFields();
+
+                JOptionPane.showMessageDialog(null,
+                        "Student Record has been successfully created and added to the database!",
+                        "Student Record created successfully!",
+                        JOptionPane.INFORMATION_MESSAGE,
+                        new ImageIcon("images/icons/user_add.png"));
             }
         // If the clear form button is pressed...
         } else if (e.getSource() == clearButton) {

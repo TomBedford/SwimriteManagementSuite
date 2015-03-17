@@ -1,18 +1,20 @@
 package uk.ac.tees.m2081433.swimritemanagementsuite.controller;
 
 import java.sql.SQLException;
+import uk.ac.tees.m2081433.swimritemanagementsuite.model.DatabaseTableController;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.StudentAddress;
 
 /**
  * This controller interacts (create, update and delete) with the Student Address table within the database.
  */
-public class StudentAddressController {
+public class StudentAddressController implements DatabaseTableController<StudentAddress> {
     
     /**
      * Creates a Student Address in the database using the provided parameter.
      * @param studentAddress The student address to add to the db.
      */
-    public void createStudentAddress(StudentAddress studentAddress) {
+    @Override
+    public void create(StudentAddress studentAddress) {
         
         try {
             // Creates the student address in the database
@@ -27,7 +29,8 @@ public class StudentAddressController {
      * Updates a Student Address in the database using the updated Student Address object provided as a parameter.
      * @param studentAddress The student address with updated values to update in the db table.
      */
-    public void updateStudentAddress(StudentAddress studentAddress) {
+    @Override
+    public void update(StudentAddress studentAddress) {
         
         try {
             // Updates the student address in the database
@@ -42,7 +45,8 @@ public class StudentAddressController {
      * Deletes the provided Student Address (parameter) from the database.
      * @param studentAddress The student address to delete from the database
      */
-    public void deleteStudentAddress(StudentAddress studentAddress) {
+    @Override
+    public void delete(StudentAddress studentAddress) {
         
         try {
             // Deletes the student address in the database

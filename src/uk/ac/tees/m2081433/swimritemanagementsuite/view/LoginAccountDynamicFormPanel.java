@@ -357,7 +357,7 @@ public class LoginAccountDynamicFormPanel extends JPanel implements ActionListen
                             
                             if (adminAuthentication == true) {
                                 // Deletes the login account in the database
-                                loginAccountController.deleteLoginAccount(loginAccountList.get(index));
+                                loginAccountController.delete(loginAccountList.get(index));
                                 // Re-loads this panel with the updated table
                                 smsBodyPanel.addViewCEDLoginAccountsPanel();
                             } 

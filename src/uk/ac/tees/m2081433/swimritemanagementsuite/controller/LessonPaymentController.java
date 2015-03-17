@@ -1,18 +1,20 @@
 package uk.ac.tees.m2081433.swimritemanagementsuite.controller;
 
 import java.sql.SQLException;
+import uk.ac.tees.m2081433.swimritemanagementsuite.model.DatabaseTableController;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.LessonPayment;
 
 /**
  * This controller interacts (create, update and delete) with the lesson payment table within the database.
  */
-public class LessonPaymentController {
+public class LessonPaymentController implements DatabaseTableController<LessonPayment> {
     
     /**
      * Creates a lesson payment record in the database using the lesson payment provided as param.
      * @param lessonPayment The lesson payment record to add to the lesson payment database table
      */
-    public void createLessonPayment(LessonPayment lessonPayment) {
+    @Override
+    public void create(LessonPayment lessonPayment) {
         try {
             DatabaseManager.lessonPaymentDAO.create(lessonPayment);
         } catch (SQLException e) {
@@ -24,7 +26,8 @@ public class LessonPaymentController {
      * Updates a lesson payment record in the database using the updated lesson payment object provided as a param.
      * @param lessonPayment The lesson payment with updated values to update in the db table.
      */
-    public void updateLessonPayment(LessonPayment lessonPayment) {
+    @Override
+    public void update(LessonPayment lessonPayment) {
         try {
             DatabaseManager.lessonPaymentDAO.update(lessonPayment);
         } catch (SQLException e) {
@@ -36,7 +39,8 @@ public class LessonPaymentController {
      * Deletes a lesson payment record from the database that matches the lesson payment object provided as a param.
      * @param lessonPayment The lesson payment to delete from the database.
      */
-    public void deleteLessonPayment(LessonPayment lessonPayment) {
+    @Override
+    public void delete(LessonPayment lessonPayment) {
         try {
             DatabaseManager.lessonPaymentDAO.delete(lessonPayment);
         } catch (SQLException e) {
