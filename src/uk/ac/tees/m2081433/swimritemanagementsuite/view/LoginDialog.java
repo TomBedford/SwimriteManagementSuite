@@ -78,91 +78,99 @@ public class LoginDialog {
         c.gridx = 1;
         c.gridy = 3;
         loginPanel.add(passwordField, c);
-
-        // Shows the confirm dialog we just created
-        final int result = JOptionPane.showConfirmDialog(null, loginPanel, "Administrator Login", JOptionPane.OK_CANCEL_OPTION);
         
-        // If the result of the button press was the ok button
-        if (result == JOptionPane.OK_OPTION) {
-           // Gets all admin accounts from the login account database
-           final List<LoginAccount> adminAccounts = loginAccountController.getAllAdminLoginAccounts();
-           
-           // If the list of admin accounts is not empty
-           if (!adminAccounts.isEmpty()) {
-               
-               // Creates a login account to hold the info of the login account if a username match is found
-               LoginAccount loginAccountMatch = null;
-               
-               // Loops through the list of admin accounts
-               for (LoginAccount lA: adminAccounts) {
-                   // Checks if the username is equal to the one entered
-                   if (lA.getUsername().equals(usernameField.getText())) {
-                       // If so, sets the login account match to the login account where the username matched 
-                       loginAccountMatch = lA;
+        /**
+         * ints to hold the user selection for whether they want to try again, if they got the username or password
+         * wrong first time.
+         */
+        int tryAgainSelection1 = JOptionPane.YES_OPTION;
+        int tryAgainSelection2 = JOptionPane.YES_OPTION;
+
+        do {
+            // Shows the confirm dialog we just created
+            final int result = JOptionPane.showConfirmDialog(null, loginPanel, "Administrator Login", JOptionPane.OK_CANCEL_OPTION);
+
+            // If the result of the button press was the ok button
+            if (result == JOptionPane.OK_OPTION) {
+               // Gets all admin accounts from the login account database
+               final List<LoginAccount> adminAccounts = loginAccountController.getAllAdminLoginAccounts();
+
+               // If the list of admin accounts is not empty
+               if (!adminAccounts.isEmpty()) {
+
+                   // Creates a login account to hold the info of the login account if a username match is found
+                   LoginAccount loginAccountMatch = null;
+
+                   // Loops through the list of admin accounts
+                   for (LoginAccount lA: adminAccounts) {
+                       // Checks if the username is equal to the one entered
+                       if (lA.getUsername().equals(usernameField.getText())) {
+                           // If so, sets the login account match to the login account where the username matched 
+                           loginAccountMatch = lA;
+                       }
                    }
-               }
-               
-               // Checks if the login account match is null (if there wasnt a match in the admin list)
-               if (loginAccountMatch == null) {
-                   // Displays no username match error
-                   JOptionPane.showMessageDialog(null,
-                                "No Administrator login account exists with the username specified, please try again.\n",
-                                "Error Admin Username Doesn't Exist!",
-                                JOptionPane.ERROR_MESSAGE);
-                } else {
-                    // Otherwise the admin account does exist
-                    // Convert the password char array into a string
-                    final String passwordString = String.valueOf(passwordField.getPassword());
 
-                    MessageDigest messageDigest = null;
+                   // Checks if the login account match is null (if there wasnt a match in the admin list)
+                   if (loginAccountMatch == null) {
+                       // Displays no username match error ask if want to try again.
+                       tryAgainSelection1 = JOptionPane.showConfirmDialog(null, "No Administrator login account exists "
+                               + "with the username specified, would you like to try again?\n"
+                               , "Error Admin Username Doesn't Exist!", JOptionPane.YES_NO_OPTION);
+                       
+                    } else {
+                        // Otherwise the admin account does exist
+                        // Convert the password char array into a string
+                        final String passwordString = String.valueOf(passwordField.getPassword());
 
-                    try {
-                        // The message Digest to salt and generate the hash set for the password
-                        messageDigest = MessageDigest.getInstance("SHA-512");
+                        MessageDigest messageDigest = null;
 
-                    } catch (NoSuchAlgorithmException exception) {
-                        System.out.println("Error hashing password to check if admin password");
-                    }
+                        try {
+                            // The message Digest to salt and generate the hash set for the password
+                            messageDigest = MessageDigest.getInstance("SHA-512");
 
-                    if (messageDigest != null) {
-                        // Adds the salt to the message digest
-                        messageDigest.update(hexStringToByteArray(loginAccountMatch.getSalt()));
-
-                        // Updates the message digest using the password string
-                        messageDigest.update(passwordString.getBytes());
-
-                        // Generates the hashed password data
-                        final byte[] hashedCheckPassword = messageDigest.digest();
-
-                        // Creates a string buffer to hold the converted byte array
-                        final StringBuffer sbCheckPassword = new StringBuffer();
-
-                        /**
-                         * Algorithm to convert byte array into string resourced from:
-                         * http://www.mkyong.com/java/java-md5-hashing-example/
-                         */
-                        for (int i = 0; i < hashedCheckPassword.length; i++) {
-                            sbCheckPassword.append(Integer.toString((hashedCheckPassword[i] & 0xff) + 0x100, 16).substring(1));
+                        } catch (NoSuchAlgorithmException exception) {
+                            System.out.println("Error hashing password to check if admin password");
                         }
 
-                        // Resets the message digest for future hashes
-                        messageDigest.reset();
+                        if (messageDigest != null) {
+                            // Adds the salt to the message digest
+                            messageDigest.update(hexStringToByteArray(loginAccountMatch.getSalt()));
 
-                        // Checks if the password entered was equal to the password in the database
-                        if (sbCheckPassword.toString().equals(loginAccountMatch.getPassword())) {
-                            // Returns true as the username and password are correct
-                            return true;
-                        } else {
-                            // Displays password match error
-                            JOptionPane.showMessageDialog(null,
-                                         "The password entered is incorrect.\n",
-                                         "Error Admin Password Incorrect!",
-                                         JOptionPane.ERROR_MESSAGE);
+                            // Updates the message digest using the password string
+                            messageDigest.update(passwordString.getBytes());
+
+                            // Generates the hashed password data
+                            final byte[] hashedCheckPassword = messageDigest.digest();
+
+                            // Creates a string buffer to hold the converted byte array
+                            final StringBuffer sbCheckPassword = new StringBuffer();
+
+                            /**
+                             * Algorithm to convert byte array into string resourced from:
+                             * http://www.mkyong.com/java/java-md5-hashing-example/
+                             */
+                            for (int i = 0; i < hashedCheckPassword.length; i++) {
+                                sbCheckPassword.append(Integer.toString((hashedCheckPassword[i] & 0xff) + 0x100, 16).substring(1));
+                            }
+
+                            // Resets the message digest for future hashes
+                            messageDigest.reset();
+
+                            // Checks if the password entered was equal to the password in the database
+                            if (sbCheckPassword.toString().equals(loginAccountMatch.getPassword())) {
+                                // Returns true as the username and password are correct
+                                return true;
+                            } else {
+                                // Displays password match error asks if want to try again
+                                tryAgainSelection2 = JOptionPane.showConfirmDialog(null, "The password is incorrect,"
+                               + " would you like to try again?\n"
+                               , "Error Password Incorrect!", JOptionPane.YES_NO_OPTION);
+                            }
                         }
                     }
                 }
             }
-        }
+        } while(tryAgainSelection1 == JOptionPane.YES_OPTION && tryAgainSelection2 == JOptionPane.YES_OPTION);
         // If this statement is reached then they have not entered any details or details are incorrect
         return false;
     }

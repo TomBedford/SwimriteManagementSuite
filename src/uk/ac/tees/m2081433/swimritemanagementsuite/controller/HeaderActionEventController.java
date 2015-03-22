@@ -14,12 +14,20 @@ import uk.ac.tees.m2081433.swimritemanagementsuite.view.SMSMenuBar;
 import uk.ac.tees.m2081433.swimritemanagementsuite.view.SMSToolbarPanel;
 
 /**
- *
+ * This is the action event controller for all action events from the SMSHeader panel components (SMSToolBar and
+ * SMSMenuBar.
  */
 public class HeaderActionEventController implements ActionListener, MouseListener {
 
-    SMSBodyPanel smsBodyPanelRef;
+    /**
+     * Reference to the body panel to swap out components when different buttons/menu items are pressed.
+     */
+    private final SMSBodyPanel smsBodyPanelRef;
     
+    /**
+     * Constructor that sets the reference to the body panel.
+     * @param smsBodyPanel 
+     */
     public HeaderActionEventController(SMSBodyPanel smsBodyPanel) {
         // The body panel to be referenced when swapping panels on the body panel.
         smsBodyPanelRef = smsBodyPanel;
@@ -31,9 +39,12 @@ public class HeaderActionEventController implements ActionListener, MouseListene
         // Checks what the source of the action event is
         if (e.getSource() instanceof JToggleButton) {
             // If it's a toggle button cast the source to the toggle button.
-            JToggleButton toggleButtonPressed = (JToggleButton) e.getSource();
+            final JToggleButton toggleButtonPressed = (JToggleButton) e.getSource();
             
-            // Checks the text of the button pressed against all the button names in the toolbar.
+            /**
+             * Checks the text of the button pressed against all the button names in the toolbar and calls the
+             * appropriate method to display the appropriate new panel on the body panel.
+             */
             switch (toggleButtonPressed.getText()) {
                 case SMSToolbarPanel.MONBUTTON_NAME:
                     displayMondaySchedule();
@@ -90,9 +101,12 @@ public class HeaderActionEventController implements ActionListener, MouseListene
         // Otherwise the source of the action event is a JMenuItem (only other possibility)
         } else {
             // casts the source to a JMenuItem.
-            JMenuItem menuItemPressed = (JMenuItem) e.getSource();
+            final JMenuItem menuItemPressed = (JMenuItem) e.getSource();
             
-            // Checks the text of the button pressed against all the button names in the toolbar.
+            /**
+             * Checks the text of the menu item pressed against all the menu items names in the toolbar and calls the
+             * appropriate method to display the appropriate new panel on the body panel.
+             */
             switch (menuItemPressed.getText()) {
                 case SMSMenuBar.MONMENUITEM_NAME:
                     displayMondaySchedule();
@@ -143,7 +157,7 @@ public class HeaderActionEventController implements ActionListener, MouseListene
                     break;
 
                 case SMSMenuBar.ABOUTMENUITEM_NAME:
-                    about();
+                    displayAbout();
                     break;
 
                 case SMSMenuBar.CEDTEACHERSMENUITEM_NAME:
@@ -159,7 +173,7 @@ public class HeaderActionEventController implements ActionListener, MouseListene
                     break;
                  
                 case SMSMenuBar.LOGOUTMENUITEM_NAME:
-                    logOut();
+                    displayLogOut();
                     break;
 
                 default:
@@ -176,11 +190,14 @@ public class HeaderActionEventController implements ActionListener, MouseListene
         // Checks what the source of the mouse event is
         if (e.getSource() instanceof JLabel) {
             // If it's a toggle button cast the source to the toggle button b.
-            JLabel labelPressed = (JLabel) e.getSource();
+            final JLabel labelPressed = (JLabel) e.getSource();
             // Checks the text of the button pressed against all the button names in the toolbar.
             switch (labelPressed.getName()) {
                 case SMSHeaderPanel.SMSLOGOLABEL_NAME:
                     displayWelcomeScreen();
+                    break;
+                default:
+                    System.out.println("ERROR: default switch case for mouse clicked reached!");
                     break;
             }
         }
@@ -204,78 +221,129 @@ public class HeaderActionEventController implements ActionListener, MouseListene
     }
     
     
-    
-    public void displayMondaySchedule() {
+    /**
+     * Calls the method to display the class schedule panel for Monday on the body panel not in edit mode.
+     */
+    private void displayMondaySchedule() {
         smsBodyPanelRef.addSchedulePanel(Day.MONDAY, false);
     }
     
-    public void displayTuesdaySchedule() {
+    /**
+     * Calls the method to display the class schedule panel for Tuesday on the body panel not in edit mode.
+     */
+    private void displayTuesdaySchedule() {
         smsBodyPanelRef.addSchedulePanel(Day.TUESDAY, false);
     }
     
-    public void displayWednesdaySchedule() {
+    /**
+     * Calls the method to display the class schedule panel for Wednesday on the body panel not in edit mode.
+     */
+    private void displayWednesdaySchedule() {
         smsBodyPanelRef.addSchedulePanel(Day.WEDNESDAY, false);
     }
     
-    public void displayThursdaySchedule() {
+    /**
+     * Calls the method to display the class schedule panel for Thursday on the body panel not in edit mode.
+     */
+    private void displayThursdaySchedule() {
         smsBodyPanelRef.addSchedulePanel(Day.THURSDAY, false);
     }
     
-    public void displayFridaySchedule() {
+    /**
+     * Calls the method to display the class schedule panel for Friday on the body panel not in edit mode.
+     */
+    private void displayFridaySchedule() {
         smsBodyPanelRef.addSchedulePanel(Day.FRIDAY, false);
     }
     
-    public void displaySaturdaySchedule() {
+    /**
+     * Calls the method to display the class schedule panel for Saturday on the body panel not in edit mode.
+     */
+    private void displaySaturdaySchedule() {
         smsBodyPanelRef.addSchedulePanel(Day.SATURDAY, false);
     }
     
-    public void displaySundaySchedule() {
+    /**
+     * Calls the method to display the class schedule panel for Sunday on the body panel not in edit mode.
+     */
+    private void displaySundaySchedule() {
         smsBodyPanelRef.addSchedulePanel(Day.SUNDAY, false);
     }
     
-    public void displayRegisterClasses() {
+    /**
+     * Calls the method to display the register todays classes panel on the body panel.
+     */
+    private void displayRegisterClasses() {
         smsBodyPanelRef.addRegisterPanel();
     }
     
-    public void displayViewAllSR() {
+    /**
+     * Calls the method to display the view all student records panel on the body panel.
+     */
+    private void displayViewAllSR() {
         smsBodyPanelRef.addViewAllSRPanel();
     }
     
-    public void displayAddSR() {
+    /**
+     * Calls the method to display the add student record panel on the body panel.
+     */
+    private void displayAddSR() {
         smsBodyPanelRef.addAddSRPanel();
     }
     
-    public void displayViewAllST() {
-        
+    /**
+     * Calls the method to display the view all support tickets panel on the body panel.
+     */
+    private void displayViewAllST() {
+        // TODO: Complete view all support tickets.
     }
     
-    public void displayAddST() {
-        
+    /**
+     * Calls the method to display the add support ticket panel on the body panel.
+     */
+    private void displayAddST() {
+        // TODO: Complete add a support ticket.
     }
     
-    public void about() {
-        
+    /**
+     * Calls the method to display the about option pane.
+     */
+    private void displayAbout() {
+        smsBodyPanelRef.displayAbout();
     }
     
-    public void displayCEDTeachers() {
+    /**
+     * Calls the method to display the create, edit and delete teachers panel on the body panel.
+     */
+    private void displayCEDTeachers() {
         smsBodyPanelRef.addViewCEDTeachersPanel();
     }
     
-    public void displayCEDLoginAccounts() {
+    /**
+     * Calls the method to display the create, edit and delete login accounts panel on the body panel.
+     */
+    private void displayCEDLoginAccounts() {
         smsBodyPanelRef.addViewCEDLoginAccountsPanel();
     }
     
-    public void displayInitialiseDB() {
-        
-        InitialiseDefaultDatabase initialiseDefaultDatabase = new InitialiseDefaultDatabase(smsBodyPanelRef);
-        
+    /**
+     * Creates and Initializes the class to run through the format/initialize the database to default values dialogs.
+     */
+    private void displayInitialiseDB() {
+        final InitialiseDefaultDatabase initialiseDefaultDatabase = new InitialiseDefaultDatabase(smsBodyPanelRef);
     }
     
-    public void logOut() {
+    /**
+     * Calls the method to display the log out screen on the main panel.
+     */
+    private void displayLogOut() {
         smsBodyPanelRef.logOut();
     }
     
-    public void displayWelcomeScreen() {
+    /**
+     * Calls the method to display the welcome screen panel on the body panel.
+     */
+    private void displayWelcomeScreen() {
         smsBodyPanelRef.removeCurrentlyDisplayedPanel();
         smsBodyPanelRef.addWelcomePanel();
     }

@@ -70,7 +70,6 @@ public class InitialiseDefaultDatabase {
                             resetToDefaultDB();
                         }
                     }
-
                     break;
             // The user does not want to format the db so don't do anything.
             case 1: break;

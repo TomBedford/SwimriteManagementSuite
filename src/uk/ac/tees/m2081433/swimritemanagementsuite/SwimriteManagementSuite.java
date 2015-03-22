@@ -106,12 +106,11 @@ public class SwimriteManagementSuite {
         smsFrame.setSize(xSize, ySize);
         smsFrame.setVisible(true);
         smsFrame.setResizable(false);
-        
-        //smsFrame.setIconImage(new ImageIcon(getClass().getResource("images/icons/SMS_Frame_Icon.png")).getImage());
     }
     
     /**
-     * Adds 20 student records test data.
+     * Adds 20 student records for test data.
+     * method call commented out in constructor.
      */
     private static void addStudentRecords() {
         

@@ -5,10 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.DatabaseTableController;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.LessonBlock;
-import uk.ac.tees.m2081433.swimritemanagementsuite.model.StudentAddress;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.StudentRecord;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.SwimmingClasses;
-import uk.ac.tees.m2081433.swimritemanagementsuite.model.SwimmingLevel;
 
 /**
  * This controller interacts (create, update and delete, etc.) with the Student Record table within the database.

@@ -398,65 +398,88 @@ public class SMSLoginPanel extends JPanel implements ActionListener, MouseListen
                             c.gridy = 1;
                             resetPasswordPanel.add(resetPasswordConfirmationField, c);
 
-                            // Shows the dialog to reset the users password
-                            final int result = JOptionPane.showConfirmDialog(null, resetPasswordPanel, 
-                                     "Reset Login Accounts Password", JOptionPane.OK_CANCEL_OPTION);
+                            // int to hold the users choice in the upcoming dialog
+                            int result;
                             
-                            // If the ok button was pressed on the panel
-                            if (result == JOptionPane.OK_OPTION) {
-                                
-                                // The password field must contain One upper and lower case letter, a number and be atleast 5 characters long
-                                if (!resetPasswordField.getText().matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$") 
-                                        || resetPasswordField.getText().length() < 5) {
-                                    
-                                    // Shows error dalog
-                                    JOptionPane.showMessageDialog(null,
-                                    "Error invalid password, the password must contain atleast:\n"
-                                            + "- 1 upper case letter\n"
-                                            + "- 1 lower case letter\n"
-                                            + "- Be atleast 5 characters long",
-                                    "Error Invalid Password!",
-                                    JOptionPane.ERROR_MESSAGE);
-                                    
-                                // Else the password meets the requirements so continue resetting the password...
-                                } else {
+                            // boolean as to whether the input was valid
+                            boolean validPasswordChange = false;
+                            
+                            do {
+                            
+                                // Shows the dialog to reset the users password
+                                result = JOptionPane.showConfirmDialog(null, resetPasswordPanel, 
+                                         "Reset Login Accounts Password", JOptionPane.OK_CANCEL_OPTION);
 
-                                    // Adds the salt to the message digest
-                                    messageDigest.update(hexStringToByteArray(loginAccount.getSalt()));
+                                // If the ok button was pressed on the panel
+                                if (result == JOptionPane.OK_OPTION) {
 
-                                    // Updates the message digest using the password string convereted to a byte array
-                                    messageDigest.update(resetPasswordField.getText().getBytes());
+                                    // The password field must contain One upper and lower case letter, a number and be atleast 5 characters long
+                                    if (!resetPasswordField.getText().matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$") 
+                                            || resetPasswordField.getText().length() < 5) {
 
-                                    // Generates the hashed password data
-                                    final byte[] hashedPassword = messageDigest.digest();
+                                        // Shows error dalog
+                                        JOptionPane.showMessageDialog(null,
+                                        "Error invalid password, the password must contain atleast:\n"
+                                                + "- 1 upper case letter\n"
+                                                + "- 1 lower case letter\n"
+                                                + "- Be atleast 5 characters long\n"
+                                                + "Please try again.",
+                                        "Error Invalid Password!",
+                                        JOptionPane.ERROR_MESSAGE);
 
-                                    // Creates a string buffer to hold the converted byte array
-                                    final StringBuffer sbPassword = new StringBuffer();
+                                    // Else the password meets the requirements so continue resetting the password...
+                                    } else {
+                                        // Checks if the password fields and the password confirmation field are the same.
+                                        if (!resetPasswordField.getText().equals(resetPasswordConfirmationField.getText())) {
+                                            // If not display error, otherwise continue
+                                            JOptionPane.showMessageDialog(null,
+                                            "<HTML> Error the password fields do <b>not</b> match!</HTML>\n"
+                                                    + "Please try again.",
+                                            "Error Passwords Do NOT Match!",
+                                            JOptionPane.ERROR_MESSAGE);
+                                        } else {
+                                            // Adds the salt to the message digest
+                                            messageDigest.update(hexStringToByteArray(loginAccount.getSalt()));
 
-                                    /**
-                                     * Algorithm to convert byte array into string resourced from:
-                                     * http://www.mkyong.com/java/java-md5-hashing-example/
-                                     */
-                                    for (int i = 0; i < hashedPassword.length; i++) {
-                                        sbPassword.append(Integer.toString((hashedPassword[i] & 0xff) + 0x100, 16).substring(1));
+                                            // Updates the message digest using the password string convereted to a byte array
+                                            messageDigest.update(resetPasswordField.getText().getBytes());
+
+                                            // Generates the hashed password data
+                                            final byte[] hashedPassword = messageDigest.digest();
+
+                                            // Creates a string buffer to hold the converted byte array
+                                            final StringBuffer sbPassword = new StringBuffer();
+
+                                            /**
+                                             * Algorithm to convert byte array into string resourced from:
+                                             * http://www.mkyong.com/java/java-md5-hashing-example/
+                                             */
+                                            for (int i = 0; i < hashedPassword.length; i++) {
+                                                sbPassword.append(Integer.toString((hashedPassword[i] & 0xff) + 0x100, 16).substring(1));
+                                            }
+
+                                            // Resets the message digest for future hashes
+                                            messageDigest.reset();
+
+                                            // Sets the new password of the account
+                                            loginAccount.setPassword(sbPassword.toString());
+
+                                            // Updates the login account in the database with the new password
+                                            loginAccountController.update(loginAccount);
+
+                                            // Shows dialog confirming password change was successfull
+                                            JOptionPane.showMessageDialog(null,
+                                            "Your login accounts password has been updated successfully.",
+                                            "Password Updated Successfully!",
+                                            JOptionPane.OK_OPTION);
+
+                                            // The password was valid and changed so the flag is true
+                                            validPasswordChange = true;
+                                        }
                                     }
-
-                                    // Resets the message digest for future hashes
-                                    messageDigest.reset();
-                                    
-                                    // Sets the new password of the account
-                                    loginAccount.setPassword(sbPassword.toString());
-                                    
-                                    // Updates the login account in the database with the new password
-                                    loginAccountController.update(loginAccount);
-                                    
-                                    // Shows dialog confirming password change was successfull
-                                    JOptionPane.showMessageDialog(null,
-                                    "Your login accounts password has been updated successfully.",
-                                    "Password Updated Successfully!",
-                                    JOptionPane.OK_OPTION);
                                 }
-                            }
+                            // Loops through while the passwords entered are not valid and if the result was the 'ok' button
+                            } while (!validPasswordChange && result == JOptionPane.OK_OPTION);
                             // If the security question answers don't match show error dialog
                         } else {
                             JOptionPane.showMessageDialog(null,
