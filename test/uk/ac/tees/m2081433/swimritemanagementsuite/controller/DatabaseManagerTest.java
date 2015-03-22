@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.BeforeClass;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.LessonBlock;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.LessonPayment;
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.LoginAccount;
@@ -21,6 +22,29 @@ import uk.ac.tees.m2081433.swimritemanagementsuite.model.Timeslot;
  * A set of unit tests to exercise the DatabaseManager class.
  */
 public class DatabaseManagerTest {
+    
+    /**
+     * Occurs before the classes testing begins.
+     */
+    @BeforeClass
+    public static void setUpClass() {
+        final DatabaseManager dbManager = new DatabaseManager();
+        
+        final JdbcConnectionSource smsConnectionSource = dbManager.createDatabaseConnection();
+
+        try {
+            TableUtils.clearTable(smsConnectionSource, LessonBlock.class);
+            TableUtils.clearTable(smsConnectionSource, LessonPayment.class);
+            TableUtils.clearTable(smsConnectionSource, LoginAccount.class);
+            TableUtils.clearTable(smsConnectionSource, StudentAddress.class);
+            TableUtils.clearTable(smsConnectionSource, StudentRecord.class);
+            TableUtils.clearTable(smsConnectionSource, SwimmingClasses.class);
+            TableUtils.clearTable(smsConnectionSource, Teacher.class);
+            TableUtils.clearTable(smsConnectionSource, Timeslot.class);
+        } catch (SQLException ex) {
+            Logger.getLogger(TimeslotControllerTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     /**
      * Test of createDatabaseConnection method, of class DatabaseManager to check that the connection source is
