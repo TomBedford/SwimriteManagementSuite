@@ -1,6 +1,7 @@
 package uk.ac.tees.m2081433.swimritemanagementsuite.controller;
 
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import com.j256.ormlite.table.TableUtils;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -251,6 +252,9 @@ public class SwimmingClassesControllerTest {
         final SwimmingClasses sc2 = new SwimmingClasses(SwimmingLevel.BEGINNERS, t2, new Teacher(), 5);
         
         try {
+            TableUtils.clearTable(smsConnectionSource, Timeslot.class);
+            TableUtils.clearTable(smsConnectionSource, SwimmingClasses.class);
+            
             dbManager.timeslotDAO.create(t1);
             dbManager.timeslotDAO.create(t2);
             
