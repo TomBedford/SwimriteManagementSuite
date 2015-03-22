@@ -102,7 +102,7 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
         lessonBlockList = lessonBlockController.getLessonBlocksByStudent(studentRecordRef);
         
         // Sets the standard panel width.
-        int panelWidth = 1380;
+        int panelWidth = 1375;
         
         // If there are more than 1 lesson block associated with the student record add extra width for each panel.
         if (lessonBlockList.size() > 1) {
@@ -132,7 +132,7 @@ public class ViewIndividualSRPanel extends JPanel implements ActionListener {
         // initialises and set the attributes to hold the add lesson block button
         addLBButtonPanel = new JPanel();
         addLBButtonPanel.setBackground(Color.white);
-        addLBButtonPanel.setPreferredSize(new Dimension(200, 50));
+        addLBButtonPanel.setPreferredSize(new Dimension(210, 50));
         addLBButtonPanel.setOpaque(true);
         addLBButtonPanel.setVisible(true);
         
