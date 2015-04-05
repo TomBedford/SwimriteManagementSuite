@@ -34,7 +34,7 @@ public class HeaderActionEventController implements ActionListener, MouseListene
     
     /**
      * Constructor that sets the reference to the body panel.
-     * @param smsBodyPanel 
+     * @param smsBodyPanel reference to the body panel so panels can be swapped in and out of view on the body panel.
      */
     public HeaderActionEventController(SMSBodyPanel smsBodyPanel) {
         // The body panel to be referenced when swapping panels on the body panel.

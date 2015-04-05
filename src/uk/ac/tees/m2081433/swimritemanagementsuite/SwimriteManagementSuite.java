@@ -39,7 +39,7 @@ public class SwimriteManagementSuite {
     
     /**
      * Database tables and GUI are initialized/created.
-     * @param args 
+     * @param args default constructor for main.
      */
     public static void main(String[] args) {
         

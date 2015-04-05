@@ -370,7 +370,7 @@ public class ViewAllSRPanel extends JPanel implements ActionListener, KeyListene
     
     /**
      * Action Listener for when filter option radio buttons or the search button is pressed.
-     * @param e 
+     * @param e the action event that occurred.
      */
     @Override
     public void actionPerformed(ActionEvent e) {

@@ -142,7 +142,7 @@ public class EditLoginAccountForm extends JPanel implements ActionListener {
     private JButton changePasswordButton;
     
     /**
-     * The button to change the login accounts Security Question & Answer.
+     * The button to change the login accounts Security Question and Answer.
      */
     private JButton changeSecurityQ;
     
@@ -162,12 +162,12 @@ public class EditLoginAccountForm extends JPanel implements ActionListener {
     private JButton cancelChangePasswordButton;
     
     /**
-     * The button to update the login accounts security question & answer using the input specified in the form.
+     * The button to update the login accounts security question and answer using the input specified in the form.
      */
     private JButton updateChangeSecurityQButton;
     
     /**
-     * The button to cancel the editing of the login accounts security question & answer.
+     * The button to cancel the editing of the login accounts security question and answer.
      */
     private JButton cancelChangeSecurityQButton;
     

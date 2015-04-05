@@ -114,8 +114,8 @@ public class AddSRToSCFrame extends JFrame implements ActionListener, KeyListene
     
     
     /**
-     * Loads a search bar, table of all student records and add & cancel buttons to allow the user to select a 
-     * student record to enroll on the swimming class provided as a param.
+     * Loads a search bar, table of all student records and add and cancel buttons to allow the user to select a 
+     * student record to enroll on the swimming class provided as a parameter.
      * @param sc The swimming class to add the student record to
      * @param smsBP The reference to the body panel to refresh the view on the individual sc once a new sr has been added.
      */
