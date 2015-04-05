@@ -1,3 +1,11 @@
+/**
+ * Swimrite Management Suite.
+ * @author Thomas Bedford (M2081433)
+ * @contact m2081433@live.tees.ac.uk
+ * 
+ * Teesside University, UK
+ * Created for BSc Computing: Final Year Project - Part 1: Artefact 2014/15
+ */
 package uk.ac.tees.m2081433.swimritemanagementsuite;
 
 import uk.ac.tees.m2081433.swimritemanagementsuite.controller.DatabaseManager;
@@ -36,50 +44,51 @@ public class SwimriteManagementSuite {
     public static void main(String[] args) {
         
         // Calls method to initialise the Swimrite Management Suite database connection references.
-        createDbReferences();
+        // returns a boolean as to whether the database setup was successful.
+        final boolean dbSetupSuccessful = createDbReferences();
         
         //addStudentRecords();
         
         // Calls method to create the swimrite management frame and panels.
-        createSMSWindow();
+        createSMSWindow(dbSetupSuccessful);
     }
     
     /**
      * Creates the all database references (connection source and data access objects) and sets up the database tables.
+     * @return dbSetupSuccessful - boolean as to whether the database setup was successful.
      */
-    private static void createDbReferences() {
+    private static boolean createDbReferences() {
         // Creates the Swimrite Management Suites Database Manager inorder to start interactions with the db.
         smsDatabaseManager = new DatabaseManager();
         
         // Gets the JDBC Connection Source to the SMS database.
         smsConnectionSource = smsDatabaseManager.createDatabaseConnection();
-        
-        // If the connection source is null display error msg.
-        if (smsConnectionSource == null) {
-            JOptionPane.showMessageDialog(null, "<HTML> <b> <font color='red'> ERROR </font> </b> with connection source. </HTML> \n"
-                    + "(Connection Source is null)"
-                    , "Connection Source Error", JOptionPane.OK_OPTION);
-        } else {
-            // Creates the database tables if they do not already exist.
-            smsDatabaseManager.setupDatabase(smsConnectionSource);
+     
+        // Creates the database tables if they do not already exist.
+        final boolean dbSetupSuccessful = smsDatabaseManager.setupDatabase(smsConnectionSource);
 
+        if (dbSetupSuccessful) {
             // Initialises the database access object for each table inorder to add, edit and delete records.
             smsDatabaseManager.initializeDaos(smsConnectionSource);
-            
+
             // Creates the default SMS Admin account if no other admins exist in the database
             smsDatabaseManager.checkLoginAccountsForAdmin();
         }
+        
+        // Returns whether the setup was successful.
+        return dbSetupSuccessful;
     }
     
     /**
      * Creates and displays the Swimrite Management System GUI.
+     * @param dbSetupSuccessful boolean as to whether the database setup was successful.
      */
-    private static void createSMSWindow() {
+    private static void createSMSWindow(boolean dbSetupSuccessful) {
         // creates the frame to hold the home controller panel
         final JFrame smsFrame = new JFrame("Swimrite Management Suite");
         
         // creates the main panel to hold the tool bar and the interchangeable panels.
-        final SMSMainPanel smsMainPanel = new SMSMainPanel();
+        final SMSMainPanel smsMainPanel = new SMSMainPanel(dbSetupSuccessful);
         
         // Adds the main panel to the frame.
         smsFrame.add(smsMainPanel);

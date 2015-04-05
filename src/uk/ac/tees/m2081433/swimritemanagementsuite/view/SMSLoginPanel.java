@@ -1,3 +1,11 @@
+/**
+ * Swimrite Management Suite.
+ * @author Thomas Bedford (M2081433)
+ * @contact m2081433@live.tees.ac.uk
+ * 
+ * Teesside University, UK
+ * Created for BSc Computing: Final Year Project - Part 1: Artefact 2014/15
+ */
 package uk.ac.tees.m2081433.swimritemanagementsuite.view;
 
 import java.awt.BorderLayout;
@@ -73,8 +81,9 @@ public class SMSLoginPanel extends JPanel implements ActionListener, MouseListen
      * Creates and adds components to this layout to create a login screen for the Swimrite Management Suite.
      * @param smsMainPanel The reference to the main panel to put on the SMS components once authentication process 
      * is successful.
+     * @param dbSetupSuccessful boolean as to whether the database setup was successful.
      */
-    public SMSLoginPanel(SMSMainPanel smsMainPanel) {
+    public SMSLoginPanel(SMSMainPanel smsMainPanel, boolean dbSetupSuccessful) {
         // Sets this panels default attributes
         this.setPreferredSize(new Dimension(1400, 800));
         this.setVisible(true);
@@ -249,6 +258,30 @@ public class SMSLoginPanel extends JPanel implements ActionListener, MouseListen
         c.gridx = 1;
         c.gridy = 7;
         this.add(spacingLabel2, c);
+        
+        // Disables buttons and displays the no connection label if there is no connection to the SMS database.
+        if (!dbSetupSuccessful) {
+            // Disables buttons and remove mouse listener on the forgotten password label
+            logInButton.setEnabled(false);
+            forgottenPasswordLabel.setEnabled(false);
+            forgottenPasswordLabel.removeMouseListener(this);
+            
+            // Label to hold no database connection text if there is no connection to the SMS database.
+            final JLabel noConnectionLabel = new JLabel();
+            noConnectionLabel.setPreferredSize(new Dimension(300, 60));
+            noConnectionLabel.setOpaque(true);
+            noConnectionLabel.setVisible(true);
+            noConnectionLabel.setBackground(Color.white);
+            noConnectionLabel.setForeground(Color.red);
+            noConnectionLabel.setText("<HTML><span style='font-size:18px'> <b>ERROR:</b> "
+                                        + "No Database Connection Available!</span></HTML>");
+
+            // The coordinates for where to add this component to the add login account form layout.
+            c.gridx = 1;
+            c.gridy = 7;
+            c.anchor = GridBagConstraints.LINE_START;
+            this.add(noConnectionLabel, c);
+        }
     }
  
     /**

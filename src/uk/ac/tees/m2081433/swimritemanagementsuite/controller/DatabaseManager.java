@@ -1,3 +1,11 @@
+/**
+ * Swimrite Management Suite.
+ * @author Thomas Bedford (M2081433)
+ * @contact m2081433@live.tees.ac.uk
+ * 
+ * Teesside University, UK
+ * Created for BSc Computing: Final Year Project - Part 1: Artefact 2014/15
+ */
 package uk.ac.tees.m2081433.swimritemanagementsuite.controller;
 
 import uk.ac.tees.m2081433.swimritemanagementsuite.model.LessonPayment;
@@ -17,8 +25,6 @@ import uk.ac.tees.m2081433.swimritemanagementsuite.model.LoginAccount;
 
 /**
  * This class manages the access to the database and database creation and maintenance.
- *
- * @author Thomas Bedford (m2081433)
  */
 public class DatabaseManager {
 
@@ -108,8 +114,9 @@ public class DatabaseManager {
      * Sets up the database if tables have not already been initialized.
      *
      * @param connectionSource The connection to the Swimrite Management Suite MySQL database
+     * @return boolean as to whether the setup of the database tables were successful.
      */
-    public void setupDatabase(JdbcConnectionSource connectionSource) {
+    public boolean setupDatabase(JdbcConnectionSource connectionSource) {
 
         try {
             // Creates all tables within the database if they do not already exist.
@@ -125,7 +132,9 @@ public class DatabaseManager {
             // Print stack trace to help diagnose error + appropriate message to console.
             e.printStackTrace();
             System.out.println("setupDatabase: Error creating database tables");
-        }
+            return false;
+        } 
+        return true;
     }
 
     /**
@@ -149,7 +158,7 @@ public class DatabaseManager {
             // Print stack trace to help diagnose error + appropriate message to console.
             e.printStackTrace();
             System.out.println("initializeDaos: Error initializing the database access objects");
-        }
+        } 
     }
     
     /**

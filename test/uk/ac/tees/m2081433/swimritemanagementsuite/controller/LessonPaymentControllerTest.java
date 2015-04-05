@@ -1,3 +1,11 @@
+/**
+ * Swimrite Management Suite.
+ * @author Thomas Bedford (M2081433)
+ * @contact m2081433@live.tees.ac.uk
+ * 
+ * Teesside University, UK
+ * Created for BSc Computing: Final Year Project - Part 1: Artefact 2014/15
+ */
 package uk.ac.tees.m2081433.swimritemanagementsuite.controller;
 
 import com.j256.ormlite.jdbc.JdbcConnectionSource;

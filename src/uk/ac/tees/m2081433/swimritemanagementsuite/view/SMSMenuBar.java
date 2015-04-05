@@ -1,3 +1,11 @@
+/**
+ * Swimrite Management Suite.
+ * @author Thomas Bedford (M2081433)
+ * @contact m2081433@live.tees.ac.uk
+ * 
+ * Teesside University, UK
+ * Created for BSc Computing: Final Year Project - Part 1: Artefact 2014/15
+ */
 package uk.ac.tees.m2081433.swimritemanagementsuite.view;
 
 import java.awt.Color;
@@ -227,6 +235,9 @@ public class SMSMenuBar extends JMenuBar {
         // Adds the support ticket menu to this menu bar
         this.add(supportTicketsMenu);
         
+        // Diables the Support Ticket buttons while functionality has not been implemented
+        viewAllSTMenuItem.setEnabled(false);
+        addSTMenuItem.setEnabled(false);
         
        
         // Glues all menu items added below this statement to the right hand-side of the JMenuBar

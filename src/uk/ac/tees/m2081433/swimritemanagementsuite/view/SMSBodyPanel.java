@@ -1,3 +1,11 @@
+/**
+ * Swimrite Management Suite.
+ * @author Thomas Bedford (M2081433)
+ * @contact m2081433@live.tees.ac.uk
+ * 
+ * Teesside University, UK
+ * Created for BSc Computing: Final Year Project - Part 1: Artefact 2014/15
+ */
 package uk.ac.tees.m2081433.swimritemanagementsuite.view;
 
 import java.awt.BorderLayout;
@@ -231,7 +239,7 @@ public class SMSBodyPanel extends JPanel {
         smsMainPanelRef.removeAll();
         
         // Creates the login screen for the SMS and adds it to the main panel.
-        final SMSLoginPanel smsLoginPanel = new SMSLoginPanel(smsMainPanelRef);
+        final SMSLoginPanel smsLoginPanel = new SMSLoginPanel(smsMainPanelRef, true);
         smsMainPanelRef.add(smsLoginPanel, BorderLayout.CENTER);
         
         // Updates the UI of the main panel with the login screen on it.
