@@ -100,12 +100,12 @@ public class SwimriteManagementSuite {
         // Gets the height of the computers screen size
         int ySize = ((int) tk.getScreenSize().getHeight());
         
-        // sets the minimum width the frame can be
+        // if the width of the users monitor is smaller than the default width, the default width is set.
         if (xSize < 1440) {
             xSize = 1440;
         }
         
-        // sets the minimum height the frame can be
+        // if the height of the users monitor is smaller than the default height, the default height is set.
         if (ySize < 900) {
             ySize = 900;
         }
