@@ -49,11 +49,6 @@ public class RegisterPanel extends JPanel implements ActionListener {
     private String todaysDate;
     
     /**
-     * Reference to the body panel to re-load this panel and to direct to view individual swimming class.
-     */
-    private SMSBodyPanel smsBodyPanelRef;
-    
-    /**
      * The Teacher controller for when running db queries on the Teacher table.
      */
     private final TeacherController teacherController = new TeacherController();
@@ -205,10 +200,8 @@ public class RegisterPanel extends JPanel implements ActionListener {
      */
     public RegisterPanel(SMSBodyPanel smsBodyPanel) {
         
+        // Method that gets todays day and date.
         calcTodaysDayAndDate();
-
-        // Sets the smsBodyPanel reference to swap out panels
-        smsBodyPanelRef = smsBodyPanel;
         
         // Method to get all the timeslots for the specified day (needed info to work out panel height etc.)
         getTimeslotsForDay();
@@ -288,7 +281,7 @@ public class RegisterPanel extends JPanel implements ActionListener {
         
         
         // The string to hold the day of the month
-        String dayOfMonth = null;
+        String dayOfMonth;
         
         // If the day of the month is less than 10, add a 0 to the front of it for proper date format (eg, DD/MM/YYYY)
         if (calendar.get(Calendar.DAY_OF_MONTH) < 10) {
@@ -298,7 +291,7 @@ public class RegisterPanel extends JPanel implements ActionListener {
         }
         
         // The string to hold the month
-        String month = null;
+        String month;
         
         // If the month is less than 10 add a 0 to the front of it for proper date format (eg, DD/MM/YYYY)
         // Calendar month plus 1 as the calendar month starts at 0 for january...
